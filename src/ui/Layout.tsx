@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import ActionHeader from "./ActionHeader";
+import ActionBar from "./ActionBar";
 
 function Layout(): React.JSX.Element {
   return (
     <>
-      <ActionHeader />
+      <ActionBar />
       <Outlet />
     </>
   );
