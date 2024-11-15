@@ -1,6 +1,8 @@
 function FeedbackTile(): React.JSX.Element {
   return (
     <article className="feedback_tile">
+      {/* TO DO: display title as an <h1> if feedback tile is rendered on Feedback Detail Page */}
+      {/*detailPage ? <h1>Title</h1> : <h3>Title</h3> */}
       <h3>Add a dark theme option</h3>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
