@@ -1,15 +1,22 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./ui/Layout";
 import Home from "./ui/Home";
-import FeedbackBoard from "./features/feedback/feedbackBoard";
+import FeedbackBoard from "./features/feedback/FeedbackBoard";
 import Roadmap from "./features/roadmap/Roadmap";
-import CreateFeedback from "./features/feedback/createFeedback";
+import CreateFeedback from "./features/feedback/CreateFeedback";
 import EditFeedback from "./features/feedback/EditFeedback";
 import FeedbackDetail from "./features/feedback/FeedbackDetail";
+import ErrorPage from "./ui/ErrorPage";
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
     element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/feedbackBoard",
@@ -19,25 +26,19 @@ const router = createBrowserRouter([
         path: "/developmentRoadmap",
         element: <Roadmap />,
       },
+      {
+        path: "/createFeedback",
+        element: <CreateFeedback />,
+      },
+      {
+        path: "/editFeedback/:feedbackId",
+        element: <EditFeedback />,
+      },
+      {
+        path: "/feedbackDetail/:feedbackId",
+        element: <FeedbackDetail />,
+      },
     ],
-  },
-
-  {
-    path: "/",
-    element: <Home />,
-  },
-
-  {
-    path: "/createFeedback",
-    element: <CreateFeedback />,
-  },
-  {
-    path: "/editFeedback/:feedbackId",
-    element: <EditFeedback />,
-  },
-  {
-    path: "/feedbackDetail/:feedbackId",
-    element: <FeedbackDetail />,
   },
 ]);
 
