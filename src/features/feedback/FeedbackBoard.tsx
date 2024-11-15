@@ -6,17 +6,20 @@ import ActionBar from "../../ui/ActionBar";
 
 function FeedbackBoard(): React.JSX.Element {
   return (
-    <>
-      <PageHeader />
-      <aside>
-        <FilterByCategory />
-        <RoadmapPreviewTile />
-      </aside>
-      <main>
+    <div className="feedbackBoard_layout">
+      <div className="feecbackBoard_leftSection">
+        <PageHeader />
+        <aside className="feedbackBoard_aside">
+          <FilterByCategory />
+          <RoadmapPreviewTile />
+        </aside>
+      </div>
+
+      <main className="feedbackBoard_main">
         <ActionBar />
         <FeedbackList />
       </main>
-    </>
+    </div>
   );
 }
 

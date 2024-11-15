@@ -1,6 +1,6 @@
 function FeedbackTile(): React.JSX.Element {
   return (
-    <article>
+    <article className="feedback_tile">
       <h3>Add a dark theme option</h3>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
