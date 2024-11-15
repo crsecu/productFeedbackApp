@@ -1,5 +1,4 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Layout from "./ui/Layout";
 import Home from "./ui/Home";
 import FeedbackBoard from "./features/feedback/FeedbackBoard";
 import Roadmap from "./features/roadmap/Roadmap";
@@ -15,30 +14,24 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/feedbackBoard",
-        element: <FeedbackBoard />,
-      },
-      {
-        path: "/developmentRoadmap",
-        element: <Roadmap />,
-      },
-      {
-        path: "/createFeedback",
-        element: <CreateFeedback />,
-      },
-      {
-        path: "/editFeedback/:feedbackId",
-        element: <EditFeedback />,
-      },
-      {
-        path: "/feedbackDetail/:feedbackId",
-        element: <FeedbackDetail />,
-      },
-    ],
+    path: "/feedbackBoard",
+    element: <FeedbackBoard />,
+  },
+  {
+    path: "/developmentRoadmap",
+    element: <Roadmap />,
+  },
+  {
+    path: "/createFeedback",
+    element: <CreateFeedback />,
+  },
+  {
+    path: "/editFeedback/:feedbackId",
+    element: <EditFeedback />,
+  },
+  {
+    path: "/feedbackDetail/:feedbackId",
+    element: <FeedbackDetail />,
   },
 ]);
 
