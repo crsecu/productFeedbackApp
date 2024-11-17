@@ -44,3 +44,18 @@
   background-color: rgb(214, 231, 231);
   padding: 12px;
 }
+
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
+/* Roadmap PAGE */
+.roadmap_header {
+}
+.roadmap_devStatusPhases {
+  display: flex;
+  gap: 10px;
+}
+.roadmap_devStatusPhase {
+  background-color: rgb(209, 210, 172);
+  padding: 0 16px;
+}
