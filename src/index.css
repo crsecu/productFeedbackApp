@@ -32,15 +32,15 @@
   margin-left: auto;
 }
 /* *************************************************************** */
-/* FeedbackTile component */
+/* FeedbackCard component */
 .feedback_list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 /* *************************************************************** */
-/* FeedbackTile component */
-.feedback_tile {
+/* FeedbackCard component */
+.feedback_card {
   background-color: rgb(214, 231, 231);
   padding: 12px;
 }

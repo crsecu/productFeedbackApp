@@ -1,13 +1,13 @@
-import FeedbackTile from "./FeedbackTile";
+import FeedbackCard from "./FeedbackCard";
 
 function FeedbackList(): React.JSX.Element {
   return (
     <section className="feedback_list">
       <h2>Feedback List</h2> {/* visually hidden heading */}
       <ul>
-        <FeedbackTile />
-        <FeedbackTile />
-        <FeedbackTile />
+        <FeedbackCard />
+        <FeedbackCard />
+        <FeedbackCard />
       </ul>
     </section>
   );

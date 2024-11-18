@@ -1,7 +1,7 @@
-function FeedbackTile(): React.JSX.Element {
+function FeedbackCard(): React.JSX.Element {
   return (
-    <article className="feedback_tile">
-      {/* TO DO: display title as an <h1> if feedback tile is rendered on Feedback Detail Page */}
+    <article className="feedback_card">
+      {/* TO DO: display title as an <h1> if feedback card is rendered on Feedback Detail Page */}
       {/*detailPage ? <h1>Title</h1> : <h3>Title</h3> */}
       <h3>Add a dark theme option</h3>
       <p>
@@ -17,4 +17,4 @@ function FeedbackTile(): React.JSX.Element {
   );
 }
 
-export default FeedbackTile;
+export default FeedbackCard;

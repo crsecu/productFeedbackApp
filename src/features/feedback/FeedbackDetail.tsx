@@ -1,4 +1,4 @@
-import FeedbackTile from "./FeedbackTile";
+import FeedbackCard from "./FeedbackCard";
 import Comment from "../comments/Comment";
 
 function FeedbackDetail(): React.JSX.Element {
@@ -9,7 +9,7 @@ function FeedbackDetail(): React.JSX.Element {
         <button>Edit Feedback</button>
       </header>
       <main>
-        <FeedbackTile />
+        <FeedbackCard />
         <section>
           <h2>
             <span>4</span> Comments
