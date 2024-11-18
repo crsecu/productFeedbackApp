@@ -4,8 +4,8 @@ import { useRouteError } from "react-router-dom";
 function ErrorPage(): React.JSX.Element {
   const error = useRouteError();
 
-  console.log(error);
-  return <div>Oops! {error.data}</div>;
+  console.log("ERROR", error);
+  return <div>Oops! {error.data || error.message}</div>;
 }
 
 export default ErrorPage;

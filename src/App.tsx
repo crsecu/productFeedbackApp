@@ -18,6 +18,7 @@ const router = createBrowserRouter([
     path: "/feedbackBoard",
     element: <FeedbackBoard />,
     loader: feedbackLoader,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/developmentRoadmap",
