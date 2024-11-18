@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { feedbackLoader } from "./loaders/feedbackLoader";
 import Home from "./ui/Home";
 import FeedbackBoard from "./features/feedback/FeedbackBoard";
 import Roadmap from "./features/roadmap/Roadmap";
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
   {
     path: "/feedbackBoard",
     element: <FeedbackBoard />,
+    loader: feedbackLoader,
   },
   {
     path: "/developmentRoadmap",
