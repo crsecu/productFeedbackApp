@@ -1,14 +1,13 @@
 import { useLoaderData } from "react-router-dom";
+import { Feedback } from "./feedback.types";
 import PageHeader from "../../ui/PageHeader";
 import FilterByCategory from "./FilterByCategory";
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
 import FeedbackList from "./FeedbackList";
 import ActionBar from "../../ui/ActionBar";
-import { Feedback } from "./feedback.types";
 
 function FeedbackBoard(): React.JSX.Element {
   const feedbackData = useLoaderData() as Feedback[];
-
   console.log(feedbackData);
   return (
     <div className="feedbackBoard_layout">

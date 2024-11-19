@@ -9,7 +9,7 @@ function FeedbackDetail(): React.JSX.Element {
         <button>Edit Feedback</button>
       </header>
       <main>
-        <FeedbackCard />
+        {/* <FeedbackCard /> */}
         <section>
           <h2>
             <span>4</span> Comments

@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import feedbackReducer from "./features/feedback/feedbackSlice";
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    feedback: feedbackReducer,
+  },
 });
 
 export default store;
