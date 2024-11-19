@@ -4,9 +4,11 @@ import FilterByCategory from "./FilterByCategory";
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
 import FeedbackList from "./FeedbackList";
 import ActionBar from "../../ui/ActionBar";
+import { Feedback } from "./feedback.types";
 
 function FeedbackBoard(): React.JSX.Element {
-  const feedbackData = useLoaderData();
+  const feedbackData = useLoaderData() as Feedback[];
+
   console.log(feedbackData);
   return (
     <div className="feedbackBoard_layout">
@@ -20,7 +22,8 @@ function FeedbackBoard(): React.JSX.Element {
 
       <main className="feedbackBoard_main">
         <ActionBar />
-        <FeedbackList />
+
+        <FeedbackList data={feedbackData} />
       </main>
     </div>
   );
