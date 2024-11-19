@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-function Home(): React.JSX.Element {
+function HomePage(): React.JSX.Element {
   return (
     <>
       <h1>Homepage</h1>
@@ -9,4 +9,4 @@ function Home(): React.JSX.Element {
   );
 }
 
-export default Home;
+export default HomePage;

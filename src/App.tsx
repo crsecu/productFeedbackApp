@@ -1,40 +1,40 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { feedbackLoader } from "./loaders/feedbackLoader";
-import Home from "./ui/Home";
-import FeedbackBoard from "./features/feedback/FeedbackBoard";
-import Roadmap from "./features/roadmap/Roadmap";
-import CreateFeedback from "./features/feedback/CreateFeedback";
-import EditFeedback from "./features/feedback/EditFeedback";
-import FeedbackDetail from "./features/feedback/FeedbackDetail";
+import HomePage from "./ui/HomePage";
+import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
+import RoadmapPage from "./features/roadmap/RoadmapPage";
+import CreateFeedbackPage from "./features/feedback/CreateFeedbackPage";
+import EditFeedbackPage from "./features/feedback/EditFeedbackPage";
+import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import ErrorPage from "./ui/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <HomePage />,
     errorElement: <ErrorPage />,
   },
   {
     path: "/feedbackBoard",
-    element: <FeedbackBoard />,
+    element: <FeedbackBoardPage />,
     loader: feedbackLoader,
     errorElement: <ErrorPage />,
   },
   {
     path: "/developmentRoadmap",
-    element: <Roadmap />,
+    element: <RoadmapPage />,
   },
   {
     path: "/createFeedback",
-    element: <CreateFeedback />,
+    element: <CreateFeedbackPage />,
   },
   {
     path: "/editFeedback/:feedbackId",
-    element: <EditFeedback />,
+    element: <EditFeedbackPage />,
   },
   {
     path: "/feedbackDetail/:feedbackId",
-    element: <FeedbackDetail />,
+    element: <FeedbackDetailPage />,
   },
 ]);
 

@@ -6,7 +6,7 @@ import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
 import FeedbackList from "./FeedbackList";
 import ActionBar from "../../ui/ActionBar";
 
-function FeedbackBoard(): React.JSX.Element {
+function FeedbackBoardPage(): React.JSX.Element {
   const feedbackData = useLoaderData() as Feedback[];
   console.log(feedbackData);
   return (
@@ -28,4 +28,4 @@ function FeedbackBoard(): React.JSX.Element {
   );
 }
 
-export default FeedbackBoard;
+export default FeedbackBoardPage;

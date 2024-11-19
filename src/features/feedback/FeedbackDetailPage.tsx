@@ -1,7 +1,7 @@
-import FeedbackCard from "./FeedbackCard";
+//import FeedbackCard from "./FeedbackCard";
 import Comment from "../comments/Comment";
 
-function FeedbackDetail(): React.JSX.Element {
+function FeedbackDetailPage(): React.JSX.Element {
   return (
     <>
       <header>
@@ -29,4 +29,4 @@ function FeedbackDetail(): React.JSX.Element {
   );
 }
 
-export default FeedbackDetail;
+export default FeedbackDetailPage;

@@ -4,7 +4,7 @@ interface FeedbackCardProps {
   feedback: Feedback;
 }
 function FeedbackCard({ feedback }: FeedbackCardProps): React.JSX.Element {
-  const { title, description, category, upvotes, id } = feedback;
+  const { title, description, category, upvotes } = feedback;
   console.log("here", feedback);
   return (
     <li>

@@ -1,4 +1,4 @@
-function Roadmap(): React.JSX.Element {
+function RoadmapPage(): React.JSX.Element {
   return (
     <>
       <header className="roadmap_header">
@@ -44,4 +44,4 @@ function Roadmap(): React.JSX.Element {
   );
 }
 
-export default Roadmap;
+export default RoadmapPage;
