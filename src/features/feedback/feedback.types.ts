@@ -1,7 +1,7 @@
 import { User } from "../user/user.types";
 
 export interface Feedback {
-  id: number | null;
+  id: string;
   title: string;
   category: string;
   upvotes: number;

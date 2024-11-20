@@ -3,11 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Feedback } from "./feedback.types";
 
 interface FeedbackState {
-  feedback: Feedback[];
+  feedbackList: Feedback[];
 }
 
 const initialState: FeedbackState = {
-  feedback: [],
+  feedbackList: [],
 };
 
 const feedbackSlice = createSlice({
@@ -16,7 +16,7 @@ const feedbackSlice = createSlice({
   reducers: {
     setFeedbackData(state, action: PayloadAction<Feedback[]>) {
       //payload = feedback data fetched from API
-      state.feedback = action.payload;
+      state.feedbackList = action.payload;
     },
   },
 });

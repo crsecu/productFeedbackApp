@@ -1,5 +1,5 @@
-import { useLoaderData } from "react-router-dom";
-import { Feedback } from "./feedback.types";
+//import { useAppSelector } from "../../types/hooks";
+//import { Feedback } from "./feedback.types";
 import PageHeader from "../../ui/PageHeader";
 import FilterByCategory from "./FilterByCategory";
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
@@ -7,8 +7,6 @@ import FeedbackList from "./FeedbackList";
 import ActionBar from "../../ui/ActionBar";
 
 function FeedbackBoardPage(): React.JSX.Element {
-  const feedbackData = useLoaderData() as Feedback[];
-  console.log(feedbackData);
   return (
     <div className="feedbackBoard_layout">
       <div className="feecbackBoard_leftSection">
@@ -22,7 +20,7 @@ function FeedbackBoardPage(): React.JSX.Element {
       <main className="feedbackBoard_main">
         <ActionBar />
 
-        <FeedbackList data={feedbackData} />
+        <FeedbackList />
       </main>
     </div>
   );
