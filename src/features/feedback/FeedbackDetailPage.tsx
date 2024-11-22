@@ -1,15 +1,14 @@
-import FeedbackCard from "./FeedbackCard";
-import Comment from "../comments/Comment";
 import { useAppSelector } from "../../types/hooks";
 import { useParams } from "react-router-dom";
+import { getFeedbackDataById } from "./feedbackSlice";
+import FeedbackCard from "./FeedbackCard";
+import Comment from "../comments/Comment";
 
 function FeedbackDetailPage(): React.JSX.Element {
   const { feedbackId } = useParams();
 
-  const feedback = useAppSelector((state) =>
-    state.feedback.feedbackList.filter((feedback) => feedback.id === feedbackId)
-  );
-  console.log("data", feedback);
+  const feedback = useAppSelector(getFeedbackDataById(feedbackId));
+
   return (
     <>
       <header>
@@ -17,7 +16,7 @@ function FeedbackDetailPage(): React.JSX.Element {
         <button>Edit Feedback</button>
       </header>
       <main>
-        <FeedbackCard feedback={feedback[0]} />
+        <FeedbackCard feedback={feedback} />
         <section>
           <h2>
             <span>4</span> Comments

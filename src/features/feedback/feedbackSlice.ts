@@ -1,6 +1,8 @@
 //This state slice manages submitted suggestions and their associated comments
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Feedback } from "./feedback.types";
+import { AppState } from "../../store";
+import assert from "../../utils/helpers";
 
 interface FeedbackState {
   feedbackList: Feedback[];
@@ -23,3 +25,15 @@ const feedbackSlice = createSlice({
 
 export const { setFeedbackData } = feedbackSlice.actions;
 export default feedbackSlice.reducer;
+
+// Redux Selectors
+export const getFeedbackDataById =
+  (id: string | undefined) => (state: AppState) => {
+    assert(id, "Invalid feedback ID provided");
+    const data = state.feedback.feedbackList.find(
+      (feedback) => feedback.id === id
+    );
+    assert(data, `No feedback found for ID: ${id}`);
+
+    return data;
+  };

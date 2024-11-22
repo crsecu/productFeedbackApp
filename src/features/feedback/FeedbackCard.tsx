@@ -4,6 +4,9 @@ interface FeedbackCardProps {
   feedback: Feedback;
 }
 function FeedbackCard({ feedback }: FeedbackCardProps): React.JSX.Element {
+  if (!feedback)
+    return <article className="feedback_card">No matching value found</article>;
+
   const { title, description, category, upvotes } = feedback;
 
   return (
