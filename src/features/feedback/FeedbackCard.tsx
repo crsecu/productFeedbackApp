@@ -14,18 +14,16 @@ function FeedbackCard({
   const { title, description, category, upvotes } = feedback;
 
   return (
-    <li>
-      <article className="feedback_card">
-        {isDetailPage ? <h1>{title}</h1> : <h3>{title}</h3>}
-        <p>{description}</p>
-        <p>{category}</p>
-        <button>
-          ^ <span>{upvotes}</span>
-        </button>
+    <article className="feedback_card">
+      {isDetailPage ? <h1>{title}</h1> : <h3>{title}</h3>}
+      <p>{description}</p>
+      <p>{category}</p>
+      <button>
+        ^ <span>{upvotes}</span>
+      </button>
 
-        <span>Comment Count 2</span>
-      </article>
-    </li>
+      <span>Comment Count 2</span>
+    </article>
   );
 }
 

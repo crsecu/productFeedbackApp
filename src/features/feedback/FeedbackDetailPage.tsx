@@ -1,6 +1,7 @@
 import { useAppSelector } from "../../types/hooks";
 import { useParams } from "react-router-dom";
 import { getFeedbackDataById } from "./feedbackSlice";
+import { Link } from "react-router-dom";
 import FeedbackCard from "./FeedbackCard";
 import Comment from "../comments/Comment";
 
@@ -12,7 +13,9 @@ function FeedbackDetailPage(): React.JSX.Element {
   return (
     <>
       <header>
-        <a>Go Back</a>
+        <Link to={"/feedbackBoard"}>Go Back</Link>
+        <br></br>
+        <br></br>
         <button>Edit Feedback</button>
       </header>
       <main>

@@ -11,9 +11,11 @@ function FeedbackList(): React.JSX.Element {
       <ul>
         {feedbackList.map((item) => {
           return (
-            <Link to={`/feedbackDetail/${item.id}`} key={item.id}>
-              <FeedbackCard key={item.id} feedback={item} />
-            </Link>
+            <li key={item.id}>
+              <Link to={`/feedbackDetail/${item.id}`}>
+                <FeedbackCard feedback={item} />
+              </Link>
+            </li>
           );
         })}
       </ul>
