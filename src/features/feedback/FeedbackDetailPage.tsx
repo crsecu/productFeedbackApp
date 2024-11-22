@@ -16,7 +16,7 @@ function FeedbackDetailPage(): React.JSX.Element {
         <button>Edit Feedback</button>
       </header>
       <main>
-        <FeedbackCard feedback={feedback} />
+        <FeedbackCard feedback={feedback} isDetailPage={true} />
         <section>
           <h2>
             <span>4</span> Comments

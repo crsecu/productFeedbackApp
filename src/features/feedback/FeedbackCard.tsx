@@ -2,8 +2,12 @@ import { Feedback } from "./feedback.types";
 
 interface FeedbackCardProps {
   feedback: Feedback;
+  isDetailPage?: boolean;
 }
-function FeedbackCard({ feedback }: FeedbackCardProps): React.JSX.Element {
+function FeedbackCard({
+  feedback,
+  isDetailPage = false,
+}: FeedbackCardProps): React.JSX.Element {
   if (!feedback)
     return <article className="feedback_card">No matching value found</article>;
 
@@ -12,9 +16,7 @@ function FeedbackCard({ feedback }: FeedbackCardProps): React.JSX.Element {
   return (
     <li>
       <article className="feedback_card">
-        {/* TO DO: display title as an <h1> if feedback card is rendered on Feedback Detail Page */}
-        {/*detailPage ? <h1>Title</h1> : <h3>Title</h3> */}
-        <h3>{title}</h3>
+        {isDetailPage ? <h1>{title}</h1> : <h3>{title}</h3>}
         <p>{description}</p>
         <p>{category}</p>
         <button>
