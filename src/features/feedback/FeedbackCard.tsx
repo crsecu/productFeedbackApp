@@ -1,4 +1,5 @@
 import { Feedback } from "./feedback.types";
+import { calculateTotalComments } from "../../utils/helpers";
 
 interface FeedbackCardProps {
   feedback: Feedback;
@@ -13,19 +14,7 @@ function FeedbackCard({
     return <article className="feedback_card">No matching value found</article>;
 
   const { title, description, category, upvotes, comments } = feedback;
-
-  /*Calculate the total number of comments and their replies*/
-  const baseCount = comments?.length || 0;
-  const repliesCount =
-    comments?.reduce((totalReplies, comment) => {
-      if (comment.replies !== undefined) {
-        return totalReplies + comment.replies.length;
-      }
-
-      return 0;
-    }, 0) || 0;
-
-  const commentCount = baseCount + repliesCount;
+  const commentCount = calculateTotalComments(comments);
 
   return (
     <article className="feedback_card">

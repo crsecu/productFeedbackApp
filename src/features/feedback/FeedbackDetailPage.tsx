@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getFeedbackDataById } from "./feedbackSlice";
 import { Link } from "react-router-dom";
 import FeedbackCard from "./FeedbackCard";
+import CommentList from "../comments/CommentList";
 import Comment from "../comments/Comment";
 
 function FeedbackDetailPage(): React.JSX.Element {
@@ -24,10 +25,7 @@ function FeedbackDetailPage(): React.JSX.Element {
           <h2>
             <span>4</span> Comments
           </h2>
-          <ul>
-            <Comment />
-            <Comment />
-          </ul>
+          <CommentList />
         </section>
         <section>
           <h2>Add a Comment</h2>
