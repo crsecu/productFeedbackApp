@@ -4,6 +4,7 @@ interface FeedbackCardProps {
   feedback: Feedback;
   isDetailPage?: boolean;
 }
+
 function FeedbackCard({
   feedback,
   isDetailPage = false,
@@ -11,7 +12,20 @@ function FeedbackCard({
   if (!feedback)
     return <article className="feedback_card">No matching value found</article>;
 
-  const { title, description, category, upvotes } = feedback;
+  const { title, description, category, upvotes, comments } = feedback;
+
+  /*Calculate the total number of comments and their replies*/
+  const baseCount = comments?.length || 0;
+  const repliesCount =
+    comments?.reduce((totalReplies, comment) => {
+      if (comment.replies !== undefined) {
+        return totalReplies + comment.replies.length;
+      }
+
+      return 0;
+    }, 0) || 0;
+
+  const commentCount = baseCount + repliesCount;
 
   return (
     <article className="feedback_card">
@@ -21,8 +35,8 @@ function FeedbackCard({
       <button>
         ^ <span>{upvotes}</span>
       </button>
-
-      <span>Comment Count 2</span>
+      <br></br>
+      <span>Comment count {commentCount}</span>
     </article>
   );
 }

@@ -7,7 +7,7 @@ export interface Feedback {
   upvotes: number;
   status: string;
   description: string;
-  comments: Comment[];
+  comments?: Comment[];
 }
 
 export interface Comment {

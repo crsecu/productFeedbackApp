@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Feedback } from "./feedback.types";
 import { AppState } from "../../store";
-import assert from "../../utils/helpers";
+import assert from "../../utils/TS_helpers";
 
 interface FeedbackState {
   feedbackList: Feedback[];
@@ -33,6 +33,7 @@ export const getFeedbackDataById =
     const data = state.feedback.feedbackList.find(
       (feedback) => feedback.id === id
     );
+
     assert(data, `No feedback found for ID: ${id}`);
 
     return data;
