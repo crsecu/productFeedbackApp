@@ -25,7 +25,7 @@ function FeedbackDetailPage(): React.JSX.Element {
           <h2>
             <span>4</span> Comments
           </h2>
-          <CommentList />
+          <CommentList comments={feedback.comments} />
         </section>
         <section>
           <h2>Add a Comment</h2>

@@ -1,19 +1,28 @@
-function Comment(): React.JSX.Element {
+import { Comment as CommentType } from "../feedback/feedback.types";
+interface CommentProps {
+  comment: CommentType;
+}
+function Comment({ comment }: CommentProps): React.JSX.Element {
+  const {
+    content,
+    user: { image, name, username },
+  } = comment;
+
+  console.log(image);
   return (
-    <li>
-      <div>
-        {/* avatar image goes here */}
-        <p>
-          <strong>John Doe</strong>
-          <span>john_doe123</span>
-        </p>
+    <div aria-label="Comment by ...">
+      <div className="comment__author">
+        <img src={image} alt="" />
+        <div className="comment__authorInfo">
+          <p>
+            <strong>{name}</strong>
+          </p>
+          <span>{username}</span>
+        </div>
       </div>
-      <p>
-        Please start working on it asap. Lorem ipsum dolor sit, amet consectetur
-        adipisicing elit. Qui quidem non dolores reprehenderit odio tempore.
-      </p>
+      <p>{content}</p>
       <button>Reply</button>
-    </li>
+    </div>
   );
 }
 
