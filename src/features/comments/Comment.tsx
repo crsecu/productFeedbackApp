@@ -8,7 +8,6 @@ function Comment({ comment }: CommentProps): React.JSX.Element {
     user: { image, name, username },
   } = comment;
 
-  console.log(image);
   return (
     <div aria-label="Comment by ...">
       <div className="comment__author">
