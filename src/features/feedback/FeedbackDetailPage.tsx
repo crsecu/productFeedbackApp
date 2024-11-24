@@ -4,7 +4,6 @@ import { getFeedbackDataById } from "./feedbackSlice";
 import { Link } from "react-router-dom";
 import FeedbackCard from "./FeedbackCard";
 import CommentList from "../comments/CommentList";
-import Comment from "../comments/Comment";
 
 function FeedbackDetailPage(): React.JSX.Element {
   const { feedbackId } = useParams();
@@ -22,9 +21,6 @@ function FeedbackDetailPage(): React.JSX.Element {
       <main>
         <FeedbackCard feedback={feedback} isDetailPage={true} />
         <section>
-          <h2>
-            <span>4</span> Comments
-          </h2>
           <CommentList comments={feedback.comments} />
         </section>
         <section>

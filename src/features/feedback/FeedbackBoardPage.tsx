@@ -1,5 +1,3 @@
-//import { useAppSelector } from "../../types/hooks";
-//import { Feedback } from "./feedback.types";
 import PageHeader from "../../ui/PageHeader";
 import FilterByCategory from "./FilterByCategory";
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
