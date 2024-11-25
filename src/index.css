@@ -59,3 +59,17 @@
   background-color: rgb(209, 210, 172);
   padding: 0 16px;
 }
+
+/* *************************************************************** */
+/* *************************************************************** */
+/* *************************************************************** */
+/* Create New Feedback Page */
+.createFeedback_new label {
+  font-weight: bold;
+}
+input,
+select,
+label,
+textarea {
+  display: block;
+}
