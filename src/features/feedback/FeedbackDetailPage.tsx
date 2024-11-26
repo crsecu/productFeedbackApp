@@ -9,6 +9,9 @@ function FeedbackDetailPage(): React.JSX.Element {
   const { feedbackId } = useParams();
 
   const feedback = useAppSelector(getFeedbackDataById(feedbackId));
+  // Testing scenario where id is not found in state
+
+  if (!feedback) return <h2>No feedback matching id found</h2>;
 
   return (
     <>

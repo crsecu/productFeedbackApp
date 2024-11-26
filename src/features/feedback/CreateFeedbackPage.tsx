@@ -1,4 +1,5 @@
 import { Form } from "react-router-dom";
+
 function CreateFeedbackPage(): React.JSX.Element {
   return (
     <div className="createFeedback_new">
@@ -32,16 +33,18 @@ function CreateFeedbackPage(): React.JSX.Element {
         </select>
         <br></br>
 
-        <label htmlFor="feedbackDetailComment">Feedback Detail</label>
-        <span id="feedbackDetailCommentDesc">
+        <label htmlFor="feedbackDescription">Feedback Detail</label>
+        <span id="feedbackDescriptionDesc">
           Include any specific comments on what should be improved, added, etc.
         </span>
         <textarea
-          name="comment"
-          id="feedbackDetailComment"
-          aria-describedby="feedbackDetailCommentDesc"
+          name="description"
+          id="feedbackDescription"
+          aria-describedby="feedbackDescriptionDesc"
           maxLength={250}
         ></textarea>
+
+        <button>Add Feedback</button>
       </Form>
     </div>
   );

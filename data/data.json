@@ -1,7 +1,7 @@
 {
   "productRequests": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Add tags for solutions",
       "category": "enhancement",
       "upvotes": 112,
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Add a dark theme option",
       "category": "feature",
       "upvotes": 99,
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Q&A within the challenge hubs",
       "category": "feature",
       "upvotes": 65,
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": "4",
       "title": "Add image/video upload to feedback",
       "category": "enhancement",
       "upvotes": 51,
@@ -124,7 +124,7 @@
       ]
     },
     {
-      "id": 5,
+      "id": "5",
       "title": "Ability to follow others",
       "category": "feature",
       "upvotes": 42,
@@ -163,7 +163,7 @@
       ]
     },
     {
-      "id": 6,
+      "id": "6",
       "title": "Preview images not loading",
       "category": "bug",
       "upvotes": 3,
@@ -171,7 +171,7 @@
       "description": "Challenge preview images are missing when you apply a filter."
     },
     {
-      "id": 7,
+      "id": "7",
       "title": "More comprehensive reports",
       "category": "feature",
       "upvotes": 123,
@@ -199,7 +199,7 @@
       ]
     },
     {
-      "id": 8,
+      "id": "8",
       "title": "Learning paths",
       "category": "feature",
       "upvotes": 28,
@@ -218,7 +218,7 @@
       ]
     },
     {
-      "id": 9,
+      "id": "9",
       "title": "One-click portfolio generation",
       "category": "feature",
       "upvotes": 62,
@@ -237,7 +237,7 @@
       ]
     },
     {
-      "id": 10,
+      "id": "10",
       "title": "Bookmark challenges",
       "category": "feature",
       "upvotes": 31,
@@ -256,7 +256,7 @@
       ]
     },
     {
-      "id": 11,
+      "id": "11",
       "title": "Animated solution screenshots",
       "category": "bug",
       "upvotes": 9,
@@ -264,7 +264,7 @@
       "description": "Screenshots of solutions with animations don’t display correctly."
     },
     {
-      "id": 12,
+      "id": "12",
       "title": "Add micro-interactions",
       "category": "enhancement",
       "upvotes": 71,
@@ -292,6 +292,126 @@
           ]
         }
       ]
+    },
+    {
+      "id": "3344",
+      "title": "Test",
+      "category": "Bug",
+      "description": "Lorem",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "568c",
+      "title": "Test",
+      "category": "UX",
+      "description": "Lorem",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "2e02",
+      "title": "Test",
+      "category": "UI",
+      "description": "Lorem",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "540d",
+      "title": "Test",
+      "category": "Feature",
+      "description": "Lorem",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "8e97",
+      "title": "Test",
+      "category": "UX",
+      "description": "Lorem",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "f4ea",
+      "title": "",
+      "category": "Feature",
+      "description": "",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "43e0",
+      "title": "Test",
+      "category": "Feature",
+      "description": "Lorem",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "abf9",
+      "title": "Test",
+      "category": "UX",
+      "description": "Hello",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "cd9c",
+      "title": "Add HomePage",
+      "category": "Feature",
+      "description": "A homopage would be a nice addition to the app.",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "72f3",
+      "title": "Test1",
+      "category": "Enhancement",
+      "description": "Lorem Test",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "504a",
+      "title": "Test",
+      "category": "UX",
+      "description": "Lorem TEST TEST",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "2b9d",
+      "title": "1",
+      "category": "UI",
+      "description": "1111",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "9f6c",
+      "title": "dffdf",
+      "category": "UX",
+      "description": "dfddf",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "cef9",
+      "title": "df",
+      "category": "Feature",
+      "description": "f",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "ae74",
+      "title": "dfdf",
+      "category": "Feature",
+      "description": "f",
+      "status": "suggestion",
+      "upvotes": 0
     }
   ]
 }
