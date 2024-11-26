@@ -1,5 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { feedbackLoader } from "./data_handlers/feedbackLoader";
+import { detailLoader } from "./data_handlers/feedbackLoader";
+import { action as createFeedbackAction } from "./data_handlers/feedbackActions";
 import HomePage from "./ui/HomePage";
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
 import RoadmapPage from "./features/roadmap/RoadmapPage";
@@ -7,7 +9,6 @@ import CreateFeedbackPage from "./features/feedback/CreateFeedbackPage";
 import EditFeedbackPage from "./features/feedback/EditFeedbackPage";
 import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import ErrorPage from "./ui/ErrorPage";
-import { action as createFeedbackAction } from "./data_handlers/feedbackActions";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
   {
     path: "/feedbackDetail/:feedbackId",
     element: <FeedbackDetailPage />,
+    loader: detailLoader,
   },
 ]);
 

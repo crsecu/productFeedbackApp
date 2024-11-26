@@ -1,17 +1,16 @@
-import { useAppSelector } from "../../types/hooks";
-import { useParams } from "react-router-dom";
-import { getFeedbackDataById } from "./feedbackSlice";
+import { useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
 import FeedbackCard from "./FeedbackCard";
 import CommentList from "../comments/CommentList";
+import { Feedback } from "./feedback.types";
 
 function FeedbackDetailPage(): React.JSX.Element {
-  const { feedbackId } = useParams();
+  // Detail Page gets data from loader
+  const loaderData = useLoaderData();
 
-  const feedback = useAppSelector(getFeedbackDataById(feedbackId));
-  // Testing scenario where id is not found in state
+  const feedback = loaderData as Feedback;
 
-  if (!feedback) return <h2>No feedback matching id found</h2>;
+  if (!feedback) return <h1>Feedback Detail is not available.</h1>;
 
   return (
     <>
