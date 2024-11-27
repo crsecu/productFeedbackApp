@@ -82,3 +82,24 @@ export async function editFeedback(
     throw Error("Failed editing Feedback");
   }
 }
+
+/* Delete feedback entry */
+export async function deleteFeedback(feedbackId: string) {
+  try {
+    const res = await fetch(`${API_URL}/productRequests/${feedbackId}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      console.log(
+        `Feedback entry with id ${feedbackId} was deleted succesfully`
+      );
+    } else {
+      throw Error();
+    }
+  } catch {
+    throw Error(
+      `There was an error deleting feedback entry with id ${feedbackId}`
+    );
+  }
+}

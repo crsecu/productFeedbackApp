@@ -9,7 +9,8 @@ function FeedbackDetailPage(): React.JSX.Element {
   const loaderData = useLoaderData();
 
   const feedback = loaderData as Feedback;
-  const { title, category, status, description, comments } = feedback;
+
+  const { id, title, category, status, description, comments } = feedback;
 
   if (!feedback) return <h1>Feedback Detail is not available.</h1>;
 
@@ -20,8 +21,8 @@ function FeedbackDetailPage(): React.JSX.Element {
         <br></br>
         <br></br>
         <Link
-          to={`/editFeedback/${feedback.id}`}
-          state={{ title, category, status, description }}
+          to={`/editFeedback/${id}`}
+          state={{ id, title, category, status, description }}
         >
           Edit Feedback
         </Link>

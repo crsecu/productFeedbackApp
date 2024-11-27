@@ -1,11 +1,21 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { deleteFeedback } from "../../services/apiFeedback";
 
 function EditFeedbackPage(): React.JSX.Element {
   const {
-    state: { category, description, status, title },
+    state: { id, category, description, status, title },
   } = useLocation();
-  //console.log(category);
+  const navigate = useNavigate();
+
+  function handleDelete() {
+    deleteFeedback(id);
+    console.log("feedback entry deleted", id);
+
+    navigate("/feedbackBoard");
+    //TO DO: Display message to inform user that the feedback entry was deleted
+  }
+
   return (
     <div className="editFeedback">
       <h1>Edit Feedback</h1>
@@ -73,6 +83,10 @@ function EditFeedbackPage(): React.JSX.Element {
         ></textarea>
 
         <button>Edit Feedback</button>
+        <button type="button">Cancel</button>
+        <button type="button" onClick={() => handleDelete()}>
+          Delete
+        </button>
       </Form>
     </div>
   );
