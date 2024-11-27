@@ -1,8 +1,9 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
-import { submitFeedback } from "../services/apiFeedback";
+import { submitFeedback, editFeedback } from "../services/apiFeedback";
+import assert from "../utils/TS_helpers";
 
-//Submit New Feedback Action Function
-export async function action({ request }: ActionFunctionArgs) {
+/* Submit New Feedback Action*/
+export async function createFeedbackAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData) as {
     title: string;
@@ -16,9 +17,33 @@ export async function action({ request }: ActionFunctionArgs) {
     upvotes: 0,
   };
 
+  /* TO DO: Form error handling */
+  //const errors = {};
+
   const newFeedback = await submitFeedback(feedback);
 
   console.log("submitted feedback", newFeedback);
 
   return redirect(`/feedbackDetail/${newFeedback.id}`);
+}
+
+/* Edit Feedback Action*/
+export async function editFeedbackAction({
+  request,
+  params,
+}: ActionFunctionArgs) {
+  const formData = await request.formData();
+
+  const data = Object.fromEntries(formData) as {
+    title: string;
+    description: string;
+    category: string;
+    status: string;
+  };
+
+  assert(params.feedbackId);
+
+  await editFeedback(params.feedbackId, data);
+
+  return redirect(`/feedbackDetail/${params.feedbackId}?status=edited`);
 }

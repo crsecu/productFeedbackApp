@@ -4,6 +4,10 @@ function CreateFeedbackPage(): React.JSX.Element {
   return (
     <div className="createFeedback_new">
       <h1>Create New Feedback</h1>
+      <p>
+        All fields are required to create feedback. Please complete the form
+        before submitting.
+      </p>
       <Form method="POST" action="/createFeedback">
         <label htmlFor="feedbackTitle">Feedback Title</label>
         <span id="feedbackTitleDesc">Add a short, descriptive headline</span>
@@ -12,6 +16,7 @@ function CreateFeedbackPage(): React.JSX.Element {
           name="title"
           id="feedbackTitle"
           aria-describedby="feedbackTitleDesc"
+          required
         ></input>
 
         <br></br>
@@ -24,6 +29,7 @@ function CreateFeedbackPage(): React.JSX.Element {
           name="category"
           id="feedbackCategory"
           aria-describedby="feedbackCategoryDesc"
+          required
         >
           <option value="Feature">Feature</option>
           <option value="UI">UI</option>
@@ -42,6 +48,7 @@ function CreateFeedbackPage(): React.JSX.Element {
           id="feedbackDescription"
           aria-describedby="feedbackDescriptionDesc"
           maxLength={250}
+          required
         ></textarea>
 
         <button>Add Feedback</button>

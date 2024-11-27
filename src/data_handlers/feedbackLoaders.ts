@@ -15,18 +15,25 @@ export async function feedbackLoader() {
 }
 
 // Fetch Feedback based on id
-export async function detailLoader({ params }: LoaderFunctionArgs) {
+export async function detailLoader({ request, params }: LoaderFunctionArgs) {
+  /* access URL query parameters */
+  const searchParams = new URL(request.url).searchParams;
+  const status = new URLSearchParams(searchParams).get("status");
+  console.log(status);
+
+  /* read state from Redux Store */
   const state = store.getState();
 
-  // check if feedback entry exists in Redux state
+  /* check if feedback entry exists in Redux state */
   const existingFeedback = state.feedback.feedbackList.find(
     (feedback) => feedback.id === params.feedbackId
   );
 
-  //if feedback entry is available in Redux state, return it to avoid unnecessary network request
-  if (existingFeedback) return existingFeedback;
+  /* - check if feedback entry is available in Redux state, and if "status" is null (null status indicates that the feedback entry hasn't been edited)
+     - if condition is true, return existing feedback entry - this avoids unnecessary network request */
+  if (existingFeedback && status === null) return existingFeedback;
 
-  //if feedback entry is not available in Redux state, fetch it from API, and return it
+  /* if feedback entry is not available in Redux state, fetch it from API, and return it */
   const feedback: Feedback = await fetchFeedbackById(params.feedbackId);
 
   return feedback;

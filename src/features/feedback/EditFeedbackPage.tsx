@@ -1,5 +1,81 @@
+import { Form } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 function EditFeedbackPage(): React.JSX.Element {
-  return <h1>Edit Feedback</h1>;
+  const {
+    state: { category, description, status, title },
+  } = useLocation();
+  //console.log(category);
+  return (
+    <div className="editFeedback">
+      <h1>Edit Feedback</h1>
+      <Form method="PATCH">
+        <label htmlFor="feedbackTitle">Title</label>
+        <span id="feedbackTitleDesc">Add a short, descriptive headline</span>
+        <input
+          name="title"
+          id="feedbackTitle"
+          aria-describedby="feedbackTitleDesc"
+          type="text"
+          defaultValue={title}
+          required
+        ></input>
+
+        <br></br>
+
+        <label htmlFor="feedbackCategory">Category</label>
+        <span id="feedbackCategoryDesc">
+          {" "}
+          Choose a category for your feedback
+        </span>
+        <select
+          name="category"
+          id="feedbackCategory"
+          aria-describedby="feedbackCategoryDesc"
+          required
+          defaultValue={category}
+        >
+          <option value="Feature">Feature</option>
+          <option value="UI">UI</option>
+          <option value="UX">UX</option>
+          <option value="Enhancement">Enhancement</option>
+          <option value="Bug">Bug</option>
+        </select>
+
+        <br></br>
+        <label htmlFor="feedbackStatus">Update status</label>
+        <span id="feedbackStatusDesc">Change feature state</span>
+        <select
+          id="feedbackStatus"
+          name="status"
+          aria-describedby="feedbackStatusDesc"
+          required
+          defaultValue={status}
+        >
+          <option value="Suggestion">Suggestion</option>
+          <option value="Planned">Planned</option>
+          <option value="In-Progress">In-Progress</option>
+          <option value="Live">Live</option>
+        </select>
+        <br></br>
+
+        <label htmlFor="feedbackDescription">Feedback Detail</label>
+        <span id="feedbackDescriptionDesc">
+          Include any specific comments on what should be improved, added, etc.
+        </span>
+        <textarea
+          name="description"
+          id="feedbackDescription"
+          aria-describedby="feedbackDescriptionDesc"
+          maxLength={250}
+          required
+          defaultValue={description}
+        ></textarea>
+
+        <button>Edit Feedback</button>
+      </Form>
+    </div>
+  );
 }
 
 export default EditFeedbackPage;

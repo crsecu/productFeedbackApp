@@ -64,7 +64,8 @@
 /* *************************************************************** */
 /* *************************************************************** */
 /* Create New Feedback Page */
-.createFeedback_new label {
+.createFeedback_new label,
+.editFeedback label {
   font-weight: bold;
 }
 input,

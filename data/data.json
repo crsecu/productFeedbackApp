@@ -2,10 +2,10 @@
   "productRequests": [
     {
       "id": "1",
-      "title": "Add tags for solutions",
-      "category": "enhancement",
+      "title": "Add dark theme 8",
+      "category": "Feature",
       "upvotes": 112,
-      "status": "suggestion",
+      "status": "Suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
       "comments": [
         {
@@ -547,6 +547,46 @@
       "category": "UX",
       "description": "Test",
       "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "2bf5",
+      "title": "Test26",
+      "category": "Feature",
+      "description": "1234",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "1cf1",
+      "title": "",
+      "category": "Feature",
+      "description": "",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "8e3a",
+      "title": "210 210 Test if Editing Feedback is implemented properly",
+      "category": "UX",
+      "description": "Lorem Ipsum Test Test",
+      "status": "Planned",
+      "upvotes": 0
+    },
+    {
+      "id": "1516",
+      "title": "11111Test 000ww",
+      "category": "Feature",
+      "description": "0000",
+      "status": "Suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "baa3",
+      "title": "NEW 1",
+      "category": "Feature",
+      "description": "NEW",
+      "status": "Suggestion",
       "upvotes": 0
     }
   ]
