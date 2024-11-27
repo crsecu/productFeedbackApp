@@ -16,6 +16,11 @@ function EditFeedbackPage(): React.JSX.Element {
     //TO DO: Display message to inform user that the feedback entry was deleted
   }
 
+  function handleCancel() {
+    console.log("canceling edit of feedback entry");
+    navigate(-1);
+  }
+
   return (
     <div className="editFeedback">
       <h1>Edit Feedback</h1>
@@ -83,7 +88,9 @@ function EditFeedbackPage(): React.JSX.Element {
         ></textarea>
 
         <button>Edit Feedback</button>
-        <button type="button">Cancel</button>
+        <button type="button" onClick={() => handleCancel()}>
+          Cancel
+        </button>
         <button type="button" onClick={() => handleDelete()}>
           Delete
         </button>
