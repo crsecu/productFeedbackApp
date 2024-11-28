@@ -8,11 +8,12 @@ function EditFeedbackPage(): React.JSX.Element {
   } = useLocation();
   const navigate = useNavigate();
 
-  function handleDelete() {
-    deleteFeedback(id);
+  async function handleDelete() {
+    await deleteFeedback(id);
     console.log("feedback entry deleted", id);
 
     navigate("/feedbackBoard");
+
     //TO DO: Display message to inform user that the feedback entry was deleted
   }
 
