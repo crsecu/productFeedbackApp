@@ -8,7 +8,7 @@ function EditFeedbackPage(): React.JSX.Element {
   } = useLocation();
   const navigate = useNavigate();
 
-  async function handleDelete() {
+  async function handleDeleteFeedbackEntry() {
     await deleteFeedback(id);
     console.log("feedback entry deleted", id);
 
@@ -92,7 +92,7 @@ function EditFeedbackPage(): React.JSX.Element {
         <button type="button" onClick={() => handleCancel()}>
           Cancel
         </button>
-        <button type="button" onClick={() => handleDelete()}>
+        <button type="button" onClick={() => handleDeleteFeedbackEntry()}>
           Delete
         </button>
       </Form>

@@ -2,10 +2,10 @@
   "productRequests": [
     {
       "id": "8e97",
-      "title": "Test",
-      "category": "UX",
+      "title": "Test UPDATED",
+      "category": "Enhancement",
       "description": "Lorem",
-      "status": "suggestion",
+      "status": "Suggestion",
       "upvotes": 0
     },
     {
