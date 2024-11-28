@@ -1,7 +1,7 @@
 import { useAppSelector } from "../../types/hooks";
 import { Link } from "react-router-dom";
 import FeedbackCard from "./FeedbackCard";
-import UpvoteButton from "../comments/UpvoteButton";
+import UpvoteButton from "./UpvoteButton";
 
 function FeedbackList(): React.JSX.Element {
   const feedbackList = useAppSelector((state) => state.feedback.feedbackList);

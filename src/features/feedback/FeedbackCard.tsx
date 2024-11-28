@@ -1,6 +1,6 @@
 import { Feedback } from "./feedback.types";
 import { calculateTotalComments } from "../../utils/helpers";
-import UpvoteButton from "../comments/UpvoteButton";
+import UpvoteButton from "./UpvoteButton";
 
 interface FeedbackCardProps {
   feedback: Feedback;
