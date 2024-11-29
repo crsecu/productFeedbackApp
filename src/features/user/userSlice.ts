@@ -1,20 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "./user.types";
+import { PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: User = {
-  name: "Test",
-  username: "test123",
-  image: "",
+interface UserState {
+  validatedUser: User;
+}
+
+const initialState: UserState = {
+  validatedUser: {
+    id: "",
+    image: "",
+    name: "",
+    username: "",
+    upvotedFeedbackEntries: [],
+  },
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setUserCredentials(state, action: PayloadAction<User>) {
+      //payload = user account information (see initalState object for data structure)
+      state.validatedUser = action.payload;
+    },
+  },
 });
 
-export default userSlice.reducer;
+export const { setUserCredentials } = userSlice.actions;
 
-//TO DO:
-//define reducers
-//export reducers
+//define selectors below
+
+export default userSlice.reducer;

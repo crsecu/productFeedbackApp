@@ -1,5 +1,7 @@
 export interface User {
+  id: string;
+  image: string;
   name: string;
   username: string;
-  image: string;
+  upvotedFeedbackEntries: string[];
 }

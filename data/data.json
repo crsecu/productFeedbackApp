@@ -1,10 +1,24 @@
 {
+  "userList": [
+    {
+      "image": "./assets/user-images/image-zena.jpg",
+      "name": "Cristina",
+      "username": "cs",
+      "upvotedFeedbackEntries": []
+    },
+    {
+      "image": "./assets/user-images/image-anne.jpg",
+      "name": "Anne",
+      "username": "ann",
+      "upvotedFeedbackEntries": []
+    }
+  ],
   "productRequests": [
     {
       "id": "1",
       "title": "Add tags for solutions",
       "category": "Feature",
-      "upvotes": 163,
+      "upvotes": 172,
       "status": "Suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
       "comments": [
@@ -80,7 +94,7 @@
       "id": "3",
       "title": "Q&A within the challenge hubs",
       "category": "feature",
-      "upvotes": 66,
+      "upvotes": 67,
       "status": "suggestion",
       "description": "Challenge-specific Q&A would make for easy reference.",
       "comments": [

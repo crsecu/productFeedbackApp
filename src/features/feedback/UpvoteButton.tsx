@@ -13,7 +13,6 @@ function UpvoteButton({
 }: UpvoteButtonProps): React.JSX.Element {
   const dispatch = useAppDispatch();
   const [userHasUpvoted, setUserHasUpvoted] = useState(false);
-  //const [upVoteCount, setUpvoteCount] = useState(upvotes);
 
   async function handleUpvote() {
     setUserHasUpvoted((prevState) => !prevState);

@@ -130,3 +130,21 @@ export async function upvoteFeedback(feedbackId: string, voteCount: number) {
     );
   }
 }
+
+/* Fetch user list */
+export async function fetchUserList() {
+  try {
+    const res = await fetch(`${API_URL}/userList`);
+    const data = await res.json();
+
+    if (res.ok) {
+      console.log("List of users has been retrieved successfully.");
+    } else {
+      throw Error();
+    }
+
+    return data;
+  } catch {
+    throw Error(`There was an error retrieving list of users.`);
+  }
+}
