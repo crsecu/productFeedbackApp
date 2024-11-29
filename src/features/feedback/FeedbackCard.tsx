@@ -14,7 +14,7 @@ function FeedbackCard({
   if (!feedback)
     return <article className="feedback_card">No matching value found</article>;
 
-  const { title, description, category, upvotes, comments } = feedback;
+  const { title, description, category, upvotes, comments, id } = feedback;
   const commentCount = calculateTotalComments(comments);
 
   return (
@@ -23,7 +23,7 @@ function FeedbackCard({
         {isDetailPage ? (
           <>
             <h1>{title}</h1>
-            <UpvoteButton upvotes={upvotes} />
+            <UpvoteButton upvotes={upvotes} feedbackId={id} />
           </>
         ) : (
           <h3>{title}</h3>

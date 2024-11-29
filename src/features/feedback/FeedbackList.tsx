@@ -20,7 +20,7 @@ function FeedbackList(): React.JSX.Element {
           {feedbackList.map((item) => {
             return (
               <li key={item.id}>
-                <UpvoteButton upvotes={item.upvotes} />
+                <UpvoteButton upvotes={item.upvotes} feedbackId={item.id} />
                 <Link to={`/feedbackDetail/${item.id}`}>
                   <FeedbackCard feedback={item} />
                 </Link>

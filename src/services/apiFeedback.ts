@@ -103,3 +103,30 @@ export async function deleteFeedback(feedbackId: string) {
     );
   }
 }
+
+/* Upvote feedback entry */
+export async function upvoteFeedback(feedbackId: string, voteCount: number) {
+  /* TO DO:  update function name*/
+  try {
+    const res = await fetch(`${API_URL}/productRequests/${feedbackId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ upvotes: voteCount }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.ok) {
+      console.log(`Feedback entry with id ${feedbackId} has been UPVOTED`);
+    } else {
+      throw Error();
+    }
+
+    const data = await res.json();
+    return data;
+  } catch {
+    throw Error(
+      `There was an error UPVOTING feedback entry with id ${feedbackId}`
+    );
+  }
+}

@@ -20,10 +20,20 @@ const feedbackSlice = createSlice({
       //payload = feedback data fetched from API
       state.feedbackList = action.payload;
     },
+    toggleFeedbackUpvote(state, action: PayloadAction<string>) {
+      //payload = feedback id
+      const feedbackEntry = state.feedbackList.find(
+        (item) => item.id === action.payload
+      );
+
+      assert(feedbackEntry);
+
+      feedbackEntry.upvotes += 1;
+    },
   },
 });
 
-export const { setFeedbackData } = feedbackSlice.actions;
+export const { setFeedbackData, toggleFeedbackUpvote } = feedbackSlice.actions;
 export default feedbackSlice.reducer;
 
 // Redux Selectors

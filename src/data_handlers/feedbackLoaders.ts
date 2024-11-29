@@ -9,6 +9,7 @@ import { Feedback } from "../features/feedback/feedback.types";
 export async function feedbackLoader() {
   const feedbackData: Feedback[] = await fetchAllFeedback();
   console.log("Feedback entries", feedbackData);
+
   if (feedbackData) store.dispatch(setFeedbackData(feedbackData));
 
   return feedbackData;
