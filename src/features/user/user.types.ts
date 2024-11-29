@@ -3,5 +3,5 @@ export interface User {
   image: string;
   name: string;
   username: string;
-  upvotedFeedbackEntries: string[];
+  upvotedFeedbackIds: string[];
 }

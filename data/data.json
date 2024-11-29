@@ -4,13 +4,15 @@
       "image": "./assets/user-images/image-zena.jpg",
       "name": "Cristina",
       "username": "cs",
-      "upvotedFeedbackEntries": []
+      "upvotedFeedbackIds": [],
+      "id": "fcb5"
     },
     {
       "image": "./assets/user-images/image-anne.jpg",
       "name": "Anne",
       "username": "ann",
-      "upvotedFeedbackEntries": []
+      "upvotedFeedbackIds": [],
+      "id": "7b27"
     }
   ],
   "productRequests": [
@@ -18,7 +20,7 @@
       "id": "1",
       "title": "Add tags for solutions",
       "category": "Feature",
-      "upvotes": 172,
+      "upvotes": 174,
       "status": "Suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
       "comments": [

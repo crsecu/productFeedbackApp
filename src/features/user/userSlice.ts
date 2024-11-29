@@ -12,7 +12,7 @@ const initialState: UserState = {
     image: "",
     name: "",
     username: "",
-    upvotedFeedbackEntries: [],
+    upvotedFeedbackIds: [],
   },
 };
 
@@ -24,6 +24,7 @@ const userSlice = createSlice({
       //payload = user account information (see initalState object for data structure)
       state.validatedUser = action.payload;
     },
+    addUpvotedFeedbackId(state, action: PayloadAction<string>) {},
   },
 });
 
