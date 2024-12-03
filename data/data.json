@@ -18,10 +18,10 @@
   "productRequests": [
     {
       "id": "1",
-      "title": "Add tags for solutions",
+      "title": "Add tags for solutions NEW",
       "category": "Feature",
       "upvotes": 309,
-      "status": "Planned",
+      "status": "Suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
       "comments": [
         {
@@ -94,10 +94,10 @@
     },
     {
       "id": "3",
-      "title": "Q&A within the challenge hubs",
-      "category": "feature",
+      "title": "1 Q&A within the challenge hubs",
+      "category": "Feature",
       "upvotes": 68,
-      "status": "suggestion",
+      "status": "Suggestion",
       "description": "Challenge-specific Q&A would make for easy reference.",
       "comments": [
         {
