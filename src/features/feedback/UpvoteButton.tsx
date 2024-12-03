@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { upvoteFeedback } from "../../services/apiFeedback";
 import { useAppDispatch } from "../../types/hooks";
-import { toggleFeedbackUpvote } from "./feedbackSlice";
+import { addFeedbackUpvote } from "./feedbackSlice";
+import { removeFeedbackUpvote } from "./feedbackSlice";
+import { addUpvotedFeedbackId } from "../user/userSlice";
 
 interface UpvoteButtonProps {
   upvotes: number;
@@ -12,15 +14,28 @@ function UpvoteButton({
   feedbackId,
 }: UpvoteButtonProps): React.JSX.Element {
   const dispatch = useAppDispatch();
+
   const [userHasUpvoted, setUserHasUpvoted] = useState(false);
 
-  async function handleUpvote() {
+  function handleUpvote() {
+    // eslint-disable-next-line no-debugger
+    //debugger;
+
+    if (!userHasUpvoted) {
+      console.log("Dispatching a UPVOTING action.");
+      dispatch(addFeedbackUpvote(feedbackId));
+    } else {
+      console.log("Dispatching a UNVOTING action.");
+      dispatch(removeFeedbackUpvote(feedbackId));
+    }
+
     setUserHasUpvoted((prevState) => !prevState);
-    dispatch(toggleFeedbackUpvote(feedbackId));
 
-    await upvoteFeedback(feedbackId, upvotes + 1);
+    //await upvoteFeedback(feedbackId, upvotes + 1);
 
-    //TO DO: continue working on toggle logic
+    /*  TO DO:
+   - save upvotedFeedbackId in backend (think about when to make the api request) 
+   - continue working on toggle logic */
   }
 
   return (

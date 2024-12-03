@@ -20,20 +20,30 @@ const feedbackSlice = createSlice({
       //payload = feedback data fetched from API
       state.feedbackList = action.payload;
     },
-    toggleFeedbackUpvote(state, action: PayloadAction<string>) {
+    addFeedbackUpvote(state, action: PayloadAction<string>) {
       //payload = feedback id
-      const feedbackEntry = state.feedbackList.find(
-        (item) => item.id === action.payload
-      );
+      const feedbackEntry = state.feedbackList.find((item) => {
+        return item.id === action.payload;
+      });
 
       assert(feedbackEntry);
-
       feedbackEntry.upvotes += 1;
+    },
+
+    removeFeedbackUpvote(state, action: PayloadAction<string>) {
+      //payload = feedback id
+      const feedbackEntry = state.feedbackList.find((item) => {
+        return item.id === action.payload;
+      });
+
+      assert(feedbackEntry);
+      feedbackEntry.upvotes -= 1;
     },
   },
 });
 
-export const { setFeedbackData, toggleFeedbackUpvote } = feedbackSlice.actions;
+export const { setFeedbackData, addFeedbackUpvote, removeFeedbackUpvote } =
+  feedbackSlice.actions;
 export default feedbackSlice.reducer;
 
 // Redux Selectors

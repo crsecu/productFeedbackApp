@@ -1,6 +1,5 @@
 import { Feedback } from "./feedback.types";
 import { calculateTotalComments } from "../../utils/helpers";
-import UpvoteButton from "./UpvoteButton";
 
 interface FeedbackCardProps {
   feedback: Feedback;
@@ -14,7 +13,7 @@ function FeedbackCard({
   if (!feedback)
     return <article className="feedback_card">No matching value found</article>;
 
-  const { title, description, category, upvotes, comments, id } = feedback;
+  const { title, description, category, comments } = feedback;
   const commentCount = calculateTotalComments(comments);
 
   return (
@@ -23,7 +22,6 @@ function FeedbackCard({
         {isDetailPage ? (
           <>
             <h1>{title}</h1>
-            <UpvoteButton upvotes={upvotes} feedbackId={id} />
           </>
         ) : (
           <h3>{title}</h3>

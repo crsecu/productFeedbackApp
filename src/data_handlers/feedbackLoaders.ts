@@ -25,12 +25,16 @@ export async function detailLoader({ request, params }: LoaderFunctionArgs) {
   /* read state from Redux Store */
   const state = store.getState();
 
-  /* check if feedback entry exists in Redux state */
+  /* 
+   - check if the feedback entry exists in Redux state 
+   - this check is crucial because the Detail Page's current implementation relies on data from Redux state to render the UI
+   - since Redux state gets reset on page reload, leading to data loss, having this check ensures a fallback API request is triggered to fetch the data 
+  */
   const existingFeedback = state.feedback.feedbackList.find(
     (feedback) => feedback.id === params.feedbackId
   );
 
-  /* - check if feedback entry is available in Redux state, and if "status" is null (null status indicates that the feedback entry hasn't been edited)
+  /* - if feedback entry is available in Redux state, and if "status" is null (null status indicates that the feedback entry hasn't been edited)
      - if condition is true, return existing feedback entry - this avoids unnecessary network request */
   if (existingFeedback && status === null) return existingFeedback;
 

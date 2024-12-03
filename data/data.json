@@ -20,8 +20,8 @@
       "id": "1",
       "title": "Add tags for solutions",
       "category": "Feature",
-      "upvotes": 174,
-      "status": "Suggestion",
+      "upvotes": 309,
+      "status": "Planned",
       "description": "Easier to search for solutions based on a specific stack.",
       "comments": [
         {
@@ -48,7 +48,7 @@
       "id": "2",
       "title": "Add a dark theme option",
       "category": "feature",
-      "upvotes": 106,
+      "upvotes": 113,
       "status": "suggestion",
       "description": "It would help people with light sensitivities and who prefer dark mode.",
       "comments": [
@@ -96,7 +96,7 @@
       "id": "3",
       "title": "Q&A within the challenge hubs",
       "category": "feature",
-      "upvotes": 67,
+      "upvotes": 68,
       "status": "suggestion",
       "description": "Challenge-specific Q&A would make for easy reference.",
       "comments": [
@@ -143,7 +143,7 @@
       "id": "5",
       "title": "Ability to follow others",
       "category": "feature",
-      "upvotes": 42,
+      "upvotes": 43,
       "status": "suggestion",
       "description": "Stay updated on comments and solutions other people post.",
       "comments": [
@@ -190,7 +190,7 @@
       "id": "7",
       "title": "More comprehensive reports",
       "category": "feature",
-      "upvotes": 123,
+      "upvotes": 124,
       "status": "planned",
       "description": "It would be great to see a more detailed breakdown of solutions.",
       "comments": [
@@ -275,7 +275,7 @@
       "id": "11",
       "title": "Animated solution screenshots",
       "category": "bug",
-      "upvotes": 9,
+      "upvotes": 10,
       "status": "in-progress",
       "description": "Screenshots of solutions with animations don’t display correctly."
     },
@@ -315,7 +315,7 @@
       "category": "UI",
       "description": "TEST TEST",
       "status": "suggestion",
-      "upvotes": 1
+      "upvotes": 2
     }
   ]
 }
