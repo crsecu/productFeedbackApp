@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { upvoteFeedback } from "../../services/apiFeedback";
 import { useAppDispatch } from "../../types/hooks";
 import { addFeedbackUpvote } from "./feedbackSlice";
 import { removeFeedbackUpvote } from "./feedbackSlice";
-import { addUpvotedFeedbackId } from "../user/userSlice";
+import { upvoteFeedback } from "../../services/apiFeedback";
 
 interface UpvoteButtonProps {
   upvotes: number;
@@ -17,21 +16,21 @@ function UpvoteButton({
 
   const [userHasUpvoted, setUserHasUpvoted] = useState(false);
 
-  function handleUpvote() {
+  async function handleUpvote() {
     // eslint-disable-next-line no-debugger
     //debugger;
 
     if (!userHasUpvoted) {
       console.log("Dispatching a UPVOTING action.");
       dispatch(addFeedbackUpvote(feedbackId));
+      await upvoteFeedback(feedbackId, upvotes + 1);
     } else {
       console.log("Dispatching a UNVOTING action.");
       dispatch(removeFeedbackUpvote(feedbackId));
+      await upvoteFeedback(feedbackId, upvotes - 1);
     }
 
     setUserHasUpvoted((prevState) => !prevState);
-
-    //await upvoteFeedback(feedbackId, upvotes + 1);
 
     /*  TO DO:
    - save upvotedFeedbackId in backend (think about when to make the api request) 

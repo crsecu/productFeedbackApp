@@ -17,39 +17,11 @@
   ],
   "productRequests": [
     {
-      "id": "1",
-      "title": "Add tags for solutions NEW",
-      "category": "Feature",
-      "upvotes": 309,
-      "status": "Suggestion",
-      "description": "Easier to search for solutions based on a specific stack.",
-      "comments": [
-        {
-          "id": 1,
-          "content": "Awesome idea! Trying to find framework-specific projects within the hubs can be tedious",
-          "user": {
-            "image": "./assets/user-images/image-suzanne.jpg",
-            "name": "Suzanne Chang",
-            "username": "upbeat1811"
-          }
-        },
-        {
-          "id": 2,
-          "content": "Please use fun, color-coded labels to easily identify them at a glance",
-          "user": {
-            "image": "./assets/user-images/image-thomas.jpg",
-            "name": "Thomas Hood",
-            "username": "brawnybrave"
-          }
-        }
-      ]
-    },
-    {
       "id": "2",
-      "title": "Add a dark theme option",
-      "category": "feature",
-      "upvotes": 113,
-      "status": "suggestion",
+      "title": "99911 NEW NEW",
+      "category": "UX",
+      "upvotes": 116,
+      "status": "Live",
       "description": "It would help people with light sensitivities and who prefer dark mode.",
       "comments": [
         {
@@ -96,7 +68,7 @@
       "id": "3",
       "title": "1 Q&A within the challenge hubs",
       "category": "Feature",
-      "upvotes": 68,
+      "upvotes": 69,
       "status": "Suggestion",
       "description": "Challenge-specific Q&A would make for easy reference.",
       "comments": [
@@ -316,6 +288,22 @@
       "description": "TEST TEST",
       "status": "suggestion",
       "upvotes": 2
+    },
+    {
+      "id": "afce",
+      "title": "dfgd",
+      "category": "Feature",
+      "description": "dfg",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "eb3f",
+      "title": "Shishi is a cat, Taco is too",
+      "category": "Enhancement",
+      "description": "Test",
+      "status": "Suggestion",
+      "upvotes": 0
     }
   ]
 }
