@@ -7,15 +7,17 @@ export interface Feedback {
   upvotes: number;
   status: string;
   description: string;
-  comments?: Comment[];
+  commentCount: number;
 }
 
 export interface Comment {
   id: number;
+  feedbackId: number;
   content: string;
   user: User;
   replies?: CommentReply[];
 }
+
 export interface CommentReply {
   content: string;
   replyingTo: string;

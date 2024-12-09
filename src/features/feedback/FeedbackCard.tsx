@@ -1,5 +1,4 @@
 import { Feedback } from "./feedback.types";
-import { calculateTotalComments } from "../../utils/helpers";
 
 interface FeedbackCardProps {
   feedback: Feedback;
@@ -13,8 +12,8 @@ function FeedbackCard({
   if (!feedback)
     return <article className="feedback_card">No matching value found</article>;
 
-  const { title, description, category, comments } = feedback;
-  const commentCount = calculateTotalComments(comments);
+  const { title, description, category, commentCount } = feedback;
+  //const commentCount = calculateTotalComments(comments);
 
   return (
     <>
@@ -30,7 +29,7 @@ function FeedbackCard({
         <p>{description}</p>
         <p>{category}</p>
         <br></br>
-        <span>Comment count {commentCount}</span>
+        <span>Comment count {commentCount ? commentCount : 0}</span>
       </article>
     </>
   );

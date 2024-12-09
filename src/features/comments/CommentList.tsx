@@ -1,14 +1,17 @@
 import { Comment as CommentType } from "../feedback/feedback.types";
 import Comment from "./Comment";
-import { calculateTotalComments } from "../../utils/helpers";
+
 interface CommentListProps {
   comments: CommentType[] | undefined;
+  commentCount: number;
 }
 
-function CommentList({ comments }: CommentListProps): React.JSX.Element {
+function CommentList({
+  comments,
+  commentCount,
+}: CommentListProps): React.JSX.Element {
   if (!comments)
     return <p>No comments yet. Be the first to share your thoughts!</p>;
-  const commentCount = calculateTotalComments(comments);
 
   return (
     <>
