@@ -16,10 +16,11 @@ const feedbackSlice = createSlice({
   name: "feedback",
   initialState,
   reducers: {
-    setFeedbackData(state, action: PayloadAction<Feedback[]>) {
-      //payload = feedback data fetched from API
+    setFeedbackList(state, action: PayloadAction<Feedback[]>) {
+      //payload = feedback list fetched from API
       state.feedbackList = action.payload;
     },
+
     addFeedbackUpvote(state, action: PayloadAction<string>) {
       //payload = feedback id
       const feedbackEntry = state.feedbackList.find((item) => {
@@ -42,11 +43,12 @@ const feedbackSlice = createSlice({
   },
 });
 
-export const { setFeedbackData, addFeedbackUpvote, removeFeedbackUpvote } =
+export const { setFeedbackList, addFeedbackUpvote, removeFeedbackUpvote } =
   feedbackSlice.actions;
 export default feedbackSlice.reducer;
 
-// Redux Selectors
+/* Redux Selectors */
+
 export const getFeedbackDataById =
   (id: string | undefined) => (state: AppState) => {
     assert(id, "Invalid feedback ID provided");
@@ -57,4 +59,17 @@ export const getFeedbackDataById =
     assert(data, `No feedback found for ID: ${id}`);
 
     return data;
+  };
+
+//Get Feedback upvote count by id
+export const getFeedbackUpvoteCount =
+  (id: string | undefined) => (state: AppState) => {
+    assert(id, "Invalid feedback ID provided");
+    const data = state.feedback.feedbackList.find(
+      (feedback) => feedback.id === id
+    );
+
+    assert(data, `No feedback found for ID: ${id}`);
+
+    return data?.upvotes;
   };

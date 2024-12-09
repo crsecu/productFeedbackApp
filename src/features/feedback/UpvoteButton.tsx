@@ -1,8 +1,12 @@
-import { useState } from "react";
-import { useAppDispatch } from "../../types/hooks";
+import { useAppDispatch, useAppSelector } from "../../types/hooks";
 import { addFeedbackUpvote } from "./feedbackSlice";
 import { removeFeedbackUpvote } from "./feedbackSlice";
-import { upvoteFeedback } from "../../services/apiFeedback";
+import { persistFeedbackVote } from "../../services/apiFeedback";
+import {
+  trackUserUpvote,
+  untrackUserUpvote,
+  getIsFeedbackUpvoted,
+} from "../user/userSlice";
 
 interface UpvoteButtonProps {
   upvotes: number;
@@ -14,31 +18,26 @@ function UpvoteButton({
 }: UpvoteButtonProps): React.JSX.Element {
   const dispatch = useAppDispatch();
 
-  const [userHasUpvoted, setUserHasUpvoted] = useState(false);
+  const isFeedbackUpvoted = useAppSelector(getIsFeedbackUpvoted(feedbackId));
 
   async function handleUpvote() {
-    // eslint-disable-next-line no-debugger
-    //debugger;
+    const action = isFeedbackUpvoted ? removeFeedbackUpvote : addFeedbackUpvote;
+    const userAction = isFeedbackUpvoted ? untrackUserUpvote : trackUserUpvote;
+    const updatedUpvotes = isFeedbackUpvoted ? upvotes - 1 : upvotes + 1;
 
-    if (!userHasUpvoted) {
-      console.log("Dispatching a UPVOTING action.");
-      dispatch(addFeedbackUpvote(feedbackId));
-      await upvoteFeedback(feedbackId, upvotes + 1);
-    } else {
-      console.log("Dispatching a UNVOTING action.");
-      dispatch(removeFeedbackUpvote(feedbackId));
-      await upvoteFeedback(feedbackId, upvotes - 1);
-    }
-
-    setUserHasUpvoted((prevState) => !prevState);
-
-    /*  TO DO:
-   - save upvotedFeedbackId in backend (think about when to make the api request) 
-   - continue working on toggle logic */
+    dispatch(action(feedbackId));
+    dispatch(userAction(feedbackId));
+    await persistFeedbackVote(feedbackId, updatedUpvotes);
+    /* TO DO:
+     - implement logic to save the upvotedFeedbackIds to the backend
+     */
   }
 
   return (
-    <button onClick={handleUpvote} className={userHasUpvoted ? "upvoted" : ""}>
+    <button
+      onClick={handleUpvote}
+      className={isFeedbackUpvoted ? "upvoted" : ""}
+    >
       ^ <span>{upvotes}</span>
     </button>
   );

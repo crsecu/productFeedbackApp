@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "./user.types";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { AppState } from "../../store";
 
 interface UserState {
   validatedUser: User;
@@ -33,15 +34,25 @@ const userSlice = createSlice({
       //payload = user account information (see initalState object for data structure)
       state.validatedUser = action.payload;
     },
-    addUpvotedFeedbackId(state, action: PayloadAction<string>) {
+    trackUserUpvote(state, action: PayloadAction<string>) {
       //payload = feedback id
       state.validatedUser.upvotedFeedbackIds.push(action.payload);
+    },
+    untrackUserUpvote(state, action: PayloadAction<string>) {
+      //payload = feedback id
+      state.validatedUser.upvotedFeedbackIds =
+        state.validatedUser.upvotedFeedbackIds.filter(
+          (id) => id !== action.payload
+        );
     },
   },
 });
 
-export const { setUserCredentials, addUpvotedFeedbackId } = userSlice.actions;
-
-//define selectors below
+export const { setUserCredentials, trackUserUpvote, untrackUserUpvote } =
+  userSlice.actions;
 
 export default userSlice.reducer;
+
+// Redux Selectors
+export const getIsFeedbackUpvoted = (feedbackId: string) => (state: AppState) =>
+  state.user.validatedUser.upvotedFeedbackIds.some((id) => id === feedbackId);

@@ -19,7 +19,7 @@ export async function fetchFeedbackById(feedbackId: string | undefined) {
   //type check against undefined above
   const res = await fetch(`${API_URL}/productRequests/${feedbackId}`);
 
-  //throw an exeception if the  server responds with a 400 Bad Request error,
+  //throw an exeception if the server responds with a 400 Bad Request error,
   // as fetch does not handle HTTP errors automatically
   if (!res.ok) throw Error("Failed getting Feedback Data");
 
@@ -104,9 +104,11 @@ export async function deleteFeedback(feedbackId: string) {
   }
 }
 
-/* Upvote feedback entry */
-export async function upvoteFeedback(feedbackId: string, voteCount: number) {
-  /* TO DO:  update function name*/
+/* Update backend with current vote count after user's upvote/unvote actions */
+export async function persistFeedbackVote(
+  feedbackId: string,
+  voteCount: number
+) {
   try {
     const res = await fetch(`${API_URL}/productRequests/${feedbackId}`, {
       method: "PATCH",
@@ -117,7 +119,9 @@ export async function upvoteFeedback(feedbackId: string, voteCount: number) {
     });
 
     if (res.ok) {
-      console.log(`Feedback entry with id ${feedbackId} has been UPVOTED`);
+      console.log(
+        `Feedback entry with id ${feedbackId} has been UPVOTED/UNVOTED`
+      );
     } else {
       throw Error();
     }
@@ -126,7 +130,7 @@ export async function upvoteFeedback(feedbackId: string, voteCount: number) {
     return data;
   } catch {
     throw Error(
-      `There was an error UPVOTING feedback entry with id ${feedbackId}`
+      `There was an error UPVOTING/UNVOTING feedback entry with id ${feedbackId}`
     );
   }
 }
