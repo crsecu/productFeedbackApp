@@ -2,7 +2,7 @@ import Comment from "./Comment";
 import { fetchComments } from "../../services/apiFeedback";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setCommentList } from "../feedback/feedbackSlice";
+import { setCommentList } from "./commentsSlice";
 import { useAppSelector } from "../../types/hooks";
 
 interface CommentListProps {
@@ -15,7 +15,7 @@ function CommentList({
   feedbackId,
 }: CommentListProps): React.JSX.Element {
   const dispatch = useDispatch();
-  const comments = useAppSelector((state) => state.feedback.commentList);
+  const comments = useAppSelector((state) => state.comment.commentList);
 
   useEffect(
     function () {

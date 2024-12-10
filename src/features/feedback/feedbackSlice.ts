@@ -1,17 +1,15 @@
 //This state slice manages submitted suggestions and their associated comments
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Feedback, Comment } from "./feedback.types";
+import { Feedback } from "./feedback.types";
 import { AppState } from "../../store";
 import assert from "../../utils/TS_helpers";
 
 interface FeedbackState {
   feedbackList: Feedback[];
-  commentList: Comment[]; //remove later when creating Comments Slice
 }
 
 const initialState: FeedbackState = {
   feedbackList: [],
-  commentList: [], //remove later when creating Comments Slice
 };
 
 const feedbackSlice = createSlice({
@@ -42,20 +40,11 @@ const feedbackSlice = createSlice({
       assert(feedbackEntry);
       feedbackEntry.upvotes -= 1;
     },
-
-    setCommentList(state, action: PayloadAction<Comment[]>) {
-      //payload = comment list fetched from API
-      state.commentList = action.payload;
-    },
   },
 });
 
-export const {
-  setFeedbackList,
-  setCommentList,
-  addFeedbackUpvote,
-  removeFeedbackUpvote,
-} = feedbackSlice.actions;
+export const { setFeedbackList, addFeedbackUpvote, removeFeedbackUpvote } =
+  feedbackSlice.actions;
 export default feedbackSlice.reducer;
 
 /* Redux Selectors */
