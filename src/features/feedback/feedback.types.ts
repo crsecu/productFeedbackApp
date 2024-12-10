@@ -12,13 +12,14 @@ export interface Feedback {
 
 export interface Comment {
   id: string;
-  feedbackId: number;
+  feedbackId?: number;
   content: string;
   user: User;
   replies?: CommentReply[];
 }
 
 export interface CommentReply {
+  id: string;
   content: string;
   replyingTo: string;
   user: User;

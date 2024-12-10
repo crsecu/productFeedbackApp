@@ -1,9 +1,10 @@
-import Comment from "./Comment";
 import { fetchComments } from "../../services/apiFeedback";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCommentList } from "./commentsSlice";
 import { useAppSelector } from "../../types/hooks";
+import { Comment as CommentType } from "../feedback/feedback.types";
+import Comment from "./Comment";
 
 interface CommentListProps {
   commentCount: number;
@@ -20,7 +21,7 @@ function CommentList({
   useEffect(
     function () {
       async function retrieveComments() {
-        const comments = await fetchComments(Number(feedbackId));
+        const comments: CommentType[] = await fetchComments(Number(feedbackId));
         dispatch(setCommentList(comments));
       }
       retrieveComments();
@@ -37,11 +38,13 @@ function CommentList({
         <span>{commentCount}</span> Comments
       </h2>
       <ul>
-        {comments.map((comment) => (
-          <li key={comment.id}>
-            <Comment comment={comment} />
-          </li>
-        ))}
+        {comments.map((comment) => {
+          return (
+            <li key={comment.id}>
+              <Comment comment={comment} />
+            </li>
+          );
+        })}
       </ul>
     </>
   );
