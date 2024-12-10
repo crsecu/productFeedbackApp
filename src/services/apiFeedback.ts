@@ -152,3 +152,19 @@ export async function fetchUserList() {
     throw Error(`There was an error retrieving list of users.`);
   }
 }
+
+/* Fetch Comments for Detail Page */
+export async function fetchComments(feedbackId: number) {
+  try {
+    const res = await fetch(`${API_URL}/comments?feedbackId=${feedbackId}`);
+    if (res.ok) {
+      console.log("Comments retrieved successfully.");
+    } else {
+      throw Error();
+    }
+
+    return await res.json();
+  } catch {
+    throw Error(`There was an error retrieving comments.`);
+  }
+}

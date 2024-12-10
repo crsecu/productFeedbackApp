@@ -15,16 +15,8 @@ function FeedbackDetailPage(): React.JSX.Element {
 
   if (!feedback) return <h1>Feedback Detail is not available.</h1>;
 
-  const {
-    id,
-    title,
-    category,
-    status,
-    description,
-    commentCount,
-    comments,
-    upvotes,
-  } = feedback;
+  const { id, title, category, status, description, commentCount, upvotes } =
+    feedback;
 
   return (
     <>
@@ -46,7 +38,7 @@ function FeedbackDetailPage(): React.JSX.Element {
         />
         <FeedbackCard feedback={feedback} isDetailPage={true} />
         <section>
-          <CommentList comments={comments} commentCount={commentCount} />
+          <CommentList commentCount={commentCount} feedbackId={id} />
         </section>
         <section>
           <h2>Add a Comment</h2>

@@ -18,10 +18,10 @@
   "productRequests": [
     {
       "id": "1",
-      "title": "Add tags for solutions",
-      "category": "enhancement",
+      "title": "NEW Add tags for solutions",
+      "category": "Feature",
       "upvotes": 113,
-      "status": "suggestion",
+      "status": "Suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
       "commentCount": 2
     },
@@ -121,6 +121,22 @@
       "status": "live",
       "description": "Small animations at specific points can add delight.",
       "commentCount": 2
+    },
+    {
+      "id": "04fb",
+      "title": "Adding new comment TEST",
+      "category": "Feature",
+      "description": "Test",
+      "status": "suggestion",
+      "upvotes": 0
+    },
+    {
+      "id": "74b5",
+      "title": "LOREM IPSUM",
+      "category": "Feature",
+      "description": ".",
+      "status": "suggestion",
+      "upvotes": 0
     }
   ],
   "comments": [
@@ -237,6 +253,7 @@
     },
     {
       "id": "9",
+      "feedbackId": 5,
       "content": "I've been saving the profile URLs of a few people and I check what they’ve been doing from time to time. Being able to follow them solves that",
       "user": {
         "image": "./assets/user-images/image-jackson.jpg",
@@ -256,6 +273,7 @@
     },
     {
       "id": "11",
+      "feedbackId": 7,
       "content": "Yeah, this would be really good. I'd love to see deeper insights into my code!",
       "user": {
         "image": "./assets/user-images/image-jackson.jpg",

@@ -1,16 +1,34 @@
-import { Comment as CommentType } from "../feedback/feedback.types";
 import Comment from "./Comment";
+import { fetchComments } from "../../services/apiFeedback";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setCommentList } from "../feedback/feedbackSlice";
+import { useAppSelector } from "../../types/hooks";
 
 interface CommentListProps {
-  comments: CommentType[] | undefined;
   commentCount: number;
+  feedbackId: string;
 }
 
 function CommentList({
-  comments,
   commentCount,
+  feedbackId,
 }: CommentListProps): React.JSX.Element {
-  if (!comments)
+  const dispatch = useDispatch();
+  const comments = useAppSelector((state) => state.feedback.commentList);
+
+  useEffect(
+    function () {
+      async function retrieveComments() {
+        const comments = await fetchComments(Number(feedbackId));
+        dispatch(setCommentList(comments));
+      }
+      retrieveComments();
+    },
+    [dispatch, feedbackId]
+  );
+
+  if (comments.length === 0)
     return <p>No comments yet. Be the first to share your thoughts!</p>;
 
   return (

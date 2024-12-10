@@ -11,7 +11,7 @@ export interface Feedback {
 }
 
 export interface Comment {
-  id: number;
+  id: string;
   feedbackId: number;
   content: string;
   user: User;
