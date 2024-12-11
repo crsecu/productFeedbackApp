@@ -1,22 +1,16 @@
 import { useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
-import FeedbackCard from "./FeedbackCard";
-import CommentList from "../comments/CommentList";
-import UpvoteButton from "./UpvoteButton";
 import { Feedback } from "./feedback.types";
-import { useAppSelector } from "../../types/hooks";
-import { getFeedbackUpvoteCount } from "./feedbackSlice";
+import CommentList from "../comments/CommentList";
+import FeedbackItem from "./FeedbackItem";
 
 function FeedbackDetailPage(): React.JSX.Element {
   const loaderData = useLoaderData();
   const feedback = loaderData as Feedback;
-  /* Read the upvote count from the Redux state to ensure the UI displays the latest value after upvote/unvote user interactions */
-  const upvoteCount = useAppSelector(getFeedbackUpvoteCount(feedback.id));
 
   if (!feedback) return <h1>Feedback Detail is not available.</h1>;
 
-  const { id, title, category, status, description, commentCount, upvotes } =
-    feedback;
+  const { id, title, category, status, description, commentCount } = feedback;
 
   return (
     <>
@@ -32,11 +26,7 @@ function FeedbackDetailPage(): React.JSX.Element {
         </Link>
       </header>
       <main>
-        <UpvoteButton
-          upvotes={upvoteCount ? upvoteCount : upvotes}
-          feedbackId={id}
-        />
-        <FeedbackCard feedback={feedback} isDetailPage={true} />
+        <FeedbackItem feedbackItem={feedback} />
         <section>
           <CommentList commentCount={commentCount} feedbackId={id} />
         </section>

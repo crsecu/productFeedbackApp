@@ -6,18 +6,25 @@ import FeedbackCard from "./FeedbackCard";
 
 interface FeedbackItemProps {
   feedbackItem: Feedback;
+  isDetailPage?: boolean;
 }
-function FeedbackItem({ feedbackItem }: FeedbackItemProps): React.JSX.Element {
+function FeedbackItem({
+  feedbackItem,
+  isDetailPage = false,
+}: FeedbackItemProps): React.JSX.Element {
   return (
-    <li>
-      <UpvoteButton
-        upvotes={feedbackItem.upvotes}
-        feedbackId={feedbackItem.id}
-      />
-      <Link to={`/feedbackDetail/${feedbackItem.id}`}>
+    <>
+      <UpvoteButton feedbackId={feedbackItem.id} />
+      {isDetailPage ? (
+        <>
+          <Link to={`/feedbackDetail/${feedbackItem.id}`}>
+            <FeedbackCard feedback={feedbackItem} />
+          </Link>{" "}
+        </>
+      ) : (
         <FeedbackCard feedback={feedbackItem} />
-      </Link>
-    </li>
+      )}
+    </>
   );
 }
 

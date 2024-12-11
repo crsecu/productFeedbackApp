@@ -8,15 +8,14 @@ import {
   getIsFeedbackUpvoted,
 } from "../user/userSlice";
 
+import { getFeedbackUpvoteCount } from "./feedbackSlice";
+
 interface UpvoteButtonProps {
-  upvotes: number;
   feedbackId: string;
 }
-function UpvoteButton({
-  upvotes,
-  feedbackId,
-}: UpvoteButtonProps): React.JSX.Element {
+function UpvoteButton({ feedbackId }: UpvoteButtonProps): React.JSX.Element {
   const dispatch = useAppDispatch();
+  const upvotes = useAppSelector(getFeedbackUpvoteCount(feedbackId));
 
   const isFeedbackUpvoted = useAppSelector(getIsFeedbackUpvoted(feedbackId));
 
