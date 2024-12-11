@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Feedback } from "./feedback.types";
 import CommentList from "../comments/CommentList";
 import FeedbackItem from "./FeedbackItem";
+import CreateComment from "../comments/CreateComment";
 
 function FeedbackDetailPage(): React.JSX.Element {
   const loaderData = useLoaderData();
@@ -31,9 +32,7 @@ function FeedbackDetailPage(): React.JSX.Element {
           <CommentList commentCount={commentCount} feedbackId={id} />
         </section>
         <section>
-          <h2>Add a Comment</h2>
-          <textarea></textarea>
-          <button>Post Comment</button>
+          <CreateComment />
         </section>
       </main>
     </>

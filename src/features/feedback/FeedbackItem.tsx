@@ -19,7 +19,7 @@ function FeedbackItem({
         <>
           <Link to={`/feedbackDetail/${feedbackItem.id}`}>
             <FeedbackCard feedback={feedbackItem} />
-          </Link>{" "}
+          </Link>
         </>
       ) : (
         <FeedbackCard feedback={feedbackItem} />

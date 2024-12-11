@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../types/hooks";
+
 import { addFeedbackUpvote } from "./feedbackSlice";
 import { removeFeedbackUpvote } from "./feedbackSlice";
 import { persistFeedbackVote } from "../../services/apiFeedback";
@@ -16,7 +17,6 @@ interface UpvoteButtonProps {
 function UpvoteButton({ feedbackId }: UpvoteButtonProps): React.JSX.Element {
   const dispatch = useAppDispatch();
   const upvotes = useAppSelector(getFeedbackUpvoteCount(feedbackId));
-
   const isFeedbackUpvoted = useAppSelector(getIsFeedbackUpvoted(feedbackId));
 
   async function handleUpvote() {
