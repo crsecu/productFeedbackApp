@@ -1,7 +1,5 @@
 import { useAppSelector } from "../../types/hooks";
-import { Link } from "react-router-dom";
-import FeedbackCard from "./FeedbackCard";
-import UpvoteButton from "./UpvoteButton";
+import FeedbackItem from "./FeedbackItem";
 
 function FeedbackList(): React.JSX.Element {
   const feedbackList = useAppSelector((state) => state.feedback.feedbackList);
@@ -18,14 +16,7 @@ function FeedbackList(): React.JSX.Element {
       ) : (
         <ul>
           {feedbackList.map((item) => {
-            return (
-              <li key={item.id}>
-                <UpvoteButton upvotes={item.upvotes} feedbackId={item.id} />
-                <Link to={`/feedbackDetail/${item.id}`}>
-                  <FeedbackCard feedback={item} />
-                </Link>
-              </li>
-            );
+            return <FeedbackItem feedbackItem={item} key={item.id} />;
           })}
         </ul>
       )}
