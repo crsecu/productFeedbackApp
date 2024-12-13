@@ -139,7 +139,6 @@ export async function persistFeedbackVote(
 export async function fetchUserList() {
   try {
     const res = await fetch(`${API_URL}/userList`);
-    const data = await res.json();
 
     if (res.ok) {
       console.log("List of users has been retrieved successfully.");
@@ -147,24 +146,35 @@ export async function fetchUserList() {
       throw Error();
     }
 
-    return data;
+    return await res.json();
   } catch {
     throw Error(`There was an error retrieving list of users.`);
   }
 }
 
-/* Fetch Comments for Detail Page */
-export async function fetchComments(feedbackId: number) {
+/* Update commentCount when a new comment/reply is added - currently working only incrementing commentCount
+   TO DO: use the same function to decrement commentCount when a comment/reply is deleted
+*/
+export async function updateCommentCount(
+  feedbackId: string,
+  updatedCommentCount: number
+) {
   try {
-    const res = await fetch(`${API_URL}/comments?feedbackId=${feedbackId}`);
+    const res = await fetch(`${API_URL}/productRequests/${feedbackId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ commentCount: updatedCommentCount }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (res.ok) {
-      console.log("Comments retrieved successfully.");
+      console.log("Updating commentCount has been successful");
     } else {
-      throw Error();
+      throw new Error();
     }
 
-    return await res.json();
+    await res.json();
   } catch {
-    throw Error(`There was an error retrieving comments.`);
+    throw Error();
   }
 }

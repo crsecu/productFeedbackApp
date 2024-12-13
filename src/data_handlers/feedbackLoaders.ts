@@ -13,10 +13,7 @@ export async function feedbackLoader() {
 
 // Fetch Feedback based on id
 export async function detailLoader({ params }: LoaderFunctionArgs) {
-  /* access URL query parameters to check if the feedback entry has been edited */
-  //const searchParams = new URL(request.url).searchParams;
-  //const feedbackEditStatus = new URLSearchParams(searchParams).get("status");
-
   const feedback: Feedback = await fetchFeedbackById(params.feedbackId);
+
   return feedback;
 }

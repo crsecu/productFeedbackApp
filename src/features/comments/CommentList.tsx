@@ -1,4 +1,4 @@
-import { fetchComments } from "../../services/apiFeedback";
+import { fetchComments } from "../../services/apiComment";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCommentList } from "./commentsSlice";
@@ -9,9 +9,11 @@ import Comment from "./Comment";
 interface CommentListProps {
   commentCount: number;
   feedbackId: string;
+  // comments: Comment[];
 }
 
 function CommentList({
+  // comments,
   commentCount,
   feedbackId,
 }: CommentListProps): React.JSX.Element {
@@ -26,10 +28,10 @@ function CommentList({
       }
       retrieveComments();
     },
-    [dispatch, feedbackId]
+    [dispatch, feedbackId, commentCount]
   );
 
-  if (comments.length === 0)
+  if (commentCount === 0)
     return <p>No comments yet. Be the first to share your thoughts!</p>;
 
   return (

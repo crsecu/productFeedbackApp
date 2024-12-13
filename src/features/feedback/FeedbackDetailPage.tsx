@@ -11,7 +11,15 @@ function FeedbackDetailPage(): React.JSX.Element {
 
   if (!feedback) return <h1>Feedback Detail is not available.</h1>;
 
-  const { id, title, category, status, description, commentCount } = feedback;
+  const {
+    id,
+    title,
+    category,
+    status,
+    description,
+    commentCount: rawCommentCount,
+  } = feedback;
+  const commentCount = rawCommentCount ?? 0;
 
   return (
     <>
@@ -32,7 +40,7 @@ function FeedbackDetailPage(): React.JSX.Element {
           <CommentList commentCount={commentCount} feedbackId={id} />
         </section>
         <section>
-          <CreateComment />
+          <CreateComment commentCount={commentCount} />
         </section>
       </main>
     </>

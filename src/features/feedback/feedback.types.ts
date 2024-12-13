@@ -24,3 +24,9 @@ export interface CommentReply {
   replyingTo: string;
   user: User;
 }
+
+export interface NewComment {
+  feedbackId: string;
+  content: string;
+  user: User;
+}

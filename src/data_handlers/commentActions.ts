@@ -1,22 +1,32 @@
 import { ActionFunctionArgs } from "react-router-dom";
+import { submitComment } from "../services/apiComment";
+import { User } from "../features/user/user.types";
+import { updateCommentCount } from "../services/apiFeedback";
+
 // Add New Comment Action
 export async function createCommentAction({
   request,
   params,
 }: ActionFunctionArgs) {
+  const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
   const content = formData.get("content");
+  const currentCommentCountJSON = formData.get("currentCommentCount");
+  console.log(currentCommentCountJSON);
   const authorJSON = formData.get("author");
 
-  if (!authorJSON) throw new Error("Author data is missing from the form data");
+  if (!authorJSON || !currentCommentCountJSON) throw new Error();
+  const currentCommentCount = JSON.parse(currentCommentCountJSON as string);
   const author = JSON.parse(authorJSON as string);
 
   const newComment = {
-    feedbackId: params.feedbackId,
-    content: content,
-    user: author,
+    feedbackId,
+    content: content as string,
+    user: author as User,
   };
 
-  console.log("comment data", newComment);
+  await submitComment(newComment);
+  await updateCommentCount(feedbackId, currentCommentCount + 1);
+
   return null;
 }
