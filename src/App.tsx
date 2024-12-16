@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { feedbackLoader, detailLoader } from "./data_handlers/feedbackLoaders";
 import { createFeedbackAction } from "./data_handlers/feedbackActions";
 import { editFeedbackAction } from "./data_handlers/feedbackActions";
-import { createCommentAction } from "./data_handlers/commentActions";
+import { submitCommentAction } from "./data_handlers/commentActions";
 import StateSyncWrapper from "./data_handlers/StateSyncWrapper";
 import HomePage from "./ui/HomePage";
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
     path: "/feedbackDetail/:feedbackId",
     element: <FeedbackDetailPage />,
     loader: detailLoader,
-    action: createCommentAction,
+    action: submitCommentAction,
   },
 ]);
 

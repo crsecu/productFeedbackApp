@@ -23,7 +23,7 @@
       "upvotes": 125,
       "status": "Suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
-      "commentCount": 2
+      "commentCount": 4
     },
     {
       "id": "2",
@@ -335,6 +335,26 @@
           }
         }
       ]
+    },
+    {
+      "id": "1ec1",
+      "feedbackId": "1",
+      "content": "TEST",
+      "user": {
+        "name": "Cristina",
+        "username": "cs",
+        "image": "./assets/user-images/image-zena.jpg"
+      }
+    },
+    {
+      "id": "9b61",
+      "feedbackId": "1",
+      "content": "TEST",
+      "user": {
+        "name": "Cristina",
+        "username": "cs",
+        "image": "./assets/user-images/image-zena.jpg"
+      }
     }
   ]
 }

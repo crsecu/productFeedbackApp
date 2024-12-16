@@ -1,12 +1,21 @@
+import { useState } from "react";
 import { Comment as CommentType } from "../feedback/feedback.types";
+
 interface CommentProps {
   comment: CommentType;
+  commentCount: number;
 }
-function Comment({ comment }: CommentProps): React.JSX.Element {
+function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
   const {
     content,
+    id,
     user: { image, name, username },
   } = comment;
+
+  const [isAddReply, setIsAddReply] = useState(false);
+  function handleReply() {
+    setIsAddReply((prevState) => !prevState);
+  }
 
   return (
     <>
@@ -14,6 +23,7 @@ function Comment({ comment }: CommentProps): React.JSX.Element {
         <div className="comment__author">
           <img src={image} alt="" />
           <div className="comment__authorInfo">
+            <h2>COMMENT #{id}</h2>
             <p>
               <strong>{name}</strong>
             </p>
@@ -21,13 +31,18 @@ function Comment({ comment }: CommentProps): React.JSX.Element {
           </div>
         </div>
         <p>{content}</p>
-        <button>Reply</button>
+        <button onClick={handleReply}>Reply</button>
+        {isAddReply && <p>REPLY text area here</p>}
       </div>
       {comment.replies ? (
         <ul>
           {comment.replies.map((commentReply) => (
             <li>
-              <Comment key={commentReply.id} comment={commentReply} />
+              <Comment
+                key={commentReply.id}
+                comment={commentReply}
+                commentCount={commentCount}
+              />
             </li>
           ))}
         </ul>

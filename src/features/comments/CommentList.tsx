@@ -43,7 +43,7 @@ function CommentList({
         {comments.map((comment) => {
           return (
             <li key={comment.id}>
-              <Comment comment={comment} />
+              <Comment comment={comment} commentCount={commentCount} />
             </li>
           );
         })}

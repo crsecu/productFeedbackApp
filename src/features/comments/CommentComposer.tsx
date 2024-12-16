@@ -1,13 +1,14 @@
 import { useFetcher } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
-interface CreateCommentProps {
+interface CommentComposerProps {
   commentCount: number;
 }
-function CreateComment({
+
+function CommentComposer({
   commentCount,
-}: CreateCommentProps): React.JSX.Element {
+}: CommentComposerProps): React.JSX.Element {
   const fetcher = useFetcher();
 
   /*TO DO: look into memoization with Reselect before using this selector function 
@@ -18,8 +19,7 @@ function CreateComment({
 
   const [commentContent, setCommentContent] = useState("");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  function handleSubmit() {
     const formData = new FormData();
     formData.append("content", commentContent);
     formData.append("currentCommentCount", JSON.stringify(commentCount));
@@ -32,8 +32,12 @@ function CreateComment({
 
   return (
     <>
-      <h2>Add a Comment</h2>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <textarea
           id="commentInput"
           onChange={(e) => setCommentContent(e.target.value)}
@@ -44,4 +48,4 @@ function CreateComment({
   );
 }
 
-export default CreateComment;
+export default CommentComposer;

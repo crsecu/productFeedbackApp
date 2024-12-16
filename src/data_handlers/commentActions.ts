@@ -3,16 +3,17 @@ import { submitComment } from "../services/apiComment";
 import { User } from "../features/user/user.types";
 import { updateCommentCount } from "../services/apiFeedback";
 
-// Add New Comment Action
-export async function createCommentAction({
+//Submit New Comment Action
+export async function submitCommentAction({
   request,
   params,
 }: ActionFunctionArgs) {
   const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
+
   const content = formData.get("content");
   const currentCommentCountJSON = formData.get("currentCommentCount");
-  console.log(currentCommentCountJSON);
+
   const authorJSON = formData.get("author");
 
   if (!authorJSON || !currentCommentCountJSON) throw new Error();

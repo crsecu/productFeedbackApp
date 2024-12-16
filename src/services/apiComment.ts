@@ -17,7 +17,9 @@ export async function fetchComments(feedbackId: number | undefined) {
   }
 }
 
+//Submit comment
 export async function submitComment(commentData: NewComment) {
+  console.log("logging comment data", commentData);
   try {
     const res = await fetch(`${API_URL}/comments`, {
       method: "POST",
