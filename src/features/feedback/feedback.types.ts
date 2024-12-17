@@ -20,6 +20,8 @@ export interface Comment {
 
 export interface CommentReply {
   id: string;
+  parentId: string | null;
+  parentType: "comment" | "reply";
   content: string;
   replyingTo: string;
   user: User;

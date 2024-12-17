@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Comment as CommentType } from "../feedback/feedback.types";
+import CommentComposer from "./CommentComposer";
 
 interface CommentProps {
   comment: CommentType;
@@ -32,7 +33,7 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
         </div>
         <p>{content}</p>
         <button onClick={handleReply}>Reply</button>
-        {isAddReply && <p>REPLY text area here</p>}
+        {isAddReply && <p>Reply textarea goes here</p>}
       </div>
       {comment.replies ? (
         <ul>
