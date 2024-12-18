@@ -21,7 +21,7 @@ function CommentList({
   useEffect(
     function () {
       async function retrieveComments() {
-        const comments: CommentType[] = await fetchComments(Number(feedbackId));
+        const comments: CommentType[] = await fetchComments(feedbackId);
         dispatch(setCommentList(comments));
       }
       retrieveComments();

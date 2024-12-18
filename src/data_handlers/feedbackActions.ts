@@ -13,8 +13,10 @@ export async function createFeedbackAction({ request }: ActionFunctionArgs) {
 
   const feedback = {
     ...data,
+    category: data.category.toLowerCase(),
     status: "suggestion",
     upvotes: 0,
+    commentCount: 0,
   };
 
   /* TO DO: Form error handling */

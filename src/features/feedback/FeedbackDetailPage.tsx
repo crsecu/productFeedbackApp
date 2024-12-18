@@ -41,7 +41,7 @@ function FeedbackDetailPage(): React.JSX.Element {
         </section>
         <section>
           <h2>Add a Comment</h2>
-          <CommentComposer mode="comment" commentCount={commentCount} />
+          <CommentComposer commentCount={commentCount} />
         </section>
       </main>
     </>
