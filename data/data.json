@@ -23,7 +23,7 @@
       "upvotes": 125,
       "status": "Suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
-      "commentCount": 4
+      "commentCount": 5
     },
     {
       "id": "2",
@@ -121,22 +121,6 @@
       "status": "live",
       "description": "Small animations at specific points can add delight.",
       "commentCount": 2
-    },
-    {
-      "id": "04fb",
-      "title": "Adding new comment TEST",
-      "category": "Feature",
-      "description": "Test",
-      "status": "suggestion",
-      "upvotes": 0
-    },
-    {
-      "id": "74b5",
-      "title": "LOREM IPSUM",
-      "category": "Feature",
-      "description": ".",
-      "status": "suggestion",
-      "upvotes": 0
     }
   ],
   "comments": [
