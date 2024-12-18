@@ -1,6 +1,6 @@
 import { ActionFunctionArgs } from "react-router-dom";
 import { submitComment } from "../services/apiComment";
-import { User } from "../features/user/user.types";
+import { CommentAuthor, NewComment } from "../features/feedback/feedback.types";
 import { updateCommentCount } from "../services/apiFeedback";
 
 //Submit New Comment Action
@@ -10,20 +10,24 @@ export async function submitCommentAction({
 }: ActionFunctionArgs) {
   const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  console.log("data from comment action", data);
 
-  const content = formData.get("content");
-  const currentCommentCountJSON = formData.get("currentCommentCount");
+  const {
+    content,
+    currentCommentCount: commentCount,
+    author: authorJSON,
+  } = data;
 
-  const authorJSON = formData.get("author");
+  const currentCommentCount: number = JSON.parse(commentCount as string);
+  const author: CommentAuthor = JSON.parse(authorJSON as string);
 
-  if (!authorJSON || !currentCommentCountJSON) throw new Error();
-  const currentCommentCount = JSON.parse(currentCommentCountJSON as string);
-  const author = JSON.parse(authorJSON as string);
-
-  const newComment = {
+  const newComment: NewComment = {
+    parentId: null,
     feedbackId,
     content: content as string,
-    user: author as User,
+    user: author,
+    replies: [],
   };
 
   await submitComment(newComment);

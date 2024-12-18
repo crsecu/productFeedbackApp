@@ -10,12 +10,18 @@ export interface Feedback {
   commentCount: number;
 }
 
+export interface CommentAuthor {
+  image: string;
+  name: string;
+  username: string;
+}
+
 export interface Comment {
   id: string;
   parentId: null;
   feedbackId: string;
   content: string;
-  user: User;
+  user: CommentAuthor;
   replies: [] | CommentReply[];
 }
 
@@ -30,7 +36,9 @@ export interface CommentReply {
 }
 
 export interface NewComment {
+  parentId: null;
   feedbackId: string;
   content: string;
-  user: User;
+  user: CommentAuthor;
+  replies: [];
 }
