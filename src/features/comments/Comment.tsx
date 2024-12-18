@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Comment as CommentType } from "../feedback/feedback.types";
-import CommentComposer from "./CommentComposer";
+import {
+  Comment as CommentType,
+  CommentReply,
+} from "../feedback/feedback.types";
 
 interface CommentProps {
-  comment: CommentType;
+  comment: CommentType | CommentReply;
   commentCount: number;
 }
 function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {

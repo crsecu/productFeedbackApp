@@ -183,7 +183,8 @@
             "image": "./assets/user-images/image-anne.jpg",
             "name": "Anne Valentine",
             "username": "annev1990"
-          }
+          },
+          "replies": []
         },
         {
           "id": "r_2",
@@ -195,7 +196,8 @@
             "image": "./assets/user-images/image-ryan.jpg",
             "name": "Ryan Welles",
             "username": "voyager.344"
-          }
+          },
+          "replies": []
         }
       ]
     },
@@ -256,7 +258,8 @@
             "image": "./assets/user-images/image-zena.jpg",
             "name": "Zena Kelley",
             "username": "velvetround"
-          }
+          },
+          "replies": []
         }
       ]
     },
@@ -353,7 +356,8 @@
             "image": "./assets/user-images/image-suzanne.jpg",
             "name": "Suzanne Chang",
             "username": "upbeat1811"
-          }
+          },
+          "replies": []
         }
       ]
     }

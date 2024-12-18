@@ -9,11 +9,9 @@ import Comment from "./Comment";
 interface CommentListProps {
   commentCount: number;
   feedbackId: string;
-  // comments: Comment[];
 }
 
 function CommentList({
-  // comments,
   commentCount,
   feedbackId,
 }: CommentListProps): React.JSX.Element {

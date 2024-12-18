@@ -12,19 +12,21 @@ export interface Feedback {
 
 export interface Comment {
   id: string;
-  feedbackId?: number;
+  parentId: null;
+  feedbackId: string;
   content: string;
   user: User;
-  replies?: CommentReply[];
+  replies: [] | CommentReply[];
 }
 
 export interface CommentReply {
   id: string;
-  parentId: string | null;
+  parentId: string;
   parentType: "comment" | "reply";
   content: string;
   replyingTo: string;
   user: User;
+  replies: [] | CommentReply[];
 }
 
 export interface NewComment {
