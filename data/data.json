@@ -23,7 +23,7 @@
       "upvotes": 125,
       "status": "suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
-      "commentCount": 4
+      "commentCount": 2
     },
     {
       "id": "2",
@@ -136,37 +136,7 @@
         "name": "Suzanne Chang",
         "username": "upbeat1811"
       },
-      "replies": [
-        {
-          "content": "r1",
-          "id": "r_1734656500180",
-          "rootCommentId": "1",
-          "parentId": "1",
-          "parentType": "comment",
-          "replyingTo": "upbeat1811",
-          "replies": [
-            {
-              "content": "r2",
-              "id": "r_1734656504914",
-              "rootCommentId": "1",
-              "parentId": "r_1734656500180",
-              "parentType": "reply",
-              "replyingTo": "cs",
-              "replies": [],
-              "user": {
-                "name": "Cristina",
-                "username": "cs",
-                "image": "./assets/user-images/image-zena.jpg"
-              }
-            }
-          ],
-          "user": {
-            "name": "Cristina",
-            "username": "cs",
-            "image": "./assets/user-images/image-zena.jpg"
-          }
-        }
-      ]
+      "replies": []
     },
     {
       "id": "2",
