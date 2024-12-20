@@ -17,6 +17,21 @@ export async function fetchComments(feedbackId: string | undefined) {
   }
 }
 
+/* Fetch Single Comment*/
+export async function fetchCommentEntry(commentId: string | undefined) {
+  try {
+    const res = await fetch(`${API_URL}/comments/${commentId}`);
+    if (res.ok) {
+      console.log("Comment Entry retrieved successfully.");
+    } else {
+      throw Error();
+    }
+
+    return await res.json();
+  } catch {
+    throw Error(`There was an error retrieving comment entry.`);
+  }
+}
 //Submit comment
 export async function submitComment(commentData: NewComment) {
   console.log("logging comment data", commentData);
@@ -38,5 +53,42 @@ export async function submitComment(commentData: NewComment) {
     return res.json();
   } catch {
     throw Error(`There was an error submitting your comment.`);
+  }
+}
+
+//Submit reply
+export async function submitReply(rootCommentId: string, newReply) {
+  const commentEntry = await fetchCommentEntry(rootCommentId);
+  const commentEntryClone = JSON.parse(JSON.stringify(commentEntry));
+
+  if (newReply.parentType === "comment") {
+    commentEntryClone.replies.push(newReply);
+  }
+
+  if (newReply.parentType === "reply") {
+    const nestedReplyUpdated = commentEntryClone.replies.find(
+      (reply) => reply.id === newReply.parentId
+    );
+
+    nestedReplyUpdated.replies = [...nestedReplyUpdated.replies, newReply];
+  }
+  try {
+    const res = await fetch(`${API_URL}/comments/${rootCommentId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        replies: commentEntryClone.replies,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      console.log("Updated replies list successfully.");
+    } else {
+      throw Error();
+    }
+    await res.json();
+  } catch (error) {
+    console.error("Something went wrong while updating replies list", error);
   }
 }

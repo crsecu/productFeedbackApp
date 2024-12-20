@@ -42,3 +42,10 @@ export interface NewComment {
   user: CommentAuthor;
   replies: [];
 }
+
+export interface RootCommentDataType {
+  id: string;
+  parentId: null | string;
+  authorUsername: string;
+  replies: [] | CommentReply[];
+}

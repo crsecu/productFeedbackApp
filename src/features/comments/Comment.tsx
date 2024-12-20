@@ -3,6 +3,7 @@ import {
   Comment as CommentType,
   CommentReply,
 } from "../feedback/feedback.types";
+import CommentComposer from "./CommentComposer";
 
 interface CommentProps {
   comment: CommentType | CommentReply;
@@ -12,11 +13,14 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
   const {
     content,
     id,
+    replies,
+    parentId,
     user: { image, name, username },
   } = comment;
 
   const [isAddReply, setIsAddReply] = useState(false);
   function handleReply() {
+    console.log("ROOT COMMENT", comment);
     setIsAddReply((prevState) => !prevState);
   }
 
@@ -35,17 +39,24 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
         </div>
         <p>{content}</p>
         <button onClick={handleReply}>Reply</button>
-        {isAddReply && <p>Reply textarea goes here</p>}
+        {isAddReply && (
+          <CommentComposer
+            mode="reply"
+            rootCommentData={{
+              id,
+              parentId,
+              authorUsername: username,
+              replies: replies,
+            }}
+            commentCount={commentCount}
+          />
+        )}
       </div>
       {comment.replies ? (
         <ul>
-          {comment.replies.map((commentReply) => (
-            <li>
-              <Comment
-                key={commentReply.id}
-                comment={commentReply}
-                commentCount={commentCount}
-              />
+          {replies.map((commentReply) => (
+            <li key={commentReply.id}>
+              <Comment comment={commentReply} commentCount={commentCount} />
             </li>
           ))}
         </ul>
