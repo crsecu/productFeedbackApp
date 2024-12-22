@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCommentList } from "./commentsSlice";
 import { useAppSelector } from "../../types/hooks";
-import { Comment as CommentType } from "../feedback/feedback.types";
+import { CommentListType } from "../feedback/feedback.types";
 import Comment from "./Comment";
 
 interface CommentListProps {
@@ -21,13 +21,14 @@ function CommentList({
   useEffect(
     function () {
       async function retrieveComments() {
-        const comments: CommentType[] = await fetchComments(feedbackId);
+        const comments: CommentListType = await fetchComments(feedbackId);
         dispatch(setCommentList(comments));
       }
       retrieveComments();
     },
     [dispatch, feedbackId, commentCount]
   );
+  const replies = comments.filter((comment) => comment.type === "reply");
 
   if (commentCount === 0)
     return <p>No comments yet. Be the first to share your thoughts!</p>;
@@ -39,11 +40,17 @@ function CommentList({
       </h2>
       <ul>
         {comments.map((comment) => {
-          return (
-            <li key={comment.id}>
-              <Comment comment={comment} commentCount={commentCount} />
-            </li>
-          );
+          if (comment.type === "comment") {
+            return (
+              <li key={comment.id}>
+                <Comment
+                  comment={comment}
+                  commentCount={commentCount}
+                  replies={replies}
+                />
+              </li>
+            );
+          }
         })}
       </ul>
     </>

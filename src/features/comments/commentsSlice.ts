@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Comment } from "../feedback/feedback.types";
+import { CommentListType } from "../feedback/feedback.types";
 import { PayloadAction } from "@reduxjs/toolkit";
 
 interface CommentState {
-  commentList: Comment[];
+  commentList: CommentListType;
 }
 
 const initialState: CommentState = {
@@ -14,7 +14,7 @@ const commentSlice = createSlice({
   name: "comment",
   initialState,
   reducers: {
-    setCommentList(state, action: PayloadAction<Comment[]>) {
+    setCommentList(state, action: PayloadAction<CommentListType>) {
       //payload = comment list fetched from API
       state.commentList = action.payload;
     },

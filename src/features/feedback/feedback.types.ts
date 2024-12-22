@@ -1,5 +1,3 @@
-import { User } from "../user/user.types";
-
 export interface Feedback {
   id: string;
   title: string;
@@ -17,35 +15,24 @@ export interface CommentAuthor {
 }
 
 export interface Comment {
-  id: string;
-  parentId: null;
+  id?: string;
   feedbackId: string;
+  type: "comment";
+  parentId: null;
+  parentType: null;
   content: string;
   user: CommentAuthor;
-  replies: [] | CommentReply[];
 }
 
 export interface CommentReply {
-  id: string;
+  id?: string;
+  feedbackId: string;
+  type: "reply";
   parentId: string;
   parentType: "comment" | "reply";
   content: string;
   replyingTo: string;
-  user: User;
-  replies: [] | CommentReply[];
-}
-
-export interface NewComment {
-  parentId: null;
-  feedbackId: string;
-  content: string;
   user: CommentAuthor;
-  replies: [];
 }
 
-export interface RootCommentDataType {
-  id: string;
-  parentId: null | string;
-  authorUsername: string;
-  replies: [] | CommentReply[];
-}
+export type CommentListType = (Comment | CommentReply)[];

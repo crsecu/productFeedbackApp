@@ -7,20 +7,24 @@ import CommentComposer from "./CommentComposer";
 
 interface CommentProps {
   comment: CommentType | CommentReply;
+  replies?: CommentReply[];
   commentCount: number;
 }
-function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
+function Comment({
+  comment,
+  replies,
+  commentCount,
+}: CommentProps): React.JSX.Element {
   const {
     content,
     id,
-    replies,
-    parentId,
+    parentType,
     user: { image, name, username },
   } = comment;
 
+  const parentTypeSafe = parentType === null ? "comment" : "reply";
   const [isAddReply, setIsAddReply] = useState(false);
   function handleReply() {
-    console.log("ROOT COMMENT", comment);
     setIsAddReply((prevState) => !prevState);
   }
 
@@ -42,23 +46,28 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
         {isAddReply && (
           <CommentComposer
             mode="reply"
-            rootCommentData={{
-              id,
-              parentId,
-              authorUsername: username,
-              replies: replies,
-            }}
+            parentId={id as string}
+            parentType={parentTypeSafe}
+            authorUsername={username}
             commentCount={commentCount}
           />
         )}
       </div>
-      {comment.replies ? (
+      {replies ? (
         <ul>
-          {replies.map((commentReply) => (
-            <li key={commentReply.id}>
-              <Comment comment={commentReply} commentCount={commentCount} />
-            </li>
-          ))}
+          {replies.map((commentReply) => {
+            if (commentReply.parentId === id) {
+              return (
+                <li key={commentReply.id}>
+                  <Comment
+                    comment={commentReply}
+                    commentCount={commentCount}
+                    replies={replies}
+                  />
+                </li>
+              );
+            }
+          })}
         </ul>
       ) : null}
     </>

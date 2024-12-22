@@ -1,25 +1,29 @@
 import { useFetcher } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
 import { useState } from "react";
-import { RootCommentDataType } from "../feedback/feedback.types";
 
 interface CommentComposerProps {
   mode: "comment" | "reply";
   commentCount: number;
-  // rootCommentData prop only needed when CommentComposer is used in "reply" mode
-  rootCommentData?: RootCommentDataType; // it contains data about the base comment (original comment) that replies are associated with;
+  // parentId, parentType, and authorUsername props only needed when CommentComposer is used in "reply" mode
+  parentId: string; // parent comment a reply belongs to;
+  parentType: "comment" | "reply";
+  authorUsername: string; //parent comment author
 }
 
 function CommentComposer({
   mode = "comment",
   commentCount,
-  rootCommentData,
+  parentId,
+  parentType,
+  authorUsername,
 }: CommentComposerProps): React.JSX.Element {
   const fetcher = useFetcher();
 
   /*TO DO: look into memoization with Reselect before using this selector function 
   const commentAuthor = useAppSelector(getLoggedInUser);
   */
+
   const commentAuthor = useAppSelector((state) => state.user.validatedUser);
   const { name, username, image } = commentAuthor;
 
@@ -34,7 +38,9 @@ function CommentComposer({
 
     /* data submitted conditionally when mode = 'reply'*/
     if (mode === "reply") {
-      formData.append("rootComment", JSON.stringify(rootCommentData));
+      formData.append("parentId", parentId);
+      formData.append("parentType", parentType);
+      formData.append("replyingTo", authorUsername);
     }
 
     fetcher.submit(formData, {
