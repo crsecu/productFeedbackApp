@@ -1,4 +1,4 @@
-import { Comment } from "../features/feedback/feedback.types";
+import { Comment } from "../types/feedback.types";
 import { User } from "../features/user/user.types";
 import { fetchUserList } from "../services/apiFeedback";
 

@@ -1,13 +1,14 @@
 import { useFetcher } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
 import { useState } from "react";
+import { CommentKindType } from "../../types/comment.types";
 
 interface CommentComposerProps {
-  mode: "comment" | "reply";
+  mode: CommentKindType;
   commentCount: number;
   // parentId, parentType, and authorUsername props only needed when CommentComposer is used in "reply" mode
   parentId: string; // parent comment a reply belongs to;
-  parentType: "comment" | "reply";
+  parentType: CommentKindType;
   authorUsername: string; //parent comment author
 }
 

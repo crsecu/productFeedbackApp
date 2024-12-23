@@ -1,13 +1,14 @@
 import { useState } from "react";
 import {
-  Comment as CommentType,
-  CommentReply,
-} from "../feedback/feedback.types";
+  CommentType,
+  ReplyType,
+  CommentKindType,
+} from "../../types/comment.types";
 import CommentComposer from "./CommentComposer";
 
 interface CommentProps {
-  comment: CommentType | CommentReply;
-  replies?: CommentReply[];
+  comment: CommentType | ReplyType;
+  replies?: ReplyType[];
   commentCount: number;
 }
 function Comment({
@@ -22,7 +23,7 @@ function Comment({
     user: { image, name, username },
   } = comment;
 
-  const parentTypeSafe = parentType === null ? "comment" : "reply";
+  const parentTypeVariant: CommentKindType = parentType ? "comment" : "reply";
   const [isAddReply, setIsAddReply] = useState(false);
   function handleReply() {
     setIsAddReply((prevState) => !prevState);
@@ -47,7 +48,7 @@ function Comment({
           <CommentComposer
             mode="reply"
             parentId={id as string}
-            parentType={parentTypeSafe}
+            parentType={parentTypeVariant}
             authorUsername={username}
             commentCount={commentCount}
           />

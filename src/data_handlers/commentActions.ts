@@ -1,11 +1,8 @@
 import { ActionFunctionArgs } from "react-router-dom";
 import { submitComment } from "../services/apiComment";
-import {
-  CommentAuthor,
-  CommentReply,
-} from "../features/feedback/feedback.types";
+import { CommentAuthor, NewReplyType } from "../types/comment.types";
 import { updateCommentCount } from "../services/apiFeedback";
-import { Comment } from "../features/feedback/feedback.types";
+import { NewCommentType } from "../types/comment.types";
 
 //Submit New Comment Action
 export async function submitCommentAction({
@@ -30,7 +27,7 @@ export async function submitCommentAction({
   const author: CommentAuthor = JSON.parse(authorJSON as string);
 
   if (mode === "comment") {
-    const newComment: Comment = {
+    const newComment: NewCommentType = {
       feedbackId,
       type: mode,
       parentId: null,
@@ -43,7 +40,7 @@ export async function submitCommentAction({
   }
 
   if (mode === "reply") {
-    const newReply: CommentReply = {
+    const newReply: NewReplyType = {
       feedbackId,
       type: mode,
       parentId: parentId as string,

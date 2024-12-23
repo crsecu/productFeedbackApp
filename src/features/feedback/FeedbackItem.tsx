@@ -1,4 +1,4 @@
-import { Feedback } from "./feedback.types";
+import { Feedback } from "../../types/feedback.types";
 import { Link } from "react-router-dom";
 import { memo } from "react";
 import UpvoteButton from "./UpvoteButton";

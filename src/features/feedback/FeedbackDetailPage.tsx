@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Feedback } from "./feedback.types";
+import { Feedback } from "../../types/feedback.types";
 import CommentList from "../comments/CommentList";
 import FeedbackItem from "./FeedbackItem";
 import CommentComposer from "../comments/CommentComposer";

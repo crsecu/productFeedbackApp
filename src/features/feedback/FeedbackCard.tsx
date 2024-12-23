@@ -1,7 +1,7 @@
-import { Feedback } from "./feedback.types";
+import { FeedbackType } from "../../types/feedback.types";
 
 interface FeedbackCardProps {
-  feedback: Feedback;
+  feedback: FeedbackType;
   isDetailPage?: boolean;
 }
 

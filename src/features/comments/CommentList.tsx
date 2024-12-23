@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCommentList } from "./commentsSlice";
 import { useAppSelector } from "../../types/hooks";
-import { CommentListType } from "../feedback/feedback.types";
+import { CommentListType } from "../../types/comment.types";
 import Comment from "./Comment";
 
 interface CommentListProps {

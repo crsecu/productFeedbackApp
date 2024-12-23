@@ -1,11 +1,11 @@
 //This state slice manages submitted suggestions and their associated comments
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Feedback } from "./feedback.types";
+import { FeedbackType } from "../../types/feedback.types";
 import { AppState } from "../../store";
 import assert from "../../utils/TS_helpers";
 
 interface FeedbackState {
-  feedbackList: Feedback[];
+  feedbackList: FeedbackType[];
 }
 
 const initialState: FeedbackState = {
@@ -16,7 +16,7 @@ const feedbackSlice = createSlice({
   name: "feedback",
   initialState,
   reducers: {
-    setFeedbackList(state, action: PayloadAction<Feedback[]>) {
+    setFeedbackList(state, action: PayloadAction<FeedbackType[]>) {
       //payload = feedback list fetched from API
       state.feedbackList = action.payload;
     },
