@@ -16,6 +16,7 @@ interface UpvoteButtonProps {
 }
 function UpvoteButton({ feedbackId }: UpvoteButtonProps): React.JSX.Element {
   const dispatch = useAppDispatch();
+
   const upvotes = useAppSelector(getFeedbackUpvoteCount(feedbackId));
   const isFeedbackUpvoted = useAppSelector(getIsFeedbackUpvoted(feedbackId));
 

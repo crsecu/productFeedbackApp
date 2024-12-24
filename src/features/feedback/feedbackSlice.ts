@@ -28,6 +28,7 @@ const feedbackSlice = createSlice({
       });
 
       assert(feedbackEntry);
+
       feedbackEntry.upvotes += 1;
     },
 
@@ -48,7 +49,6 @@ export const { setFeedbackList, addFeedbackUpvote, removeFeedbackUpvote } =
 export default feedbackSlice.reducer;
 
 /* Redux Selectors */
-
 export const getFeedbackDataById =
   (id: string | undefined) => (state: AppState) => {
     assert(id, "Invalid feedback ID provided");
@@ -69,7 +69,5 @@ export const getFeedbackUpvoteCount =
       (feedback) => feedback.id === id
     );
 
-    assert(data, `No feedback found for ID: ${id}`);
-
-    return data?.upvotes;
+    return data?.upvotes ?? 0;
   };

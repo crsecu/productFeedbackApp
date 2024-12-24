@@ -1,22 +1,26 @@
-import { Comment } from "../types/feedback.types";
 import { User } from "../features/user/user.types";
 import { fetchUserList } from "../services/apiFeedback";
 
-/*The calculateTotalComments function calculates the total number of comments and their replies*/
-export function calculateTotalComments(
-  commentList: Comment[] | undefined
-): number {
-  const baseCount = commentList?.length || 0;
-  const repliesCount =
-    commentList?.reduce((totalReplies, comment) => {
-      if (comment.replies !== undefined) {
-        return totalReplies + comment.replies.length;
-      }
+/* Reusable Fetch Helper */
+export async function fetchWrapper(url: string, options: RequestInit = {}) {
+  try {
+    const res = await fetch(url, options);
 
-      return 0;
-    }, 0) || 0;
+    if (!res.ok) {
+      const errorDetails = await res.json();
+      throw Error(errorDetails.error || `HTTP Error: ${res.status}`);
+    }
 
-  return baseCount + repliesCount;
+    return await res.json();
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Fetch error: ${error.message}`);
+    } else {
+      console.error("Unknown error occurred");
+    }
+
+    throw error;
+  }
 }
 
 /* The validateUserCredentials function fetches the user list from mock API and validates the input credentials

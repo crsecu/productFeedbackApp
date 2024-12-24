@@ -13,7 +13,6 @@ function FeedbackCard({
     return <article className="feedback_card">No matching value found</article>;
 
   const { title, description, category, commentCount } = feedback;
-  //const commentCount = calculateTotalComments(comments);
 
   return (
     <>

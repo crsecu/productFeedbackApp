@@ -1,5 +1,6 @@
 import { fetchFeedbackList } from "../services/apiFeedback";
 import { fetchFeedbackById } from "../services/apiFeedback";
+import assert from "../utils/TS_helpers";
 
 import { LoaderFunctionArgs } from "react-router-dom";
 import { FeedbackType } from "../types/feedback.types";
@@ -13,7 +14,10 @@ export async function feedbackLoader() {
 
 // Fetch Feedback based on id
 export async function detailLoader({ params }: LoaderFunctionArgs) {
-  const feedback: FeedbackType = await fetchFeedbackById(params.feedbackId);
+  const feedbackId = params.feedbackId;
+  assert(feedbackId, "feedbackId is invalid");
+
+  const feedback: FeedbackType = await fetchFeedbackById(feedbackId);
 
   return feedback;
 }
