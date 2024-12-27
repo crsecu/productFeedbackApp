@@ -1,13 +1,13 @@
 import { useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Feedback } from "../../types/feedback.types";
+import { FeedbackType } from "../../types/feedback.types";
 import CommentList from "../comments/CommentList";
 import FeedbackItem from "./FeedbackItem";
 import CommentComposer from "../comments/CommentComposer";
 
 function FeedbackDetailPage(): React.JSX.Element {
   const loaderData = useLoaderData();
-  const feedback = loaderData as Feedback;
+  const feedback = loaderData as FeedbackType;
 
   if (!feedback) return <h1>Feedback Detail is not available.</h1>;
 
@@ -35,7 +35,7 @@ function FeedbackDetailPage(): React.JSX.Element {
         </Link>
       </header>
       <main>
-        <FeedbackItem feedbackItem={feedback} />
+        <FeedbackItem feedbackItem={feedback} isDetailPage={true} />
         <section>
           <CommentList commentCount={commentCount} feedbackId={id} />
         </section>

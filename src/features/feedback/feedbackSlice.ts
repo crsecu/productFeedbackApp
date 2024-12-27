@@ -27,7 +27,7 @@ const feedbackSlice = createSlice({
         return item.id === action.payload;
       });
 
-      assert(feedbackEntry);
+      assert(feedbackEntry, "Upvoting a new feedback failed.");
 
       feedbackEntry.upvotes += 1;
     },
@@ -69,5 +69,5 @@ export const getFeedbackUpvoteCount =
       (feedback) => feedback.id === id
     );
 
-    return data?.upvotes ?? 0;
+    return data?.upvotes;
   };

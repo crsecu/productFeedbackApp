@@ -1,7 +1,5 @@
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../types/hooks";
-
-import { addFeedbackUpvote } from "./feedbackSlice";
-import { removeFeedbackUpvote } from "./feedbackSlice";
 import { persistFeedbackVote } from "../../services/apiFeedback";
 import {
   trackUserUpvote,
@@ -9,25 +7,41 @@ import {
   getIsFeedbackUpvoted,
 } from "../user/userSlice";
 
-import { getFeedbackUpvoteCount } from "./feedbackSlice";
-
 interface UpvoteButtonProps {
   feedbackId: string;
+  initialUpvoteCount: number;
 }
-function UpvoteButton({ feedbackId }: UpvoteButtonProps): React.JSX.Element {
+
+function UpvoteButton({
+  feedbackId,
+  initialUpvoteCount,
+}: UpvoteButtonProps): React.JSX.Element {
+  console.log("count", initialUpvoteCount);
+  const [upvoteCount, setUpvoteCount] = useState(initialUpvoteCount);
   const dispatch = useAppDispatch();
 
-  const upvotes = useAppSelector(getFeedbackUpvoteCount(feedbackId));
   const isFeedbackUpvoted = useAppSelector(getIsFeedbackUpvoted(feedbackId));
 
   async function handleUpvote() {
-    const action = isFeedbackUpvoted ? removeFeedbackUpvote : addFeedbackUpvote;
-    const userAction = isFeedbackUpvoted ? untrackUserUpvote : trackUserUpvote;
-    const updatedUpvotes = isFeedbackUpvoted ? upvotes - 1 : upvotes + 1;
+    const userUpvoteTrackingAction = isFeedbackUpvoted
+      ? untrackUserUpvote
+      : trackUserUpvote;
+    const nextUpvoteCount = isFeedbackUpvoted
+      ? upvoteCount - 1
+      : upvoteCount + 1;
 
-    dispatch(action(feedbackId));
-    dispatch(userAction(feedbackId));
-    await persistFeedbackVote(feedbackId, updatedUpvotes);
+    setUpvoteCount((prevState) => {
+      return isFeedbackUpvoted ? prevState - 1 : prevState + 1;
+    });
+
+    if (upvoteCount === 0) {
+      dispatch(trackUserUpvote(feedbackId));
+      await persistFeedbackVote(feedbackId, upvoteCount + 1);
+    } else {
+      dispatch(userUpvoteTrackingAction(feedbackId));
+      await persistFeedbackVote(feedbackId, nextUpvoteCount);
+    }
+
     /* TO DO:
      - implement logic to save the upvotedFeedbackIds to the backend
      */
@@ -38,7 +52,7 @@ function UpvoteButton({ feedbackId }: UpvoteButtonProps): React.JSX.Element {
       onClick={handleUpvote}
       className={isFeedbackUpvoted ? "upvoted" : ""}
     >
-      ^ <span>{upvotes}</span>
+      ^ <span>{upvoteCount}</span>
     </button>
   );
 }
