@@ -16,7 +16,6 @@ function UpvoteButton({
   feedbackId,
   initialUpvoteCount,
 }: UpvoteButtonProps): React.JSX.Element {
-  console.log("count", initialUpvoteCount);
   const [upvoteCount, setUpvoteCount] = useState(initialUpvoteCount);
   const dispatch = useAppDispatch();
 
