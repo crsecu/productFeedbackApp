@@ -1,11 +1,12 @@
 import FeedbackCount from "../features/feedback/FeedbackCount";
+import SortBy from "../features/feedback/SortBy";
 import { Link } from "react-router-dom";
 
 function ActionBar(): React.JSX.Element {
   return (
     <section className="actionBar">
       <FeedbackCount />
-      <span>Sort by</span>
+      <SortBy />
       <Link to={"/createFeedback"}>Add Feedback</Link>
     </section>
   );

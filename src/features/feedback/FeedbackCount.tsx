@@ -5,7 +5,7 @@ import { getCountOfFeedbackEntriesByCategory } from "./feedbackSlice";
 function FeedbackCount(): React.JSX.Element {
   const [searchParams] = useSearchParams();
   const selectedCategory = searchParams.get("category") || "all";
-  console.log("here", selectedCategory);
+
   const suggestionCount = useAppSelector((state) =>
     getCountOfFeedbackEntriesByCategory(selectedCategory)(state)
   );

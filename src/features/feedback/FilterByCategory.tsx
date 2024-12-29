@@ -4,14 +4,18 @@ import { formatCategoryLabel } from "../../utils/helpers";
 const feedbackCategories = ["ui", "ux", "enhancement", "bug", "feature"];
 
 function FilterByCategory(): React.JSX.Element {
-  const [, setSearchParams] = useSearchParams();
-  const [category, setCategory] = useState("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [category, setCategory] = useState(
+    searchParams.get("category") || "all"
+  );
 
   function handleOptionChange(e: ChangeEvent<HTMLInputElement>) {
     const category = e.target.value;
     setCategory(category);
 
-    setSearchParams({ category });
+    setSearchParams((prevParams) => {
+      return { ...Object.fromEntries(prevParams), category };
+    });
   }
 
   return (
