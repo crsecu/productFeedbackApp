@@ -1,3 +1,5 @@
+import { formatCategoryLabel } from "../../utils/helpers";
+
 interface NoFeedbackEntriesProps {
   category: string;
 }
@@ -5,10 +7,8 @@ interface NoFeedbackEntriesProps {
 function NoFeedbackEntries({
   category,
 }: NoFeedbackEntriesProps): React.JSX.Element {
-  const formatCategory =
-    category.length === 2
-      ? category.toUpperCase()
-      : category.substring(0, 1).toUpperCase();
+  const formatCategory = formatCategoryLabel(category);
+
   const noFeedbackText =
     category === "all" ? (
       "There is no feedback yet."

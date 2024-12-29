@@ -37,3 +37,10 @@ export async function validateUserCredentials(name: string, username: string) {
 
   return validatedUser;
 }
+
+//Format category label
+export function formatCategoryLabel(categoryLabel: string) {
+  return categoryLabel.length === 2
+    ? categoryLabel.toUpperCase()
+    : categoryLabel.charAt(0).toUpperCase() + categoryLabel.slice(1);
+}
