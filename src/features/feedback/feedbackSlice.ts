@@ -86,3 +86,13 @@ export const getFeedbackByCategory =
 
     return data;
   };
+
+//Get the count of feedback entries matching the selected filtering category
+export const getCountOfFeedbackEntriesByCategory =
+  (category: string) => (state: AppState) => {
+    if (category === "all") return state.feedback.feedbackList.length;
+    const matchingFeedbackEntries = state.feedback.feedbackList.filter(
+      (feedbackEntry) => feedbackEntry.category === category
+    );
+    return matchingFeedbackEntries.length;
+  };
