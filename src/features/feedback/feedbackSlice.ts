@@ -71,3 +71,18 @@ export const getFeedbackUpvoteCount =
 
     return data?.upvotes;
   };
+
+//Filter Feedback by category
+export const getFeedbackByCategory =
+  (category: string) => (state: AppState) => {
+    if (category === "all") {
+      const fullFeedbackList = state.feedback.feedbackList;
+      return fullFeedbackList;
+    }
+
+    const data = state.feedback.feedbackList.filter(
+      (feedback) => feedback.category === category
+    );
+
+    return data;
+  };

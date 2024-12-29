@@ -26,6 +26,8 @@ const router = createBrowserRouter([
       </StateSyncWrapper>
     ),
     loader: feedbackLoader,
+    shouldRevalidate: ({ currentUrl, nextUrl }) =>
+      currentUrl.pathname !== nextUrl.pathname,
     errorElement: <ErrorPage />,
   },
   {
