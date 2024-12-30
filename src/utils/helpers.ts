@@ -46,10 +46,31 @@ export function formatCategoryLabel(categoryLabel: string) {
     : categoryLabel.charAt(0).toUpperCase() + categoryLabel.slice(1);
 }
 
+//Filters a list of feedback entries based on the specified status
+export function filterFeedbackByStatus(
+  feedbackList: FeedbackType[],
+  status: string
+) {
+  return feedbackList.filter(
+    (feedbackEntry) => feedbackEntry.status === status
+  );
+}
+
 //Sort feedback list
-export function sortFeedbackList(list: FeedbackType[], sortByOption: string) {
-  const feedbackList = [...list];
+export function sortFeedbackList(
+  list: FeedbackType[],
+  category: string,
+  sortByOption: string
+) {
+  const feedbackList =
+    category === "all"
+      ? [...list]
+      : [...list].filter(
+          (feedbackEntry) => feedbackEntry.category === category
+        );
+
   let sortedFeedbackList = [];
+
   switch (sortByOption) {
     case "leastUpvotes":
       {

@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-import { getFeedbackByCategory } from "./feedbackSlice";
+import { getFeedbackByStatus } from "./feedbackSlice";
 import FeedbackItem from "./FeedbackItem";
 import NoFeedbackEntries from "./NoFeedbackEntries";
 import { sortFeedbackList } from "../../utils/helpers";
@@ -10,20 +10,24 @@ function FeedbackList(): React.JSX.Element {
   const category = searchParams.get("category") || "all";
   const sortBy = searchParams.get("sortBy") || "mostUpvotes";
 
-  const feedbackList = useAppSelector((state) =>
-    getFeedbackByCategory(category)(state)
+  const suggestionsList = useAppSelector((state) =>
+    getFeedbackByStatus("suggestion")(state)
   );
 
-  const feedbackListSorted = sortFeedbackList(feedbackList, sortBy);
+  const suggestionsListSorted = sortFeedbackList(
+    suggestionsList,
+    category,
+    sortBy
+  );
 
   return (
     <section className="feedback_list">
       <h2>Feedback List</h2> {/* visually hidden heading */}
-      {feedbackListSorted.length === 0 ? (
+      {suggestionsListSorted.length === 0 ? (
         <NoFeedbackEntries category={category} />
       ) : (
         <ul>
-          {feedbackListSorted.map((item) => {
+          {suggestionsListSorted.map((item) => {
             return (
               <li key={item.id}>
                 <FeedbackItem feedbackItem={item} />

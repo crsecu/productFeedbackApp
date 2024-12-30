@@ -12,7 +12,7 @@ interface editedFeedbackType {
 
 /* Fetch feedback list */
 export async function fetchFeedbackList() {
-  return fetchWrapper(`${API_URL}/productRequests?status=suggestion`);
+  return fetchWrapper(`${API_URL}/productRequests`);
 }
 
 /* Fetch feedback by id */

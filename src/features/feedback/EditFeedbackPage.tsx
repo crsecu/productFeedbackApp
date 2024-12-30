@@ -68,10 +68,10 @@ function EditFeedbackPage(): React.JSX.Element {
           required
           defaultValue={status}
         >
-          <option value="Suggestion">Suggestion</option>
-          <option value="Planned">Planned</option>
-          <option value="In-Progress">In-Progress</option>
-          <option value="Live">Live</option>
+          <option value="suggestion">Suggestion</option>
+          <option value="planned">Planned</option>
+          <option value="in-Progress">In-Progress</option>
+          <option value="live">Live</option>
         </select>
         <br></br>
 
