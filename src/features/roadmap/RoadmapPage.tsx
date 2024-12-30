@@ -1,44 +1,54 @@
+import { Link } from "react-router-dom";
+import RoadmapStatusColumn from "./RoadmapStatusColumn";
+import { useAppSelector } from "../../types/hooks";
+import { getFeedbackByAllStatusCategories } from "../feedback/feedbackSlice";
+import { statusCategories } from "../feedback/feedbackSlice";
+
 function RoadmapPage(): React.JSX.Element {
+  const {
+    planned,
+    "in-progress": inProgress,
+    live,
+  } = useAppSelector((state) =>
+    getFeedbackByAllStatusCategories(statusCategories)(state)
+  );
+
   return (
     <>
       <header className="roadmap_header">
-        <button>Go back</button>
+        <Link to="/feedbackBoard">Go Back</Link>
         <h1>Roadmap</h1>
       </header>
       <main className="roadmap_devStatusPhases">
-        <section className="roadmap_devStatusPhase">
-          <h2>Planned</h2>
-          <article>
-            <h3>Add Dark Theme</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-              sit consectetur distinctio ipsam, in alias cupiditate corporis
-              natus ratione.
-            </p>
-          </article>
-        </section>
-        <section className="roadmap_devStatusPhase">
-          <h2>Planned</h2>
-          <article>
-            <h3>Add Dark Theme</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-              sit consectetur distinctio ipsam, in alias cupiditate corporis
-              natus ratione.
-            </p>
-          </article>
-        </section>
-        <section className="roadmap_devStatusPhase">
-          <h2>Planned</h2>
-          <article>
-            <h3>Add Dark Theme</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-              sit consectetur distinctio ipsam, in alias cupiditate corporis
-              natus ratione.
-            </p>
-          </article>
-        </section>
+        <ul className="roadmap_devStatusPhases">
+          <li>
+            {planned && (
+              <RoadmapStatusColumn
+                feedbackList={planned}
+                title={"Planned"}
+                description="Ideas prioritized for research"
+              />
+            )}
+          </li>
+          <li>
+            {inProgress && (
+              <RoadmapStatusColumn
+                feedbackList={inProgress}
+                title={"In-Progress"}
+                description="Currently being developed"
+              />
+            )}
+          </li>
+          <li>
+            {live && (
+              <RoadmapStatusColumn
+                feedbackList={live}
+                title="Live"
+                description="Released features"
+              />
+            )}
+          </li>
+        </ul>
       </main>
     </>
   );

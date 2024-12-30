@@ -5,6 +5,22 @@ import { AppState } from "../../store";
 import assert from "../../utils/TS_helpers";
 import { filterFeedbackByStatus } from "../../utils/helpers";
 
+export const statusCategories = [
+  "suggestion",
+  "planned",
+  "in-progress",
+  "live",
+] as const;
+
+type StatusCategoryType = (typeof statusCategories)[number];
+
+interface feedbackByStatusCategoryType {
+  suggestion: FeedbackType[];
+  planned: FeedbackType[];
+  "in-progress": FeedbackType[];
+  live: FeedbackType[];
+}
+
 interface FeedbackState {
   feedbackList: FeedbackType[];
 }
@@ -80,15 +96,29 @@ export const getFeedbackByStatus = (status: string) => (state: AppState) => {
   return data;
 };
 
+//Selects feedback entries from Redux store that match all specified status categories present in the provided argument (array)
+export const getFeedbackByAllStatusCategories =
+  (categories: readonly StatusCategoryType[]) => (state: AppState) => {
+    const feedbackByStatusCategory: feedbackByStatusCategoryType = {
+      suggestion: [],
+      planned: [],
+      "in-progress": [],
+      live: [],
+    };
+
+    categories.forEach((statusCategory) => {
+      const data = filterFeedbackByStatus(
+        state.feedback.feedbackList,
+        statusCategory
+      );
+      feedbackByStatusCategory[statusCategory] = data;
+    });
+
+    return feedbackByStatusCategory;
+  };
+
 //Calculates the count of feedback entries for each status category; returns an object with the count of feedback entries for each status category
 export const selectFeedbackCountsByStatus = (state: AppState) => {
-  const statusCategories = [
-    "suggestion",
-    "planned",
-    "in-progress",
-    "live",
-  ] as const;
-
   const feedbackCounts = {
     suggestion: 0,
     planned: 0,

@@ -68,6 +68,7 @@ body {
 }
 .roadmap_devStatusPhases {
   display: flex;
+
   gap: 10px;
 }
 .roadmap_devStatusPhase {

@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FeedbackType } from "../../types/feedback.types";
 import CommentList from "../comments/CommentList";
@@ -7,6 +7,7 @@ import CommentComposer from "../comments/CommentComposer";
 
 function FeedbackDetailPage(): React.JSX.Element {
   const loaderData = useLoaderData();
+  const navigate = useNavigate();
   const feedback = loaderData as FeedbackType;
 
   if (!feedback) return <h1>Feedback Detail is not available.</h1>;
@@ -24,7 +25,8 @@ function FeedbackDetailPage(): React.JSX.Element {
   return (
     <>
       <header>
-        <Link to={"/feedbackBoard"}>Go Back</Link>
+        {/* <Link to={"/feedbackBoard"}>Go Back</Link> */}
+        <button onClick={() => navigate(-1)}>Go Back</button>
         <br></br>
         <br></br>
         <Link

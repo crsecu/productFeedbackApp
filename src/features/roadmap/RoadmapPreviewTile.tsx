@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
 import { selectFeedbackCountsByStatus } from "../feedback/feedbackSlice";
 
@@ -10,8 +11,13 @@ function RoadmapPreviewTile(): React.JSX.Element {
 
   return (
     <section>
-      <h2>Roadmap</h2> {/*TO DO: add a clearer title for ADA */}
-      <a>View</a>
+      <div style={{ display: "flex" }}>
+        <h2>Roadmap</h2> {/*TO DO: add a clearer title for ADA */}
+        <Link to="/developmentRoadmap" aria-label="View full roadmap">
+          View
+        </Link>
+      </div>
+
       <div>
         <span>Planned</span>
         <span>{planned}</span>
