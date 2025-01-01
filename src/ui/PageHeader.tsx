@@ -1,10 +1,8 @@
-function PageHeader(): React.JSX.Element {
-  return (
-    <header>
-      <h1>Feedback Board</h1>
-      <span>Frontend Mentor</span>
-    </header>
-  );
+interface PageHeaderProps {
+  children: React.ReactNode;
+}
+function PageHeader({ children }: PageHeaderProps): React.JSX.Element {
+  return <header>{children}</header>;
 }
 
 export default PageHeader;

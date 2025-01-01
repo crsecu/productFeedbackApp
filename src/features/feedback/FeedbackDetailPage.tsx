@@ -4,6 +4,7 @@ import { FeedbackType } from "../../types/feedback.types";
 import CommentList from "../comments/CommentList";
 import FeedbackItem from "./FeedbackItem";
 import CommentComposer from "../comments/CommentComposer";
+import ActionBar from "../../ui/ActionBar";
 
 function FeedbackDetailPage(): React.JSX.Element {
   const loaderData = useLoaderData();
@@ -24,8 +25,7 @@ function FeedbackDetailPage(): React.JSX.Element {
 
   return (
     <>
-      <header>
-        {/* <Link to={"/feedbackBoard"}>Go Back</Link> */}
+      <ActionBar>
         <button onClick={() => navigate(-1)}>Go Back</button>
         <br></br>
         <br></br>
@@ -35,7 +35,8 @@ function FeedbackDetailPage(): React.JSX.Element {
         >
           Edit Feedback
         </Link>
-      </header>
+      </ActionBar>
+
       <main>
         <FeedbackItem feedbackItem={feedback} isDetailPage={true} />
         <section>

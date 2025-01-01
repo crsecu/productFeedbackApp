@@ -47,7 +47,7 @@ const feedbackSlice = createSlice({
       assert(feedbackEntry, "Upvoting a new feedback failed.");
 
       feedbackEntry.upvotes += 1;
-    },
+    }, //TO DO: delete this reducer if not needed
 
     removeFeedbackUpvote(state, action: PayloadAction<string>) {
       //payload = feedback id
@@ -57,7 +57,7 @@ const feedbackSlice = createSlice({
 
       assert(feedbackEntry);
       feedbackEntry.upvotes -= 1;
-    },
+    }, //TO DO: delete this reducer if not needed
   },
 });
 

@@ -3,6 +3,7 @@ import RoadmapStatusColumn from "./RoadmapStatusColumn";
 import { useAppSelector } from "../../types/hooks";
 import { getFeedbackByAllStatusCategories } from "../feedback/feedbackSlice";
 import { statusCategories } from "../feedback/feedbackSlice";
+import PageHeader from "../../ui/PageHeader";
 
 function RoadmapPage(): React.JSX.Element {
   const {
@@ -15,11 +16,13 @@ function RoadmapPage(): React.JSX.Element {
 
   return (
     <>
-      <header className="roadmap_header">
+      <PageHeader>
         <Link to="/feedbackBoard">Go Back</Link>
         <h1>Roadmap</h1>
-      </header>
-      <main className="roadmap_devStatusPhases">
+        <Link to={"/createFeedback"}>Add Feedback</Link>
+      </PageHeader>
+
+      <main>
         <ul className="roadmap_devStatusPhases">
           <li>
             {planned && (
