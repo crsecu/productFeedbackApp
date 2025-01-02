@@ -18,35 +18,26 @@
   "productRequests": [
     {
       "id": "1",
-      "title": "Add tags for solutions",
-      "category": "feature",
+      "title": "Add tags for solutions NEW",
+      "category": "Bug",
       "upvotes": 125,
-      "status": "suggestion",
-      "description": "Easier to search for solutions based on a specific stack.",
+      "status": "live",
+      "description": "123 Easier to search for solutions based on a specific stack.",
       "commentCount": 2
     },
     {
       "id": "2",
       "title": "Add a dark theme option",
-      "category": "feature",
+      "category": "Feature",
       "upvotes": 100,
-      "status": "suggestion",
-      "description": "It would help people with light sensitivities and who prefer dark mode.",
+      "status": "in-Progress",
+      "description": "1 It would help people with light sensitivities and who prefer dark mode.",
       "commentCount": 4
-    },
-    {
-      "id": "3",
-      "title": "Q&A within the challenge hubs",
-      "category": "feature",
-      "upvotes": 65,
-      "status": "suggestion",
-      "description": "Challenge-specific Q&A would make for easy reference.",
-      "commentCount": 1
     },
     {
       "id": "4",
       "title": "Add image/video upload to feedback",
-      "category": "enhancement",
+      "category": "Feature",
       "upvotes": 51,
       "status": "suggestion",
       "description": "Images and screencasts can enhance comments on solutions.",
@@ -72,29 +63,20 @@
     },
     {
       "id": "7",
-      "title": "More comprehensive reports",
-      "category": "feature",
+      "title": "EDITED More comprehensive reports",
+      "category": "Feature",
       "upvotes": 123,
-      "status": "planned",
-      "description": "It would be great to see a more detailed breakdown of solutions.",
+      "status": "in-Progress",
+      "description": "67It would be great to see a more detailed breakdown of solutions.",
       "commentCount": 2
     },
     {
       "id": "8",
-      "title": "Learning paths",
-      "category": "feature",
+      "title": "Test Learning paths 2025",
+      "category": "Feature",
       "upvotes": 28,
       "status": "planned",
       "description": "Sequenced projects for different goals to help people improve.",
-      "commentCount": 1
-    },
-    {
-      "id": "9",
-      "title": "One-click portfolio generation",
-      "category": "feature",
-      "upvotes": 62,
-      "status": "in-progress",
-      "description": "Add ability to create professional looking portfolio from profile.",
       "commentCount": 1
     },
     {
@@ -123,6 +105,132 @@
       "status": "live",
       "description": "Small animations at specific points can add delight.",
       "commentCount": 2
+    },
+    {
+      "id": "0353",
+      "title": "qqqq",
+      "category": "feature",
+      "description": "qqq",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "f295",
+      "title": "TEST NEW",
+      "category": "ui",
+      "description": "111",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "36b4",
+      "title": "123",
+      "category": "feature",
+      "description": "1",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "fabc",
+      "title": "11",
+      "category": "feature",
+      "description": "1",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "4ada",
+      "title": "nou hoho",
+      "category": "feature",
+      "description": "123",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "5782",
+      "title": "eee",
+      "category": "feature",
+      "description": "e",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "f40a",
+      "title": "Add1",
+      "category": "feature",
+      "description": "1",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "99fa",
+      "title": "add3",
+      "category": "feature",
+      "description": "3",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "347c",
+      "title": "rrr",
+      "category": "feature",
+      "description": "r",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "ddd0",
+      "title": "d",
+      "category": "feature",
+      "description": "d",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "10d6",
+      "title": "aaaaaa",
+      "category": "feature",
+      "description": "a",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "042e",
+      "title": "sd",
+      "category": "feature",
+      "description": "sd",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "017f",
+      "title": "s",
+      "category": "feature",
+      "description": "s",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "9556",
+      "title": "ccc",
+      "category": "feature",
+      "description": "ccc",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
     }
   ],
   "comments": [

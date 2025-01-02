@@ -40,7 +40,8 @@ const router = createBrowserRouter([
     action: createFeedbackAction,
   },
   {
-    path: "/editFeedback/:feedbackId",
+    // path: "/editFeedback/:feedbackId",
+    path: "editFeedback",
     element: <EditFeedbackPage />,
     action: editFeedbackAction,
   },
