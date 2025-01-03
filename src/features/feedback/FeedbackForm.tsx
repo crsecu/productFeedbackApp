@@ -1,4 +1,4 @@
-import { Form, useNavigate } from "react-router-dom";
+import { Form } from "react-router-dom";
 
 interface FeedbackFormProps {
   children?: React.ReactNode;
@@ -18,16 +18,13 @@ function FeedbackForm({
   mode,
   feedbackEntryData,
 }: FeedbackFormProps): React.JSX.Element {
-  const navigate = useNavigate();
-
-  function handleCancel() {
-    console.log("canceling edit of feedback entry");
-    navigate(-1);
-  }
-
   const mainButton = mode === "create" ? "Add Feedback" : "Save Changes";
   return (
-    <Form method={httpMethod} replace>
+    <Form method={httpMethod} onSubmit={() => console.log("submitted")}>
+      {mode === "edit" && (
+        <input type="hidden" name="formType" value="editFeedback" />
+      )}
+
       <label htmlFor="feedbackTitle">Feedback Title</label>
       <span id="feedbackTitleDesc">Add a short, descriptive headline</span>
       <input
@@ -96,9 +93,6 @@ function FeedbackForm({
       <footer>
         <div>
           <button>{mainButton}</button>
-          <button type="button" onClick={() => handleCancel()}>
-            Cancel
-          </button>
         </div>
       </footer>
 

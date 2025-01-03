@@ -1,6 +1,17 @@
 import { User } from "../features/user/user.types";
-import { fetchUserList } from "../services/apiFeedback";
+import { submitComment } from "../services/apiComment";
+import {
+  editFeedback,
+  fetchUserList,
+  updateCommentCount,
+} from "../services/apiFeedback";
+import {
+  CommentAuthor,
+  NewCommentType,
+  NewReplyType,
+} from "../types/comment.types";
 import { FeedbackType } from "../types/feedback.types";
+import assert from "./TS_helpers";
 
 /* Reusable Fetch Helper */
 export async function fetchWrapper(url: string, options: RequestInit = {}) {
@@ -98,4 +109,77 @@ export function sortFeedbackList(
   }
 
   return sortedFeedbackList;
+}
+
+/* Function used by FeedbackDetailPage action function to handle feedback edits. Updates the backend with the edited feedback data for the specified feedbackId. */
+export async function editFeedbackEntry(
+  formData: FormData | Iterable<readonly [PropertyKey, string]>,
+  feedbackId: string
+) {
+  const data = Object.fromEntries(formData) as {
+    title: string;
+    description: string;
+    category: string;
+    status: string;
+  };
+
+  assert(feedbackId);
+  await editFeedback(feedbackId, data);
+
+  return null;
+}
+
+/* Function used by the FeedbackDetailPage action function to handle the submission 
+of comments/replies for a specific feedback entry. It updates the backend by creating 
+a new comment or reply based on the mode ("comment" or "reply") and increments the comment count. */
+export async function postCommentOrReply(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formData: Iterable<readonly [PropertyKey, any]>,
+  feedbackId: string
+) {
+  const data = Object.fromEntries(formData);
+
+  const {
+    content,
+    currentCommentCount: commentCount,
+    author: authorJSON,
+    mode,
+    parentId,
+    parentType,
+    replyingTo,
+  } = data;
+
+  const currentCommentCount: number = JSON.parse(commentCount as string);
+  const author: CommentAuthor = JSON.parse(authorJSON as string);
+
+  if (mode === "comment") {
+    const newComment: NewCommentType = {
+      feedbackId,
+      type: mode,
+      parentId: null,
+      parentType: null,
+      content: content as string,
+      user: author,
+    };
+
+    await submitComment(newComment);
+  }
+
+  if (mode === "reply") {
+    const newReply: NewReplyType = {
+      feedbackId,
+      type: mode,
+      parentId: parentId as string,
+      parentType: parentType as "comment" | "reply",
+      content: content as string,
+      user: author,
+      replyingTo: replyingTo as string,
+    };
+
+    await submitComment(newReply);
+  }
+
+  await updateCommentCount(feedbackId, currentCommentCount + 1);
+
+  return null;
 }

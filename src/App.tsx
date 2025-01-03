@@ -1,14 +1,15 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { feedbackLoader, detailLoader } from "./data_handlers/feedbackLoaders";
-import { createFeedbackAction } from "./data_handlers/feedbackActions";
-import { editFeedbackAction } from "./data_handlers/feedbackActions";
-import { submitCommentAction } from "./data_handlers/commentActions";
+import {
+  createFeedbackAction,
+  submitDetailAction,
+} from "./data_handlers/feedbackActions";
+
 import StateSyncWrapper from "./data_handlers/StateSyncWrapper";
 import HomePage from "./ui/HomePage";
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
 import RoadmapPage from "./features/roadmap/RoadmapPage";
 import CreateFeedbackPage from "./features/feedback/CreateFeedbackPage";
-import EditFeedbackPage from "./features/feedback/EditFeedbackPage";
 import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import ErrorPage from "./ui/ErrorPage";
 
@@ -40,15 +41,10 @@ const router = createBrowserRouter([
     action: createFeedbackAction,
   },
   {
-    path: "/editFeedback/:feedbackId",
-    element: <EditFeedbackPage />,
-    action: editFeedbackAction,
-  },
-  {
     path: "/feedbackDetail/:feedbackId",
     element: <FeedbackDetailPage />,
     loader: detailLoader,
-    action: submitCommentAction,
+    action: submitDetailAction,
   },
 ]);
 

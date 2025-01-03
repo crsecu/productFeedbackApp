@@ -90,3 +90,9 @@ label,
 textarea {
   display: block;
 }
+
+.editFeedback {
+  padding: 20px;
+  background-color: rgb(130, 185, 134);
+  border: 16px solid orange;
+}
