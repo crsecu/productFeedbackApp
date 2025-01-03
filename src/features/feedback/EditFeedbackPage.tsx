@@ -6,8 +6,6 @@ function EditFeedbackPage(): React.JSX.Element {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  console.log("feedback entry state ", state);
-
   async function handleDeleteFeedbackEntry() {
     await deleteFeedback(state.id);
     console.log("feedback entry deleted", state.id);

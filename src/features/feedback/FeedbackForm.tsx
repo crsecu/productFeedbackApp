@@ -27,7 +27,7 @@ function FeedbackForm({
 
   const mainButton = mode === "create" ? "Add Feedback" : "Save Changes";
   return (
-    <Form method={httpMethod}>
+    <Form method={httpMethod} replace>
       <label htmlFor="feedbackTitle">Feedback Title</label>
       <span id="feedbackTitleDesc">Add a short, descriptive headline</span>
       <input

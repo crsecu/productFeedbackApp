@@ -47,5 +47,5 @@ export async function editFeedbackAction({
 
   await editFeedback(params.feedbackId, data);
 
-  return redirect(`/feedbackDetail/${params.feedbackId}?status=edited`);
+  return redirect(`/feedbackDetail/${params.feedbackId}`);
 }

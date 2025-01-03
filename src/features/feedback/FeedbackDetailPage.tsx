@@ -1,4 +1,4 @@
-import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FeedbackType } from "../../types/feedback.types";
 import CommentList from "../comments/CommentList";
@@ -8,7 +8,6 @@ import ActionBar from "../../ui/ActionBar";
 
 function FeedbackDetailPage(): React.JSX.Element {
   const loaderData = useLoaderData();
-  const location = useLocation();
   const navigate = useNavigate();
   const feedback = loaderData as FeedbackType;
 
@@ -23,19 +22,16 @@ function FeedbackDetailPage(): React.JSX.Element {
     commentCount: rawCommentCount,
   } = feedback;
   const commentCount = rawCommentCount ?? 0;
-  function handleNavigation() {
-    console.log("click", location);
-    navigate(-1);
-  }
 
   return (
     <>
       <ActionBar>
-        <button onClick={() => handleNavigation()}>Go Back</button>
+        <button onClick={() => navigate(-1)}>Go Back</button>
         <br></br>
         <br></br>
         <Link
           to={`/editFeedback/${id}`}
+          replace
           state={{ id, title, category, status, description }}
         >
           Edit Feedback
@@ -52,6 +48,8 @@ function FeedbackDetailPage(): React.JSX.Element {
           <CommentComposer commentCount={commentCount} />
         </section>
       </main>
+      {/* EDIt Feedback */}
+      <Outlet />
     </>
   );
 }
