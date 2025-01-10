@@ -1,7 +1,7 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
+import { deleteFeedback } from "../../services/apiFeedback";
 
 interface FeedbackFormProps {
-  children?: React.ReactNode;
   httpMethod: "POST" | "PATCH";
   mode: "create" | "edit";
   feedbackEntryData?: {
@@ -11,16 +11,28 @@ interface FeedbackFormProps {
     status: string;
     description: string;
   };
+  closeModal: () => void;
 }
 function FeedbackForm({
-  children,
   httpMethod,
   mode,
   feedbackEntryData,
+  closeModal,
 }: FeedbackFormProps): React.JSX.Element {
+  const navigate = useNavigate();
   const mainButton = mode === "create" ? "Add Feedback" : "Save Changes";
+
+  async function handleDeleteFeedbackEntry() {
+    await deleteFeedback(feedbackEntryData.id);
+    console.log("feedback entry deleted", feedbackEntryData.id);
+
+    navigate("/feedbackBoard");
+
+    //TO DO: Display message to inform user that the feedback entry was deleted
+  }
+
   return (
-    <Form method={httpMethod} onSubmit={() => console.log("submitted")}>
+    <Form method={httpMethod} onSubmit={closeModal}>
       {mode === "edit" && (
         <input type="hidden" name="formType" value="editFeedback" />
       )}
@@ -91,12 +103,29 @@ function FeedbackForm({
         required
       ></textarea>
       <footer>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            gap: "10px",
+            marginTop: "20px",
+          }}
+        >
           <button>{mainButton}</button>
+          <button type="button" onClick={closeModal}>
+            Cancel
+          </button>
+          {mode === "edit" && (
+            <button
+              type="button"
+              onClick={() => handleDeleteFeedbackEntry()}
+              style={{ marginRight: "auto" }}
+            >
+              Delete Entry
+            </button>
+          )}
         </div>
       </footer>
-
-      {children}
     </Form>
   );
 }

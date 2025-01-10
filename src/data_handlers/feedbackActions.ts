@@ -62,7 +62,7 @@ export async function submitDetailAction({
   const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
   const formType = formData.get("formType");
-  console.log("formData inside comment action", formType);
+  console.log("action received edit form request", formType);
 
   if (formType === "editFeedback") {
     return editFeedbackEntry(formData, feedbackId);
