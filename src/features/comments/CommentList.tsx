@@ -16,6 +16,7 @@ function CommentList({
   feedbackId,
 }: CommentListProps): React.JSX.Element {
   const dispatch = useDispatch();
+
   const comments = useAppSelector((state) => state.comment.commentList);
 
   useEffect(

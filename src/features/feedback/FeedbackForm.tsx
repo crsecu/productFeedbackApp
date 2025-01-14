@@ -20,6 +20,7 @@ function FeedbackForm({
   closeModal,
 }: FeedbackFormProps): React.JSX.Element {
   const navigate = useNavigate();
+
   const mainButton = mode === "create" ? "Add Feedback" : "Save Changes";
 
   async function handleDeleteFeedbackEntry() {
@@ -32,7 +33,7 @@ function FeedbackForm({
   }
 
   return (
-    <Form method={httpMethod} onSubmit={closeModal}>
+    <Form method={httpMethod} replace onSubmit={closeModal}>
       {mode === "edit" && (
         <input type="hidden" name="formType" value="editFeedback" />
       )}

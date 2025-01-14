@@ -29,6 +29,7 @@ const router = createBrowserRouter([
     loader: feedbackLoader,
     shouldRevalidate: ({ currentUrl, nextUrl }) =>
       currentUrl.pathname !== nextUrl.pathname,
+    /* TO DO: don't revalidate if curentUrl.pathname contains "new" */
     errorElement: <ErrorPage />,
   },
   {

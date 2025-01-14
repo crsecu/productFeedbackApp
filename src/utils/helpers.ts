@@ -124,9 +124,13 @@ export async function editFeedbackEntry(
   };
 
   assert(feedbackId);
-  await editFeedback(feedbackId, data);
-
-  return null;
+  try {
+    await editFeedback(feedbackId, data);
+    return { successfulSubmission: true };
+  } catch (err) {
+    console.log("error in editFeedbackEntry", err);
+    return { successfulSubmission: false };
+  }
 }
 
 /* Function used by the FeedbackDetailPage action function to handle the submission 

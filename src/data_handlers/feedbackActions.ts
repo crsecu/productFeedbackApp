@@ -27,7 +27,7 @@ export async function createFeedbackAction({ request }: ActionFunctionArgs) {
 
   console.log("submitted feedback", newFeedback);
 
-  return redirect(`/feedbackDetail/${newFeedback.id}`);
+  return redirect(`/feedbackDetail/${newFeedback.id}?status=new`);
 }
 
 /* Edit Feedback Action*/
@@ -45,7 +45,7 @@ export async function editFeedbackAction({
   };
 
   assert(params.feedbackId);
-  console.log("edit???");
+
   await editFeedback(params.feedbackId, data);
 
   return null;
@@ -62,10 +62,10 @@ export async function submitDetailAction({
   const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
   const formType = formData.get("formType");
-  console.log("action received edit form request", formType);
 
   if (formType === "editFeedback") {
-    return editFeedbackEntry(formData, feedbackId);
+    const response = await editFeedbackEntry(formData, feedbackId);
+    return response;
   }
 
   if (formType === "submitCommentOrReply") {

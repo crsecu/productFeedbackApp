@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useSearchParams } from "react-router-dom";
 import { FeedbackType } from "../../types/feedback.types";
 import CommentList from "../comments/CommentList";
 import FeedbackItem from "./FeedbackItem";
@@ -11,9 +11,15 @@ import FeedbackForm from "./FeedbackForm";
 function FeedbackDetailPage(): React.JSX.Element {
   const loaderData = useLoaderData();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const feedback = loaderData as FeedbackType;
 
   if (!feedback) return <h1>Feedback Detail is not available.</h1>;
+
+  const isFeedbackEntryNew =
+    searchParams.get("status") === "new" ? true : false;
+
   const commentCount = feedback.commentCount ?? 0;
 
   return (
@@ -37,7 +43,12 @@ function FeedbackDetailPage(): React.JSX.Element {
           <br></br>
           <FeedbackItem feedbackItem={feedback} isDetailPage={true} />
           <section>
-            <CommentList commentCount={commentCount} feedbackId={feedback.id} />
+            {!isFeedbackEntryNew && commentCount > 0 && (
+              <CommentList
+                commentCount={commentCount}
+                feedbackId={feedback.id}
+              />
+            )}
           </section>
           <section>
             <h2>Add a Comment</h2>
