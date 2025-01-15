@@ -14,3 +14,5 @@ export interface NewFeedbackType {
 export interface FeedbackType extends NewFeedbackType {
   id: string;
 }
+
+export type RoadmapStatusType = "planned" | "in-progress" | "live";

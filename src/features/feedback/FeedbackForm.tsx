@@ -4,7 +4,7 @@ import { deleteFeedback } from "../../services/apiFeedback";
 interface FeedbackFormProps {
   httpMethod: "POST" | "PATCH";
   mode: "create" | "edit";
-  feedbackEntryData?: {
+  feedbackEntryData: {
     id: string;
     title: string;
     category: string;

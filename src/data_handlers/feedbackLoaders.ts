@@ -6,8 +6,17 @@ import { LoaderFunctionArgs } from "react-router-dom";
 import { FeedbackType } from "../types/feedback.types";
 
 // Fetch list of feedback entries from API
-export async function feedbackLoader() {
+export async function feedbackBoardLoader() {
   const feedbackData: FeedbackType[] = await fetchFeedbackList();
+
+  return feedbackData;
+}
+
+//Fetch list of feedback entries for Roadmap Development Page (status: planned, live, in-progress)
+export async function roadmapDevLoader() {
+  const feedbackData: FeedbackType[] = await fetchFeedbackList(
+    "developmentRoadmap"
+  );
 
   return feedbackData;
 }

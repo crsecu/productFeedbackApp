@@ -1,5 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { feedbackLoader, detailLoader } from "./data_handlers/feedbackLoaders";
+import {
+  feedbackBoardLoader,
+  detailLoader,
+  roadmapDevLoader,
+} from "./data_handlers/feedbackLoaders";
 import {
   createFeedbackAction,
   submitDetailAction,
@@ -26,7 +30,7 @@ const router = createBrowserRouter([
         <FeedbackBoardPage />
       </StateSyncWrapper>
     ),
-    loader: feedbackLoader,
+    loader: feedbackBoardLoader,
     shouldRevalidate: ({ currentUrl, nextUrl }) =>
       currentUrl.pathname !== nextUrl.pathname,
     /* TO DO: don't revalidate if curentUrl.pathname contains "new" */
@@ -35,6 +39,7 @@ const router = createBrowserRouter([
   {
     path: "/developmentRoadmap",
     element: <RoadmapPage />,
+    loader: roadmapDevLoader,
   },
   {
     path: "/createFeedback",
