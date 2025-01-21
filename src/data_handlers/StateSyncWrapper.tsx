@@ -1,9 +1,8 @@
 import { useLoaderData } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-
 import { setFeedbackList } from "../features/feedback/feedbackSlice";
-import { FeedbackType } from "../types/feedback.types";
+import { StatusType, FeedbackType } from "../types/feedback.types";
 
 interface StateSyncWrapperProps {
   children: React.ReactNode;
@@ -12,14 +11,14 @@ interface StateSyncWrapperProps {
 function StateSyncWrapper({
   children,
 }: StateSyncWrapperProps): React.JSX.Element {
-  const dataFromLoader = useLoaderData() as FeedbackType[];
+  const dataFromLoader = useLoaderData() as Record<StatusType, FeedbackType[]>;
 
   const dispatch = useDispatch();
 
   useEffect(
     function () {
       if (dataFromLoader) {
-        dispatch(setFeedbackList(dataFromLoader));
+        dispatch(setFeedbackList(dataFromLoader.suggestion));
       }
     },
     [dataFromLoader, dispatch]

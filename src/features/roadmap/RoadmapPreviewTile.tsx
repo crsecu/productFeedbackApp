@@ -1,14 +1,8 @@
-import { Link } from "react-router-dom";
-import { useAppSelector } from "../../types/hooks";
-import { selectFeedbackCountsByStatus } from "../feedback/feedbackSlice";
+import { Link, useLoaderData } from "react-router-dom";
 
 function RoadmapPreviewTile(): React.JSX.Element {
-  const {
-    planned,
-    "in-progress": inProgress,
-    live,
-  } = useAppSelector(selectFeedbackCountsByStatus);
-
+  const loaderData = useLoaderData();
+  const { planned, "in-progress": inProgress, live } = loaderData;
   return (
     <section>
       <div style={{ display: "flex" }}>
@@ -20,15 +14,15 @@ function RoadmapPreviewTile(): React.JSX.Element {
 
       <div>
         <span>Planned</span>
-        <span>{planned}</span>
+        <span style={{ fontWeight: "bold" }}> {planned.length}</span>
       </div>
       <div>
         <span>In-Progress</span>
-        <span>{inProgress}</span>
+        <span style={{ fontWeight: "bold" }}> {inProgress.length}</span>
       </div>
       <div>
         <span>Live</span>
-        <span>{live}</span>
+        <span style={{ fontWeight: "bold" }}> {live.length}</span>
       </div>
     </section>
   );

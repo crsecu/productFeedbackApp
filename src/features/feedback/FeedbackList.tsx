@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-import { getFeedbackByStatus } from "./feedbackSlice";
+
 import FeedbackItem from "./FeedbackItem";
 import NoFeedbackEntries from "./NoFeedbackEntries";
 import { sortFeedbackList } from "../../utils/helpers";
@@ -10,8 +10,8 @@ function FeedbackList(): React.JSX.Element {
   const category = searchParams.get("category") || "all";
   const sortBy = searchParams.get("sortBy") || "mostUpvotes";
 
-  const suggestionsList = useAppSelector((state) =>
-    getFeedbackByStatus("suggestion")(state)
+  const suggestionsList = useAppSelector(
+    (state) => state.feedback.feedbackList
   );
 
   const suggestionsListSorted = sortFeedbackList(

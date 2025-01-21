@@ -1,24 +1,23 @@
-import { fetchFeedbackList } from "../services/apiFeedback";
-import { fetchFeedbackById } from "../services/apiFeedback";
-import assert from "../utils/TS_helpers";
-
+import { fetchFeedbackList, fetchFeedbackById } from "../services/apiFeedback";
 import { LoaderFunctionArgs } from "react-router-dom";
 import { FeedbackType } from "../types/feedback.types";
+import assert from "../utils/TS_helpers";
 
-// Fetch list of feedback entries from API
+// Fetch list of feedback entries for Feedback Board Page
 export async function feedbackBoardLoader() {
-  const feedbackData: FeedbackType[] = await fetchFeedbackList();
+  const data = await fetchFeedbackList("feedbackBoard");
 
-  return feedbackData;
+  return data;
 }
 
-//Fetch list of feedback entries for Roadmap Development Page (status: planned, live, in-progress)
+// Fetch list of feedback entries for Roadmap Development Page (status: planned, in-progress, live)
 export async function roadmapDevLoader() {
-  const feedbackData: FeedbackType[] = await fetchFeedbackList(
-    "developmentRoadmap"
-  );
+  const data = await fetchFeedbackList("developmentRoadmap");
 
-  return feedbackData;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+  const { suggestion, ...roadmapFeedbackList } = data;
+
+  return roadmapFeedbackList;
 }
 
 // Fetch Feedback based on id

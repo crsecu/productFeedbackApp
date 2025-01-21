@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import PageHeader from "../../ui/PageHeader";
 import FilterByCategory from "./FilterByCategory";
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
@@ -5,7 +6,6 @@ import FeedbackList from "./FeedbackList";
 import ActionBar from "../../ui/ActionBar";
 import FeedbackCount from "./FeedbackCount";
 import SortBy from "./SortBy";
-import { Link } from "react-router-dom";
 import TitleCard from "./TitleCard";
 
 function FeedbackBoardPage(): React.JSX.Element {

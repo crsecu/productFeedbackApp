@@ -1,26 +1,15 @@
 import { Link, useLoaderData } from "react-router-dom";
 import RoadmapStatusColumn from "./RoadmapStatusColumn";
-import { useAppSelector } from "../../types/hooks";
-import { getFeedbackByAllStatusCategories } from "../feedback/feedbackSlice";
-import { statusCategories } from "../feedback/feedbackSlice";
 import PageHeader from "../../ui/PageHeader";
-import { FeedbackType } from "../../types/feedback.types";
-
-//function modalRoadmapDevelopmentData(data)
+import { FeedbackType, RoadmapStatusType } from "../../types/feedback.types";
 
 function RoadmapPage(): React.JSX.Element {
-  const dataFromLoader = useLoaderData() as FeedbackType[];
-  console.log("data from loader", dataFromLoader);
+  const dataFromLoader = useLoaderData() as Record<
+    RoadmapStatusType,
+    FeedbackType[]
+  >;
 
-  const {
-    planned,
-    "in-progress": inProgress,
-    live,
-  } = useAppSelector((state) =>
-    getFeedbackByAllStatusCategories(statusCategories)(state)
-  );
-
-  //const roadmapStatusColumn = dataFromLoader
+  const { planned, "in-progress": inProgress, live } = dataFromLoader;
 
   return (
     <>
