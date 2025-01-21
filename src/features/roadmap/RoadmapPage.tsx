@@ -16,7 +16,7 @@ function RoadmapPage(): React.JSX.Element {
       <PageHeader>
         <Link to="/feedbackBoard">Go Back</Link>
         <h1>Roadmap</h1>
-        <Link to={"/createFeedback"}>Add Feedback</Link>
+        <Link to={"createFeedback"}>Add Feedback</Link>
       </PageHeader>
 
       <main>

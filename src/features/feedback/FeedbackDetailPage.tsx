@@ -4,7 +4,6 @@ import CommentList from "../comments/CommentList";
 import FeedbackItem from "./FeedbackItem";
 import CommentComposer from "../comments/CommentComposer";
 import ActionBar from "../../ui/ActionBar";
-// import EditFeedbackPage from "./EditFeedbackPage";
 import ModalWrapper from "../../ui/ModalWrapper";
 import FeedbackForm from "./FeedbackForm";
 

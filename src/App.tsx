@@ -42,7 +42,7 @@ const router = createBrowserRouter([
     loader: roadmapDevLoader,
   },
   {
-    path: "/createFeedback",
+    path: "/:parentRoute/createFeedback",
     element: <CreateFeedbackPage />,
     action: createFeedbackAction,
   },
