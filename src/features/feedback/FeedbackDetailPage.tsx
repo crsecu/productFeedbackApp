@@ -1,16 +1,18 @@
 import { useLoaderData, useNavigate, useSearchParams } from "react-router-dom";
 import { FeedbackType } from "../../types/feedback.types";
 import CommentList from "../comments/CommentList";
-import FeedbackItem from "./FeedbackItem";
+
 import CommentComposer from "../comments/CommentComposer";
 import ActionBar from "../../ui/ActionBar";
 import ModalWrapper from "../../ui/ModalWrapper";
 import FeedbackForm from "./FeedbackForm";
+import FeedbackDetailContent from "./FeedbackDetailContent";
+import CommentSection from "../comments/CommentSection";
 
 function FeedbackDetailPage(): React.JSX.Element {
-  const loaderData = useLoaderData();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const loaderData = useLoaderData(); //1
+  const navigate = useNavigate(); //2
+  const [searchParams] = useSearchParams(); //3
 
   const feedback = loaderData as FeedbackType;
 
@@ -27,9 +29,6 @@ function FeedbackDetailPage(): React.JSX.Element {
         <button onClick={() => navigate(-1)}>Go Back</button>
         <br></br>
         <br></br>
-      </ActionBar>
-
-      <main>
         <ModalWrapper>
           <FeedbackForm
             httpMethod="PATCH"
@@ -37,24 +36,18 @@ function FeedbackDetailPage(): React.JSX.Element {
             feedbackEntryData={feedback}
           ></FeedbackForm>
         </ModalWrapper>
-        <>
-          <br></br>
-          <br></br>
-          <FeedbackItem feedbackItem={feedback} isDetailPage={true} />
-          <section>
-            {!isFeedbackEntryNew && commentCount > 0 && (
-              <CommentList
-                commentCount={commentCount}
-                feedbackId={feedback.id}
-              />
-            )}
-          </section>
-          <section>
+      </ActionBar>
+      <FeedbackDetailContent feedback={feedback}>
+        <CommentSection>
+          {!isFeedbackEntryNew && commentCount > 0 && (
+            <CommentList commentCount={commentCount} feedbackId={feedback.id} />
+          )}
+
+          <CommentComposer commentCount={commentCount}>
             <h2>Add a Comment</h2>
-            <CommentComposer commentCount={commentCount} />
-          </section>
-        </>
-      </main>
+          </CommentComposer>
+        </CommentSection>
+      </FeedbackDetailContent>
     </>
   );
 }

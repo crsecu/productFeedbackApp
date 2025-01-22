@@ -1,18 +1,20 @@
 import { useFetcher } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-import { useState } from "react";
+import { Children, useState } from "react";
 import { CommentKindType } from "../../types/comment.types";
 
 interface CommentComposerProps {
-  mode: CommentKindType;
+  children: React.ReactNode;
+  mode?: CommentKindType;
   commentCount: number;
   // parentId, parentType, and authorUsername props only needed when CommentComposer is used in "reply" mode
-  parentId: string; // parent comment a reply belongs to;
-  parentType: CommentKindType;
-  authorUsername: string; //parent comment author
+  parentId?: string; // parent comment a reply belongs to;
+  parentType?: CommentKindType;
+  authorUsername?: string; //parent comment author
 }
 
 function CommentComposer({
+  children,
   mode = "comment",
   commentCount,
   parentId,
@@ -58,6 +60,7 @@ function CommentComposer({
           handleSubmit();
         }}
       >
+        {children}
         <textarea
           id="commentInput"
           onChange={(e) => setCommentContent(e.target.value)}

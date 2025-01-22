@@ -13,7 +13,7 @@ function FeedbackItem({
   isDetailPage = false,
 }: FeedbackItemProps): React.JSX.Element {
   return (
-    <>
+    <div>
       <UpvoteButton
         feedbackId={feedbackItem.id}
         initialUpvoteCount={feedbackItem.upvotes}
@@ -27,7 +27,7 @@ function FeedbackItem({
           </Link>
         </>
       )}
-    </>
+    </div>
   );
 }
 
