@@ -1,6 +1,5 @@
 import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-
 import FeedbackItem from "./FeedbackItem";
 import NoFeedbackEntries from "./NoFeedbackEntries";
 import { sortFeedbackList } from "../../utils/helpers";

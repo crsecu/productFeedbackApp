@@ -28,6 +28,7 @@ function CommentComposer({
   */
 
   const commentAuthor = useAppSelector((state) => state.user.validatedUser);
+
   const { name, username, image } = commentAuthor;
 
   const [commentContent, setCommentContent] = useState("");

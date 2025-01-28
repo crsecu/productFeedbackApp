@@ -12,6 +12,7 @@ function StateSyncWrapper({
   children,
 }: StateSyncWrapperProps): React.JSX.Element {
   const dataFromLoader = useLoaderData() as Record<StatusType, FeedbackType[]>;
+  console.log("data from loader", dataFromLoader);
 
   const dispatch = useDispatch();
 

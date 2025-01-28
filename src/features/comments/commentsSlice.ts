@@ -1,6 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CommentListType } from "../../types/comment.types";
-import { PayloadAction } from "@reduxjs/toolkit";
 
 interface CommentState {
   commentList: CommentListType;
