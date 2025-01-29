@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
 import FeedbackItem from "./FeedbackItem";
@@ -8,25 +9,21 @@ function FeedbackList(): React.JSX.Element {
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category") || "all";
   const sortBy = searchParams.get("sortBy") || "mostUpvotes";
+  const suggestions = useAppSelector((state) => state.feedback.feedbackList);
 
-  const suggestionsList = useAppSelector(
-    (state) => state.feedback.feedbackList
-  );
-
-  const suggestionsListSorted = sortFeedbackList(
-    suggestionsList,
-    category,
-    sortBy
+  const suggestionsSorted = useMemo(
+    () => sortFeedbackList(suggestions, category, sortBy),
+    [suggestions, category, sortBy]
   );
 
   return (
     <section className="feedback_list">
       <h2>Feedback List</h2> {/* visually hidden heading */}
-      {suggestionsListSorted.length === 0 ? (
+      {suggestionsSorted.length === 0 ? (
         <NoFeedbackEntries category={category} />
       ) : (
         <ul>
-          {suggestionsListSorted.map((item) => {
+          {suggestionsSorted.map((item) => {
             return (
               <li key={item.id}>
                 <FeedbackItem feedbackItem={item} />
