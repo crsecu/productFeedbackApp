@@ -1,7 +1,7 @@
 import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../types/hooks";
-import { setUserCredentials } from "./userSlice";
+import { setUserCredentials } from "../../store/slices/userSlice";
 import { validateUserCredentials } from "../../utils/helpers";
 
 /* MVP phase of app doesn't support authenticatin

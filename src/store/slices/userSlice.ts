@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "./user.types";
-import { AppState } from "../../store";
+import { User } from "../../features/user/user.types";
+import { AppState } from "../../store/store";
 
 interface UserState {
   validatedUser: User;

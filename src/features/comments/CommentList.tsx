@@ -1,7 +1,7 @@
 import { fetchComments } from "../../services/apiComment";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setCommentList } from "./commentsSlice";
+import { setCommentList } from "../../store/slices/commentsSlice";
 import { useAppSelector } from "../../types/hooks";
 import { CommentListType } from "../../types/comment.types";
 import Comment from "./Comment";

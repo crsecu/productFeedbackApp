@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import feedbackReducer from "./features/feedback/feedbackSlice";
-import userReducer from "./features/user/userSlice";
-import commentReducer from "./features/comments/commentsSlice";
+import feedbackReducer from "./slices/feedbackSlice";
+import userReducer from "./slices/userSlice";
+import commentReducer from "./slices/commentsSlice";
 
 const store = configureStore({
   reducer: {

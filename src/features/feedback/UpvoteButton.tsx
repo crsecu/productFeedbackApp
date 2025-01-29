@@ -5,7 +5,7 @@ import {
   trackUserUpvote,
   untrackUserUpvote,
   getIsFeedbackUpvoted,
-} from "../user/userSlice";
+} from "../../store/slices/userSlice";
 
 interface UpvoteButtonProps {
   feedbackId: string;

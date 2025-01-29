@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FeedbackType } from "../../types/feedback.types";
-import { AppState } from "../../store";
+import { AppState } from "../store";
 import assert from "../../utils/TS_helpers";
 import { filterFeedbackByStatus } from "../../utils/helpers";
 

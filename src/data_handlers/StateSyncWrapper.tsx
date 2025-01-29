@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { setFeedbackList } from "../features/feedback/feedbackSlice";
+import { setFeedbackList } from "../store/slices/feedbackSlice";
 import { StatusType, FeedbackType } from "../types/feedback.types";
 
 interface StateSyncWrapperProps {

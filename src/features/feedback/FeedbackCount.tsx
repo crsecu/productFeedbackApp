@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-import { getCountOfFeedbackByStatusAndCategory } from "./feedbackSlice";
+import { getCountOfFeedbackByStatusAndCategory } from "../../store/slices/feedbackSlice";
 
 function FeedbackCount(): React.JSX.Element {
   const [searchParams] = useSearchParams();
