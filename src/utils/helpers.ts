@@ -76,39 +76,20 @@ export function sortFeedbackList(
   const feedbackList =
     category === "all"
       ? [...list]
-      : [...list].filter(
-          (feedbackEntry) => feedbackEntry.category === category
-        );
+      : list.filter((feedbackEntry) => feedbackEntry.category === category);
 
-  let sortedFeedbackList = [];
-
-  switch (sortByOption) {
-    case "leastUpvotes":
-      {
-        sortedFeedbackList = feedbackList.sort((a, b) => a.upvotes - b.upvotes);
-      }
-      break;
-    case "mostComments":
-      {
-        sortedFeedbackList = feedbackList.sort(
-          (a, b) => b.commentCount - a.commentCount
-        );
-      }
-      break;
-    case "leastComments":
-      {
-        sortedFeedbackList = feedbackList.sort(
-          (a, b) => a.commentCount - b.commentCount
-        );
-      }
-      break;
-    default: {
-      //default case: "mostUpvotes"
-      sortedFeedbackList = feedbackList.sort((a, b) => b.upvotes - a.upvotes);
+  return [...feedbackList].sort((a, b) => {
+    switch (sortByOption) {
+      case "leastUpvotes":
+        return a.upvotes - b.upvotes;
+      case "mostComments":
+        return b.commentCount - a.commentCount;
+      case "leastComments":
+        return a.commentCount - b.commentCount;
+      default: //mostUpvotes
+        return b.upvotes - a.upvotes;
     }
-  }
-
-  return sortedFeedbackList;
+  });
 }
 
 /* Function used by FeedbackDetailPage action function to handle feedback edits. Updates the backend with the edited feedback data for the specified feedbackId. */
