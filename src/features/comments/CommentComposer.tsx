@@ -1,6 +1,6 @@
 import { useFetcher } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-import { Children, useState } from "react";
+import { useState } from "react";
 import { CommentKindType } from "../../types/comment.types";
 
 interface CommentComposerProps {

@@ -7,7 +7,6 @@ function CreateFeedbackPage(): React.JSX.Element {
   const navigate = useNavigate();
 
   const cancelCreateFeedback = useCallback(() => {
-    console.log("CANCELING CREATE FEEDBACK FORM");
     navigate(-1); //TO DO: Keep in mind that this doesn't replace current entry in history stack, therefore, pressing "forward" button takes you back to form - address this later
   }, [navigate]);
 

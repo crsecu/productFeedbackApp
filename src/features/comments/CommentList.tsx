@@ -29,7 +29,7 @@ function CommentList({
     },
     [dispatch, feedbackId, commentCount]
   );
-  const replies = comments.filter((comment) => comment.type === "reply");
+  const replies = comments.filter((comment) => comment.type === "reply"); //TO DO: memoize
 
   if (commentCount === 0)
     return <p>No comments yet. Be the first to share your thoughts!</p>;

@@ -24,7 +24,7 @@ export async function fetchFeedbackList(
   const data: FeedbackType[] = await fetchWrapper(
     `${API_URL}/productRequests${queryCondition}`
   );
-  console.log("ddd", data);
+
   const feedbackEntriesByStatus = data.reduce(
     (acc: Record<StatusType, FeedbackType[]>, curr: FeedbackType) => {
       const status = curr.status;

@@ -34,7 +34,11 @@ function FeedbackFormNew({
   const { httpMethod, mainButton } = modeConfig[mode];
 
   return (
-    <Form method={httpMethod} replace>
+    <Form
+      method={httpMethod}
+      replace
+      {...(mode === "edit" && { onSubmit: onCancel })}
+    >
       {mode === "edit" && (
         <input type="hidden" name="formType" value="editFeedback" />
       )}
