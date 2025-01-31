@@ -3,7 +3,7 @@
    "FeedbackType" extends NewFeedbackType to include the id field, representing the saved feedback entry returned by the server 
 */
 
-export type RoadmapStatusType = "planned" | "in-progress" | "live"; //represents status types for Roadmap
+export type RoadmapStatusType = "planned" | "in-Progress" | "live"; //represents status types for Roadmap
 
 export type StatusType = RoadmapStatusType | "suggestion"; //represents all possible status types
 
@@ -11,11 +11,20 @@ export interface NewFeedbackType {
   title: string;
   category: string;
   upvotes: number;
-  status: StatusType;
+  status: string;
   description: string;
   commentCount: number;
 }
 
 export interface FeedbackType extends NewFeedbackType {
   id: string;
+  status: StatusType;
+}
+
+export interface editFormInitialValues {
+  id: string;
+  title: string;
+  category: string;
+  status: StatusType;
+  description: string;
 }

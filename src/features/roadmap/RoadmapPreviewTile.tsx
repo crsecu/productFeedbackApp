@@ -2,7 +2,7 @@ import { Link, useLoaderData } from "react-router-dom";
 
 function RoadmapPreviewTile(): React.JSX.Element {
   const loaderData = useLoaderData();
-  const { planned, "in-progress": inProgress, live } = loaderData;
+  const { planned, "in-Progress": inProgress, live } = loaderData;
   return (
     <section>
       <div style={{ display: "flex" }}>
@@ -17,7 +17,7 @@ function RoadmapPreviewTile(): React.JSX.Element {
         <span style={{ fontWeight: "bold" }}> {planned.length}</span>
       </div>
       <div>
-        <span>In-Progress</span>
+        <span>in-Progress</span>
         <span style={{ fontWeight: "bold" }}> {inProgress.length}</span>
       </div>
       <div>

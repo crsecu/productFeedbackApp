@@ -9,7 +9,7 @@ function RoadmapPage(): React.JSX.Element {
     FeedbackType[]
   >;
 
-  const { planned, "in-progress": inProgress, live } = dataFromLoader;
+  const { planned, "in-Progress": inProgress, live } = dataFromLoader;
 
   return (
     <>
@@ -34,7 +34,7 @@ function RoadmapPage(): React.JSX.Element {
             {inProgress && (
               <RoadmapStatusColumn
                 feedbackList={inProgress}
-                title={"In-Progress"}
+                title={"in-Progress"}
                 description="Currently being developed"
               />
             )}

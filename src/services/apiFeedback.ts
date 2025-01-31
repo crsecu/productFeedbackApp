@@ -24,7 +24,7 @@ export async function fetchFeedbackList(
   const data: FeedbackType[] = await fetchWrapper(
     `${API_URL}/productRequests${queryCondition}`
   );
-
+  console.log("ddd", data);
   const feedbackEntriesByStatus = data.reduce(
     (acc: Record<StatusType, FeedbackType[]>, curr: FeedbackType) => {
       const status = curr.status;
@@ -32,7 +32,7 @@ export async function fetchFeedbackList(
       acc[status].push(curr);
       return acc;
     },
-    { suggestion: [], planned: [], "in-progress": [], live: [] }
+    { suggestion: [], planned: [], "in-Progress": [], live: [] }
   );
 
   return feedbackEntriesByStatus;

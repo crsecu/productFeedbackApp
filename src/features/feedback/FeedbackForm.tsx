@@ -11,7 +11,7 @@ interface FeedbackFormProps {
     status: string;
     description: string;
   };
-  closeModal: () => void;
+  closeModal?: () => void;
 }
 function FeedbackForm({
   httpMethod,
@@ -83,7 +83,7 @@ function FeedbackForm({
           >
             <option value="suggestion">Suggestion</option>
             <option value="planned">Planned</option>
-            <option value="in-Progress">In-Progress</option>
+            <option value="in-Progress">in-Progress</option>
             <option value="live">Live</option>
           </select>
         </>

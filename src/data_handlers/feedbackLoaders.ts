@@ -10,7 +10,7 @@ export async function feedbackBoardLoader() {
   return data;
 }
 
-// Fetch list of feedback entries for Roadmap Development Page (status: planned, in-progress, live)
+// Fetch list of feedback entries for Roadmap Development Page (status: planned, in-Progress, live)
 export async function roadmapDevLoader() {
   const data = await fetchFeedbackList("developmentRoadmap");
 
