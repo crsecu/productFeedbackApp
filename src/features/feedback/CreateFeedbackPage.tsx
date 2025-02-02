@@ -11,7 +11,9 @@ function CreateFeedbackPage(): React.JSX.Element {
   const prevPage = location.state?.from || "/feedbackBoard";
 
   return (
-    <>
+    <div
+      style={{ backgroundColor: "orange", padding: "10px", marginTop: "20px" }}
+    >
       <ActionBar>
         <Link to={prevPage}>Go Back</Link>
       </ActionBar>
@@ -21,11 +23,9 @@ function CreateFeedbackPage(): React.JSX.Element {
           All fields are required to create feedback. Please complete the form
           before submitting.
         </p>
-        <FeedbackFormNew
-          onCancel={() => navigate(prevPage, { replace: true })}
-        />
+        <FeedbackFormNew onCancel={() => navigate(prevPage)} />
       </main>
-    </>
+    </div>
   );
 }
 

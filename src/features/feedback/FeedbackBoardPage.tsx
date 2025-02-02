@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import PageHeader from "../../ui/PageHeader";
 import FilterByCategory from "./FilterByCategory";
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
@@ -20,7 +20,6 @@ function FeedbackBoardPage(): React.JSX.Element {
           <RoadmapPreviewTile />
         </aside>
       </div>
-
       <main className="feedbackBoard_main">
         <ActionBar>
           <FeedbackCount />
@@ -30,6 +29,7 @@ function FeedbackBoardPage(): React.JSX.Element {
           </Link>
         </ActionBar>
 
+        <Outlet />
         <FeedbackList />
       </main>
     </div>

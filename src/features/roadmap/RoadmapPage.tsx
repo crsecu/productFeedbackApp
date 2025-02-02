@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, Outlet, useLoaderData } from "react-router-dom";
 import RoadmapStatusColumn from "./RoadmapStatusColumn";
 import PageHeader from "../../ui/PageHeader";
 import { FeedbackType, RoadmapStatusType } from "../../types/feedback.types";
@@ -16,11 +16,11 @@ function RoadmapPage(): React.JSX.Element {
       <PageHeader>
         <Link to="/feedbackBoard">Go Back</Link>
         <h1>Roadmap</h1>
-        <Link to={"createFeedback"} state={{ from: location.pathname }}>
+        <Link to={"createFeedback"} state={{ from: location.pathname }} replace>
           Add Feedback
         </Link>
       </PageHeader>
-
+      <Outlet />
       <main>
         <ul className="roadmap_devStatusPhases">
           <li>

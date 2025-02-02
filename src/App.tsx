@@ -31,20 +31,50 @@ const router = createBrowserRouter([
       </StateSyncWrapper>
     ),
     loader: feedbackBoardLoader,
-    shouldRevalidate: ({ currentUrl, nextUrl }) =>
-      currentUrl.pathname !== nextUrl.pathname,
-    /* TO DO: don't revalidate if curentUrl.pathname contains "new" */
+    shouldRevalidate: ({ currentUrl, nextUrl }) => {
+      console.log("current", currentUrl);
+      console.log("next", nextUrl);
+
+      // prevent revalidation if only search params change
+      if (
+        currentUrl.pathname === nextUrl.pathname &&
+        currentUrl.search !== nextUrl.search
+      ) {
+        console.log("skipping revalidation: only search params changed");
+        return false;
+      }
+
+      // prevent revalidation when navigating to createFeedback
+      if (
+        currentUrl.pathname === "/feedbackBoard" &&
+        nextUrl.pathname === "/feedbackBoard/createFeedback"
+      ) {
+        console.log(
+          "skipping revalidation when navigating to createFeedback form"
+        );
+        return false;
+      }
+    },
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "createFeedback",
+        element: <CreateFeedbackPage />,
+        action: createFeedbackAction,
+      },
+    ],
   },
   {
     path: "/developmentRoadmap",
     element: <RoadmapPage />,
     loader: roadmapDevLoader,
-  },
-  {
-    path: "/:parentRoute/createFeedback",
-    element: <CreateFeedbackPage />,
-    action: createFeedbackAction,
+    children: [
+      {
+        path: "createFeedback",
+        element: <CreateFeedbackPage />,
+        action: createFeedbackAction,
+      },
+    ],
   },
   {
     path: "/feedbackDetail/:feedbackId",
