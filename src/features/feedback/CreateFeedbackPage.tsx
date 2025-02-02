@@ -1,19 +1,19 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ActionBar from "../../ui/ActionBar";
 import FeedbackFormNew from "./FeedbackFormNew";
-import { useCallback } from "react";
+
+import { Link } from "react-router-dom";
 
 function CreateFeedbackPage(): React.JSX.Element {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const cancelCreateFeedback = useCallback(() => {
-    navigate(-1); //TO DO: Keep in mind that this doesn't replace current entry in history stack, therefore, pressing "forward" button takes you back to form - address this later
-  }, [navigate]);
+  const prevPage = location.state?.from || "/feedbackBoard";
 
   return (
     <>
       <ActionBar>
-        <button onClick={() => navigate(-1)}>Go Back</button>
+        <Link to={prevPage}>Go Back</Link>
       </ActionBar>
       <main className="createFeedback_new">
         <h1>Create New Feedback</h1>
@@ -21,7 +21,9 @@ function CreateFeedbackPage(): React.JSX.Element {
           All fields are required to create feedback. Please complete the form
           before submitting.
         </p>
-        <FeedbackFormNew onCancel={cancelCreateFeedback} />
+        <FeedbackFormNew
+          onCancel={() => navigate(prevPage, { replace: true })}
+        />
       </main>
     </>
   );

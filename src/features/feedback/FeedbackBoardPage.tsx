@@ -25,7 +25,9 @@ function FeedbackBoardPage(): React.JSX.Element {
         <ActionBar>
           <FeedbackCount />
           <SortBy />
-          <Link to={"createFeedback"}>Add Feedback</Link>
+          <Link to={"createFeedback"} state={{ from: location.pathname }}>
+            Add Feedback
+          </Link>
         </ActionBar>
 
         <FeedbackList />
