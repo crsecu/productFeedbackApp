@@ -7,20 +7,20 @@ import ActionBar from "../../ui/ActionBar";
 import FeedbackCount from "./FeedbackCount";
 import SortBy from "./SortBy";
 import TitleCard from "./TitleCard";
+import Suggestions from "./Suggestions";
 
 function FeedbackBoardPage(): React.JSX.Element {
   /* TO DO: create custom hook - this logic is also used inside roadmapDevelopment */
-  const location = useLocation();
-  const isCreateFeedback =
-    location.pathname === "/feedbackBoard/createFeedback";
-  console.log("createFeedback???", isCreateFeedback);
+  const { pathname } = useLocation();
+
+  const isCreateFeedback = pathname === "/feedbackBoard/createFeedback";
 
   return (
     <>
       {isCreateFeedback ? (
         <Outlet />
       ) : (
-        <div className="feedbackBoard_layout">
+        <Suggestions>
           <div className="feecbackBoard_leftSection">
             <PageHeader>
               <TitleCard />
@@ -34,14 +34,14 @@ function FeedbackBoardPage(): React.JSX.Element {
             <ActionBar>
               <FeedbackCount />
               <SortBy />
-              <Link to={"createFeedback"} state={{ from: location.pathname }}>
+              <Link to={"createFeedback"} state={{ from: pathname }}>
                 Add Feedback
               </Link>
             </ActionBar>
 
             <FeedbackList />
           </main>
-        </div>
+        </Suggestions>
       )}
     </>
   );

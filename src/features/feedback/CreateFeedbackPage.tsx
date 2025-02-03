@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 
 function CreateFeedbackPage(): React.JSX.Element {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { state } = useLocation();
 
-  const prevPage = location.state?.from || "/feedbackBoard";
+  const prevPage = state?.from || "/feedbackBoard";
 
   return (
     <div

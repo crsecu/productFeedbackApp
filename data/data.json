@@ -123,24 +123,6 @@
       "status": "live",
       "description": "Small animations at specific points can add delight.",
       "commentCount": 2
-    },
-    {
-      "id": "4cfa",
-      "title": "taco",
-      "category": "ui",
-      "description": "1",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "9cf5",
-      "title": "765456",
-      "category": "feature",
-      "description": "6",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
     }
   ],
   "comments": [
