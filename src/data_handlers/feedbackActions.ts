@@ -24,12 +24,8 @@ export async function createFeedbackAction({ request }: ActionFunctionArgs) {
   //const errors = {};
 
   const newFeedback = await submitFeedback(feedback);
-  const prevUrl = new URL(request.url);
-  const prevPage = `/${prevUrl.pathname.split("/")[1]}`;
-  console.log("request url", prevPage);
 
-  //return redirect(`/feedbackDetail/${newFeedback.id}?status=new`);
-  return redirect(prevPage);
+  return redirect(`/feedbackBoard?newFeedbackId=${newFeedback.id}`);
 }
 
 /* Edit Feedback Action*/

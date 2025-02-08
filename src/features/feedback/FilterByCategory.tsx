@@ -1,20 +1,17 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import { formatCategoryLabel } from "../../utils/helpers";
 const feedbackCategories = ["ui", "ux", "enhancement", "bug", "feature"];
 
 function FilterByCategory(): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [category, setCategory] = useState(
-    searchParams.get("category") || "all"
-  );
+  const filterByOption = searchParams.get("category") || "all";
 
   function handleOptionChange(e: ChangeEvent<HTMLInputElement>) {
-    const category = e.target.value;
-    setCategory(category);
+    const selectedCategory = e.target.value;
 
     setSearchParams((prevParams) => {
-      return { ...Object.fromEntries(prevParams), category };
+      return { ...Object.fromEntries(prevParams), category: selectedCategory };
     });
   }
 
@@ -28,7 +25,7 @@ function FilterByCategory(): React.JSX.Element {
             name="filterByCategory"
             id="categoryAll"
             value="all"
-            checked={category === "all"}
+            checked={filterByOption === "all"}
             onChange={(e) => handleOptionChange(e)}
           ></input>
           <label htmlFor="categoryAll">All</label>
@@ -43,7 +40,7 @@ function FilterByCategory(): React.JSX.Element {
                 name="filterByCategory"
                 id="categoryAll"
                 value={feedbackCategory}
-                checked={category === feedbackCategory}
+                checked={filterByOption === feedbackCategory}
                 onChange={(e) => handleOptionChange(e)}
               ></input>
               <label htmlFor="categoryAll">{categoryLabel}</label>

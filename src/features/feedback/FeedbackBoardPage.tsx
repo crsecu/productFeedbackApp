@@ -1,4 +1,10 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigationType,
+  useSearchParams,
+} from "react-router-dom";
 import PageHeader from "../../ui/PageHeader";
 import FilterByCategory from "./FilterByCategory";
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
@@ -8,10 +14,17 @@ import FeedbackCount from "./FeedbackCount";
 import SortBy from "./SortBy";
 import TitleCard from "./TitleCard";
 import Suggestions from "./Suggestions";
+import NewFeedback from "./NewFeedback";
 
 function FeedbackBoardPage(): React.JSX.Element {
   /* TO DO: create custom hook - this logic is also used inside roadmapDevelopment */
   const { pathname } = useLocation();
+  const navigationType = useNavigationType();
+  const [searchParams] = useSearchParams();
+
+  const newFeedbackId = searchParams.get("newFeedbackId");
+  const showFeaturedFeedback =
+    navigationType === "REPLACE" || navigationType === "PUSH";
 
   const isCreateFeedback = pathname === "/feedbackBoard/createFeedback";
 
@@ -38,7 +51,9 @@ function FeedbackBoardPage(): React.JSX.Element {
                 Add Feedback
               </Link>
             </ActionBar>
-
+            {newFeedbackId && showFeaturedFeedback && (
+              <NewFeedback newFeedbackId={newFeedbackId} />
+            )}
             <FeedbackList />
           </main>
         </Suggestions>

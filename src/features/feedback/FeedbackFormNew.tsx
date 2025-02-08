@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigation } from "react-router-dom";
 import InputField from "./InputField";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
@@ -32,13 +32,12 @@ function FeedbackFormNew({
   onDelete,
 }: FeedbackFormProps): React.JSX.Element {
   const { httpMethod, mainButton } = modeConfig[mode];
+  const navigation = useNavigation();
+  const isSumbitting = navigation.state === "submitting";
 
+  //   {...(mode === "edit" && { onSubmit: onCancel })}
   return (
-    <Form
-      method={httpMethod}
-      replace
-      {...(mode === "edit" && { onSubmit: onCancel })}
-    >
+    <Form method={httpMethod} replace>
       {mode === "edit" && (
         <input type="hidden" name="formType" value="editFeedback" />
       )}
@@ -118,7 +117,9 @@ function FeedbackFormNew({
             marginTop: "20px",
           }}
         >
-          <button>{mainButton}</button>
+          <button disabled={isSumbitting}>
+            {isSumbitting ? "submitting form..." : mainButton}
+          </button>
 
           <button type="button" onClick={onCancel}>
             Cancel

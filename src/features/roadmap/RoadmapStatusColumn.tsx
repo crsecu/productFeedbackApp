@@ -1,5 +1,8 @@
+import { Link } from "react-router-dom";
 import { FeedbackType } from "../../types/feedback.types";
 import FeedbackItem from "../feedback/FeedbackItem";
+import UpvoteButton from "../feedback/UpvoteButton";
+import FeedbackCard from "../feedback/FeedbackCard";
 interface RoadmapStatusColumn {
   feedbackList: FeedbackType[];
   description: string;
@@ -22,7 +25,15 @@ function RoadmapStatusColumn({
           return (
             <li key={feedbackItem.id}>
               <span>{title}</span>
-              <FeedbackItem feedbackItem={feedbackItem} />
+              <FeedbackItem>
+                <UpvoteButton
+                  feedbackId={feedbackItem.id}
+                  initialUpvoteCount={feedbackItem.upvotes}
+                />
+                <Link to={`/feedbackDetail/${feedbackItem.id}`}>
+                  <FeedbackCard feedback={feedbackItem} />
+                </Link>
+              </FeedbackItem>
             </li>
           );
         })}

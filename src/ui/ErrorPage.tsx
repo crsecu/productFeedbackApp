@@ -5,7 +5,12 @@ function ErrorPage(): React.JSX.Element {
   const error = useRouteError();
 
   console.log("ERROR", error);
-  return <div>Oops! {error.data || error.message}</div>;
+  return (
+    <div>
+      <h2 style={{ color: "darkRed" }}>Oops! You've encountered an error</h2>
+      <p>{error.data || error.message}</p>
+    </div>
+  );
 }
 
 export default ErrorPage;

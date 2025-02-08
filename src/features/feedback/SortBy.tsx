@@ -1,14 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 
 function SortBy(): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [option, setOption] = useState(
-    searchParams.get("sortBy") || "mostUpvotes"
-  );
+  const sortByOption = searchParams.get("sortBy") || "mostUpvotes";
 
   function handleOptionChange(e: ChangeEvent<HTMLSelectElement>) {
-    setOption(e.target.value);
     setSearchParams((prevParams) => {
       return { ...Object.fromEntries(prevParams), sortBy: e.target.value };
     });
@@ -18,7 +15,7 @@ function SortBy(): React.JSX.Element {
       <label htmlFor="sortBy">Sort by:</label>
       <select
         id="sortBy"
-        value={option}
+        value={sortByOption}
         onChange={(e) => handleOptionChange(e)}
       >
         <option value="mostUpvotes">Most Upvotes</option>

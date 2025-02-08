@@ -13,7 +13,6 @@ function RoadmapPage(): React.JSX.Element {
   const location = useLocation();
   const isCreateFeedback =
     location.pathname === "/developmentRoadmap/createFeedback";
-  console.log("createFeedback???", isCreateFeedback);
 
   const { planned, "in-Progress": inProgress, live } = dataFromLoader;
 
