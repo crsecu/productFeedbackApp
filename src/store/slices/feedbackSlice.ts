@@ -57,6 +57,5 @@ export const getCountOfFeedbackByStatusAndCategory =
 
 // Get feedback by id (useful to display Featured New Feedback)
 export const getFeedbackById = (id: string) => (state: AppState) => {
-  const feedback = state.feedback.feedbackList.filter((item) => item.id === id);
-  return feedback[0];
+  return state.feedback.feedbackList.find((item) => item.id === id);
 };
