@@ -10,7 +10,7 @@ import {
   NewCommentType,
   NewReplyType,
 } from "../types/comment.types";
-import { FeedbackType } from "../types/feedback.types";
+import { FeedbackFormErrors, FeedbackType } from "../types/feedback.types";
 import assert from "./TS_helpers";
 
 /* Reusable Fetch Helper */
@@ -103,6 +103,14 @@ export async function editFeedbackEntry(
     category: string;
     status: string;
   };
+
+  //Form Error Handling
+  const errors: FeedbackFormErrors = {};
+  if (data.title.trim() === "") errors.title = "Please enter a valid title";
+  if (data.description.trim() === "")
+    errors.description = "Please enter a valid description";
+
+  if (Object.keys(errors).length > 0) return errors;
 
   assert(feedbackId);
   try {

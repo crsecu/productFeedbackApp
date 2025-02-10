@@ -1,6 +1,5 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
-import { submitFeedback, editFeedback } from "../services/apiFeedback";
-import assert from "../utils/TS_helpers";
+import { submitFeedback } from "../services/apiFeedback";
 import { editFeedbackEntry, postCommentOrReply } from "../utils/helpers";
 import { FeedbackFormErrors } from "../types/feedback.types";
 
@@ -32,27 +31,6 @@ export async function createFeedbackAction({ request }: ActionFunctionArgs) {
   const newFeedback = await submitFeedback(feedback);
 
   return redirect(`/feedbackBoard?newFeedbackId=${newFeedback.id}`);
-}
-
-/* Edit Feedback Action*/
-export async function editFeedbackAction({
-  request,
-  params,
-}: ActionFunctionArgs) {
-  const formData = await request.formData();
-
-  const data = Object.fromEntries(formData) as {
-    title: string;
-    description: string;
-    category: string;
-    status: string;
-  };
-
-  assert(params.feedbackId);
-
-  await editFeedback(params.feedbackId, data);
-
-  return null;
 }
 
 /* 
