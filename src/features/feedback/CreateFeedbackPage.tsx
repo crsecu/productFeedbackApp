@@ -1,12 +1,22 @@
 import { useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useActionData,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import ActionBar from "../../ui/ActionBar";
 import FeedbackFormNew from "./FeedbackFormNew";
+import { FeedbackFormErrors } from "../../types/feedback.types";
 
 function CreateFeedbackPage(): React.JSX.Element {
   const navigate = useNavigate();
 
   const { state } = useLocation();
+
+  const formErrors = useActionData() as FeedbackFormErrors;
+
+  console.log("form encountered error", formErrors);
 
   const prevPage = useRef(state?.from);
 
@@ -24,7 +34,10 @@ function CreateFeedbackPage(): React.JSX.Element {
           All fields are required to create feedback. Please complete the form
           before submitting.
         </p>
-        <FeedbackFormNew onCancel={() => navigate(prevPage.current)} />
+        <FeedbackFormNew
+          onCancel={() => navigate(prevPage.current)}
+          errors={formErrors}
+        />
       </main>
     </div>
   );

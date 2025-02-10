@@ -2,14 +2,15 @@ import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { submitFeedback, editFeedback } from "../services/apiFeedback";
 import assert from "../utils/TS_helpers";
 import { editFeedbackEntry, postCommentOrReply } from "../utils/helpers";
+import { FeedbackFormErrors } from "../types/feedback.types";
 
 /* Submit New Feedback Action*/
 export async function createFeedbackAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData) as {
     title: string;
-    description: string;
     category: string;
+    description: string;
   };
 
   const feedback = {
@@ -20,8 +21,13 @@ export async function createFeedbackAction({ request }: ActionFunctionArgs) {
     commentCount: 0,
   };
 
-  /* TO DO: Form error handling */
-  //const errors = {};
+  /* Form error handling */
+  const errors: FeedbackFormErrors = {};
+  if (feedback.title.trim() === "") errors.title = "Please enter a valid title";
+  if (feedback.description.trim() === "")
+    errors.description = "Please enter a valid description";
+
+  if (Object.keys(errors).length > 0) return errors;
 
   const newFeedback = await submitFeedback(feedback);
 

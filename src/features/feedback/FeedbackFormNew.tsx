@@ -2,12 +2,18 @@ import { Form, useNavigation } from "react-router-dom";
 import InputField from "./InputField";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
-import { editFormInitialValues, StatusType } from "../../types/feedback.types";
+import {
+  editFormInitialValues,
+  FeedbackFormErrors,
+  StatusType,
+} from "../../types/feedback.types";
+import FormFieldError from "./FormFieldError";
 
 interface FeedbackFormProps {
   initialValues?: editFormInitialValues;
   mode?: "create" | "edit";
   statusOptions?: StatusType[];
+  errors: FeedbackFormErrors;
   onCancel: () => void;
   onDelete?: () => Promise<void>;
 }
@@ -28,6 +34,7 @@ function FeedbackFormNew({
   initialValues,
   mode = "create",
   statusOptions = [],
+  errors,
   onCancel,
   onDelete,
 }: FeedbackFormProps): React.JSX.Element {
@@ -55,6 +62,7 @@ function FeedbackFormNew({
           describedById="feedbackTitleDesc"
           initialValue={initialValues?.title}
         />
+        <FormFieldError errorMessage={errors?.title} />
       </FormField>
       <br></br>
 
@@ -107,6 +115,7 @@ function FeedbackFormNew({
           defaultValue={initialValues?.description}
           required
         />
+        <FormFieldError errorMessage={errors?.description} />
       </FormField>
       <div className="form-actions">
         <div

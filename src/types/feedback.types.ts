@@ -28,3 +28,7 @@ export interface editFormInitialValues {
   status: StatusType;
   description: string;
 }
+
+export interface FeedbackFormErrors {
+  [key: string]: string;
+}

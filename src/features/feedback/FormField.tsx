@@ -16,11 +16,11 @@ function FormField({
   inputGuidanceId,
 }: FormField): React.JSX.Element {
   return (
-    <>
+    <div>
       <label htmlFor={inputId}>{label}</label>
       <span id={inputGuidanceId}>{description}</span>
       {children}
-    </>
+    </div>
   );
 }
 

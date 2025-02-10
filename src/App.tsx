@@ -40,6 +40,9 @@ const router = createBrowserRouter([
           console.log("current", currentUrl);
           console.log("next", nextUrl);
 
+          //prevent revalidation when createFeedback form contains validation errors
+          if (currentUrl.pathname === nextUrl.pathname) return false;
+
           // prevent revalidation if only search params change
           if (
             currentUrl.pathname === nextUrl.pathname &&

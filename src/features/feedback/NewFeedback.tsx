@@ -28,7 +28,7 @@ function NewFeedback({
 
   return (
     <div style={{ border: "10px solid #be70be" }}>
-      <p>NEW NEW NEW!!!</p>
+      <p>Your feedback has been submitted. Others can now engage with it!</p>
 
       <FeedbackItem>
         <UpvoteButton feedbackId={newFeedback.id} initialUpvoteCount={0} />
