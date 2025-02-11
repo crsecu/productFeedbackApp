@@ -1,12 +1,8 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback } from "react";
 import FeedbackFormNew from "./FeedbackFormNew";
-import { FeedbackType, StatusType } from "../../types/feedback.types";
+import { FeedbackFormData, StatusType } from "../../types/feedback.types";
 import { deleteFeedback } from "../../services/apiFeedback";
-import { useNavigate } from "react-router-dom";
-
-interface EditFeedbackPageProps {
-  state: FeedbackType;
-}
+import { useActionData, useLocation, useNavigate } from "react-router-dom";
 
 const statusUpdateOptions: StatusType[] = [
   "suggestion",
@@ -15,43 +11,39 @@ const statusUpdateOptions: StatusType[] = [
   "live",
 ];
 
-function EditFeedbackPage({ state }: EditFeedbackPageProps): React.JSX.Element {
+function EditFeedbackPage(): React.JSX.Element {
+  //debugger;
   const navigate = useNavigate();
-  const [showEditForm, setShowEditForm] = useState(false);
+  const { state } = useLocation();
 
-  const initialValues = useMemo(() => {
-    const { id, title, category, status, description } = state;
+  const formData = useActionData() as FeedbackFormData;
 
-    return { id, title, category, status, description };
-  }, [state]);
+  console.log("edit errors", formData);
 
-  const handleDeleteFeedbackEntry = useCallback(async () => {
-    await deleteFeedback(state.id);
-    console.log("feedback entry deleted", state.id);
+  // const handleDeleteFeedbackEntry = useCallback(async () => {
+  //   await deleteFeedback(state.id);
+  //   console.log("feedback entry deleted", state.id);
 
-    //TO DO: Display message to inform user that the feedback entry was deleted
+  //   //TO DO: Display message to inform user that the feedback entry was deleted
 
-    navigate(-1);
-  }, [navigate, state.id]);
+  //   navigate(-1);
+  // }, [navigate, state.id]);
 
   return (
     <>
-      {!showEditForm && (
-        <button onClick={() => setShowEditForm(true)}>Edit Feedback</button>
-      )}
-
-      {showEditForm && (
-        <div className="editFeedback">
-          <h1>Edit "{state.title}"</h1>
-          <FeedbackFormNew
-            mode="edit"
-            initialValues={initialValues}
-            statusOptions={statusUpdateOptions}
-            onDelete={handleDeleteFeedbackEntry}
-            onCancel={() => setShowEditForm(false)}
-          />
-        </div>
-      )}
+      <div className="editFeedback">
+        <h1>Edit "{state?.title}"</h1>
+        <FeedbackFormNew
+          mode="edit"
+          initialValues={state}
+          statusOptions={statusUpdateOptions}
+          errors={formData?.errors}
+          // onDelete={() => handleDeleteFeedbackEntry()}
+          onCancel={() =>
+            navigate(`/feedbackDetail/${state.id}`, { replace: true })
+          }
+        />
+      </div>
     </>
   );
 }

@@ -7,16 +7,14 @@ import {
 } from "react-router-dom";
 import ActionBar from "../../ui/ActionBar";
 import FeedbackFormNew from "./FeedbackFormNew";
-import { FeedbackFormErrors } from "../../types/feedback.types";
+import { FeedbackFormData } from "../../types/feedback.types";
 
 function CreateFeedbackPage(): React.JSX.Element {
   const navigate = useNavigate();
 
   const { state } = useLocation();
 
-  const formErrors = useActionData() as FeedbackFormErrors;
-
-  console.log("form encountered error", formErrors);
+  const formData = useActionData() as FeedbackFormData;
 
   const prevPage = useRef(state?.from);
 
@@ -36,7 +34,7 @@ function CreateFeedbackPage(): React.JSX.Element {
         </p>
         <FeedbackFormNew
           onCancel={() => navigate(prevPage.current)}
-          errors={formErrors}
+          errors={formData?.errors}
         />
       </main>
     </div>

@@ -1,20 +1,30 @@
-import { useLoaderData, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { FeedbackType } from "../../types/feedback.types";
 import CommentList from "../comments/CommentList";
 import CommentComposer from "../comments/CommentComposer";
 import ActionBar from "../../ui/ActionBar";
 import FeedbackDetailContent from "./FeedbackDetailContent";
 import CommentSection from "../comments/CommentSection";
-import EditFeedbackPage from "./EditFeedbackPage";
 
 function FeedbackDetailPage(): React.JSX.Element {
-  const loaderData = useLoaderData(); //1
-  const navigate = useNavigate(); //2
-  const [searchParams] = useSearchParams(); //3
+  const loaderData = useLoaderData();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const isEditFeedback = pathname.includes("editFeedback");
 
   const feedback = loaderData as FeedbackType;
 
   if (!feedback) return <h1>Feedback Detail is not available.</h1>;
+  const { id, title, category, status, description } = feedback;
 
   const isFeedbackEntryNew =
     searchParams.get("status") === "new" ? true : false;
@@ -23,22 +33,45 @@ function FeedbackDetailPage(): React.JSX.Element {
   return (
     <>
       <ActionBar>
-        <button onClick={() => navigate(-1)}>Go Back</button>
+        <button
+          onClick={() => {
+            return isEditFeedback
+              ? navigate(`/feedbackDetail/${id}`, { replace: true })
+              : navigate(-1);
+          }}
+        >
+          Go Back
+        </button>
         <br></br>
         <br></br>
-        <EditFeedbackPage state={feedback} />
+        <Link
+          to="editFeedback"
+          state={{ id, title, category, status, description }}
+          replace
+        >
+          Edit Feedback
+        </Link>
       </ActionBar>
-      <FeedbackDetailContent feedback={feedback}>
-        <CommentSection>
-          {!isFeedbackEntryNew && commentCount > 0 && (
-            <CommentList commentCount={commentCount} feedbackId={feedback.id} />
-          )}
+      {isEditFeedback ? (
+        <Outlet />
+      ) : (
+        <>
+          <FeedbackDetailContent feedback={feedback}>
+            <CommentSection>
+              {!isFeedbackEntryNew && commentCount > 0 && (
+                <CommentList
+                  commentCount={commentCount}
+                  feedbackId={feedback.id}
+                />
+              )}
 
-          <CommentComposer commentCount={commentCount}>
-            <h2>Add a Comment</h2>
-          </CommentComposer>
-        </CommentSection>
-      </FeedbackDetailContent>
+              <CommentComposer commentCount={commentCount}>
+                <h2>Add a Comment</h2>
+              </CommentComposer>
+            </CommentSection>
+          </FeedbackDetailContent>
+        </>
+      )}
     </>
   );
 }

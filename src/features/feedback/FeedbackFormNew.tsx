@@ -15,7 +15,7 @@ interface FeedbackFormProps {
   statusOptions?: StatusType[];
   errors: FeedbackFormErrors;
   onCancel: () => void;
-  onDelete?: () => Promise<void>;
+  // onDelete?: () => Promise<void>;
 }
 
 const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];
@@ -36,13 +36,12 @@ function FeedbackFormNew({
   statusOptions = [],
   errors,
   onCancel,
-  onDelete,
-}: FeedbackFormProps): React.JSX.Element {
+}: // onDelete,
+FeedbackFormProps): React.JSX.Element {
   const { httpMethod, mainButton } = modeConfig[mode];
   const navigation = useNavigation();
   const isSumbitting = navigation.state === "submitting";
 
-  //   {...(mode === "edit" && { onSubmit: onCancel })}
   return (
     <Form method={httpMethod} replace>
       {mode === "edit" && (
@@ -135,7 +134,7 @@ function FeedbackFormNew({
           </button>
 
           {/* EDIT FORM additional button BEGINSS */}
-          {mode === "edit" && onDelete && (
+          {/* {mode === "edit" && onDelete && (
             <button
               type="button"
               onClick={async () => await onDelete()}
@@ -143,7 +142,7 @@ function FeedbackFormNew({
             >
               Delete Entry
             </button>
-          )}
+          )} */}
           {/* EDIT FORM additional button ENDS */}
         </div>
       </div>

@@ -1,17 +1,12 @@
 import { User } from "../features/user/user.types";
 import { submitComment } from "../services/apiComment";
-import {
-  editFeedback,
-  fetchUserList,
-  updateCommentCount,
-} from "../services/apiFeedback";
+import { fetchUserList, updateCommentCount } from "../services/apiFeedback";
 import {
   CommentAuthor,
   NewCommentType,
   NewReplyType,
 } from "../types/comment.types";
-import { FeedbackFormErrors, FeedbackType } from "../types/feedback.types";
-import assert from "./TS_helpers";
+import { FeedbackType } from "../types/feedback.types";
 
 /* Reusable Fetch Helper */
 export async function fetchWrapper(url: string, options: RequestInit = {}) {
@@ -90,36 +85,6 @@ export function sortFeedbackList(
         return b.upvotes - a.upvotes;
     }
   });
-}
-
-/* Function used by FeedbackDetailPage action function to handle feedback edits. Updates the backend with the edited feedback data for the specified feedbackId. */
-export async function editFeedbackEntry(
-  formData: FormData | Iterable<readonly [PropertyKey, string]>,
-  feedbackId: string
-) {
-  const data = Object.fromEntries(formData) as {
-    title: string;
-    description: string;
-    category: string;
-    status: string;
-  };
-
-  //Form Error Handling
-  const errors: FeedbackFormErrors = {};
-  if (data.title.trim() === "") errors.title = "Please enter a valid title";
-  if (data.description.trim() === "")
-    errors.description = "Please enter a valid description";
-
-  if (Object.keys(errors).length > 0) return errors;
-
-  assert(feedbackId);
-  try {
-    await editFeedback(feedbackId, data);
-    return { successfulSubmission: true };
-  } catch (err) {
-    console.log("error in editFeedbackEntry", err);
-    return { successfulSubmission: false };
-  }
 }
 
 /* Function used by the FeedbackDetailPage action function to handle the submission 

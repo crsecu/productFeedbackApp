@@ -6,7 +6,7 @@ import {
 } from "./data_handlers/feedbackLoaders";
 import {
   createFeedbackAction,
-  submitDetailAction,
+  submitCommentAction,
 } from "./data_handlers/feedbackActions";
 
 import StateSyncWrapper from "./data_handlers/StateSyncWrapper";
@@ -18,6 +18,8 @@ import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import ErrorPage from "./ui/ErrorPage";
 import NotFoundPage from "./ui/NotFoundPage";
 import RootRoute from "./ui/RootRoute";
+import EditFeedbackPage from "./features/feedback/EditFeedbackPage";
+import { editFeedbackAction } from "./data_handlers/feedbackActions";
 
 const router = createBrowserRouter([
   {
@@ -36,12 +38,14 @@ const router = createBrowserRouter([
           </StateSyncWrapper>
         ),
         loader: feedbackBoardLoader,
-        shouldRevalidate: ({ currentUrl, nextUrl }) => {
+        shouldRevalidate: ({ currentUrl, nextUrl, actionResult }) => {
           console.log("current", currentUrl);
           console.log("next", nextUrl);
 
           //prevent revalidation when createFeedback form contains validation errors
-          if (currentUrl.pathname === nextUrl.pathname) return false;
+          if (actionResult && "errors" in actionResult) {
+            return false;
+          }
 
           // prevent revalidation if only search params change
           if (
@@ -87,7 +91,24 @@ const router = createBrowserRouter([
         path: "/feedbackDetail/:feedbackId",
         element: <FeedbackDetailPage />,
         loader: detailLoader,
-        action: submitDetailAction,
+        shouldRevalidate: ({ currentUrl, nextUrl, actionResult }) => {
+          console.log("current detail", currentUrl);
+          console.log("next detail", nextUrl);
+          console.log("actionResult", actionResult);
+
+          //prevent revalidation when editFeedback form contains validation errors
+          if (actionResult && "errors" in actionResult) {
+            return false;
+          }
+        },
+        action: submitCommentAction,
+        children: [
+          {
+            path: "editFeedback",
+            element: <EditFeedbackPage />,
+            action: editFeedbackAction,
+          },
+        ],
       },
       { path: "*", element: <NotFoundPage /> },
     ],

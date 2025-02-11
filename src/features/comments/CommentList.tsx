@@ -5,6 +5,7 @@ import { setCommentList } from "../../store/slices/commentsSlice";
 import { useAppSelector } from "../../types/hooks";
 import { CommentListType } from "../../types/comment.types";
 import Comment from "./Comment";
+import { useNavigationType } from "react-router-dom";
 
 interface CommentListProps {
   commentCount: number;
@@ -16,18 +17,20 @@ function CommentList({
   feedbackId,
 }: CommentListProps): React.JSX.Element {
   const dispatch = useDispatch();
+  const navigationType = useNavigationType();
 
   const comments = useAppSelector((state) => state.comment.commentList);
 
   useEffect(
     function () {
       async function retrieveComments() {
+        if (navigationType === "REPLACE") return;
         const comments: CommentListType = await fetchComments(feedbackId);
         dispatch(setCommentList(comments));
       }
       retrieveComments();
     },
-    [dispatch, feedbackId, commentCount]
+    [dispatch, feedbackId, commentCount, navigationType]
   );
   const replies = comments.filter((comment) => comment.type === "reply"); //TO DO: memoize
 

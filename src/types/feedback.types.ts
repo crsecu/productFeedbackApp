@@ -30,5 +30,9 @@ export interface editFormInitialValues {
 }
 
 export interface FeedbackFormErrors {
-  [key: string]: string | boolean;
+  [key: string]: string;
+}
+
+export interface FeedbackFormData {
+  errors: FeedbackFormErrors;
 }
