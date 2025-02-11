@@ -35,7 +35,6 @@ function CommentComposer({
 
   function handleSubmit() {
     const formData = new FormData();
-    formData.append("formType", "submitCommentOrReply");
     formData.append("mode", mode);
     formData.append("content", commentContent);
     formData.append("currentCommentCount", JSON.stringify(commentCount));

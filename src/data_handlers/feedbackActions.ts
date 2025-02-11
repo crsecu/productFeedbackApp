@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { editFeedback, submitFeedback } from "../services/apiFeedback";
-import { editFeedbackAction, postCommentOrReply } from "../utils/helpers";
+import { postCommentOrReply } from "../utils/helpers";
 import { FeedbackFormErrors } from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
 
@@ -35,8 +35,7 @@ export async function createFeedbackAction({ request }: ActionFunctionArgs) {
 }
 
 /* 
- FeedbackDetailPage action - handles actions such as editing a feedback entry or adding a comment/reply; determines the action type 
- based on the formType and updates the backend accordingly.
+ FeedbackDetailPage action - handles adding a comment/reply; 
 */
 export async function submitCommentAction({
   request,
@@ -44,11 +43,8 @@ export async function submitCommentAction({
 }: ActionFunctionArgs) {
   const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
-  const formType = formData.get("formType");
-
-  if (formType === "submitCommentOrReply") {
-    return postCommentOrReply(formData, feedbackId);
-  }
+  console.log("hey");
+  return postCommentOrReply(formData, feedbackId);
 }
 
 export async function editFeedbackAction({
