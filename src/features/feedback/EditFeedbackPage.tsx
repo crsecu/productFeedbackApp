@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import FeedbackFormNew from "./FeedbackFormNew";
 import { FeedbackFormData, StatusType } from "../../types/feedback.types";
 import { deleteFeedback } from "../../services/apiFeedback";
@@ -16,31 +16,36 @@ function EditFeedbackPage(): React.JSX.Element {
   const navigate = useNavigate();
   const { state } = useLocation();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [initialFormValues, setInitialFormValues] = useState(state);
+
   const formData = useActionData() as FeedbackFormData;
+  console.log("state?", state);
+  console.log("edit feedback state", initialFormValues);
 
-  console.log("edit errors", formData);
+  const handleDeleteFeedbackEntry = useCallback(async () => {
+    await deleteFeedback(initialFormValues.id);
+    console.log("feedback entry deleted", initialFormValues.id);
 
-  // const handleDeleteFeedbackEntry = useCallback(async () => {
-  //   await deleteFeedback(state.id);
-  //   console.log("feedback entry deleted", state.id);
+    //TO DO: Display message to inform user that the feedback entry was deleted
 
-  //   //TO DO: Display message to inform user that the feedback entry was deleted
-
-  //   navigate(-1);
-  // }, [navigate, state.id]);
+    navigate(-1);
+  }, [navigate, initialFormValues.id]);
 
   return (
     <>
       <div className="editFeedback">
-        <h1>Edit "{state?.title}"</h1>
+        <h1>Edit "{initialFormValues.title}"</h1>
         <FeedbackFormNew
           mode="edit"
-          initialValues={state}
+          initialValues={initialFormValues}
           statusOptions={statusUpdateOptions}
           errors={formData?.errors}
-          // onDelete={() => handleDeleteFeedbackEntry()}
+          onDelete={() => handleDeleteFeedbackEntry()}
           onCancel={() =>
-            navigate(`/feedbackDetail/${state.id}`, { replace: true })
+            navigate(`/feedbackDetail/${initialFormValues.id}`, {
+              replace: true,
+            })
           }
         />
       </div>
