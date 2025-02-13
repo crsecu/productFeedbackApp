@@ -72,5 +72,5 @@ export async function editFeedbackAction({
   assert(feedbackId);
 
   await editFeedback(feedbackId, data);
-  return redirect(`/feedbackDetail/${feedbackId}`);
+  return redirect(`/feedbackDetail/${feedbackId}?status=edited`);
 }

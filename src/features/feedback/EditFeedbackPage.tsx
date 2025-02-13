@@ -12,7 +12,6 @@ const statusUpdateOptions: StatusType[] = [
 ];
 
 function EditFeedbackPage(): React.JSX.Element {
-  //debugger;
   const navigate = useNavigate();
   const { state } = useLocation();
 
@@ -20,15 +19,12 @@ function EditFeedbackPage(): React.JSX.Element {
   const [initialFormValues, setInitialFormValues] = useState(state);
 
   const formData = useActionData() as FeedbackFormData;
-  console.log("state?", state);
-  console.log("edit feedback state", initialFormValues);
 
   const handleDeleteFeedbackEntry = useCallback(async () => {
     await deleteFeedback(initialFormValues.id);
     console.log("feedback entry deleted", initialFormValues.id);
 
     //TO DO: Display message to inform user that the feedback entry was deleted
-
     navigate(-1);
   }, [navigate, initialFormValues.id]);
 
@@ -36,6 +32,7 @@ function EditFeedbackPage(): React.JSX.Element {
     <>
       <div className="editFeedback">
         <h1>Edit "{initialFormValues.title}"</h1>
+
         <FeedbackFormNew
           mode="edit"
           initialValues={initialFormValues}

@@ -17,11 +17,11 @@ function NewFeedback({
   const newFeedback = useAppSelector(getFeedbackById(newFeedbackId));
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setSearchParams({});
     }, 4000);
 
-    return () => clearTimeout(timerId);
+    return () => clearTimeout(timeoutId);
   }, [setSearchParams]);
 
   if (!newFeedback) return null;

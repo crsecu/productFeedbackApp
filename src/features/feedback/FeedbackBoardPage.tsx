@@ -19,15 +19,15 @@ import NewFeedback from "./NewFeedback";
 function FeedbackBoardPage(): React.JSX.Element {
   /* TO DO: create custom hook - this logic is also used inside roadmapDevelopment */
   const { pathname } = useLocation();
-  const navigationType = useNavigationType();
   const [searchParams] = useSearchParams();
+  const navigationType = useNavigationType();
 
   const newFeedbackId = searchParams.get("newFeedbackId");
   const showFeaturedFeedback =
     navigationType === "REPLACE" || navigationType === "PUSH";
 
   const isCreateFeedback = pathname === "/feedbackBoard/createFeedback";
-
+  console.log("naaaaav type", navigationType);
   return (
     <>
       {isCreateFeedback ? (
@@ -54,6 +54,7 @@ function FeedbackBoardPage(): React.JSX.Element {
             {newFeedbackId && showFeaturedFeedback && (
               <NewFeedback newFeedbackId={newFeedbackId} />
             )}
+
             <FeedbackList />
           </main>
         </Suggestions>
