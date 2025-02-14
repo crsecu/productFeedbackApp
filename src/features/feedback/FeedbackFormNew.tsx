@@ -15,7 +15,7 @@ interface FeedbackFormProps {
   statusOptions?: StatusType[];
   errors: FeedbackFormErrors;
   onCancel: () => void;
-  onDelete?: () => Promise<void>;
+  onDelete?: () => void;
 }
 
 const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];

@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import FeedbackFormNew from "./FeedbackFormNew";
 import { FeedbackFormData, StatusType } from "../../types/feedback.types";
-import { deleteFeedback } from "../../services/apiFeedback";
 import { useActionData, useLocation, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../types/hooks";
+import { showModal } from "../../store/slices/modalSlice";
 
 const statusUpdateOptions: StatusType[] = [
   "suggestion",
@@ -12,6 +13,7 @@ const statusUpdateOptions: StatusType[] = [
 ];
 
 function EditFeedbackPage(): React.JSX.Element {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
 
@@ -20,13 +22,13 @@ function EditFeedbackPage(): React.JSX.Element {
 
   const formData = useActionData() as FeedbackFormData;
 
-  const handleDeleteFeedbackEntry = useCallback(async () => {
-    await deleteFeedback(initialFormValues.id);
-    console.log("feedback entry deleted", initialFormValues.id);
+  // const handleDeleteFeedbackEntry = useCallback(async () => {
+  //   await deleteFeedback(initialFormValues.id);
+  //   console.log("feedback entry deleted", initialFormValues.id);
 
-    //TO DO: Display message to inform user that the feedback entry was deleted
-    navigate(-1);
-  }, [navigate, initialFormValues.id]);
+  //   //TO DO: Display message to inform user that the feedback entry was deleted
+  //   navigate(-1);
+  // }, [navigate, initialFormValues.id]);
 
   return (
     <>
@@ -38,7 +40,14 @@ function EditFeedbackPage(): React.JSX.Element {
           initialValues={initialFormValues}
           statusOptions={statusUpdateOptions}
           errors={formData?.errors}
-          onDelete={() => handleDeleteFeedbackEntry()}
+          onDelete={() =>
+            dispatch(
+              showModal({
+                modalType: "DELETE_FEEDBACK",
+                confirmPayload: initialFormValues.id,
+              })
+            )
+          }
           onCancel={() =>
             navigate(`/feedbackDetail/${initialFormValues.id}`, {
               replace: true,

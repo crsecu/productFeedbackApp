@@ -27,7 +27,7 @@ function FeedbackBoardPage(): React.JSX.Element {
     navigationType === "REPLACE" || navigationType === "PUSH";
 
   const isCreateFeedback = pathname === "/feedbackBoard/createFeedback";
-  console.log("naaaaav type", navigationType);
+
   return (
     <>
       {isCreateFeedback ? (
