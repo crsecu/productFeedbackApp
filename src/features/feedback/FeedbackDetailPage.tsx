@@ -46,7 +46,10 @@ function FeedbackDetailPage(): React.JSX.Element {
         <br></br>
         <Link
           to="editFeedback"
-          state={{ id, title, category, status, description }}
+          state={{
+            id,
+            data: { title, category, status, description },
+          }}
           replace
         >
           Edit Feedback

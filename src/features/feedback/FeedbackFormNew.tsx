@@ -3,14 +3,14 @@ import InputField from "./InputField";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
 import {
-  editFormInitialValues,
+  EditFeedbackDefaultValues,
   FeedbackFormErrors,
   StatusType,
 } from "../../types/feedback.types";
 import FormFieldError from "./FormFieldError";
 
 interface FeedbackFormProps {
-  initialValues?: editFormInitialValues;
+  initialValues?: EditFeedbackDefaultValues;
   mode?: "create" | "edit";
   statusOptions?: StatusType[];
   errors: FeedbackFormErrors;
@@ -42,6 +42,33 @@ function FeedbackFormNew({
   const navigation = useNavigation();
   const isSumbitting = navigation.state === "submitting";
 
+  console.log("initial form values", initialValues);
+  //testing changes
+
+  function formChanges(e) {
+    const formData = new FormData(e.target.form);
+
+    const { formType, ...currentFormData } = Object.fromEntries(formData);
+    console.log(
+      "is data the same",
+      JSON.stringify(currentFormData) ===
+        JSON.stringify(initialValues.feedbackData)
+    );
+
+    let hasFormChanged = false;
+    let inputValue: keyof typeof currentFormData;
+    for (inputValue in currentFormData) {
+      if (
+        currentFormData[inputValue] !== initialValues?.feedbackData[inputValue]
+      ) {
+        hasFormChanged = true;
+        break;
+      }
+    }
+
+    console.log("has form changed", hasFormChanged);
+  }
+
   return (
     <Form method={httpMethod} replace>
       {mode === "edit" && (
@@ -59,7 +86,7 @@ function FeedbackFormNew({
           id="feedbackTitle"
           type="text"
           describedById="feedbackTitleDesc"
-          initialValue={initialValues?.title}
+          initialValue={initialValues?.feedbackData.title}
         />
         <FormFieldError errorMessage={errors?.title} />
       </FormField>
@@ -76,7 +103,7 @@ function FeedbackFormNew({
           id="feedbackCategory"
           options={feedbackCategories}
           describedById="feedbackCategoryDesc"
-          initialValue={initialValues?.category}
+          initialValue={initialValues?.feedbackData.category}
         />
       </FormField>
       <br></br>
@@ -94,7 +121,7 @@ function FeedbackFormNew({
             id="feedbackStatus"
             options={statusOptions}
             describedById="feedbackStatusDesc"
-            initialValue={initialValues?.status}
+            initialValue={initialValues?.feedbackData.status}
           />
         </FormField>
       )}
@@ -111,7 +138,7 @@ function FeedbackFormNew({
           id="feedbackDescription"
           aria-describedby="feedbackDescriptionDesc"
           maxLength={250}
-          defaultValue={initialValues?.description}
+          defaultValue={initialValues?.feedbackData.description}
           required
         />
         <FormFieldError errorMessage={errors?.description} />
@@ -129,7 +156,7 @@ function FeedbackFormNew({
             {isSumbitting ? "submitting form..." : mainButton}
           </button>
 
-          <button type="button" onClick={onCancel}>
+          <button type="button" onClick={formChanges}>
             Cancel
           </button>
 

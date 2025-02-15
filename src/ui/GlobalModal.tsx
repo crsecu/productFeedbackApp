@@ -11,11 +11,11 @@ function GlobalModal(): React.JSX.Element | null {
   const { isOpen, modalType, content, confirmPayload } = useAppSelector(
     (state) => state.modal
   );
-
+  console.log("what is the modalType ", modalType);
   if (!isOpen) return null;
 
   const handleConfirm = async () => {
-    if (modalType === "DELETE_FEEDBACK") {
+    if (modalType === "delete_feedback") {
       try {
         assert(confirmPayload);
         await deleteFeedback(confirmPayload);
@@ -34,6 +34,17 @@ function GlobalModal(): React.JSX.Element | null {
       }
     }
 
+    if (modalType === "cancel_editFeedback") {
+      navigate(`/feedbackDetail/${confirmPayload}`, {
+        replace: true,
+      });
+    }
+
+    if (modalType === "cancel_addFeedback") {
+      assert(confirmPayload);
+      navigate(confirmPayload);
+    }
+
     dispatch(hideModal());
   };
 
@@ -41,12 +52,10 @@ function GlobalModal(): React.JSX.Element | null {
     <div>
       <p>{content}</p>
 
-      {modalType === "DELETE_FEEDBACK" && (
-        <>
-          <button onClick={handleConfirm}>Confirm</button>
-          <button onClick={() => dispatch(hideModal())}>Cancel</button>
-        </>
-      )}
+      <>
+        <button onClick={handleConfirm}>Confirm</button>
+        <button onClick={() => dispatch(hideModal())}>Cancel</button>
+      </>
     </div>
   );
 }

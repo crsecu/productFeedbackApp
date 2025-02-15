@@ -16,9 +16,9 @@ function EditFeedbackPage(): React.JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { state } = useLocation();
-
+  console.log("state", state);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [initialFormValues, setInitialFormValues] = useState(state);
+  const [currentFeedbackValues, setCurrentFeedbackValues] = useState(state);
 
   const formData = useActionData() as FeedbackFormData;
 
@@ -33,25 +33,28 @@ function EditFeedbackPage(): React.JSX.Element {
   return (
     <>
       <div className="editFeedback">
-        <h1>Edit "{initialFormValues.title}"</h1>
+        <h1>Edit "{currentFeedbackValues.feedbackData.title}"</h1>
 
         <FeedbackFormNew
           mode="edit"
-          initialValues={initialFormValues}
+          initialValues={currentFeedbackValues}
           statusOptions={statusUpdateOptions}
           errors={formData?.errors}
           onDelete={() =>
             dispatch(
               showModal({
                 modalType: "DELETE_FEEDBACK",
-                confirmPayload: initialFormValues.id,
+                confirmPayload: currentFeedbackValues.feedbackData.id,
               })
             )
           }
           onCancel={() =>
-            navigate(`/feedbackDetail/${initialFormValues.id}`, {
-              replace: true,
-            })
+            navigate(
+              `/feedbackDetail/${currentFeedbackValues.feedbackData.id}`,
+              {
+                replace: true,
+              }
+            )
           }
         />
       </div>

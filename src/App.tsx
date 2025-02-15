@@ -20,6 +20,8 @@ import NotFoundPage from "./ui/NotFoundPage";
 import RootRoute from "./ui/RootRoute";
 import EditFeedbackPage from "./features/feedback/EditFeedbackPage";
 import { editFeedbackAction } from "./data_handlers/feedbackActions";
+import EditFeedbackBest from "./features/feedback/EditFeedbackBest";
+import CreateFeedbackBest from "./features/feedback/CreateFeedbackBest";
 
 const router = createBrowserRouter([
   {
@@ -70,7 +72,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "createFeedback",
-            element: <CreateFeedbackPage />,
+            element: <CreateFeedbackBest />,
             action: createFeedbackAction,
           },
         ],
@@ -105,7 +107,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "editFeedback",
-            element: <EditFeedbackPage />,
+            element: <EditFeedbackBest />,
             action: editFeedbackAction,
           },
         ],
