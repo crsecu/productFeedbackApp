@@ -1,6 +1,6 @@
 import { Form } from "react-router-dom";
 import {
-  EditFeedbackDefaultValues,
+  EditFeedbackFormValues,
   FeedbackFormErrors,
 } from "../../types/feedback.types";
 import { ReactNode } from "react";
@@ -12,9 +12,10 @@ import SelectField from "./SelectField";
 interface FeedbackFormBestProps {
   children?: ReactNode;
   method: "post" | "patch";
-  defaultValues?: EditFeedbackDefaultValues;
+  defaultValues?: EditFeedbackFormValues;
   footer: ReactNode;
   errors: FeedbackFormErrors;
+  handleChange: (e) => void;
 }
 
 const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];
@@ -26,9 +27,10 @@ function FeedbackFormBest({
   defaultValues,
   footer,
   errors,
+  handleChange, //temporary test to check if form val have changed
 }: FeedbackFormBestProps): React.JSX.Element {
   return (
-    <Form method={method}>
+    <Form method={method} onChange={handleChange}>
       <FormField
         inputId="feedbackTitle"
         label="Feedback Title"

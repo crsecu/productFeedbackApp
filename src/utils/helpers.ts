@@ -141,3 +141,12 @@ export async function postCommentOrReply(
 
   return null;
 }
+
+/* Function if any form field values have changed from their initial state */
+export function hasFormChanged(initialValues, currentValues) {
+  const formFieldNames = Object.keys(initialValues);
+
+  return formFieldNames.some(
+    (key) => initialValues[key] !== currentValues[key]
+  );
+}

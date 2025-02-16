@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
 import { useAppDispatch } from "../../types/hooks";
+import { hasFormChanged } from "../../utils/helpers";
 
 const statusOptions: StatusType[] = [
   "suggestion",
@@ -27,52 +28,51 @@ function EditFeedbackBest(): React.JSX.Element {
   const navigate = useNavigate();
   const isSubmitting = navigation.state === "submitting";
 
-  const [feedback] = useState(state);
+  const [initialFeedbackData] = useState(state);
+  const [isFormDirty, setIsFormDirty] = useState(false);
 
-  function handleFormDismiss(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleCancel(e: React.MouseEvent<HTMLButtonElement>) {
     const formElement = e.currentTarget.form;
+
     if (!formElement) {
-      console.log("Warning!!! Button is not inside a form");
-      return; // Prevents null access errors
+      console.warn("Warning!!! Button is not inside a form");
+      return;
     }
 
-    const formData = new FormData(formElement);
-
-    const data = Object.fromEntries(formData);
-    console.log(
-      "is data the same",
-      JSON.stringify(data) === JSON.stringify(feedback.data),
-      data
-    );
-
-    const hasFormChanged =
-      JSON.stringify(data) !== JSON.stringify(feedback.data);
-    console.log("has edit form changed ", hasFormChanged);
-
-    if (!hasFormChanged) {
-      navigate(`/feedbackDetail/${feedback.id}`, {
+    if (!isFormDirty) {
+      navigate(`/feedbackDetail/${initialFeedbackData.id}`, {
         replace: true,
       });
     } else {
       dispatch(
         showModal({
           modalType: "cancel_editFeedback",
-          confirmPayload: feedback.id,
+          confirmPayload: initialFeedbackData.id,
         })
       );
     }
   }
 
+  function handleFormChange(e: { currentTarget: HTMLFormElement | undefined }) {
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData);
+
+    const isDirty = hasFormChanged(initialFeedbackData.data, data);
+
+    if (isDirty !== isFormDirty) setIsFormDirty(isDirty);
+  }
+
   return (
     <FeedbackFormBest
+      handleChange={(e) => handleFormChange(e)}
       method="patch"
-      defaultValues={feedback.data}
+      defaultValues={initialFeedbackData.data}
       footer={
         <>
-          <button disabled={isSubmitting}>
+          <button disabled={isSubmitting || isFormDirty === false}>
             {isSubmitting ? "Saving Changes..." : "Save Changes"}
           </button>
-          <button type="button" onClick={(e) => handleFormDismiss(e)}>
+          <button type="button" onClick={(e) => handleCancel(e)}>
             Cancel
           </button>
           <button
@@ -81,7 +81,7 @@ function EditFeedbackBest(): React.JSX.Element {
               dispatch(
                 showModal({
                   modalType: "delete_feedback",
-                  confirmPayload: feedback.id,
+                  confirmPayload: initialFeedbackData.id,
                 })
               );
             }}
@@ -103,7 +103,7 @@ function EditFeedbackBest(): React.JSX.Element {
           id="feedbackStatus"
           options={statusOptions}
           describedById="feedbackStatusDesc"
-          initialValue={feedback.data.status}
+          initialValue={initialFeedbackData.data.status}
         />
       </FormField>
     </FeedbackFormBest>

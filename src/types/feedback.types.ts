@@ -21,7 +21,7 @@ export interface FeedbackType extends NewFeedbackType {
   status: StatusType;
 }
 
-export interface EditFeedbackDefaultValues {
+export interface EditFeedbackFormValues {
   title: string;
   category: string;
   status: StatusType;
