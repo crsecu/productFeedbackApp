@@ -11,7 +11,7 @@ function GlobalModal(): React.JSX.Element | null {
   const { isOpen, modalType, content, confirmPayload } = useAppSelector(
     (state) => state.modal
   );
-  console.log("what is the modalType ", modalType);
+
   if (!isOpen) return null;
 
   const handleConfirm = async () => {

@@ -21,11 +21,13 @@ export interface FeedbackType extends NewFeedbackType {
   status: StatusType;
 }
 
-export interface EditFeedbackFormValues {
+export interface CreateFeedbackFormValues {
   title: string;
   category: string;
-  status: StatusType;
   description: string;
+}
+export interface EditFeedbackFormValues extends CreateFeedbackFormValues {
+  status: StatusType;
 }
 
 export interface FeedbackFormErrors {

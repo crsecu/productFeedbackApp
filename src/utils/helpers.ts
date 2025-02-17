@@ -6,7 +6,11 @@ import {
   NewCommentType,
   NewReplyType,
 } from "../types/comment.types";
-import { FeedbackType } from "../types/feedback.types";
+import {
+  CreateFeedbackFormValues,
+  EditFeedbackFormValues,
+  FeedbackType,
+} from "../types/feedback.types";
 
 /* Reusable Fetch Helper */
 export async function fetchWrapper(url: string, options: RequestInit = {}) {
@@ -142,11 +146,25 @@ export async function postCommentOrReply(
   return null;
 }
 
-/* Function if any form field values have changed from their initial state */
-export function hasFormChanged(initialValues, currentValues) {
+/* Function checks if any form field values have changed by comparing each field in "currentValues" against "initialValues"; returns true as soon as a change is detected*/
+function hasFormChanged(initialValues, currentValues) {
   const formFieldNames = Object.keys(initialValues);
 
   return formFieldNames.some(
     (key) => initialValues[key] !== currentValues[key]
   );
+}
+
+/* Function checks if the form has been modified by extracting current form values from an HTMLFormElement and comparing them to the provided initial values; if changes are detected, it updates the `isFormModified` state accordingly */
+export function handleFormChange(
+  currentTarget: HTMLFormElement,
+  initialFormData: CreateFeedbackFormValues | EditFeedbackFormValues,
+  isFormModified: boolean,
+  setIsFormModified: React.Dispatch<React.SetStateAction<boolean>>
+) {
+  const formData = new FormData(currentTarget);
+  const currentFormData = Object.fromEntries(formData);
+  const isChanged = hasFormChanged(initialFormData, currentFormData);
+
+  if (isChanged !== isFormModified) setIsFormModified(isChanged);
 }

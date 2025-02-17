@@ -9,7 +9,6 @@ import { FeedbackFormData } from "../../types/feedback.types";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showModal } from "../../store/slices/modalSlice";
-import { hasFormChanged } from "../../utils/helpers";
 
 const initialFormState = {
   title: "",
@@ -28,7 +27,7 @@ function CreateFeedbackBest(): React.JSX.Element {
   const prevPage = useRef(state?.from);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
-  function handleCancel(e) {
+  function handleCancel() {
     if (!isFormDirty) {
       navigate(prevPage.current);
     } else {
@@ -41,29 +40,22 @@ function CreateFeedbackBest(): React.JSX.Element {
     }
   }
 
-  function handleFormChange(e: { currentTarget: HTMLFormElement | undefined }) {
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData);
-
-    const isDirty = hasFormChanged(initialFormState, data);
-
-    if (isDirty !== isFormDirty) setIsFormDirty(isDirty);
-  }
-
   return (
     <FeedbackFormBest
-      handleChange={handleFormChange}
       method="post"
+      defaultValues={initialFormState}
       footer={
         <>
           <button disabled={isSubmitting || isFormDirty === false}>
             {isSubmitting ? "Submitting..." : "Add Feedback"}
           </button>
-          <button type="button" onClick={(e) => handleCancel(e)}>
+          <button type="button" onClick={handleCancel}>
             Cancel
           </button>
         </>
       }
+      isDirty={isFormDirty}
+      setIsDirty={setIsFormDirty}
       errors={formData?.errors}
     />
   );

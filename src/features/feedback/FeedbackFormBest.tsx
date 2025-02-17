@@ -1,21 +1,24 @@
+import { ReactNode } from "react";
 import { Form } from "react-router-dom";
 import {
+  CreateFeedbackFormValues,
   EditFeedbackFormValues,
   FeedbackFormErrors,
 } from "../../types/feedback.types";
-import { ReactNode } from "react";
 import FormField from "./FormField";
 import InputField from "./InputField";
 import FormFieldError from "./FormFieldError";
 import SelectField from "./SelectField";
+import { handleFormChange } from "../../utils/helpers";
 
 interface FeedbackFormBestProps {
   children?: ReactNode;
   method: "post" | "patch";
-  defaultValues?: EditFeedbackFormValues;
+  defaultValues: CreateFeedbackFormValues | EditFeedbackFormValues;
   footer: ReactNode;
+  isDirty: boolean;
+  setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
   errors: FeedbackFormErrors;
-  handleChange: (e) => void;
 }
 
 const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];
@@ -26,11 +29,18 @@ function FeedbackFormBest({
   method,
   defaultValues,
   footer,
+  isDirty,
+  setIsDirty,
   errors,
-  handleChange, //temporary test to check if form val have changed
 }: FeedbackFormBestProps): React.JSX.Element {
   return (
-    <Form method={method} onChange={handleChange}>
+    <Form
+      method={method}
+      onChange={(e) =>
+        handleFormChange(e.currentTarget, defaultValues, isDirty, setIsDirty)
+      }
+      replace
+    >
       <FormField
         inputId="feedbackTitle"
         label="Feedback Title"
@@ -42,7 +52,7 @@ function FeedbackFormBest({
           id="feedbackTitle"
           type="text"
           describedById="feedbackTitleDesc"
-          initialValue={defaultValues?.title}
+          initialValue={defaultValues.title}
         />
         <FormFieldError errorMessage={errors?.title} />
       </FormField>
@@ -59,7 +69,7 @@ function FeedbackFormBest({
           id="feedbackCategory"
           options={feedbackCategories}
           describedById="feedbackCategoryDesc"
-          initialValue={defaultValues?.category}
+          initialValue={defaultValues.category}
         />
       </FormField>
 
@@ -76,7 +86,7 @@ function FeedbackFormBest({
           id="feedbackDescription"
           aria-describedby="feedbackDescriptionDesc"
           maxLength={250}
-          defaultValue={defaultValues?.description}
+          defaultValue={defaultValues.description}
           required
         />
         <FormFieldError errorMessage={errors?.description} />

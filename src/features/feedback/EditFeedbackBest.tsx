@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
 import { useAppDispatch } from "../../types/hooks";
-import { hasFormChanged } from "../../utils/helpers";
 
 const statusOptions: StatusType[] = [
   "suggestion",
@@ -53,18 +52,8 @@ function EditFeedbackBest(): React.JSX.Element {
     }
   }
 
-  function handleFormChange(e: { currentTarget: HTMLFormElement | undefined }) {
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData);
-
-    const isDirty = hasFormChanged(initialFeedbackData.data, data);
-
-    if (isDirty !== isFormDirty) setIsFormDirty(isDirty);
-  }
-
   return (
     <FeedbackFormBest
-      handleChange={(e) => handleFormChange(e)}
       method="patch"
       defaultValues={initialFeedbackData.data}
       footer={
@@ -90,6 +79,8 @@ function EditFeedbackBest(): React.JSX.Element {
           </button>
         </>
       }
+      isDirty={isFormDirty}
+      setIsDirty={setIsFormDirty}
       errors={formData?.errors}
     >
       <FormField
