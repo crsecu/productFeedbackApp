@@ -15,6 +15,7 @@ import SortBy from "./SortBy";
 import TitleCard from "./TitleCard";
 import Suggestions from "./Suggestions";
 import NewFeedback from "./NewFeedback";
+import { useShowCreateFeedbackForm } from "../../utils/customHooks";
 
 function FeedbackBoardPage(): React.JSX.Element {
   /* TO DO: create custom hook - this logic is also used inside roadmapDevelopment */
@@ -26,7 +27,7 @@ function FeedbackBoardPage(): React.JSX.Element {
   const showFeaturedFeedback =
     navigationType === "REPLACE" || navigationType === "PUSH";
 
-  const isCreateFeedback = pathname === "/feedbackBoard/createFeedback";
+  const isCreateFeedback = useShowCreateFeedbackForm();
 
   return (
     <>

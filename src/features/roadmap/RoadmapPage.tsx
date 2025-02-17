@@ -1,7 +1,8 @@
-import { Link, Outlet, useLoaderData, useLocation } from "react-router-dom";
+import { Link, Outlet, useLoaderData } from "react-router-dom";
 import RoadmapStatusColumn from "./RoadmapStatusColumn";
 import PageHeader from "../../ui/PageHeader";
 import { FeedbackType, RoadmapStatusType } from "../../types/feedback.types";
+import { useShowCreateFeedbackForm } from "../../utils/customHooks";
 
 function RoadmapPage(): React.JSX.Element {
   const dataFromLoader = useLoaderData() as Record<
@@ -9,10 +10,8 @@ function RoadmapPage(): React.JSX.Element {
     FeedbackType[]
   >;
 
-  /* TO DO: create custom hook - this logic is also used inside feedbackBoard */
-  const location = useLocation();
-  const isCreateFeedback =
-    location.pathname === "/developmentRoadmap/createFeedback";
+  const isCreateFeedback = useShowCreateFeedbackForm();
+  console.log("isCreateFeedback", isCreateFeedback);
 
   const { planned, "in-Progress": inProgress, live } = dataFromLoader;
 
