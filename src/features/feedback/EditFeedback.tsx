@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FeedbackFormData, StatusType } from "../../types/feedback.types";
-import FeedbackFormBest from "./FeedbackFormBest";
+import FeedbackForm from "./FeedbackForm";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
 import {
@@ -19,7 +19,7 @@ const statusOptions: StatusType[] = [
   "live",
 ];
 
-function EditFeedbackBest(): React.JSX.Element {
+function EditFeedback(): React.JSX.Element {
   const dispatch = useAppDispatch();
   const { state } = useLocation();
   const formData = useActionData() as FeedbackFormData;
@@ -53,7 +53,7 @@ function EditFeedbackBest(): React.JSX.Element {
   }
 
   return (
-    <FeedbackFormBest
+    <FeedbackForm
       method="patch"
       defaultValues={initialFeedbackData.data}
       footer={
@@ -97,8 +97,8 @@ function EditFeedbackBest(): React.JSX.Element {
           initialValue={initialFeedbackData.data.status}
         />
       </FormField>
-    </FeedbackFormBest>
+    </FeedbackForm>
   );
 }
 
-export default EditFeedbackBest;
+export default EditFeedback;

@@ -4,7 +4,7 @@ import {
   useNavigate,
   useNavigation,
 } from "react-router-dom";
-import FeedbackFormBest from "./FeedbackFormBest";
+import FeedbackForm from "./FeedbackForm";
 import { FeedbackFormData } from "../../types/feedback.types";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ const initialFormState = {
   description: "",
 };
 
-function CreateFeedbackBest(): React.JSX.Element {
+function CreateFeedback(): React.JSX.Element {
   const dispatch = useDispatch();
   const formData = useActionData() as FeedbackFormData;
   const { state } = useLocation();
@@ -41,7 +41,7 @@ function CreateFeedbackBest(): React.JSX.Element {
   }
 
   return (
-    <FeedbackFormBest
+    <FeedbackForm
       method="post"
       defaultValues={initialFormState}
       footer={
@@ -61,4 +61,4 @@ function CreateFeedbackBest(): React.JSX.Element {
   );
 }
 
-export default CreateFeedbackBest;
+export default CreateFeedback;

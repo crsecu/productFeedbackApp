@@ -13,15 +13,15 @@ import StateSyncWrapper from "./data_handlers/StateSyncWrapper";
 import HomePage from "./ui/HomePage";
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
 import RoadmapPage from "./features/roadmap/RoadmapPage";
-import CreateFeedbackPage from "./features/feedback/CreateFeedbackPage";
+
 import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import ErrorPage from "./ui/ErrorPage";
 import NotFoundPage from "./ui/NotFoundPage";
 import RootRoute from "./ui/RootRoute";
-import EditFeedbackPage from "./features/feedback/EditFeedbackPage";
+
 import { editFeedbackAction } from "./data_handlers/feedbackActions";
-import EditFeedbackBest from "./features/feedback/EditFeedbackBest";
-import CreateFeedbackBest from "./features/feedback/CreateFeedbackBest";
+import EditFeedback from "./features/feedback/EditFeedback";
+import CreateFeedback from "./features/feedback/CreateFeedback";
 
 const router = createBrowserRouter([
   {
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "createFeedback",
-            element: <CreateFeedbackBest />,
+            element: <CreateFeedback />,
             action: createFeedbackAction,
           },
         ],
@@ -84,7 +84,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "createFeedback",
-            element: <CreateFeedbackPage />,
+            element: <CreateFeedback />,
             action: createFeedbackAction,
           },
         ],
@@ -107,7 +107,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "editFeedback",
-            element: <EditFeedbackBest />,
+            element: <EditFeedback />,
             action: editFeedbackAction,
           },
         ],

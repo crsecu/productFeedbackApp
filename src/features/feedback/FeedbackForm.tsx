@@ -11,7 +11,7 @@ import FormFieldError from "./FormFieldError";
 import SelectField from "./SelectField";
 import { handleFormChange } from "../../utils/helpers";
 
-interface FeedbackFormBestProps {
+interface FeedbackFormProps {
   children?: ReactNode;
   method: "post" | "patch";
   defaultValues: CreateFeedbackFormValues | EditFeedbackFormValues;
@@ -23,7 +23,7 @@ interface FeedbackFormBestProps {
 
 const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];
 
-function FeedbackFormBest({
+function FeedbackForm({
   children,
 
   method,
@@ -32,7 +32,7 @@ function FeedbackFormBest({
   isDirty,
   setIsDirty,
   errors,
-}: FeedbackFormBestProps): React.JSX.Element {
+}: FeedbackFormProps): React.JSX.Element {
   return (
     <Form
       method={method}
@@ -98,4 +98,4 @@ function FeedbackFormBest({
   );
 }
 
-export default FeedbackFormBest;
+export default FeedbackForm;
