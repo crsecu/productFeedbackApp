@@ -1,11 +1,9 @@
 import { fetchComments } from "../../services/apiComment";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { setCommentList } from "../../store/slices/commentsSlice";
-import { useAppSelector } from "../../types/hooks";
-import { CommentListType } from "../../types/comment.types";
+import { useEffect, useState } from "react";
+import { CommentListType, CommentThreadEntry } from "../../types/comment.types";
 import Comment from "./Comment";
 import { useNavigationType } from "react-router-dom";
+import { buildCommentHierarchy } from "../../utils/helpers";
 
 interface CommentListProps {
   commentCount: number;
@@ -16,23 +14,23 @@ function CommentList({
   commentCount,
   feedbackId,
 }: CommentListProps): React.JSX.Element {
-  const dispatch = useDispatch();
   const navigationType = useNavigationType();
-
-  const comments = useAppSelector((state) => state.comment.commentList);
+  const [comments, setComments] = useState<CommentThreadEntry[]>([]);
 
   useEffect(
     function () {
       async function retrieveComments() {
         if (navigationType === "REPLACE") return;
-        const comments: CommentListType = await fetchComments(feedbackId);
-        dispatch(setCommentList(comments));
+
+        const commentList: CommentListType = await fetchComments(feedbackId);
+        const commentThread = buildCommentHierarchy(commentList);
+        setComments(commentThread);
       }
+
       retrieveComments();
     },
-    [dispatch, feedbackId, commentCount, navigationType]
+    [feedbackId, commentCount, navigationType]
   );
-  const replies = comments.filter((comment) => comment.type === "reply"); //TO DO: memoize
 
   if (commentCount === 0)
     return <p>No comments yet. Be the first to share your thoughts!</p>;
@@ -44,17 +42,11 @@ function CommentList({
       </h2>
       <ul>
         {comments.map((comment) => {
-          if (comment.type === "comment") {
-            return (
-              <li key={comment.id}>
-                <Comment
-                  comment={comment}
-                  commentCount={commentCount}
-                  replies={replies}
-                />
-              </li>
-            );
-          }
+          return (
+            <li key={comment.id}>
+              <Comment comment={comment} commentCount={commentCount} />
+            </li>
+          );
         })}
       </ul>
     </>

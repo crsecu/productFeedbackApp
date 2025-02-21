@@ -35,6 +35,19 @@ export interface ReplyType extends NewReplyType {
   id: string;
 }
 
+/* Type annotation for comment/reply that belongs to a comment thread (data is transformed from flat structure to nested structure after fetching)*/
+export interface CommentThreadEntry {
+  id: string;
+  feedbackId: string;
+  type: CommentKindType;
+  parentId: string | null;
+  parentType: CommentKindType | null;
+  content: string;
+  replyingTo?: string;
+  user: CommentAuthor;
+  replies: CommentThreadEntry[];
+}
+
 export type CommentListType = (CommentType | ReplyType)[];
 
 export type CommentKindType = "comment" | "reply";

@@ -11,7 +11,6 @@ function RoadmapPage(): React.JSX.Element {
   >;
 
   const isCreateFeedback = useShowCreateFeedbackForm();
-  console.log("isCreateFeedback", isCreateFeedback);
 
   const { planned, "in-Progress": inProgress, live } = dataFromLoader;
 

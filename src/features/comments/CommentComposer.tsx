@@ -1,37 +1,36 @@
 import { useFetcher } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { CommentKindType } from "../../types/comment.types";
 
-interface CommentComposerProps {
-  children: React.ReactNode;
-  mode?: CommentKindType;
+type CommentComposerProps = {
+  children?: ReactNode;
   commentCount: number;
-  // parentId, parentType, and authorUsername props only needed when CommentComposer is used in "reply" mode
-  parentId?: string; // parent comment a reply belongs to;
-  parentType?: CommentKindType;
-  authorUsername?: string; //parent comment author
-}
+} & (
+  | { mode: "comment" }
+  | {
+      mode: "reply";
+      setShowAddReply: React.Dispatch<React.SetStateAction<boolean>>;
+      parentId: string; // parent comment a reply belongs to;
+      parentType: CommentKindType;
+      authorUsername: string; //parent comment author
+    }
+);
 
-function CommentComposer({
-  children,
-  mode = "comment",
-  commentCount,
-  parentId,
-  parentType,
-  authorUsername,
-}: CommentComposerProps): React.JSX.Element {
+function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const fetcher = useFetcher();
+
+  const [commentContent, setCommentContent] = useState("");
+
+  const commentAuthor = useAppSelector((state) => state.user.validatedUser);
 
   /*TO DO: look into memoization with Reselect before using this selector function 
   const commentAuthor = useAppSelector(getLoggedInUser);
   */
-
-  const commentAuthor = useAppSelector((state) => state.user.validatedUser);
+  const { children, commentCount, mode } = props;
 
   const { name, username, image } = commentAuthor;
-
-  const [commentContent, setCommentContent] = useState("");
+  const isSubmitting = fetcher.state === "submitting";
 
   function handleSubmit() {
     const formData = new FormData();
@@ -40,8 +39,9 @@ function CommentComposer({
     formData.append("currentCommentCount", JSON.stringify(commentCount));
     formData.append("author", JSON.stringify({ name, username, image }));
 
-    /* data submitted conditionally when mode = 'reply'*/
+    /* data submitted conditionally when mode === 'reply'*/
     if (mode === "reply") {
+      const { parentId, parentType, authorUsername } = props;
       formData.append("parentId", parentId);
       formData.append("parentType", parentType);
       formData.append("replyingTo", authorUsername);
@@ -58,14 +58,22 @@ function CommentComposer({
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();
+          setCommentContent("");
+          if (mode !== "reply") return;
+
+          props.setShowAddReply(false);
         }}
       >
         {children}
+
         <textarea
           id="commentInput"
+          value={commentContent}
           onChange={(e) => setCommentContent(e.target.value)}
         ></textarea>
-        <button>Post Comment</button>
+        <button disabled={commentContent.trim() === ""}>
+          {isSubmitting ? "Posting comment..." : "Post Comment"}
+        </button>
       </form>
     </>
   );

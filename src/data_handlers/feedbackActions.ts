@@ -43,7 +43,7 @@ export async function submitCommentAction({
 }: ActionFunctionArgs) {
   const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
-  console.log("hey");
+
   return postCommentOrReply(formData, feedbackId);
 }
 

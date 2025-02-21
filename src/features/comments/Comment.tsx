@@ -1,21 +1,14 @@
 import { useState } from "react";
-import {
-  CommentType,
-  ReplyType,
-  CommentKindType,
-} from "../../types/comment.types";
+import { CommentKindType, CommentThreadEntry } from "../../types/comment.types";
 import CommentComposer from "./CommentComposer";
 
 interface CommentProps {
-  comment: CommentType | ReplyType;
-  replies?: ReplyType[];
+  comment: CommentThreadEntry;
   commentCount: number;
 }
-function Comment({
-  comment,
-  replies,
-  commentCount,
-}: CommentProps): React.JSX.Element {
+function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
+  const [showAddReply, setShowAddReply] = useState(false);
+
   const {
     content,
     id,
@@ -23,11 +16,8 @@ function Comment({
     user: { image, name, username },
   } = comment;
 
-  const parentTypeVariant: CommentKindType = parentType ? "comment" : "reply";
-  const [isAddReply, setIsAddReply] = useState(false);
-  function handleReply() {
-    setIsAddReply((prevState) => !prevState);
-  }
+  const parentTypeVariant: CommentKindType =
+    parentType === null ? "comment" : "reply";
 
   return (
     <>
@@ -43,34 +33,34 @@ function Comment({
           </div>
         </div>
         <p>{content}</p>
-        <button onClick={handleReply}>Reply</button>
-        {isAddReply && (
+        {parentType !== "reply" && (
+          <button onClick={() => setShowAddReply((prevState) => !prevState)}>
+            Reply
+          </button>
+        )}
+
+        <div className={!showAddReply ? "hidden" : ""}>
           <CommentComposer
             mode="reply"
+            setShowAddReply={setShowAddReply}
             parentId={id as string}
             parentType={parentTypeVariant}
             authorUsername={username}
             commentCount={commentCount}
           />
-        )}
+        </div>
       </div>
-      {replies ? (
+      {comment.replies && comment.replies.length > 0 && (
         <ul>
-          {replies.map((commentReply) => {
-            if (commentReply.parentId === id) {
-              return (
-                <li key={commentReply.id}>
-                  <Comment
-                    comment={commentReply}
-                    commentCount={commentCount}
-                    replies={replies}
-                  />
-                </li>
-              );
-            }
+          {comment.replies.map((commentReply) => {
+            return (
+              <li key={commentReply.id}>
+                <Comment comment={commentReply} commentCount={commentCount} />
+              </li>
+            );
           })}
         </ul>
-      ) : null}
+      )}
     </>
   );
 }

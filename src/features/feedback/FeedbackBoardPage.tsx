@@ -18,7 +18,6 @@ import NewFeedback from "./NewFeedback";
 import { useShowCreateFeedbackForm } from "../../utils/customHooks";
 
 function FeedbackBoardPage(): React.JSX.Element {
-  /* TO DO: create custom hook - this logic is also used inside roadmapDevelopment */
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
   const navigationType = useNavigationType();

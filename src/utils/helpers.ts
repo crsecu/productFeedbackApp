@@ -3,6 +3,8 @@ import { submitComment } from "../services/apiComment";
 import { fetchUserList, updateCommentCount } from "../services/apiFeedback";
 import {
   CommentAuthor,
+  CommentListType,
+  CommentThreadEntry,
   NewCommentType,
   NewReplyType,
 } from "../types/comment.types";
@@ -167,4 +169,31 @@ export function handleFormChange(
   const isChanged = hasFormChanged(initialFormData, currentFormData);
 
   if (isChanged !== isFormModified) setIsFormModified(isChanged);
+}
+
+// This function creates a comment thread by associating replies with their respective parent comments
+//TO DO: ADD TYPE ANNOTATIONS
+export function buildCommentHierarchy(comments: CommentListType) {
+  const commentsThread: CommentThreadEntry[] = [];
+  const commentIdMap: { [key: string]: CommentThreadEntry } = {};
+
+  comments.forEach((comment) => {
+    commentIdMap[comment.id] = {
+      ...comment,
+      replies: [],
+    } as CommentThreadEntry;
+  });
+
+  comments.forEach((comment) => {
+    if (comment.parentType === null) {
+      commentsThread.push(commentIdMap[comment.id]);
+    } else {
+      const parent = commentIdMap[comment.parentId];
+      if (parent) {
+        parent.replies.push(commentIdMap[comment.id]);
+      }
+    }
+  });
+
+  return commentsThread;
 }

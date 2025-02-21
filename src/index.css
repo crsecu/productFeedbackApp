@@ -96,3 +96,7 @@ textarea {
   background-color: rgb(130, 185, 134);
   border: 16px solid orange;
 }
+
+.hidden {
+  display: none;
+}
