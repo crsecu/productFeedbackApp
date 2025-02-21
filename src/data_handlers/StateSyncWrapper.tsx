@@ -24,12 +24,7 @@ function StateSyncWrapper({
     [dataFromLoader, dispatch]
   );
 
-  return (
-    <div>
-      <h1>Hi from Wrapper Component</h1>
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 }
 
 export default StateSyncWrapper;

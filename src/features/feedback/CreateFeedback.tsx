@@ -41,23 +41,27 @@ function CreateFeedback(): React.JSX.Element {
   }
 
   return (
-    <FeedbackForm
-      method="post"
-      defaultValues={initialFormState}
-      footer={
-        <>
-          <button disabled={isSubmitting || isFormDirty === false}>
-            {isSubmitting ? "Submitting..." : "Add Feedback"}
-          </button>
-          <button type="button" onClick={handleCancel}>
-            Cancel
-          </button>
-        </>
-      }
-      isDirty={isFormDirty}
-      setIsDirty={setIsFormDirty}
-      errors={formData?.errors}
-    />
+    <>
+      <button onClick={handleCancel}>Go Back</button>
+      <h1>Create New Feedback</h1>
+      <FeedbackForm
+        method="post"
+        defaultValues={initialFormState}
+        footer={
+          <>
+            <button disabled={isSubmitting || isFormDirty === false}>
+              {isSubmitting ? "Submitting..." : "Add Feedback"}
+            </button>
+            <button type="button" onClick={handleCancel}>
+              Cancel
+            </button>
+          </>
+        }
+        isDirty={isFormDirty}
+        setIsDirty={setIsFormDirty}
+        errors={formData?.errors}
+      />
+    </>
   );
 }
 

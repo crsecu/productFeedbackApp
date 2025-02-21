@@ -12,14 +12,14 @@ interface NewFeedbackProps {
 function NewFeedback({
   newFeedbackId,
 }: NewFeedbackProps): React.JSX.Element | null {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const newFeedback = useAppSelector(getFeedbackById(newFeedbackId));
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setSearchParams({});
-    }, 4000);
+    }, 2000);
 
     return () => clearTimeout(timeoutId);
   }, [setSearchParams]);

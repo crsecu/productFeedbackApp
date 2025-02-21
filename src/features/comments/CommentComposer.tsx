@@ -24,13 +24,9 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
 
   const commentAuthor = useAppSelector((state) => state.user.validatedUser);
 
-  /*TO DO: look into memoization with Reselect before using this selector function 
-  const commentAuthor = useAppSelector(getLoggedInUser);
-  */
   const { children, commentCount, mode } = props;
 
   const { name, username, image } = commentAuthor;
-  const isSubmitting = fetcher.state === "submitting";
 
   function handleSubmit() {
     const formData = new FormData();
@@ -59,9 +55,9 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
           e.preventDefault();
           handleSubmit();
           setCommentContent("");
-          if (mode !== "reply") return;
+          // if (mode !== "reply") return;
 
-          props.setShowAddReply(false);
+          // props.setShowAddReply(false);
         }}
       >
         {children}
@@ -72,7 +68,7 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
           onChange={(e) => setCommentContent(e.target.value)}
         ></textarea>
         <button disabled={commentContent.trim() === ""}>
-          {isSubmitting ? "Posting comment..." : "Post Comment"}
+          {fetcher.state !== "idle" ? "Posting comment..." : "Post Comment"}
         </button>
       </form>
     </>

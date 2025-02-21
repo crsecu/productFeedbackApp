@@ -51,53 +51,56 @@ function EditFeedback(): React.JSX.Element {
       );
     }
   }
-
+  console.log("initial", initialFeedbackData);
   return (
-    <FeedbackForm
-      method="patch"
-      defaultValues={initialFeedbackData.data}
-      footer={
-        <>
-          <button disabled={isSubmitting || isFormDirty === false}>
-            {isSubmitting ? "Saving Changes..." : "Save Changes"}
-          </button>
-          <button type="button" onClick={(e) => handleCancel(e)}>
-            Cancel
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              dispatch(
-                showModal({
-                  modalType: "delete_feedback",
-                  confirmPayload: initialFeedbackData.id,
-                })
-              );
-            }}
-          >
-            Delete
-          </button>
-        </>
-      }
-      isDirty={isFormDirty}
-      setIsDirty={setIsFormDirty}
-      errors={formData?.errors}
-    >
-      <FormField
-        inputId="feedbackStatus"
-        label="Update Status"
-        description="Change feature state"
-        inputGuidanceId="feedbackStatusDesc"
+    <>
+      <h1>Editing {initialFeedbackData.data.title}</h1>
+      <FeedbackForm
+        method="patch"
+        defaultValues={initialFeedbackData.data}
+        footer={
+          <>
+            <button disabled={isSubmitting || isFormDirty === false}>
+              {isSubmitting ? "Saving Changes..." : "Save Changes"}
+            </button>
+            <button type="button" onClick={(e) => handleCancel(e)}>
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                dispatch(
+                  showModal({
+                    modalType: "delete_feedback",
+                    confirmPayload: initialFeedbackData.id,
+                  })
+                );
+              }}
+            >
+              Delete
+            </button>
+          </>
+        }
+        isDirty={isFormDirty}
+        setIsDirty={setIsFormDirty}
+        errors={formData?.errors}
       >
-        <SelectField
-          name="status"
-          id="feedbackStatus"
-          options={statusOptions}
-          describedById="feedbackStatusDesc"
-          initialValue={initialFeedbackData.data.status}
-        />
-      </FormField>
-    </FeedbackForm>
+        <FormField
+          inputId="feedbackStatus"
+          label="Update Status"
+          description="Change feature state"
+          inputGuidanceId="feedbackStatusDesc"
+        >
+          <SelectField
+            name="status"
+            id="feedbackStatus"
+            options={statusOptions}
+            describedById="feedbackStatusDesc"
+            initialValue={initialFeedbackData.data.status}
+          />
+        </FormField>
+      </FeedbackForm>
+    </>
   );
 }
 
