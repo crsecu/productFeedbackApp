@@ -40,7 +40,7 @@ function CommentList({
       <h2>
         <span>{commentCount}</span> Comments
       </h2>
-      <ul>
+      <ul className="comments">
         {comments.map((comment) => {
           return (
             <li key={comment.id}>

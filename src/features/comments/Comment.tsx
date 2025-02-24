@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { CommentKindType, CommentThreadEntry } from "../../types/comment.types";
 import CommentComposer from "./CommentComposer";
+import UserAvatar from "../user/UserAvatar";
+import UserInfo from "../user/UserInfo";
 
 interface CommentProps {
   comment: CommentThreadEntry;
@@ -21,23 +23,20 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
 
   return (
     <>
-      <div aria-label="Comment by ...">
-        <div className="comment__author">
-          <img src={image} alt="" />
-          <div className="comment__authorInfo">
-            <h2>COMMENT #{id}</h2>
-            <p>
-              <strong>{name}</strong>
-            </p>
-            <span>{username}</span>
-          </div>
+      <div aria-label="Comment by ..." style={{ margin: "30px 0 30px  0" }}>
+        <UserAvatar imageUrl={image} />
+        <div style={{ display: "flex" }}>
+          <UserInfo name={name} username={username} />
+          {parentType !== "reply" && (
+            <button
+              onClick={() => setShowAddReply((prevState) => !prevState)}
+              style={{ marginLeft: "auto" }}
+            >
+              Reply
+            </button>
+          )}
         </div>
-        <p>{content}</p>
-        {parentType !== "reply" && (
-          <button onClick={() => setShowAddReply((prevState) => !prevState)}>
-            Reply
-          </button>
-        )}
+        <p style={{ marginBottom: "none" }}>{content}</p>
 
         <div className={!showAddReply ? "hidden" : ""}>
           <CommentComposer
