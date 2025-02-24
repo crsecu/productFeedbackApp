@@ -50,6 +50,22 @@ ul {
   flex-direction: column;
   gap: 10px;
 }
+
+.feedback_list ul {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feedback_list ul li {
+  position: relative;
+}
+
+.feedback_list ul li button {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+}
 /* *************************************************************** */
 /* FeedbackCard component */
 .feedback_card {

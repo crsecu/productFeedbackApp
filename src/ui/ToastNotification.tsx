@@ -9,6 +9,8 @@ function ToastNotification(): React.JSX.Element | null {
   );
 
   useEffect(() => {
+    if (!isVisible) return;
+
     const timeoutId = setTimeout(() => {
       dispatch(hideNotification());
     }, 2000);
