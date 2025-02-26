@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../types/hooks";
 import { persistFeedbackVote } from "../../services/apiFeedback";
 import {
@@ -6,6 +5,12 @@ import {
   untrackUserUpvote,
   getIsFeedbackUpvoted,
 } from "../../store/slices/userSlice";
+import { showNotification } from "../../store/slices/toastNotificationSlice";
+import {
+  getFeedbackUpvoteCount,
+  upvoteFeedbackItem,
+} from "../../store/slices/feedbackSlice";
+import { useState } from "react";
 
 interface UpvoteButtonProps {
   feedbackId: string;
@@ -16,42 +21,47 @@ function UpvoteButton({
   feedbackId,
   initialUpvoteCount,
 }: UpvoteButtonProps): React.JSX.Element {
-  const [upvoteCount, setUpvoteCount] = useState(initialUpvoteCount);
   const dispatch = useAppDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const upvoteCount = useAppSelector(getFeedbackUpvoteCount(feedbackId));
 
   const isFeedbackUpvoted = useAppSelector(getIsFeedbackUpvoted(feedbackId));
 
-  async function handleUpvote() {
-    const userUpvoteTrackingAction = isFeedbackUpvoted
-      ? untrackUserUpvote
-      : trackUserUpvote;
-    const nextUpvoteCount = isFeedbackUpvoted
-      ? upvoteCount - 1
-      : upvoteCount + 1;
+  const userUpvoteTrackingAction =
+    initialUpvoteCount === 0 || isFeedbackUpvoted === false
+      ? trackUserUpvote
+      : untrackUserUpvote;
 
-    setUpvoteCount((prevState) => {
-      return isFeedbackUpvoted ? prevState - 1 : prevState + 1;
-    });
+  const nextUpvoteCount =
+    upvoteCount === 0 || !isFeedbackUpvoted ? upvoteCount + 1 : upvoteCount - 1;
 
-    if (upvoteCount === 0) {
-      dispatch(trackUserUpvote(feedbackId));
-      await persistFeedbackVote(feedbackId, upvoteCount + 1);
-    } else {
-      dispatch(userUpvoteTrackingAction(feedbackId));
-      await persistFeedbackVote(feedbackId, nextUpvoteCount);
-    }
+  function handleUpvote() {
+    setIsLoading(true);
 
-    /* TO DO:
-     - implement logic to save the upvotedFeedbackIds to the backend
-     */
+    persistFeedbackVote(feedbackId, nextUpvoteCount)
+      .then(() => {
+        dispatch(userUpvoteTrackingAction(feedbackId));
+        dispatch(
+          upvoteFeedbackItem({ feedbackId, newUpvoteCount: nextUpvoteCount })
+        );
+      })
+      .catch(() => {
+        dispatch(showNotification({ type: "upvoteFeedback_error" }));
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   return (
     <button
+      disabled={isLoading}
       onClick={handleUpvote}
       className={isFeedbackUpvoted ? "upvoted" : ""}
     >
-      ^ <span>{upvoteCount}</span>
+      ^ <span>{isLoading ? "Upvoting..." : upvoteCount}</span>
     </button>
   );
 }

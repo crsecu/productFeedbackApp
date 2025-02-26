@@ -7,7 +7,16 @@ import assert from "../utils/TS_helpers";
 export async function feedbackBoardLoader() {
   const data = await fetchFeedbackList("feedbackBoard");
 
-  return data;
+  const model = {
+    suggestions: data.suggestion,
+    roadmap: {
+      live: data.live.length,
+      "in-Progress": data["in-Progress"].length,
+      planned: data.planned.length,
+    },
+  };
+
+  return model;
 }
 
 // Fetch list of feedback entries for Roadmap Development Page (status: planned, in-Progress, live)

@@ -80,13 +80,27 @@ export async function persistFeedbackVote(
   feedbackId: string,
   voteCount: number
 ) {
-  return fetchWrapper(`${API_URL}/productRequests/${feedbackId}`, {
-    method: "PATCH",
-    body: JSON.stringify({ upvotes: voteCount }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const data = await fetchWrapper(
+      `${API_URL}/productRequests/${feedbackId}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ upvotes: voteCount }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!("upvotes" in data)) {
+      throw Error();
+    }
+
+    return data.upvotes;
+  } catch (err) {
+    console.log("upvotes key not found", err);
+    throw Error();
+  }
 }
 
 /* Fetch user list */

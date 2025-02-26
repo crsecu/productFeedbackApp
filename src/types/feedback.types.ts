@@ -37,3 +37,12 @@ export interface FeedbackFormErrors {
 export interface FeedbackFormData {
   errors: FeedbackFormErrors;
 }
+
+export interface SuggestionType extends FeedbackType {
+  status: "suggestion";
+}
+
+export interface FeedbackBoardLoaderData {
+  suggestions: SuggestionType[];
+  roadmap: Record<RoadmapStatusType, string>;
+}

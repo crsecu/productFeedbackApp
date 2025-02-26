@@ -59,6 +59,7 @@ export const getIsFeedbackUpvoted = (feedbackId: string) => (state: AppState) =>
 /* Look into memoization with Reselect before using this selector function */
 export const getLoggedInUser = (state: AppState) => {
   const loggedInUser = state.user.validatedUser;
+  console.log(9, loggedInUser);
   return {
     name: loggedInUser.name,
     image: loggedInUser.image,

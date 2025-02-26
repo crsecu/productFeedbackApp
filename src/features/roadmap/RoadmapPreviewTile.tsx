@@ -1,8 +1,13 @@
 import { Link, useLoaderData } from "react-router-dom";
+import { FeedbackBoardLoaderData } from "../../types/feedback.types";
 
 function RoadmapPreviewTile(): React.JSX.Element {
-  const loaderData = useLoaderData();
-  const { planned, "in-Progress": inProgress, live } = loaderData;
+  const loaderData = useLoaderData() as FeedbackBoardLoaderData;
+
+  const {
+    roadmap: { planned, "in-Progress": inProgress, live },
+  } = loaderData;
+
   return (
     <section>
       <div style={{ display: "flex" }}>
