@@ -10,14 +10,21 @@ import FilterByCategory from "./FilterByCategory";
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
 import FeedbackList from "./FeedbackList";
 import ActionBar from "../../ui/ActionBar";
-import FeedbackCount from "./FeedbackCount";
+import SuggestionCount from "./SuggestionCount";
 import SortBy from "./SortBy";
 import TitleCard from "./TitleCard";
 import Suggestions from "./Suggestions";
 import NewFeedback from "./NewFeedback";
 import { useShowCreateFeedbackForm } from "../../utils/customHooks";
+import { FeedbackBoardLoaderData } from "../../types/feedback.types";
 
-function FeedbackBoardPage(): React.JSX.Element {
+interface FeedbackBoardProps {
+  dataFromLoader: FeedbackBoardLoaderData;
+}
+
+function FeedbackBoardPage({
+  dataFromLoader,
+}: FeedbackBoardProps): React.JSX.Element {
   const { pathname } = useLocation();
   const [searchParams] = useSearchParams();
   const navigationType = useNavigationType();
@@ -45,7 +52,7 @@ function FeedbackBoardPage(): React.JSX.Element {
           </div>
           <main className="feedbackBoard_main">
             <ActionBar>
-              <FeedbackCount />
+              <SuggestionCount suggestions={dataFromLoader.suggestions} />
               <SortBy />
               <Link to={"createFeedback"} state={{ from: pathname }}>
                 Add Feedback
@@ -55,7 +62,7 @@ function FeedbackBoardPage(): React.JSX.Element {
               <NewFeedback newFeedbackId={newFeedbackId} />
             )}
 
-            <FeedbackList />
+            <FeedbackList suggestions={dataFromLoader.suggestions} />
           </main>
         </Suggestions>
       )}

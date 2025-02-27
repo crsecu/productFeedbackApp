@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
-import { FeedbackType } from "../../types/feedback.types";
+import {
+  InProgressType,
+  LiveType,
+  PlannedType,
+} from "../../types/feedback.types";
 import FeedbackItem from "../feedback/FeedbackItem";
 import UpvoteButton from "../feedback/UpvoteButton";
 import FeedbackCard from "../feedback/FeedbackCard";
+
 interface RoadmapStatusColumn {
-  feedbackList: FeedbackType[];
+  feedbackList: PlannedType[] | InProgressType[] | LiveType[];
   description: string;
   title: string;
 }

@@ -1,19 +1,20 @@
 import { useMemo } from "react";
-import { Link, useLoaderData, useSearchParams } from "react-router-dom";
-
+import { Link, useSearchParams } from "react-router-dom";
 import FeedbackItem from "./FeedbackItem";
 import NoFeedbackEntries from "./NoFeedbackEntries";
 import { sortFeedbackList } from "../../utils/helpers";
 import FeedbackCard from "./FeedbackCard";
 import UpvoteButton from "./UpvoteButton";
-import { FeedbackBoardLoaderData } from "../../types/feedback.types";
+import { SuggestionType } from "../../types/feedback.types";
 
-function FeedbackList(): React.JSX.Element {
+interface FeedbackListProps {
+  suggestions: SuggestionType[];
+}
+
+function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category") || "all";
   const sortBy = searchParams.get("sortBy") || "mostUpvotes";
-
-  const { suggestions } = useLoaderData() as FeedbackBoardLoaderData;
 
   const suggestionsSorted = useMemo(
     () => sortFeedbackList(suggestions, category, sortBy),

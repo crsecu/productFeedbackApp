@@ -1,15 +1,13 @@
-import { Link, Outlet, useLoaderData } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import RoadmapStatusColumn from "./RoadmapStatusColumn";
 import PageHeader from "../../ui/PageHeader";
-import { FeedbackType, RoadmapStatusType } from "../../types/feedback.types";
 import { useShowCreateFeedbackForm } from "../../utils/customHooks";
+import { RoadmapLoaderData } from "../../types/feedback.types";
 
-function RoadmapPage(): React.JSX.Element {
-  const dataFromLoader = useLoaderData() as Record<
-    RoadmapStatusType,
-    FeedbackType[]
-  >;
-
+interface RoadmapPageProps {
+  dataFromLoader: RoadmapLoaderData;
+}
+function RoadmapPage({ dataFromLoader }: RoadmapPageProps): React.JSX.Element {
   const isCreateFeedback = useShowCreateFeedbackForm();
 
   const { planned, "in-Progress": inProgress, live } = dataFromLoader;
@@ -20,7 +18,6 @@ function RoadmapPage(): React.JSX.Element {
         <Outlet />
       ) : (
         <>
-          {" "}
           <PageHeader>
             <Link to="/feedbackBoard">Go Back</Link>
             <h1>Roadmap</h1>

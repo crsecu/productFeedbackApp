@@ -5,22 +5,46 @@
 
 export type RoadmapStatusType = "planned" | "in-Progress" | "live"; //represents status types for Roadmap
 
-export type StatusType = RoadmapStatusType | "suggestion"; //represents all possible status types
+export type StatusType = RoadmapStatusType | "suggestion";
 
-export interface NewFeedbackType {
+export type CategoryType = "feature" | "ui" | "ux" | "enhancement" | "bug";
+
+export interface CommonFeedbackFields {
   title: string;
-  category: string;
+  category: CategoryType;
   upvotes: number;
-  status: string;
   description: string;
   commentCount: number;
 }
 
-export interface FeedbackType extends NewFeedbackType {
-  id: string;
-  status: StatusType;
+export interface NewFeedbackType extends CommonFeedbackFields {
+  status: "suggestion";
 }
 
+//Feedback Types by status
+export interface SuggestionType extends NewFeedbackType {
+  id: string;
+}
+export interface PlannedType extends CommonFeedbackFields {
+  id: string;
+  status: "planned";
+}
+export interface InProgressType extends CommonFeedbackFields {
+  id: string;
+  status: "in-Progress";
+}
+export interface LiveType extends CommonFeedbackFields {
+  id: string;
+  status: "live";
+}
+
+export type FeedbackType =
+  | SuggestionType
+  | PlannedType
+  | InProgressType
+  | LiveType;
+
+//Add/Edit Feedback Form Types
 export interface CreateFeedbackFormValues {
   title: string;
   category: string;
@@ -38,11 +62,19 @@ export interface FeedbackFormData {
   errors: FeedbackFormErrors;
 }
 
-export interface SuggestionType extends FeedbackType {
-  status: "suggestion";
+// Loader data types
+export interface FeedbackBoardLoaderData {
+  roadmap: Record<RoadmapStatusType, number>;
+  suggestions: SuggestionType[];
 }
 
-export interface FeedbackBoardLoaderData {
-  suggestions: SuggestionType[];
-  roadmap: Record<RoadmapStatusType, string>;
+export interface RoadmapLoaderData {
+  planned: PlannedType[];
+  "in-Progress": InProgressType[];
+  live: LiveType[];
 }
+
+export type LoaderDataType =
+  | FeedbackBoardLoaderData
+  | RoadmapLoaderData
+  | FeedbackType;

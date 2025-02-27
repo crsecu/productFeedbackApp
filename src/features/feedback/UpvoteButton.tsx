@@ -6,10 +6,7 @@ import {
   getIsFeedbackUpvoted,
 } from "../../store/slices/userSlice";
 import { showNotification } from "../../store/slices/toastNotificationSlice";
-import {
-  getFeedbackUpvoteCount,
-  upvoteFeedbackItem,
-} from "../../store/slices/feedbackSlice";
+
 import { useState } from "react";
 
 interface UpvoteButtonProps {
@@ -24,8 +21,7 @@ function UpvoteButton({
   const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const upvoteCount = useAppSelector(getFeedbackUpvoteCount(feedbackId));
+  const [upvoteCount, setUpvoteCount] = useState(initialUpvoteCount);
 
   const isFeedbackUpvoted = useAppSelector(getIsFeedbackUpvoted(feedbackId));
 
@@ -43,9 +39,7 @@ function UpvoteButton({
     persistFeedbackVote(feedbackId, nextUpvoteCount)
       .then(() => {
         dispatch(userUpvoteTrackingAction(feedbackId));
-        dispatch(
-          upvoteFeedbackItem({ feedbackId, newUpvoteCount: nextUpvoteCount })
-        );
+        setUpvoteCount(nextUpvoteCount);
       })
       .catch(() => {
         dispatch(showNotification({ type: "upvoteFeedback_error" }));

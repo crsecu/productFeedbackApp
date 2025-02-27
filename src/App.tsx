@@ -9,7 +9,6 @@ import {
   submitCommentAction,
 } from "./data_handlers/feedbackActions";
 
-import StateSyncWrapper from "./data_handlers/StateSyncWrapper";
 import HomePage from "./ui/HomePage";
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
 import RoadmapPage from "./features/roadmap/RoadmapPage";
@@ -22,6 +21,7 @@ import RootRoute from "./ui/RootRoute";
 import { editFeedbackAction } from "./data_handlers/feedbackActions";
 import EditFeedback from "./features/feedback/EditFeedback";
 import CreateFeedback from "./features/feedback/CreateFeedback";
+import DataProvider from "./data_handlers/DataProvider";
 
 const router = createBrowserRouter([
   {
@@ -35,9 +35,11 @@ const router = createBrowserRouter([
       {
         path: "/feedbackBoard",
         element: (
-          <StateSyncWrapper>
-            <FeedbackBoardPage />
-          </StateSyncWrapper>
+          <DataProvider PageComponent={FeedbackBoardPage} />
+
+          // <StateSyncWrapper>
+          //   <FeedbackBoardPage />
+          // </StateSyncWrapper>
         ),
         loader: feedbackBoardLoader,
         shouldRevalidate: ({ currentUrl, nextUrl, actionResult }) => {
@@ -79,7 +81,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/developmentRoadmap",
-        element: <RoadmapPage />,
+        element: <DataProvider PageComponent={RoadmapPage} />,
         loader: roadmapDevLoader,
         children: [
           {
@@ -91,7 +93,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/feedbackDetail/:feedbackId",
-        element: <FeedbackDetailPage />,
+        element: <DataProvider PageComponent={FeedbackDetailPage} />,
         loader: detailLoader,
         shouldRevalidate: ({ currentUrl, nextUrl, actionResult }) => {
           console.log("current detail", currentUrl);

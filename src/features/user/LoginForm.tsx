@@ -8,8 +8,8 @@ import { validateUserCredentials } from "../../utils/helpers";
    This component mocks a login process
  */
 function LoginForm(): React.JSX.Element {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("Cristina");
+  const [username, setUsername] = useState("cs");
   const [validationError, setValidationError] = useState("");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

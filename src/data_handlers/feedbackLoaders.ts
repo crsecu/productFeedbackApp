@@ -1,14 +1,20 @@
 import { fetchFeedbackList, fetchFeedbackById } from "../services/apiFeedback";
 import { LoaderFunctionArgs } from "react-router-dom";
-import { FeedbackType } from "../types/feedback.types";
+import {
+  FeedbackBoardLoaderData,
+  FeedbackType,
+  SuggestionType,
+} from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
 
 // Fetch list of feedback entries for Feedback Board Page
-export async function feedbackBoardLoader() {
+export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
   const data = await fetchFeedbackList("feedbackBoard");
 
-  const model = {
-    suggestions: data.suggestion,
+  const suggestions = data.suggestion as SuggestionType[];
+
+  const model: FeedbackBoardLoaderData = {
+    suggestions,
     roadmap: {
       live: data.live.length,
       "in-Progress": data["in-Progress"].length,
