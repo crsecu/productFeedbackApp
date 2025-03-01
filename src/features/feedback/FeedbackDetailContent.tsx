@@ -25,7 +25,9 @@ function FeedbackDetailContent({
           feedbackId={feedback.id}
           initialUpvoteCount={feedback.upvotes}
         />
-        <FeedbackCard feedback={feedback} />
+        <FeedbackCard feedback={feedback}>
+          <h1>{feedback.title}</h1>
+        </FeedbackCard>
       </FeedbackItem>
       {children}
     </main>

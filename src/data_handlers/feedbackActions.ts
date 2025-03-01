@@ -1,7 +1,11 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { editFeedback, submitFeedback } from "../services/apiFeedback";
 import { postCommentOrReply } from "../utils/helpers";
-import { FeedbackFormErrors } from "../types/feedback.types";
+import {
+  CategoryType,
+  FeedbackFormErrors,
+  NewFeedbackType,
+} from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
 
 /* Submit New Feedback Action*/
@@ -9,13 +13,15 @@ export async function createFeedbackAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData) as {
     title: string;
-    category: string;
+    category: CategoryType;
     description: string;
   };
 
-  const feedback = {
+  const category = data.category.toLowerCase() as CategoryType;
+
+  const feedback: NewFeedbackType = {
     ...data,
-    category: data.category.toLowerCase(),
+    category,
     status: "suggestion",
     upvotes: 0,
     commentCount: 0,

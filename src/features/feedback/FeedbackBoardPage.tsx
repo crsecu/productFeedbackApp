@@ -47,7 +47,7 @@ function FeedbackBoardPage({
             </PageHeader>
             <aside className="feedbackBoard_aside">
               <FilterByCategory />
-              <RoadmapPreviewTile />
+              <RoadmapPreviewTile roadmapStats={dataFromLoader.roadmap} />
             </aside>
           </div>
           <main className="feedbackBoard_main">

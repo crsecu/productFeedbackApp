@@ -1,12 +1,33 @@
-import { Link, useLoaderData } from "react-router-dom";
-import { FeedbackBoardLoaderData } from "../../types/feedback.types";
+import { Link } from "react-router-dom";
+import { RoadmapStatusType } from "../../types/feedback.types";
+import RoadmapPreviewItem from "./RoadmapPreviewItem";
 
-function RoadmapPreviewTile(): React.JSX.Element {
-  const loaderData = useLoaderData() as FeedbackBoardLoaderData;
+interface RoadmapPreviewProps {
+  roadmapStats: Record<RoadmapStatusType, number>;
+}
 
-  const {
-    roadmap: { planned, "in-Progress": inProgress, live },
-  } = loaderData;
+// This func renders a list of RoadmapPreviewItem components from roadmap stats
+function renderRoadmapPreviewItems(
+  stats: Record<RoadmapStatusType, number>
+): JSX.Element[] {
+  return Object.keys(stats).map((status) => {
+    const count = stats[status as RoadmapStatusType];
+
+    return (
+      <RoadmapPreviewItem
+        key={status}
+        stage={status as RoadmapStatusType}
+        count={count}
+      />
+    );
+  });
+}
+
+function RoadmapPreviewTile({
+  roadmapStats,
+}: RoadmapPreviewProps): React.JSX.Element {
+  //TO DO: Assess if memoizing renderRoadmapPreviewItems is worth the cost given its low complexity
+  const roadmapPreviewItems = renderRoadmapPreviewItems(roadmapStats);
 
   return (
     <section>
@@ -16,19 +37,7 @@ function RoadmapPreviewTile(): React.JSX.Element {
           View
         </Link>
       </div>
-
-      <div>
-        <span>Planned</span>
-        <span style={{ fontWeight: "bold" }}> {planned.length}</span>
-      </div>
-      <div>
-        <span>in-Progress</span>
-        <span style={{ fontWeight: "bold" }}> {inProgress.length}</span>
-      </div>
-      <div>
-        <span>Live</span>
-        <span style={{ fontWeight: "bold" }}> {live.length}</span>
-      </div>
+      <ul>{roadmapPreviewItems}</ul>
     </section>
   );
 }

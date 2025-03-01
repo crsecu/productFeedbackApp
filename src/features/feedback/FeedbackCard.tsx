@@ -1,30 +1,28 @@
-import { FeedbackType } from "../../types/feedback.types";
+import { ReactNode } from "react";
+import {
+  RoadmapFeedbackType,
+  SuggestionType,
+} from "../../types/feedback.types";
 
 interface FeedbackCardProps {
-  feedback: FeedbackType;
-  isDetailPage?: boolean;
+  children: ReactNode;
+  feedback: RoadmapFeedbackType | SuggestionType;
 }
 
 function FeedbackCard({
+  children,
   feedback,
-  isDetailPage = false,
 }: FeedbackCardProps): React.JSX.Element {
   if (!feedback)
     return <article className="feedback_card">No matching value found</article>;
 
-  const { title, description, category, commentCount } = feedback;
+  const { description, category, commentCount, status } = feedback;
 
   return (
     <>
       <article className="feedback_card">
-        {isDetailPage ? (
-          <>
-            <h1>{title}</h1>
-          </>
-        ) : (
-          <h3>{title}</h3>
-        )}
-
+        {status !== "suggestion" && <p>* {status}</p>}
+        {children}
         <p>{description}</p>
         <p>{category}</p>
         <br></br>

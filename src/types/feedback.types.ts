@@ -38,11 +38,11 @@ export interface LiveType extends CommonFeedbackFields {
   status: "live";
 }
 
-export type FeedbackType =
-  | SuggestionType
-  | PlannedType
-  | InProgressType
-  | LiveType;
+//type of feedback belonging to Roadmap
+export type RoadmapFeedbackType = PlannedType | InProgressType | LiveType;
+
+//type of all possible feedback
+export type FeedbackType = RoadmapFeedbackType | SuggestionType;
 
 //Add/Edit Feedback Form Types
 export interface CreateFeedbackFormValues {

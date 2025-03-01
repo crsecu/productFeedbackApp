@@ -32,7 +32,9 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
             />
 
             <Link to={`/feedbackDetail/${item.id}`}>
-              <FeedbackCard feedback={item} />
+              <FeedbackCard feedback={item}>
+                <h3>{item.title}</h3>
+              </FeedbackCard>
             </Link>
           </FeedbackItem>
         </li>

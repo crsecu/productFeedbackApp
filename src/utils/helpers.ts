@@ -11,7 +11,7 @@ import {
 import {
   CreateFeedbackFormValues,
   EditFeedbackFormValues,
-  FeedbackType,
+  SuggestionType,
 } from "../types/feedback.types";
 
 /* Reusable Fetch Helper */
@@ -60,7 +60,7 @@ export function formatCategoryLabel(categoryLabel: string) {
 
 //Filters a list of feedback entries based on the specified status
 export function filterFeedbackByStatus(
-  feedbackList: FeedbackType[],
+  feedbackList: SuggestionType[],
   status: string
 ) {
   return feedbackList.filter(
@@ -70,7 +70,7 @@ export function filterFeedbackByStatus(
 
 //Sort feedback list
 export function sortFeedbackList(
-  list: FeedbackType[],
+  list: SuggestionType[],
   category: string,
   sortByOption: string
 ) {

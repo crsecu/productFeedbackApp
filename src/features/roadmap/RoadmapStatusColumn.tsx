@@ -8,42 +8,40 @@ import FeedbackItem from "../feedback/FeedbackItem";
 import UpvoteButton from "../feedback/UpvoteButton";
 import FeedbackCard from "../feedback/FeedbackCard";
 
+import { ReactNode } from "react";
+
 interface RoadmapStatusColumn {
+  children: ReactNode;
   feedbackList: PlannedType[] | InProgressType[] | LiveType[];
-  description: string;
-  title: string;
 }
 function RoadmapStatusColumn({
+  children,
   feedbackList,
-  title,
-  description,
 }: RoadmapStatusColumn): React.JSX.Element {
-  return (
-    <>
-      <h2>
-        {title} <span>({feedbackList.length})</span>
-      </h2>
-      <p>{description}</p>
+  //TO DO: memoize
+  const statusColumns = feedbackList.map((feedbackItem) => {
+    return (
+      <li key={feedbackItem.id}>
+        <FeedbackItem>
+          <UpvoteButton
+            feedbackId={feedbackItem.id}
+            initialUpvoteCount={feedbackItem.upvotes}
+          />
+          <Link to={`/feedbackDetail/${feedbackItem.id}`}>
+            <FeedbackCard feedback={feedbackItem}>
+              <h3>{feedbackItem.title}</h3>
+            </FeedbackCard>
+          </Link>
+        </FeedbackItem>
+      </li>
+    );
+  });
 
-      <ul>
-        {feedbackList.map((feedbackItem) => {
-          return (
-            <li key={feedbackItem.id}>
-              <span>{title}</span>
-              <FeedbackItem>
-                <UpvoteButton
-                  feedbackId={feedbackItem.id}
-                  initialUpvoteCount={feedbackItem.upvotes}
-                />
-                <Link to={`/feedbackDetail/${feedbackItem.id}`}>
-                  <FeedbackCard feedback={feedbackItem} />
-                </Link>
-              </FeedbackItem>
-            </li>
-          );
-        })}
-      </ul>
-    </>
+  return (
+    <li>
+      {children}
+      <ul>{statusColumns}</ul>
+    </li>
   );
 }
 
