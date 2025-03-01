@@ -11,14 +11,16 @@ import assert from "../utils/TS_helpers";
 export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
   const data = await fetchFeedbackList("feedbackBoard");
 
+  const { planned, "in-Progress": inProgress, live } = data;
   const suggestions = data.suggestion as SuggestionType[];
 
   const model: FeedbackBoardLoaderData = {
     suggestions,
-    roadmap: {
-      live: data.live.length,
-      "in-Progress": data["in-Progress"].length,
-      planned: data.planned.length,
+    roadmapTotal: live.length + inProgress.length + planned.length,
+    roadmapStatusCounts: {
+      live: live.length,
+      "in-Progress": inProgress.length,
+      planned: planned.length,
     },
   };
 

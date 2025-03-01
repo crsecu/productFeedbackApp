@@ -35,6 +35,8 @@ function FeedbackBoardPage({
 
   const isCreateFeedback = useShowCreateFeedbackForm();
 
+  const { suggestions, roadmapStatusCounts, roadmapTotal } = dataFromLoader;
+
   return (
     <>
       {isCreateFeedback ? (
@@ -46,13 +48,16 @@ function FeedbackBoardPage({
               <TitleCard />
             </PageHeader>
             <aside className="feedbackBoard_aside">
-              <FilterByCategory />
-              <RoadmapPreviewTile roadmapStats={dataFromLoader.roadmap} />
+              <FilterByCategory suggestionCount={suggestions.length} />
+              <RoadmapPreviewTile
+                roadmapStats={roadmapStatusCounts}
+                roadmapCount={roadmapTotal}
+              />
             </aside>
           </div>
           <main className="feedbackBoard_main">
             <ActionBar>
-              <SuggestionCount suggestions={dataFromLoader.suggestions} />
+              <SuggestionCount suggestions={suggestions} />
               <SortBy />
               <Link to={"createFeedback"} state={{ from: pathname }}>
                 Add Feedback
@@ -62,7 +67,7 @@ function FeedbackBoardPage({
               <NewFeedback newFeedbackId={newFeedbackId} />
             )}
 
-            <FeedbackList suggestions={dataFromLoader.suggestions} />
+            <FeedbackList suggestions={suggestions} />
           </main>
         </Suggestions>
       )}

@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
-import { RoadmapStatusType } from "../../types/feedback.types";
+import { useNavigate } from "react-router-dom";
+import { RoadmapStats, RoadmapStatusType } from "../../types/feedback.types";
 import RoadmapPreviewItem from "./RoadmapPreviewItem";
 
 interface RoadmapPreviewProps {
-  roadmapStats: Record<RoadmapStatusType, number>;
+  roadmapStats: RoadmapStats;
+  roadmapCount: number;
 }
 
 // This func renders a list of RoadmapPreviewItem components from roadmap stats
@@ -25,7 +26,10 @@ function renderRoadmapPreviewItems(
 
 function RoadmapPreviewTile({
   roadmapStats,
+  roadmapCount,
 }: RoadmapPreviewProps): React.JSX.Element {
+  const navigate = useNavigate();
+
   //TO DO: Assess if memoizing renderRoadmapPreviewItems is worth the cost given its low complexity
   const roadmapPreviewItems = renderRoadmapPreviewItems(roadmapStats);
 
@@ -33,9 +37,13 @@ function RoadmapPreviewTile({
     <section>
       <div style={{ display: "flex" }}>
         <h2>Roadmap</h2> {/*TO DO: add a clearer title for ADA */}
-        <Link to="/developmentRoadmap" aria-label="View full roadmap">
+        <button
+          onClick={() => navigate("/developmentRoadmap")}
+          aria-label="View full roadmap"
+          disabled={!roadmapCount}
+        >
           View
-        </Link>
+        </button>
       </div>
       <ul>{roadmapPreviewItems}</ul>
     </section>

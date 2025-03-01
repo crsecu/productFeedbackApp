@@ -4,7 +4,12 @@ import CategoryItem from "./CategoryItem";
 
 const feedbackCategories = ["all", "ui", "ux", "enhancement", "bug", "feature"];
 
-function FilterByCategory(): React.JSX.Element {
+interface FilterByCategoryProps {
+  suggestionCount: number;
+}
+function FilterByCategory({
+  suggestionCount,
+}: FilterByCategoryProps): React.JSX.Element {
   const [, setSearchParams] = useSearchParams();
 
   //TO DO: Assess if memoizing handleOptionChange is worth the cost given its low complexity
@@ -24,6 +29,7 @@ function FilterByCategory(): React.JSX.Element {
         value={category}
         key={`${category + i}`}
         onOptionChange={handleOptionChange}
+        isDisabled={category !== "all" && suggestionCount === 0}
       />
     );
   });

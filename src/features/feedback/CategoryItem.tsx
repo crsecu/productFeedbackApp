@@ -5,6 +5,7 @@ interface CategoryItemProps {
   name: string;
   id: string;
   value: string;
+  isDisabled: boolean;
   // eslint-disable-next-line no-unused-vars
   onOptionChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -12,7 +13,7 @@ function CategoryItem({
   name,
   id,
   value,
-
+  isDisabled,
   onOptionChange,
 }: CategoryItemProps): React.JSX.Element {
   const categoryLabel = formatCategoryLabel(value);
@@ -20,6 +21,7 @@ function CategoryItem({
   return (
     <li>
       <input
+        disabled={isDisabled}
         type="radio"
         name={name}
         id={id}

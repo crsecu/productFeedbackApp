@@ -62,10 +62,17 @@ export interface FeedbackFormData {
   errors: FeedbackFormErrors;
 }
 
+export interface RoadmapStats {
+  planned: number;
+  "in-Progress": number;
+  live: number;
+}
+
 // Loader data types
 export interface FeedbackBoardLoaderData {
-  roadmap: Record<RoadmapStatusType, number>;
   suggestions: SuggestionType[];
+  roadmapTotal: number;
+  roadmapStatusCounts: RoadmapStats;
 }
 
 export interface RoadmapLoaderData {
