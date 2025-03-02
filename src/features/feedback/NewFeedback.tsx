@@ -19,7 +19,7 @@ function NewFeedback({
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setSearchParams({});
-    }, 2000);
+    }, 30000);
 
     return () => clearTimeout(timeoutId);
   }, [setSearchParams]);
@@ -34,7 +34,9 @@ function NewFeedback({
         <UpvoteButton feedbackId={newFeedback.id} initialUpvoteCount={0} />
 
         <Link to={`/feedbackDetail/${newFeedback.id}`}>
-          <FeedbackCard feedback={newFeedback} />
+          <FeedbackCard feedback={newFeedback}>
+            <p>hey</p>
+          </FeedbackCard>
         </Link>
       </FeedbackItem>
     </div>

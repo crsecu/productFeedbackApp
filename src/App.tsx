@@ -45,9 +45,15 @@ const router = createBrowserRouter([
         shouldRevalidate: ({ currentUrl, nextUrl, actionResult }) => {
           console.log("current", currentUrl);
           console.log("next", nextUrl);
+          console.log("action result", actionResult);
 
-          //prevent revalidation when createFeedback form contains validation errors
-          if (actionResult && "errors" in actionResult) {
+          const preventRevalidation = actionResult
+            ? actionResult.success || "validationErrors" in actionResult
+            : false;
+
+          console.log("action result", actionResult, preventRevalidation);
+          //prevent revalidation in createFeedback
+          if (preventRevalidation) {
             return false;
           }
 

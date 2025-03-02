@@ -1,4 +1,5 @@
-import { ActionFunctionArgs, redirect } from "react-router-dom";
+import { ActionFunctionArgs, json, redirect } from "react-router-dom";
+
 import { editFeedback, submitFeedback } from "../services/apiFeedback";
 import { postCommentOrReply } from "../utils/helpers";
 import {
@@ -11,16 +12,16 @@ import assert from "../utils/TS_helpers";
 /* Submit New Feedback Action*/
 export async function createFeedbackAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
-  const data = Object.fromEntries(formData) as {
+  const data1 = Object.fromEntries(formData) as {
     title: string;
     category: CategoryType;
     description: string;
   };
 
-  const category = data.category.toLowerCase() as CategoryType;
+  const category = data1.category.toLowerCase() as CategoryType;
 
   const feedback: NewFeedbackType = {
-    ...data,
+    ...data1,
     category,
     status: "suggestion",
     upvotes: 0,
@@ -28,16 +29,19 @@ export async function createFeedbackAction({ request }: ActionFunctionArgs) {
   };
 
   /* Form error handling */
-  const errors: FeedbackFormErrors = {};
-  if (feedback.title.trim() === "") errors.title = "Please enter a valid title";
+  const validationErrors: FeedbackFormErrors = {};
+  if (feedback.title.trim() === "")
+    validationErrors.title = "Please enter a valid title";
   if (feedback.description.trim() === "")
-    errors.description = "Please enter a valid description";
+    validationErrors.description = "Please enter a valid description";
 
-  if (Object.keys(errors).length > 0) return { errors };
+  if (Object.keys(validationErrors).length > 0) {
+    return { success: false, validationErrors };
+  }
 
-  const newFeedback = await submitFeedback(feedback);
+  const submissionResult = await submitFeedback(feedback);
 
-  return redirect(`/feedbackBoard?newFeedbackId=${newFeedback.id}`);
+  return submissionResult;
 }
 
 /* 

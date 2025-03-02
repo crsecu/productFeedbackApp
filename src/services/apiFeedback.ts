@@ -45,13 +45,20 @@ export async function fetchFeedbackById(feedbackId: string) {
 
 /* Submit new feedback */
 export async function submitFeedback(feedback: NewFeedbackType) {
-  return fetchWrapper(`${API_URL}/productRequests`, {
-    method: "POST",
-    body: JSON.stringify(feedback),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const res = await fetchWrapper(`${API_URL}/productRequests`, {
+      method: "POST",
+      body: JSON.stringify(feedback),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return { success: true };
+  } catch (err) {
+    console.error("Something went wrong inside SubmitFeedback", err);
+    return { success: false };
+  }
 }
 
 /* Edit feedback entry */

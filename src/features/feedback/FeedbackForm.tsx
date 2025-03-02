@@ -13,6 +13,7 @@ import { handleFormChange } from "../../utils/helpers";
 
 interface FeedbackFormProps {
   children?: ReactNode;
+
   method: "post" | "patch";
   defaultValues: CreateFeedbackFormValues | EditFeedbackFormValues;
   footer: ReactNode;
@@ -25,7 +26,6 @@ const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];
 
 function FeedbackForm({
   children,
-
   method,
   defaultValues,
   footer,

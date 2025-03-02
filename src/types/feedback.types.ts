@@ -55,11 +55,13 @@ export interface EditFeedbackFormValues extends CreateFeedbackFormValues {
 }
 
 export interface FeedbackFormErrors {
-  [key: string]: string;
+  [key: string]: string | boolean;
 }
 
 export interface FeedbackFormData {
-  errors: FeedbackFormErrors;
+  success: boolean;
+  error?: string;
+  validationErrors?: FeedbackFormErrors;
 }
 
 export interface RoadmapStats {

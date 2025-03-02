@@ -14,7 +14,6 @@ import SuggestionCount from "./SuggestionCount";
 import SortBy from "./SortBy";
 import TitleCard from "./TitleCard";
 import Suggestions from "./Suggestions";
-import NewFeedback from "./NewFeedback";
 import { useShowCreateFeedbackForm } from "../../utils/customHooks";
 import { FeedbackBoardLoaderData } from "../../types/feedback.types";
 
@@ -63,9 +62,9 @@ function FeedbackBoardPage({
                 Add Feedback
               </Link>
             </ActionBar>
-            {newFeedbackId && showFeaturedFeedback && (
+            {/* {newFeedbackId && showFeaturedFeedback && (
               <NewFeedback newFeedbackId={newFeedbackId} />
-            )}
+            )} */}
 
             <FeedbackList suggestions={suggestions} />
           </main>

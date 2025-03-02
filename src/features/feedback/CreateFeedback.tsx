@@ -9,6 +9,7 @@ import { FeedbackFormData } from "../../types/feedback.types";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showModal } from "../../store/slices/modalSlice";
+import BannerNotification from "../../ui/BannerNotification";
 
 const initialFormState = {
   title: "",
@@ -23,6 +24,8 @@ function CreateFeedback(): React.JSX.Element {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
+  console.log("form vvv", formData);
+  const submitResponse = formData?.success;
 
   const prevPage = useRef(state?.from);
   const [isFormDirty, setIsFormDirty] = useState(false);
@@ -42,8 +45,20 @@ function CreateFeedback(): React.JSX.Element {
 
   return (
     <>
-      <button onClick={handleCancel}>Go Back</button>
-      <h1>Create New Feedback</h1>
+      {!formData ? (
+        <>
+          <button onClick={handleCancel}>Go Back</button>
+          <h1>Create New Feedback</h1>
+        </>
+      ) : (
+        /* TO DO: don't show BannerNotification when validationErrors exist */
+        <BannerNotification
+          notificationType={
+            submitResponse ? "createFeedback_success" : "createFeedback_failed"
+          }
+        />
+      )}
+
       <FeedbackForm
         method="post"
         defaultValues={initialFormState}
@@ -59,7 +74,7 @@ function CreateFeedback(): React.JSX.Element {
         }
         isDirty={isFormDirty}
         setIsDirty={setIsFormDirty}
-        errors={formData?.errors}
+        errors={formData?.validationErrors}
       />
     </>
   );
