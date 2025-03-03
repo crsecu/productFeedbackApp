@@ -55,14 +55,3 @@ export default userSlice.reducer;
 // Redux Selectors
 export const getIsFeedbackUpvoted = (feedbackId: string) => (state: AppState) =>
   state.user.validatedUser.upvotedFeedbackIds.some((id) => id === feedbackId);
-
-/* Look into memoization with Reselect before using this selector function */
-export const getLoggedInUser = (state: AppState) => {
-  const loggedInUser = state.user.validatedUser;
-  console.log(9, loggedInUser);
-  return {
-    name: loggedInUser.name,
-    image: loggedInUser.image,
-    username: loggedInUser.username,
-  };
-};

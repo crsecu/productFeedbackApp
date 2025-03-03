@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  FeedbackActionResult,
-  FeedbackFormData,
-  StatusType,
-} from "../../types/feedback.types";
+import { FeedbackActionResult, StatusType } from "../../types/feedback.types";
 import FeedbackForm from "./FeedbackForm";
 import FormField from "./FormField";
 import SelectField from "./SelectField";

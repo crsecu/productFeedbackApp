@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import feedbackReducer from "./slices/feedbackSlice";
+
 import userReducer from "./slices/userSlice";
 
 import modalReducer from "./slices/modalSlice";
@@ -8,8 +8,6 @@ import toastNotificationReducer from "./slices/toastNotificationSlice";
 const store = configureStore({
   reducer: {
     user: userReducer,
-    feedback: feedbackReducer,
-
     modal: modalReducer,
     toastNotification: toastNotificationReducer,
   },
