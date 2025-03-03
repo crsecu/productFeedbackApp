@@ -21,6 +21,13 @@ export interface NewFeedbackType extends CommonFeedbackFields {
   status: "suggestion";
 }
 
+export interface EditedFeedbackType {
+  title: string;
+  description: string;
+  category: CategoryType;
+  status: StatusType;
+}
+
 //Feedback Types by status
 export interface SuggestionType extends NewFeedbackType {
   id: string;
@@ -55,13 +62,15 @@ export interface EditFeedbackFormValues extends CreateFeedbackFormValues {
 }
 
 export interface FeedbackFormErrors {
-  [key: string]: string | boolean;
+  [key: string]: string;
 }
 
-export interface FeedbackFormData {
-  success: boolean;
-  error?: string;
-  validationErrors?: FeedbackFormErrors;
+export interface FeedbackActionResult {
+  success?: boolean | null; //true/false (form submission sucessful/failed), null (form wasn't submitted due to validation errors)
+  actionType: "createFeedback" | "editFeedback"; //identifies the type of action submitted
+  validationErrors?: FeedbackFormErrors | null;
+  message?: string | null; //human friendly message for both success/failure
+  payload?: string | null; //for now using payload to pass the id of new feedback; extend later if needed
 }
 
 export interface RoadmapStats {

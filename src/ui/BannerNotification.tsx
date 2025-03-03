@@ -8,14 +8,22 @@ interface BannerNotificationProps {
 
 const messages = {
   createFeedback_failed: {
-    title: "Feedback Submission Failed",
+    title: "Failed to Create Feedback",
     message:
-      'Submission failed. Try again or press "Cancel" to return to the previous',
+      "We couldn't submit your feedback. Please try again or press Cancel to go back.",
   },
   createFeedback_success: {
-    title: "Feedback Submission Successful",
+    title: "Feedback Created!",
     message:
-      "You can check the feedback detail here: ..., or return to Feedback Board",
+      "Your feedback has been added. You can view the details or go back to the previous page",
+  },
+  editFeedback_failed: {
+    title: "Failed to Update Feedback",
+    message: "We couldn't update your feedback. Please try again.",
+  },
+  editFeedback_success: {
+    title: "Feedback Updated!",
+    message: "Your feedback changes have been saved.",
   },
 };
 function BannerNotification({

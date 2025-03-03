@@ -19,7 +19,7 @@ interface FeedbackFormProps {
   footer: ReactNode;
   isDirty: boolean;
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
-  errors: FeedbackFormErrors;
+  errors: FeedbackFormErrors | null;
 }
 
 const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];
@@ -54,7 +54,7 @@ function FeedbackForm({
           describedById="feedbackTitleDesc"
           initialValue={defaultValues.title}
         />
-        <FormFieldError errorMessage={errors?.title} />
+        {errors?.title && <FormFieldError errorMessage={errors.title} />}
       </FormField>
       <br></br>
 
@@ -89,7 +89,9 @@ function FeedbackForm({
           defaultValue={defaultValues.description}
           required
         />
-        <FormFieldError errorMessage={errors?.description} />
+        {errors?.description && (
+          <FormFieldError errorMessage={errors.description} />
+        )}
       </FormField>
       <br></br>
 

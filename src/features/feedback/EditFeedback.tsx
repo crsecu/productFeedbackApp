@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { FeedbackFormData, StatusType } from "../../types/feedback.types";
+import {
+  FeedbackActionResult,
+  FeedbackFormData,
+  StatusType,
+} from "../../types/feedback.types";
 import FeedbackForm from "./FeedbackForm";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
@@ -21,14 +25,15 @@ const statusOptions: StatusType[] = [
 
 function EditFeedback(): React.JSX.Element {
   const dispatch = useAppDispatch();
-  const { state } = useLocation();
-  const formData = useActionData() as FeedbackFormData;
+  const { state: navigationState } = useLocation();
   const navigation = useNavigation();
   const navigate = useNavigate();
-  const isSubmitting = navigation.state === "submitting";
 
-  const [initialFeedbackData] = useState(state);
-  const [isFormDirty, setIsFormDirty] = useState(false);
+  const formData = useActionData() as FeedbackActionResult;
+  const isSubmitting = navigation.state === "submitting";
+  console.log("sss", navigationState);
+  const [initialFeedbackData] = useState(navigationState);
+  const [hasFormChanged, setHasFormChanged] = useState(false);
 
   function handleCancel(e: React.MouseEvent<HTMLButtonElement>) {
     const formElement = e.currentTarget.form;
@@ -38,7 +43,7 @@ function EditFeedback(): React.JSX.Element {
       return;
     }
 
-    if (!isFormDirty) {
+    if (!hasFormChanged) {
       navigate(`/feedbackDetail/${initialFeedbackData.id}`, {
         replace: true,
       });
@@ -51,7 +56,7 @@ function EditFeedback(): React.JSX.Element {
       );
     }
   }
-  console.log("initial", initialFeedbackData);
+
   return (
     <>
       <h1>Editing {initialFeedbackData.data.title}</h1>
@@ -60,7 +65,7 @@ function EditFeedback(): React.JSX.Element {
         defaultValues={initialFeedbackData.data}
         footer={
           <>
-            <button disabled={isSubmitting || isFormDirty === false}>
+            <button disabled={isSubmitting || hasFormChanged === false}>
               {isSubmitting ? "Saving Changes..." : "Save Changes"}
             </button>
             <button type="button" onClick={(e) => handleCancel(e)}>
@@ -81,8 +86,8 @@ function EditFeedback(): React.JSX.Element {
             </button>
           </>
         }
-        isDirty={isFormDirty}
-        setIsDirty={setIsFormDirty}
+        isDirty={hasFormChanged}
+        setIsDirty={setHasFormChanged}
         errors={formData?.errors}
       >
         <FormField

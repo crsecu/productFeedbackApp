@@ -1,48 +1,72 @@
-import { ActionFunctionArgs, json, redirect } from "react-router-dom";
+import { ActionFunctionArgs, ActionFunction, redirect } from "react-router-dom";
 
 import { editFeedback, submitFeedback } from "../services/apiFeedback";
-import { postCommentOrReply } from "../utils/helpers";
+import {
+  createFeedbackActionResult,
+  postCommentOrReply,
+} from "../utils/helpers";
 import {
   CategoryType,
   FeedbackFormErrors,
   NewFeedbackType,
+  StatusType,
 } from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
 
 /* Submit New Feedback Action*/
-export async function createFeedbackAction({ request }: ActionFunctionArgs) {
+export const createFeedbackAction: ActionFunction = async ({
+  request,
+}: ActionFunctionArgs) => {
+  const actionType = "createFeedback";
+
   const formData = await request.formData();
-  const data1 = Object.fromEntries(formData) as {
+  const data = Object.fromEntries(formData) as {
     title: string;
     category: CategoryType;
     description: string;
   };
 
-  const category = data1.category.toLowerCase() as CategoryType;
+  const category = data.category.toLowerCase() as CategoryType;
 
   const feedback: NewFeedbackType = {
-    ...data1,
+    ...data,
     category,
     status: "suggestion",
     upvotes: 0,
     commentCount: 0,
   };
 
-  /* Form error handling */
+  /* Form Validation Error Handling */
   const validationErrors: FeedbackFormErrors = {};
+
   if (feedback.title.trim() === "")
     validationErrors.title = "Please enter a valid title";
   if (feedback.description.trim() === "")
     validationErrors.description = "Please enter a valid description";
 
+  // action couldn't submit because of validation errors
   if (Object.keys(validationErrors).length > 0) {
-    return { success: false, validationErrors };
+    //return { success: null, actionType: "createFeedback", validationErrors };
+    return createFeedbackActionResult({ actionType, validationErrors });
   }
 
-  const submissionResult = await submitFeedback(feedback);
+  const response = await submitFeedback(feedback);
 
-  return submissionResult;
-}
+  // action submission failed
+  if (!response.success)
+    return createFeedbackActionResult({
+      actionType,
+      success: false,
+      //TO DO: pass message: response.error after defining the types of errors returned when fetch fails
+    });
+
+  // action submission successful
+  return createFeedbackActionResult({
+    actionType,
+    success: true,
+    payload: response.payload,
+  });
+};
 
 /* 
  FeedbackDetailPage action - handles adding a comment/reply; 
@@ -67,17 +91,18 @@ export async function editFeedbackAction({
   const data = Object.fromEntries(formData) as {
     title: string;
     description: string;
-    category: string;
-    status: string;
+    category: CategoryType;
+    status: StatusType;
   };
 
   //Form Error Handling
-  const errors: FeedbackFormErrors = {};
-  if (data.title.trim() === "") errors.title = "Please enter a valid title";
+  const validationErrors: FeedbackFormErrors = {};
+  if (data.title.trim() === "")
+    validationErrors.title = "Please enter a valid title";
   if (data.description.trim() === "")
-    errors.description = "Please enter a valid description";
+    validationErrors.description = "Please enter a valid description";
 
-  if (Object.keys(errors).length > 0) return { errors };
+  if (Object.keys(validationErrors).length > 0) return { validationErrors };
 
   assert(feedbackId);
 

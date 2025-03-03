@@ -11,6 +11,7 @@ import {
 import {
   CreateFeedbackFormValues,
   EditFeedbackFormValues,
+  FeedbackActionResult,
   SuggestionType,
 } from "../types/feedback.types";
 
@@ -196,4 +197,15 @@ export function buildCommentHierarchy(comments: CommentListType) {
   });
 
   return commentsThread;
+}
+
+//Factory function that creates the result object of an action function
+export function createFeedbackActionResult({
+  actionType,
+  success = null,
+  validationErrors = null,
+  message = null,
+  payload = null,
+}: FeedbackActionResult) {
+  return { actionType, success, validationErrors, message, payload };
 }

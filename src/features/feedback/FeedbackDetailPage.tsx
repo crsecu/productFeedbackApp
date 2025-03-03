@@ -30,8 +30,13 @@ function FeedbackDetailPage({
 
   const isFeedbackEntryNew =
     searchParams.get("status") === "new" ? true : false;
-
   const commentCount = dataFromLoader.commentCount ?? 0;
+  console.log(
+    "is feedback entry new",
+    isFeedbackEntryNew,
+    commentCount,
+    !isFeedbackEntryNew && commentCount > 0
+  );
   return (
     <>
       <ActionBar>
@@ -63,9 +68,9 @@ function FeedbackDetailPage({
         <>
           <FeedbackDetailContent feedback={dataFromLoader}>
             <CommentSection>
-              {!isFeedbackEntryNew && commentCount > 0 && (
+              {!isFeedbackEntryNew && commentCount > 0 ? (
                 <CommentList commentCount={commentCount} feedbackId={id} />
-              )}
+              ) : null}
 
               <CommentComposer mode="comment" commentCount={commentCount}>
                 <h2>Add a Comment</h2>
