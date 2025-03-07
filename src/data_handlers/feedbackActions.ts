@@ -7,7 +7,6 @@ import {
 } from "../utils/helpers";
 import {
   CategoryType,
-  EditedFeedbackType,
   FeedbackFormErrors,
   NewFeedbackType,
 } from "../types/feedback.types";
@@ -68,35 +67,27 @@ export const createFeedbackAction: ActionFunction = async ({
   });
 };
 
-/* 
- FeedbackDetailPage action - handles adding a comment/reply; 
-*/
+/* ------------------------------------------------------------ */
+/* ------------------------------------------------------------ */
+/* FeedbackDetailPage action - handles adding a comment/reply */
 export async function submitCommentAction({
   request,
   params,
 }: ActionFunctionArgs) {
   const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
-
   const formEntries = Object.fromEntries(formData);
-  //TO DO, revisit types after cleaning up CommentComposer formData
-  const { intent, ...submissionData } = formEntries as Record<string, string>;
 
-  console.log("submitted form: :):):) ", submissionData, intent);
+  //TO DO: revisit types after cleaning up CommentComposer formData
+  const { intent, ...submissionData } = formEntries as Record<string, string>;
 
   if (intent === "addComment")
     return postCommentOrReply(feedbackId, submissionData);
-
-  if (intent === "editFeedback") {
-    console.log("intent", intent);
-
-    return editFeedbackAction(
-      feedbackId,
-      submissionData as unknown as EditedFeedbackType
-    );
-  }
 }
 
+/* ------------------------------------------------------------ */
+/* ------------------------------------------------------------ */
+/* Submit Edit Feedback Action */
 export async function editFeedbackAction({
   request,
   params,
@@ -118,7 +109,7 @@ export async function editFeedbackAction({
 
   // action couldn't submit because of validation errors
   if (Object.keys(validationErrors).length > 0) {
-    //return { success: null, actionType: "createFeedback", validationErrors };
+    //return { success: null, actionType: "editFeedback", validationErrors };
     return createFeedbackActionResult({ actionType, validationErrors });
   }
 
@@ -142,42 +133,3 @@ export async function editFeedbackAction({
     payload: response.payload,
   });
 }
-
-// export async function editFeedbackAction(
-//   feedbackId: string,
-//   formFields: EditedFeedbackType
-// ) {
-//   const actionType = "editFeedback";
-//   //Form Error Handling
-//   const validationErrors: FeedbackFormErrors = {};
-//   if (formFields.title.trim() === "")
-//     validationErrors.title = "Please enter a valid title";
-//   if (formFields.description.trim() === "")
-//     validationErrors.description = "Please enter a valid description";
-
-//   // action couldn't submit because of validation errors
-//   if (Object.keys(validationErrors).length > 0) {
-//     //return { success: null, actionType: "createFeedback", validationErrors };
-//     return createFeedbackActionResult({ actionType, validationErrors });
-//   }
-
-//   assert(feedbackId);
-
-//   const response = await editFeedback(feedbackId, formFields);
-//   console.log("edit response", response);
-
-//   // action submission failed
-//   if (!response.success)
-//     return createFeedbackActionResult({
-//       actionType,
-//       success: false,
-//       //TO DO: pass message: response.error after defining the types of errors returned when fetch fails
-//     });
-
-//   // action submission successful
-//   return createFeedbackActionResult({
-//     actionType,
-//     success: true,
-//     payload: response.payload,
-//   });
-// }
