@@ -20,6 +20,7 @@ interface FeedbackFormProps {
   isDirty: boolean;
   setIsDirty: React.Dispatch<React.SetStateAction<boolean>>;
   errors: FeedbackFormErrors | null;
+  actionRoute?: string;
 }
 
 const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];
@@ -32,6 +33,7 @@ function FeedbackForm({
   isDirty,
   setIsDirty,
   errors,
+  actionRoute,
 }: FeedbackFormProps): React.JSX.Element {
   return (
     <Form
@@ -39,7 +41,7 @@ function FeedbackForm({
       onChange={(e) =>
         handleFormChange(e.currentTarget, defaultValues, isDirty, setIsDirty)
       }
-      replace
+      action={actionRoute}
     >
       <FormField
         inputId="feedbackTitle"

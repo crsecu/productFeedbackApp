@@ -7,7 +7,8 @@ type NotificationType =
   | "deleteFeedback_success"
   | "deleteFeedback_error"
   | "upvoteFeedback_success"
-  | "upvoteFeedback_error";
+  | "upvoteFeedback_error"
+  | "comment_added"; //
 
 const NOTIFICATION_MESSAGES: Record<NotificationType, string> = {
   createFeedback_success: "Your feedback has been submitted successfully!",
@@ -18,6 +19,7 @@ const NOTIFICATION_MESSAGES: Record<NotificationType, string> = {
   deleteFeedback_error: "Failed to delete feedback. Please try again.",
   upvoteFeedback_success: "Your upvote was successful.",
   upvoteFeedback_error: "Failed upvoting feedback. Please try again.",
+  comment_added: "comment added", //
 };
 
 interface ToastNotificationState {

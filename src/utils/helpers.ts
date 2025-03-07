@@ -99,11 +99,9 @@ of comments/replies for a specific feedback entry. It updates the backend by cre
 a new comment or reply based on the mode ("comment" or "reply") and increments the comment count. */
 export async function postCommentOrReply(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formData: Iterable<readonly [PropertyKey, any]>,
-  feedbackId: string
+  feedbackId: string,
+  submissionData: { [x: string]: string }
 ) {
-  const data = Object.fromEntries(formData);
-
   const {
     content,
     currentCommentCount: commentCount,
@@ -112,7 +110,7 @@ export async function postCommentOrReply(
     parentId,
     parentType,
     replyingTo,
-  } = data;
+  } = submissionData;
 
   const currentCommentCount: number = JSON.parse(commentCount as string);
   const author: CommentAuthor = JSON.parse(authorJSON as string);

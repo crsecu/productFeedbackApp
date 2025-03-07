@@ -1,16 +1,11 @@
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FeedbackType } from "../../types/feedback.types";
 import CommentList from "../comments/CommentList";
 import CommentComposer from "../comments/CommentComposer";
 import ActionBar from "../../ui/ActionBar";
 import FeedbackDetailContent from "./FeedbackDetailContent";
 import CommentSection from "../comments/CommentSection";
+import { useMemo } from "react";
 
 interface DetailPageProps {
   dataFromLoader: FeedbackType;
@@ -20,65 +15,62 @@ function FeedbackDetailPage({
   dataFromLoader,
 }: DetailPageProps): React.JSX.Element {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
 
-  const isEditFeedback = pathname.includes("editFeedback");
+  /* TO DO: instead of checking for "dataFromLoader" in the component, throw an error in the loader to prevent rendering when data is missing */
+  //if (!dataFromLoader) return <h1>Feedback Detail is not available.</h1>;
 
-  if (!dataFromLoader) return <h1>Feedback Detail is not available.</h1>;
-  const { id, title, category, status, description } = dataFromLoader;
+  const optimisticFeedback = location?.state;
 
-  const isFeedbackEntryNew =
-    searchParams.get("status") === "new" ? true : false;
-  const commentCount = dataFromLoader.commentCount ?? 0;
-  console.log(
-    "is feedback entry new",
-    isFeedbackEntryNew,
-    commentCount,
-    !isFeedbackEntryNew && commentCount > 0
-  );
+  const feedback = optimisticFeedback
+    ? { ...dataFromLoader, ...optimisticFeedback }
+    : dataFromLoader;
+
+  const { id, title, category, status, description, commentCount } = feedback;
+
+  const editableFormData = useMemo(() => {
+    return { title, category, status, description };
+  }, [category, description, status, title]);
+
   return (
     <>
+      <Outlet />
       <ActionBar>
         <button
           onClick={() => {
-            return isEditFeedback
-              ? navigate(`/feedbackDetail/${id}`, { replace: true })
-              : navigate(-1);
+            navigate(-1);
           }}
         >
           Go Back
         </button>
         <br></br>
         <br></br>
+
         <Link
           to="editFeedback"
           state={{
             id,
-            data: { title, category, status, description },
+            data: editableFormData,
           }}
           replace
         >
           Edit Feedback
         </Link>
       </ActionBar>
-      {isEditFeedback ? (
-        <Outlet />
-      ) : (
-        <>
-          <FeedbackDetailContent feedback={dataFromLoader}>
-            <CommentSection>
-              {!isFeedbackEntryNew && commentCount > 0 ? (
-                <CommentList commentCount={commentCount} feedbackId={id} />
-              ) : null}
-
-              <CommentComposer mode="comment" commentCount={commentCount}>
-                <h2>Add a Comment</h2>
-              </CommentComposer>
-            </CommentSection>
-          </FeedbackDetailContent>
-        </>
-      )}
+      <>
+        <FeedbackDetailContent feedback={feedback}>
+          <CommentSection>
+            {commentCount > 0 ? (
+              <CommentList commentCount={commentCount} feedbackId={id} />
+            ) : (
+              <p>No comments yet. Be the first to share your thoughts!</p>
+            )}
+            <CommentComposer mode="comment" commentCount={commentCount}>
+              <h2>Add a Comment</h2>
+            </CommentComposer>
+          </CommentSection>
+        </FeedbackDetailContent>
+      </>
     </>
   );
 }

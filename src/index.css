@@ -7,7 +7,7 @@ body {
 }
 ul {
   list-style-type: none;
-  padding-left: 0;
+  //padding-left: 0;
 }
 /* Homepage PAGE */
 .loginError {
@@ -100,10 +100,19 @@ ul {
 /* *************************************************************** */
 /* *************************************************************** */
 /* Create New Feedback Page */
-.createFeedback_new label,
-.editFeedback label {
-  font-weight: bold;
+.createFeedbackModal,
+.editFeedbackModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(224, 216, 216);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }
+
 input,
 select,
 label,
@@ -115,6 +124,10 @@ textarea {
   padding: 20px;
   background-color: rgb(130, 185, 134);
   border: 16px solid orange;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .hidden {

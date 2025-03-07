@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import PageHeader from "../../ui/PageHeader";
-import { useShowCreateFeedbackForm } from "../../utils/customHooks";
+import { useShowCreateFeedback } from "../../utils/customHooks";
 import { RoadmapLoaderData } from "../../types/feedback.types";
 import RoadmapStatusBoard from "./RoadmapStatusBoard";
 
@@ -8,7 +8,7 @@ interface RoadmapPageProps {
   dataFromLoader: RoadmapLoaderData;
 }
 function RoadmapPage({ dataFromLoader }: RoadmapPageProps): React.JSX.Element {
-  const isCreateFeedback = useShowCreateFeedbackForm();
+  const isCreateFeedback = useShowCreateFeedback();
 
   console.log("data loader roadmap", dataFromLoader);
 
@@ -21,11 +21,7 @@ function RoadmapPage({ dataFromLoader }: RoadmapPageProps): React.JSX.Element {
           <PageHeader>
             <Link to="/feedbackBoard">Go Back</Link>
             <h1>Roadmap</h1>
-            <Link
-              to={"createFeedback"}
-              state={{ from: location.pathname }}
-              replace
-            >
+            <Link to={"createFeedback"} state={{ from: location.pathname }}>
               Add Feedback
             </Link>
           </PageHeader>

@@ -43,6 +43,6 @@ export async function detailLoader({ params }: LoaderFunctionArgs) {
   assert(feedbackId, "feedbackId is invalid");
 
   const feedback: FeedbackType = await fetchFeedbackById(feedbackId);
-  console.log("is the detail loader triggered");
+
   return feedback;
 }

@@ -70,7 +70,7 @@ export interface FeedbackActionResult {
   actionType: "createFeedback" | "editFeedback"; //identifies the type of action submitted
   validationErrors?: FeedbackFormErrors | null;
   message?: string | null; //human friendly message for both success/failure
-  payload?: string | null; //for now using payload to pass the id of new feedback; extend later if needed
+  payload?: Record<string, string | number> | null; //for now using payload to pass the id of new feedback; extend later if needed
 }
 
 export interface RoadmapStats {

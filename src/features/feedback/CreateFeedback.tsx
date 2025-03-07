@@ -1,13 +1,8 @@
-import {
-  useActionData,
-  useLocation,
-  useNavigate,
-  useNavigation,
-} from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useActionData, useNavigate, useNavigation } from "react-router-dom";
 import FeedbackForm from "./FeedbackForm";
 import { FeedbackActionResult } from "../../types/feedback.types";
-import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { showModal } from "../../store/slices/modalSlice";
 import BannerNotification from "../../ui/BannerNotification";
 
@@ -20,11 +15,11 @@ const initialFormState = {
 function CreateFeedback(): React.JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const navigation = useNavigation();
+
+  const [hasFormChanged, sethasFormChanged] = useState(false);
 
   const actionResponse = useActionData() as FeedbackActionResult | undefined;
-
-  const navigation = useNavigation();
 
   const isSubmitting = navigation.state === "submitting";
 
@@ -33,17 +28,13 @@ function CreateFeedback(): React.JSX.Element {
   const submissionStatus = actionResponse?.success ?? null;
   const validationErrors = actionResponse?.validationErrors ?? null;
 
-  const prevPageRef = useRef(state?.from);
-  const [hasFormChanged, sethasFormChanged] = useState(false);
-
   function handleCancel() {
     if (!hasFormChanged) {
-      navigate(prevPageRef.current);
+      navigate(-1);
     } else {
       dispatch(
         showModal({
           modalType: "cancel_addFeedback",
-          confirmPayload: prevPageRef.current,
         })
       );
     }
@@ -57,10 +48,16 @@ function CreateFeedback(): React.JSX.Element {
     >
       {submissionStatus && (
         <>
-          <button onClick={() => navigate(-1)}>Go back</button>
+          <button
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            Go back
+          </button>
           <button
             onClick={() =>
-              navigate(`/feedbackDetail/${actionResponse?.payload}`, {
+              navigate(`/feedbackDetail/${actionResponse?.payload?.id}`, {
                 replace: true,
               })
             }
@@ -73,7 +70,7 @@ function CreateFeedback(): React.JSX.Element {
   );
 
   return (
-    <>
+    <div className="createFeedbackModal">
       {submissionStatus !== null && notification}
 
       {!submissionStatus && (
@@ -95,10 +92,11 @@ function CreateFeedback(): React.JSX.Element {
             isDirty={hasFormChanged}
             setIsDirty={sethasFormChanged}
             errors={validationErrors}
+            actionRoute="."
           />
         </>
       )}
-    </>
+    </div>
   );
 }
 

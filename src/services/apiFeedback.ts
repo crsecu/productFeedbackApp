@@ -48,7 +48,7 @@ export async function submitFeedback(feedback: NewFeedbackType) {
       },
     });
 
-    return { success: true, payload: data.id };
+    return { success: true, payload: data };
   } catch (err) {
     console.error("Something went wrong inside SubmitFeedback", err);
     return { success: false, error: err };
@@ -60,13 +60,25 @@ export async function editFeedback(
   feedbackId: string,
   editedFeedback: EditedFeedbackType
 ) {
-  return fetchWrapper(`${API_URL}/productRequests/${feedbackId}`, {
-    method: "PATCH",
-    body: JSON.stringify(editedFeedback),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const data = await fetchWrapper(
+      `${API_URL}/productRequests/${feedbackId}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(editedFeedback),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const { title, category, status, description } = data;
+
+    return { success: true, payload: { title, category, status, description } };
+  } catch (err) {
+    console.error("Something went wrong inside EditFeedback", err);
+    return { success: false, error: err };
+  }
 }
 
 /* Delete feedback entry */

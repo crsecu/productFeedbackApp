@@ -22,6 +22,7 @@ import { editFeedbackAction } from "./data_handlers/feedbackActions";
 import EditFeedback from "./features/feedback/EditFeedback";
 import CreateFeedback from "./features/feedback/CreateFeedback";
 import DataProvider from "./data_handlers/DataProvider";
+import FeedbackBoardError from "./ui/FeedbackBoardError";
 
 const router = createBrowserRouter([
   {
@@ -34,46 +35,31 @@ const router = createBrowserRouter([
       },
       {
         path: "/feedbackBoard",
-        element: (
-          <DataProvider PageComponent={FeedbackBoardPage} />
-
-          // <StateSyncWrapper>
-          //   <FeedbackBoardPage />
-          // </StateSyncWrapper>
-        ),
+        element: <FeedbackBoardPage />,
         loader: feedbackBoardLoader,
-        shouldRevalidate: ({ currentUrl, nextUrl, actionResult }) => {
+        errorElement: <FeedbackBoardError />,
+        shouldRevalidate: ({
+          currentUrl,
+          nextUrl,
+          actionResult,
+          formMethod,
+        }) => {
           console.log("current", currentUrl);
           console.log("next", nextUrl);
           console.log("action result", actionResult);
 
-          const preventRevalidation = actionResult
-            ? actionResult.success || "validationErrors" in actionResult
-            : false;
-
-          console.log("action result", actionResult, preventRevalidation);
-          //prevent revalidation in createFeedback
-          if (preventRevalidation) {
+          /* Prevent revalidation if feedback submission fails or if there are any validation errors */
+          if (formMethod === "post" && !actionResult.success) {
+            console.log("Revalidation prevented: feedback submission failed");
             return false;
           }
 
-          // prevent revalidation if only search params change
+          //  Prevent revalidation if only search params change in the URL
           if (
             currentUrl.pathname === nextUrl.pathname &&
             currentUrl.search !== nextUrl.search
           ) {
-            console.log("skipping revalidation: only search params changed");
-            return false;
-          }
-
-          // prevent revalidation when navigating to createFeedback
-          if (
-            currentUrl.pathname === "/feedbackBoard" &&
-            nextUrl.pathname === "/feedbackBoard/createFeedback"
-          ) {
-            console.log(
-              "skipping revalidation when navigating to createFeedback form"
-            );
+            console.log("Skipping revalidation: only search params changed");
             return false;
           }
         },
@@ -101,13 +87,12 @@ const router = createBrowserRouter([
         path: "/feedbackDetail/:feedbackId",
         element: <DataProvider PageComponent={FeedbackDetailPage} />,
         loader: detailLoader,
-        shouldRevalidate: ({ currentUrl, nextUrl, actionResult }) => {
-          console.log("current detail", currentUrl);
-          console.log("next detail", nextUrl);
-          console.log("actionResult", actionResult);
-
-          //prevent revalidation when editFeedback form contains validation errors
-          if (actionResult && "errors" in actionResult) {
+        shouldRevalidate: ({ formMethod }) => {
+          /* Prevent revalidation on edit feedback form submission - UI is updated optimistically, no re-fetch needed. */
+          if (formMethod === "patch") {
+            console.log(
+              "Revalidation skipped: Edit Feedback - UI updated optimistically"
+            );
             return false;
           }
         },

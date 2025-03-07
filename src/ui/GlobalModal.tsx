@@ -41,8 +41,7 @@ function GlobalModal(): React.JSX.Element | null {
     }
 
     if (modalType === "cancel_addFeedback") {
-      assert(confirmPayload);
-      navigate(confirmPayload);
+      navigate(-1);
     }
 
     dispatch(hideModal());

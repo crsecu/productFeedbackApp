@@ -8,6 +8,7 @@ interface FeedbackDetailContentProps {
   children: React.ReactNode;
   feedback: FeedbackType;
 }
+
 function FeedbackDetailContent({
   children,
   feedback,

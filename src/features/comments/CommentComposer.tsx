@@ -31,6 +31,7 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   function handleSubmit() {
     const formData = new FormData();
     formData.append("mode", mode);
+    formData.append("intent", "addComment");
     formData.append("content", commentContent);
     formData.append("currentCommentCount", JSON.stringify(commentCount));
     formData.append("author", JSON.stringify({ name, username, image }));
@@ -55,9 +56,6 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
           e.preventDefault();
           handleSubmit();
           setCommentContent("");
-          // if (mode !== "reply") return;
-
-          // props.setShowAddReply(false);
         }}
       >
         {children}
