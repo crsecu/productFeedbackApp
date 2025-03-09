@@ -32,7 +32,11 @@ function RoadmapStatusBoard({
   //TO DO: Assess if memoizing renderRoadmapColumn is worth the cost given its low complexity
   const roadmapColumns = renderRoadmapColumns(dataFromLoader);
 
-  return <ul className="roadmap_devStatusPhases">{roadmapColumns}</ul>;
+  return (
+    <main>
+      <ul className="roadmap_devStatusPhases">{roadmapColumns}</ul>;
+    </main>
+  );
 }
 
 export default RoadmapStatusBoard;
