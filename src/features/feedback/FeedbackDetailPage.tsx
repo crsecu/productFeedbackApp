@@ -65,7 +65,10 @@ function FeedbackDetailPage({
             ) : (
               <p>No comments yet. Be the first to share your thoughts!</p>
             )}
-            <CommentComposer mode="comment" commentCount={commentCount}>
+            <CommentComposer
+              mode="comment"
+              payload={{ feedbackId: id, commentCount }}
+            >
               <h2>Add a Comment</h2>
             </CommentComposer>
           </CommentSection>

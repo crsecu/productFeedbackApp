@@ -1,53 +1,31 @@
-import { useState } from "react";
-import { CommentKindType, CommentThreadEntry } from "../../types/comment.types";
-import CommentComposer from "./CommentComposer";
+import { CommentThreadEntry } from "../../types/comment.types";
+
 import UserAvatar from "../user/UserAvatar";
 import UserInfo from "../user/UserInfo";
+import AddReply from "../feedback/AddReply";
 
 interface CommentProps {
   comment: CommentThreadEntry;
   commentCount: number;
 }
 function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
-  const [showAddReply, setShowAddReply] = useState(false);
-
   const {
     content,
-    id,
     parentType,
     user: { image, name, username },
   } = comment;
 
-  const parentTypeVariant: CommentKindType =
-    parentType === null ? "comment" : "reply";
-
   return (
     <>
-      <div aria-label="Comment by ..." style={{ margin: "30px 0 30px  0" }}>
+      <div aria-label="Comment by ..." className="comment">
         <UserAvatar imageUrl={image} />
         <div style={{ display: "flex" }}>
           <UserInfo name={name} username={username} />
-          {parentType !== "reply" && (
-            <button
-              onClick={() => setShowAddReply((prevState) => !prevState)}
-              style={{ marginLeft: "auto" }}
-            >
-              Reply
-            </button>
-          )}
         </div>
         <p style={{ marginBottom: "none" }}>{content}</p>
-
-        <div className={!showAddReply ? "hidden" : ""}>
-          <CommentComposer
-            mode="reply"
-            setShowAddReply={setShowAddReply}
-            parentId={id as string}
-            parentType={parentTypeVariant}
-            authorUsername={username}
-            commentCount={commentCount}
-          />
-        </div>
+        {parentType !== "reply" && (
+          <AddReply parentComment={comment} commentCount={commentCount} />
+        )}
       </div>
       {comment.replies && comment.replies.length > 0 && (
         <ul>

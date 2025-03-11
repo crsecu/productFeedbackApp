@@ -11,6 +11,7 @@ import {
   NewFeedbackType,
 } from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
+import { SubmissionDataType } from "../types/comment.types";
 
 /* Submit New Feedback Action*/
 export const createFeedbackAction: ActionFunction = async ({
@@ -70,19 +71,22 @@ export const createFeedbackAction: ActionFunction = async ({
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
 /* FeedbackDetailPage action - handles adding a comment/reply */
-export async function submitCommentAction({
-  request,
-  params,
-}: ActionFunctionArgs) {
-  const feedbackId = params.feedbackId as string;
+export async function submitCommentAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
-  const formEntries = Object.fromEntries(formData);
+
+  const intent = formData.get("intent") as "addComment";
+
+  console.log("ACTION COMMENT", intent);
 
   //TO DO: revisit types after cleaning up CommentComposer formData
-  const { intent, ...submissionData } = formEntries as Record<string, string>;
 
-  if (intent === "addComment")
-    return postCommentOrReply(feedbackId, submissionData);
+  if (intent === "addComment") {
+    const content = formData.get("content") as string;
+    const submissionDataJSON = formData.get("submissionData") as string;
+    const submissionData: SubmissionDataType = JSON.parse(submissionDataJSON);
+    return postCommentOrReply(content, submissionData);
+  }
+  return null;
 }
 
 /* ------------------------------------------------------------ */
@@ -98,7 +102,6 @@ export async function editFeedbackAction({
   const formEntries = Object.fromEntries(formData);
   const { intent, ...submissionData } = formEntries as Record<string, string>;
   const actionType = intent as "editFeedback";
-  console.log("F", formEntries);
 
   //Form Error Handling
   const validationErrors: FeedbackFormErrors = {};
@@ -116,7 +119,6 @@ export async function editFeedbackAction({
   assert(feedbackId);
 
   const response = await editFeedback(feedbackId, submissionData);
-  console.log("edit response", response);
 
   // action submission failed
   if (!response.success)

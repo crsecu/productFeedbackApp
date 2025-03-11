@@ -2,11 +2,11 @@ import { User } from "../features/user/user.types";
 import { submitComment } from "../services/apiComment";
 import { fetchUserList, updateCommentCount } from "../services/apiFeedback";
 import {
-  CommentAuthor,
+  BaseCommentType,
   CommentListType,
   CommentThreadEntry,
-  NewCommentType,
-  NewReplyType,
+  ReplyPayload,
+  SubmissionDataType,
 } from "../types/comment.types";
 import {
   CreateFeedbackFormValues,
@@ -98,51 +98,37 @@ export function sortFeedbackList(
 of comments/replies for a specific feedback entry. It updates the backend by creating 
 a new comment or reply based on the mode ("comment" or "reply") and increments the comment count. */
 export async function postCommentOrReply(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  feedbackId: string,
-  submissionData: { [x: string]: string }
+  content: string,
+  submissionData: SubmissionDataType
 ) {
+  console.log("1111", submissionData);
   const {
-    content,
-    currentCommentCount: commentCount,
-    author: authorJSON,
+    author,
     mode,
-    parentId,
-    parentType,
-    replyingTo,
+    payload: { commentCount, feedbackId },
   } = submissionData;
 
-  const currentCommentCount: number = JSON.parse(commentCount as string);
-  const author: CommentAuthor = JSON.parse(authorJSON as string);
-
-  if (mode === "comment") {
-    const newComment: NewCommentType = {
-      feedbackId,
-      type: mode,
-      parentId: null,
-      parentType: null,
-      content: content as string,
-      user: author,
-    };
-
-    await submitComment(newComment);
-  }
+  /* Common fields between comment and reply */
+  const baseComment: BaseCommentType = {
+    feedbackId,
+    type: mode,
+    parentId: null,
+    parentType: null,
+    content,
+    user: author,
+  };
 
   if (mode === "reply") {
-    const newReply: NewReplyType = {
-      feedbackId,
-      type: mode,
-      parentId: parentId as string,
-      parentType: parentType as "comment" | "reply",
-      content: content as string,
-      user: author,
-      replyingTo: replyingTo as string,
-    };
-
-    await submitComment(newReply);
+    const parent = (submissionData.payload as ReplyPayload).parent;
+    const { author, id, type } = parent;
+    baseComment.replyingTo = author;
+    baseComment.parentId = id;
+    baseComment.parentType = type;
   }
 
-  await updateCommentCount(feedbackId, currentCommentCount + 1);
+  console.log("BASE COMMENT", baseComment);
+  await updateCommentCount(feedbackId, commentCount + 1);
+  await submitComment(baseComment);
 
   return null;
 }

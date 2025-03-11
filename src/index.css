@@ -7,7 +7,6 @@ body {
 }
 ul {
   list-style-type: none;
-  //padding-left: 0;
 }
 /* Homepage PAGE */
 .loginError {
@@ -169,4 +168,16 @@ textarea {
 
 .comments li:last-child {
   border-bottom: none;
+}
+
+.comment {
+  position: relative;
+  margin: 30px 0 30px 0;
+}
+
+.addReply {
+  position: absolute;
+  margin-left: auto;
+  top: 0;
+  right: 0;
 }

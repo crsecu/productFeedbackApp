@@ -51,3 +51,33 @@ export interface CommentThreadEntry {
 export type CommentListType = (CommentType | ReplyType)[];
 
 export type CommentKindType = "comment" | "reply";
+
+export type BasePayload = {
+  feedbackId: string;
+  commentCount: number;
+};
+
+export type CommentPayload = BasePayload;
+export type ReplyPayload = BasePayload & {
+  parent: {
+    id: string | null;
+    type: CommentKindType | null;
+    author: string;
+  };
+};
+
+export interface SubmissionDataType {
+  author: CommentAuthor;
+  mode: CommentKindType;
+  payload: CommentPayload | ReplyPayload;
+}
+
+export interface BaseCommentType {
+  feedbackId: string;
+  type: CommentKindType;
+  parentId: string | null;
+  parentType: CommentKindType | null;
+  content: string;
+  user: CommentAuthor;
+  replyingTo?: string;
+}

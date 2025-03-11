@@ -1,74 +1,48 @@
 import { useFetcher } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-import { ReactNode, useState } from "react";
-import { CommentKindType } from "../../types/comment.types";
+import { ReactNode } from "react";
+import { CommentPayload, ReplyPayload } from "../../types/comment.types";
 
 type CommentComposerProps = {
   children?: ReactNode;
-  commentCount: number;
 } & (
-  | { mode: "comment" }
+  | { mode: "comment"; payload: CommentPayload }
   | {
       mode: "reply";
-      setShowAddReply: React.Dispatch<React.SetStateAction<boolean>>;
-      parentId: string; // parent comment a reply belongs to;
-      parentType: CommentKindType;
-      authorUsername: string; //parent comment author
+      payload: ReplyPayload;
     }
 );
 
 function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const fetcher = useFetcher();
+  const loggedInUser = useAppSelector((state) => state.user.validatedUser);
+  const { name, username, image } = loggedInUser;
 
-  const [commentContent, setCommentContent] = useState("");
-
-  const commentAuthor = useAppSelector((state) => state.user.validatedUser);
-
-  const { children, commentCount, mode } = props;
-
-  const { name, username, image } = commentAuthor;
-
-  function handleSubmit() {
-    const formData = new FormData();
-    formData.append("mode", mode);
-    formData.append("intent", "addComment");
-    formData.append("content", commentContent);
-    formData.append("currentCommentCount", JSON.stringify(commentCount));
-    formData.append("author", JSON.stringify({ name, username, image }));
-
-    /* data submitted conditionally when mode === 'reply'*/
-    if (mode === "reply") {
-      const { parentId, parentType, authorUsername } = props;
-      formData.append("parentId", parentId);
-      formData.append("parentType", parentType);
-      formData.append("replyingTo", authorUsername);
-    }
-
-    fetcher.submit(formData, {
-      method: "POST",
-    });
-  }
+  const { children, mode, payload } = props;
 
   return (
     <>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-          setCommentContent("");
-        }}
-      >
+      <fetcher.Form method="post">
         {children}
+        <input
+          type="hidden"
+          name="submissionData"
+          value={JSON.stringify({
+            mode,
+            author: { name, username, image },
+            payload,
+          })}
+        />
 
-        <textarea
-          id="commentInput"
-          value={commentContent}
-          onChange={(e) => setCommentContent(e.target.value)}
-        ></textarea>
-        <button disabled={commentContent.trim() === ""}>
+        <textarea id="commentInput" name="content"></textarea>
+        <button name="intent" value="addComment">
           {fetcher.state !== "idle" ? "Posting comment..." : "Post Comment"}
         </button>
-      </form>
+
+        {/* <button disabled={commentContent.trim() === ""}>
+          {fetcher.state !== "idle" ? "Posting comment..." : "Post Comment"}
+        </button> */}
+      </fetcher.Form>
     </>
   );
 }
