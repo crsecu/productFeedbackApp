@@ -4,7 +4,6 @@ import { useRouteError } from "react-router-dom";
 function ErrorPage(): React.JSX.Element {
   const error = useRouteError();
 
-  console.log("ERROR shishi", error);
   return (
     <div>
       <h2 style={{ color: "darkRed" }}>Oops! You've encountered an error</h2>

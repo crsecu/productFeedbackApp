@@ -19,7 +19,6 @@ export function useShowCreateFeedback() {
 export function UpdateSuggestionList(suggestions: SuggestionType[]) {
   const dataFromAction = useActionData() as FeedbackActionResult | undefined;
 
-  console.log("custom hook", dataFromAction);
   if (!dataFromAction) return suggestions;
 
   const newFeedback = dataFromAction.success ? dataFromAction.payload : {};

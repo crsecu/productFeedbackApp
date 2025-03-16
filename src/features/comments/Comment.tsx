@@ -1,8 +1,8 @@
+import { useMemo } from "react";
 import { CommentThreadEntry } from "../../types/comment.types";
-
 import UserAvatar from "../user/UserAvatar";
 import UserInfo from "../user/UserInfo";
-import AddReply from "../feedback/AddReply";
+import AddReply from "./AddReply";
 
 interface CommentProps {
   comment: CommentThreadEntry;
@@ -14,6 +14,16 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
     parentType,
     user: { image, name, username },
   } = comment;
+
+  const replies = useMemo(() => {
+    return comment.replies.map((commentReply) => {
+      return (
+        <li key={commentReply.id}>
+          <Comment comment={commentReply} commentCount={commentCount} />
+        </li>
+      );
+    });
+  }, [comment.replies, commentCount]);
 
   return (
     <>
@@ -27,17 +37,8 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
           <AddReply parentComment={comment} commentCount={commentCount} />
         )}
       </div>
-      {comment.replies && comment.replies.length > 0 && (
-        <ul>
-          {comment.replies.map((commentReply) => {
-            return (
-              <li key={commentReply.id}>
-                <Comment comment={commentReply} commentCount={commentCount} />
-              </li>
-            );
-          })}
-        </ul>
-      )}
+
+      {comment.replies && comment.replies.length > 0 && <ul>{replies}</ul>}
     </>
   );
 }

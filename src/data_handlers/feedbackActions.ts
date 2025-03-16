@@ -76,15 +76,14 @@ export async function submitCommentAction({ request }: ActionFunctionArgs) {
 
   const intent = formData.get("intent") as "addComment";
 
-  console.log("ACTION COMMENT", intent);
 
-  //TO DO: revisit types after cleaning up CommentComposer formData
 
+  //TO DO: revisit types
   if (intent === "addComment") {
     const content = formData.get("content") as string;
     const submissionDataJSON = formData.get("submissionData") as string;
     const submissionData: SubmissionDataType = JSON.parse(submissionDataJSON);
-    return postCommentOrReply(content, submissionData);
+    return postCommentOrReply(content, submissionData, intent);
   }
   return null;
 }

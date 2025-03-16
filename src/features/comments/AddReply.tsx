@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { CommentThreadEntry } from "../../types/comment.types";
-import CommentComposer from "../comments/CommentComposer";
+import CommentComposer from "./CommentComposer";
 
 interface AddReplyProps {
   parentComment: CommentThreadEntry;

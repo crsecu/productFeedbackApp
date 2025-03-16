@@ -1,33 +1,17 @@
-import { fetchComments } from "../../services/apiComment";
-import { useEffect, useState } from "react";
-import { CommentListType, CommentThreadEntry } from "../../types/comment.types";
+import { CommentThreadEntry } from "../../types/comment.types";
 import Comment from "./Comment";
-
-import { buildCommentHierarchy } from "../../utils/helpers";
 
 interface CommentListProps {
   commentCount: number;
-  feedbackId: string;
+  comments: CommentThreadEntry[];
 }
 
 function CommentList({
   commentCount,
-  feedbackId,
+  comments,
 }: CommentListProps): React.JSX.Element {
-  const [comments, setComments] = useState<CommentThreadEntry[]>([]);
-
-  useEffect(
-    function () {
-      async function retrieveComments() {
-        const commentList: CommentListType = await fetchComments(feedbackId);
-        const commentThread = buildCommentHierarchy(commentList);
-        setComments(commentThread);
-      }
-
-      retrieveComments();
-    },
-    [feedbackId, commentCount]
-  );
+  if (commentCount === 0)
+    return <p>No comments yet. Be the first to share your thoughts!</p>;
 
   return (
     <>
@@ -35,6 +19,7 @@ function CommentList({
         <span>{commentCount}</span> Comments
       </h2>
       <ul className="comments">
+        {/* TO DO: memoize */}
         {comments.map((comment) => {
           return (
             <li key={comment.id}>

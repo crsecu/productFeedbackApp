@@ -1,31 +1,41 @@
-import { FeedbackType } from "../../types/feedback.types";
-import FeedbackCard from "./FeedbackCard";
-import FeedbackItem from "./FeedbackItem";
-import UpvoteButton from "./UpvoteButton";
+import { useLoaderData, useParams } from "react-router-dom";
+import CommentList from "../comments/CommentList";
+import { memo, ReactNode } from "react";
+import { CommentThreadEntry } from "../../types/comment.types";
+import CommentComposer from "../comments/CommentComposer";
+
+export interface CommentData {
+  commentHierarchy: CommentThreadEntry[];
+  commentCount: number;
+}
 
 interface FeedbackDetailContentProps {
-  children: React.ReactNode;
-  feedback: FeedbackType;
+  children: ReactNode;
 }
 
 function FeedbackDetailContent({
   children,
-  feedback,
 }: FeedbackDetailContentProps): React.JSX.Element {
+  const params = useParams();
+  const feedbackId = params.feedbackId as string;
+
+  const commentData = useLoaderData() as CommentData;
+
+  const countLoader = commentData.commentCount;
+  const commentHierarchy = commentData.commentHierarchy;
+
   return (
     <main style={{ paddingTop: "26px" }}>
-      <FeedbackItem>
-        <UpvoteButton
-          feedbackId={feedback.id}
-          initialUpvoteCount={feedback.upvotes}
-        />
-        <FeedbackCard feedback={feedback}>
-          <h1>{feedback.title}</h1>
-        </FeedbackCard>
-      </FeedbackItem>
       {children}
+      <CommentList commentCount={countLoader} comments={commentHierarchy} />
+      <CommentComposer
+        mode="comment"
+        payload={{ feedbackId, commentCount: countLoader }}
+      >
+        <h2>Add a Comment</h2>
+      </CommentComposer>
     </main>
   );
 }
 
-export default FeedbackDetailContent;
+export default memo(FeedbackDetailContent);

@@ -67,7 +67,7 @@ export interface FeedbackFormErrors {
 
 export interface FeedbackActionResult {
   success?: boolean | null; //true/false (form submission sucessful/failed), null (form wasn't submitted due to validation errors)
-  actionType: "createFeedback" | "editFeedback"; //identifies the type of action submitted
+  actionType: "createFeedback" | "editFeedback" | "addComment"; //identifies the type of action submitted
   validationErrors?: FeedbackFormErrors | null;
   message?: string | null; //human friendly message for both success/failure
   payload?: Record<string, string | number> | null; //for now using payload to pass the id of new feedback; extend later if needed

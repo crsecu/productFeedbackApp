@@ -1,8 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   feedbackBoardLoader,
-  detailLoader,
   roadmapDevLoader,
+  feedbackDetailLoader,
+  commentDataLoader,
 } from "./data_handlers/feedbackLoaders";
 import {
   createFeedbackAction,
@@ -19,10 +20,12 @@ import NotFoundPage from "./ui/NotFoundPage";
 import RootRoute from "./ui/RootRoute";
 
 import { editFeedbackAction } from "./data_handlers/feedbackActions";
-import EditFeedback from "./features/feedback/EditFeedback";
+
 import CreateFeedback from "./features/feedback/CreateFeedback";
 import DataProvider from "./data_handlers/DataProvider";
 import FeedbackBoardError from "./ui/FeedbackBoardError";
+
+import FeedbackDetailLayout from "./features/feedback/FeedbackDetailLayout";
 
 const router = createBrowserRouter([
   {
@@ -85,26 +88,39 @@ const router = createBrowserRouter([
       },
       {
         path: "/feedbackDetail/:feedbackId",
-        element: <DataProvider PageComponent={FeedbackDetailPage} />,
-        loader: detailLoader,
-        shouldRevalidate: ({ formMethod }) => {
-          /* Prevent revalidation on edit feedback form submission - UI is updated optimistically, no re-fetch needed. */
-          if (formMethod === "patch") {
-            console.log(
-              "Revalidation skipped: Edit Feedback - UI updated optimistically"
-            );
+        element: <FeedbackDetailLayout />,
+        id: "feedbackDetailData",
+
+        loader: feedbackDetailLoader,
+        shouldRevalidate: ({ formMethod, actionResult }) => {
+          if (formMethod === "post") return false;
+
+          /* Prevent revalidation if "editFeedback" submission fails or if there are any validation errors */
+          if (formMethod === "patch" && !actionResult.success) {
+            console.log("Revalidation prevented: EDIT FEEDBACK FAILED");
             return false;
           }
         },
-        action: submitCommentAction,
+
         children: [
           {
+            index: true,
+            element: <FeedbackDetailPage />,
+            id: "commentData", //might not need this id unless we need access to the comment data in a different route
+            loader: commentDataLoader,
+            action: submitCommentAction,
+            shouldRevalidate: ({ formMethod }) => {
+              if (formMethod === "patch") return false;
+            },
+          },
+
+          {
             path: "editFeedback",
-            element: <EditFeedback />,
             action: editFeedbackAction,
           },
         ],
       },
+
       { path: "*", element: <NotFoundPage /> },
     ],
   },

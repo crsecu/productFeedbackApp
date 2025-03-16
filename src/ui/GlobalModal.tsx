@@ -33,13 +33,6 @@ function GlobalModal(): React.JSX.Element | null {
         );
       }
     }
-
-    if (modalType === "cancel_editFeedback") {
-      navigate(`/feedbackDetail/${confirmPayload}`, {
-        replace: true,
-      });
-    }
-
     if (modalType === "cancel_addFeedback") {
       navigate(-1);
     }
@@ -48,7 +41,14 @@ function GlobalModal(): React.JSX.Element | null {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        position: "relative",
+        zIndex: "999",
+        fontSize: "1.25rem",
+        backgroundColor: "yellow",
+      }}
+    >
       <p>{content}</p>
 
       <>

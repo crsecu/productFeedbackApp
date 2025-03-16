@@ -25,7 +25,6 @@ function LoginForm(): React.JSX.Element {
     } //TO DO: handle input validation
 
     const validatedUser = await validateUserCredentials(name, username);
-    console.log("validated", validatedUser);
 
     if (validatedUser) {
       dispatch(setUserCredentials(validatedUser));

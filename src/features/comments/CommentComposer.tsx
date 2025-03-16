@@ -15,6 +15,7 @@ type CommentComposerProps = {
 
 function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const fetcher = useFetcher();
+
   const loggedInUser = useAppSelector((state) => state.user.validatedUser);
   const { name, username, image } = loggedInUser;
 
@@ -22,7 +23,8 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
 
   return (
     <>
-      <fetcher.Form method="post">
+      {fetcher.state === "idle" && fetcher.data && <p>Comment added</p>}
+      <fetcher.Form method="post" action=".">
         {children}
         <input
           type="hidden"

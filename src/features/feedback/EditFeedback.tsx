@@ -1,17 +1,10 @@
-import { useState } from "react";
-import { FeedbackActionResult, StatusType } from "../../types/feedback.types";
+import { EditedFeedbackType, StatusType } from "../../types/feedback.types";
 import FeedbackForm from "./FeedbackForm";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
-import {
-  useActionData,
-  useLocation,
-  useNavigate,
-  useNavigation,
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
 import { useAppDispatch } from "../../types/hooks";
-import BannerNotification from "../../ui/BannerNotification";
 
 const statusOptions: StatusType[] = [
   "suggestion",
@@ -19,128 +12,76 @@ const statusOptions: StatusType[] = [
   "in-Progress",
   "live",
 ];
+interface EditFeedbackProps {
+  editableFeedback: EditedFeedbackType;
+  closeModal: () => void;
+}
 
-function EditFeedback(): React.JSX.Element {
+function EditFeedback({
+  editableFeedback,
+  closeModal,
+}: EditFeedbackProps): React.JSX.Element {
   const dispatch = useAppDispatch();
-  const { state: navigationState } = useLocation();
-  const navigation = useNavigation();
-  const navigate = useNavigate();
 
-  const actionResponse = useActionData() as FeedbackActionResult;
-  const isSubmitting = navigation.state === "submitting";
+  const { feedbackId } = useParams();
 
-  const [initialFeedbackData] = useState(navigationState);
-  const [hasFormChanged, setHasFormChanged] = useState(false);
-
-  const submissionStatus = actionResponse?.success ?? null; //TO DO: defaulting to null may not be necessary - check later
-  const validationErrors = actionResponse?.validationErrors ?? null;
-
-  function handleCancel(e: React.MouseEvent<HTMLButtonElement>) {
-    const formElement = e.currentTarget.form;
-
-    if (!formElement) {
-      console.warn("Warning!!! Button is not inside a form");
-      return;
-    }
-
+  //TO DO: Check this functionality after refactoring rest
+  function handleCancel(hasFormChanged: boolean) {
     if (!hasFormChanged) {
-      navigate(`/feedbackDetail/${initialFeedbackData.id}`, {
-        replace: true,
-      });
+      closeModal();
     } else {
       dispatch(
         showModal({
           modalType: "cancel_editFeedback",
-          confirmPayload: initialFeedbackData.id,
         })
       );
     }
   }
 
-  //notification
-  const notification = (
-    <BannerNotification
-      notificationType={
-        submissionStatus ? "editFeedback_success" : "editFeedback_failed"
-      }
-    >
-      {submissionStatus && (
-        <>
-          <button
-            onClick={() => {
-              navigate(`/feedbackDetail/${initialFeedbackData.id}`, {
-                replace: true,
-                state: actionResponse?.payload,
-              });
-            }}
-          >
-            Close
-          </button>
-        </>
-      )}
-    </BannerNotification>
-  );
-
   return (
-    <div className="editFeedbackModal">
-      {submissionStatus !== null && notification}
+    <div className="formModal">
+      <>
+        <h1>Editing title</h1>
 
-      {!submissionStatus && (
-        <>
-          <h1>Editing {initialFeedbackData.data.title}</h1>
-
-          <FeedbackForm
-            method="patch"
-            defaultValues={initialFeedbackData.data}
-            footer={
-              <>
-                <button
-                  disabled={isSubmitting || hasFormChanged === false}
-                  name="intent"
-                  value="editFeedback"
-                >
-                  {isSubmitting ? "Saving Changes..." : "Save Changes"}
-                </button>
-                <button type="button" onClick={(e) => handleCancel(e)}>
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    dispatch(
-                      showModal({
-                        modalType: "delete_feedback",
-                        confirmPayload: initialFeedbackData.id,
-                      })
-                    );
-                  }}
-                >
-                  Delete
-                </button>
-              </>
-            }
-            isDirty={hasFormChanged}
-            setIsDirty={setHasFormChanged}
-            errors={validationErrors}
-            actionRoute="."
+        <FeedbackForm
+          method="patch"
+          defaultValues={editableFeedback}
+          buttons={
+            <>
+              <button
+                type="button"
+                onClick={() => {
+                  dispatch(
+                    showModal({
+                      modalType: "delete_feedback",
+                      confirmPayload: feedbackId,
+                    })
+                  );
+                }}
+              >
+                Delete
+              </button>
+            </>
+          }
+          actionRoute="editFeedback"
+          onCancel={handleCancel}
+        >
+          <FormField
+            inputId="feedbackStatus"
+            label="Update Status"
+            description="Change feature state"
+            inputGuidanceId="feedbackStatusDesc"
           >
-            <FormField
-              inputId="feedbackStatus"
-              label="Update Status"
-              description="Change feature state"
-              inputGuidanceId="feedbackStatusDesc"
-            >
-              <SelectField
-                name="status"
-                id="feedbackStatus"
-                options={statusOptions}
-                describedById="feedbackStatusDesc"
-                initialValue={initialFeedbackData.data.status}
-              />
-            </FormField>
-          </FeedbackForm>
-        </>
-      )}
+            <SelectField
+              name="status"
+              id="feedbackStatus"
+              options={statusOptions}
+              describedById="feedbackStatusDesc"
+              initialValue={editableFeedback?.status}
+            />
+          </FormField>
+        </FeedbackForm>
+      </>
     </div>
   );
 }

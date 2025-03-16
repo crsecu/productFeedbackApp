@@ -1,6 +1,6 @@
 import { User } from "../features/user/user.types";
 import { submitComment } from "../services/apiComment";
-import { fetchUserList, updateCommentCount } from "../services/apiFeedback";
+import { fetchUserList } from "../services/apiFeedback";
 import {
   BaseCommentType,
   CommentListType,
@@ -99,9 +99,9 @@ of comments/replies for a specific feedback entry. It updates the backend by cre
 a new comment or reply based on the mode ("comment" or "reply") and increments the comment count. */
 export async function postCommentOrReply(
   content: string,
-  submissionData: SubmissionDataType
+  submissionData: SubmissionDataType,
+  actionType: "addComment"
 ) {
-  console.log("1111", submissionData);
   const {
     author,
     mode,
@@ -126,15 +126,27 @@ export async function postCommentOrReply(
     baseComment.parentType = type;
   }
 
-  console.log("BASE COMMENT", baseComment);
-  await updateCommentCount(feedbackId, commentCount + 1);
-  await submitComment(baseComment);
+  const response = await submitComment(baseComment, commentCount);
 
-  return null;
+  // action submission failed
+  if (!response.success) {
+    return createFeedbackActionResult({
+      actionType,
+      success: false,
+    });
+  }
+  // action submission successful
+  return createFeedbackActionResult({
+    actionType,
+    success: true,
+    payload: response.payload,
+  });
 }
 
 /* Function checks if any form field values have changed by comparing each field in "currentValues" against "initialValues"; returns true as soon as a change is detected*/
 function hasFormChanged(initialValues, currentValues) {
+  //if(!in)
+
   const formFieldNames = Object.keys(initialValues);
 
   return formFieldNames.some(

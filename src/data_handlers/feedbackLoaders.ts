@@ -6,6 +6,8 @@ import {
   SuggestionType,
 } from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
+import { buildCommentHierarchy, fetchWrapper } from "../utils/helpers";
+import { API_URL } from "../services/apiFeedback";
 
 // Fetch list of feedback entries for Feedback Board Page
 export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
@@ -38,11 +40,24 @@ export async function roadmapDevLoader() {
 }
 
 // Fetch Feedback based on id
-export async function detailLoader({ params }: LoaderFunctionArgs) {
+export async function feedbackDetailLoader({ params }: LoaderFunctionArgs) {
   const feedbackId = params.feedbackId;
   assert(feedbackId, "feedbackId is invalid");
 
   const feedback: FeedbackType = await fetchFeedbackById(feedbackId);
 
   return feedback;
+}
+
+// Fetch Comment List for Detail Page
+export async function commentDataLoader({ params }: LoaderFunctionArgs) {
+  const feedbackId = params.feedbackId;
+  assert(feedbackId, "feedbackId is invalid");
+
+  const comments = await fetchWrapper(
+    `${API_URL}/comments?feedbackId=${feedbackId}`
+  );
+
+  const commentHierarchy = buildCommentHierarchy(comments);
+  return { commentHierarchy, commentCount: comments.length };
 }

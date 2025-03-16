@@ -6,6 +6,7 @@ import { sortFeedbackList } from "../../utils/helpers";
 import FeedbackCard from "./FeedbackCard";
 import UpvoteButton from "./UpvoteButton";
 import { SuggestionType } from "../../types/feedback.types";
+import CommentCount from "../comments/CommentCount";
 
 interface FeedbackListProps {
   suggestions: SuggestionType[];
@@ -33,7 +34,7 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
 
             <Link to={`/feedbackDetail/${item.id}`}>
               <FeedbackCard feedback={item}>
-                <h3>{item.title}</h3>
+                <CommentCount count={item.commentCount} />
               </FeedbackCard>
             </Link>
           </FeedbackItem>

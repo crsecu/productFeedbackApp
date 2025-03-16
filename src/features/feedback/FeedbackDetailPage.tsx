@@ -1,81 +1,58 @@
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useRouteLoaderData } from "react-router-dom";
+
 import { FeedbackType } from "../../types/feedback.types";
-import CommentList from "../comments/CommentList";
-import CommentComposer from "../comments/CommentComposer";
-import ActionBar from "../../ui/ActionBar";
+import CommentCount from "../comments/CommentCount";
+import FeedbackCard from "./FeedbackCard";
+
+import FeedbackItem from "./FeedbackItem";
+import UpvoteButton from "./UpvoteButton";
 import FeedbackDetailContent from "./FeedbackDetailContent";
-import CommentSection from "../comments/CommentSection";
-import { useMemo } from "react";
 
-interface DetailPageProps {
-  dataFromLoader: FeedbackType;
-}
+import { useState } from "react";
+import { createPortal } from "react-dom";
+import EditFeedback from "./EditFeedback";
 
-function FeedbackDetailPage({
-  dataFromLoader,
-}: DetailPageProps): React.JSX.Element {
-  const navigate = useNavigate();
-  const location = useLocation();
+function FeedbackDetailPage(): React.JSX.Element {
+  const feedback = useRouteLoaderData("feedbackDetailData") as FeedbackType;
+  const [showEditFeedback, setShowEditFeedback] = useState(false);
 
-  /* TO DO: instead of checking for "dataFromLoader" in the component, throw an error in the loader to prevent rendering when data is missing */
-  //if (!dataFromLoader) return <h1>Feedback Detail is not available.</h1>;
-
-  const optimisticFeedback = location?.state;
-
-  const feedback = optimisticFeedback
-    ? { ...dataFromLoader, ...optimisticFeedback }
-    : dataFromLoader;
-
-  const { id, title, category, status, description, commentCount } = feedback;
-
-  const editableFormData = useMemo(() => {
-    return { title, category, status, description };
-  }, [category, description, status, title]);
+  const { title, description, category, status } = feedback;
 
   return (
     <>
-      <Outlet />
-      <ActionBar>
-        <button
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          Go Back
-        </button>
-        <br></br>
-        <br></br>
+      <button onClick={() => setShowEditFeedback(true)}>Edit</button>
+      {showEditFeedback &&
+        createPortal(
+          <EditFeedback
+            editableFeedback={{ title, description, category, status }}
+            closeModal={() => setShowEditFeedback(false)}
+          />,
+          document.body
+        )}
 
-        <Link
-          to="editFeedback"
-          state={{
-            id,
-            data: editableFormData,
-          }}
-          replace
-        >
-          Edit Feedback
-        </Link>
-      </ActionBar>
-      <>
-        <FeedbackDetailContent feedback={feedback}>
-          <CommentSection>
-            {commentCount > 0 ? (
-              <CommentList commentCount={commentCount} feedbackId={id} />
-            ) : (
-              <p>No comments yet. Be the first to share your thoughts!</p>
-            )}
-            <CommentComposer
-              mode="comment"
-              payload={{ feedbackId: id, commentCount }}
-            >
-              <h2>Add a Comment</h2>
-            </CommentComposer>
-          </CommentSection>
-        </FeedbackDetailContent>
-      </>
+      <FeedbackDetailContent>
+        <>
+          <FeedbackItem>
+            <UpvoteButton
+              feedbackId={feedback.id}
+              initialUpvoteCount={feedback.upvotes}
+            />
+            <FeedbackCard feedback={feedback}>
+              <CommentCount />
+            </FeedbackCard>
+          </FeedbackItem>
+        </>
+      </FeedbackDetailContent>
     </>
   );
 }
 
 export default FeedbackDetailPage;
+//
+
+//
+
+//
+
+/* TO DO: instead of checking for "dataFromLoader" in the component, throw an error in the loader to prevent rendering when data is missing */
+//if (!dataFromLoader) return <h1>Feedback Detail is not available.</h1>;
