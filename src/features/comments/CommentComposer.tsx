@@ -3,6 +3,7 @@ import { useAppSelector } from "../../types/hooks";
 import { ReactNode, useEffect } from "react";
 import { CommentPayload, ReplyPayload } from "../../types/comment.types";
 import CommentBox from "./CommentBox";
+import { getLoggedInUser } from "../../store/slices/userSlice";
 
 type CommentComposerProps = {
   children?: ReactNode;
@@ -17,9 +18,8 @@ type CommentComposerProps = {
 
 function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const fetcher = useFetcher();
-  console.log("AM I RERENDERINg");
-  const loggedInUser = useAppSelector((state) => state.user.validatedUser);
-  const { name, username, image } = loggedInUser;
+
+  const { name, username, image } = useAppSelector(getLoggedInUser);
 
   const { children, mode, payload } = props;
   const submissionResult = fetcher?.data;
