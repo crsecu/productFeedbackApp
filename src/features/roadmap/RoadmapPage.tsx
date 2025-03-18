@@ -1,13 +1,11 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useRouteLoaderData } from "react-router-dom";
 
 import { RoadmapLoaderData } from "../../types/feedback.types";
 import RoadmapStatusBoard from "./RoadmapStatusBoard";
 import ActionBar from "../../ui/ActionBar";
 
-interface RoadmapPageProps {
-  dataFromLoader: RoadmapLoaderData;
-}
-function RoadmapPage({ dataFromLoader }: RoadmapPageProps): React.JSX.Element {
+function RoadmapPage(): React.JSX.Element {
+  const dataFromLoader = useRouteLoaderData("roadmapData") as RoadmapLoaderData;
   return (
     <>
       <Outlet />

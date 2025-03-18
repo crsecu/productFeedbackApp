@@ -22,11 +22,13 @@ function FeedbackDetailContent({
   const commentData = useLoaderData() as CommentData;
 
   const countLoader = commentData.commentCount;
+
   const commentHierarchy = commentData.commentHierarchy;
 
   return (
     <main style={{ paddingTop: "26px" }}>
       {children}
+
       <CommentList commentCount={countLoader} comments={commentHierarchy} />
       <CommentComposer
         mode="comment"

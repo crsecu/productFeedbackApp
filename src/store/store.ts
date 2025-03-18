@@ -4,12 +4,14 @@ import userReducer from "./slices/userSlice";
 
 import modalReducer from "./slices/modalSlice";
 import toastNotificationReducer from "./slices/toastNotificationSlice";
+import feedbackDetailReducer from "./slices/feedbackDetailSlice";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     modal: modalReducer,
     toastNotification: toastNotificationReducer,
+    feedbackDetail: feedbackDetailReducer,
   },
 });
 

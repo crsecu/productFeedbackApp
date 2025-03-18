@@ -3,6 +3,7 @@ import ActionBar from "../../ui/ActionBar";
 
 function FeedbackDetailLayout(): React.JSX.Element {
   const navigate = useNavigate();
+
   return (
     <>
       <ActionBar>
@@ -13,10 +14,12 @@ function FeedbackDetailLayout(): React.JSX.Element {
         >
           Go Back
         </button>
-        <h1>THIS IS THE LAYOUT</h1>
+        <h3>THIS IS THE LAYOUT</h3>
+
         <br></br>
         <br></br>
       </ActionBar>
+
       <Outlet />
     </>
   );

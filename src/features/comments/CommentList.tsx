@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { CommentThreadEntry } from "../../types/comment.types";
 import Comment from "./Comment";
 
@@ -10,6 +11,15 @@ function CommentList({
   commentCount,
   comments,
 }: CommentListProps): React.JSX.Element {
+  const commentItems = useMemo(() => {
+    if (commentCount === 0) return;
+    return comments.map((comment) => (
+      <li key={comment.id}>
+        <Comment comment={comment} commentCount={commentCount} />
+      </li>
+    ));
+  }, [comments, commentCount]);
+
   if (commentCount === 0)
     return <p>No comments yet. Be the first to share your thoughts!</p>;
 
@@ -18,16 +28,7 @@ function CommentList({
       <h2>
         <span>{commentCount}</span> Comments
       </h2>
-      <ul className="comments">
-        {/* TO DO: memoize */}
-        {comments.map((comment) => {
-          return (
-            <li key={comment.id}>
-              <Comment comment={comment} commentCount={commentCount} />
-            </li>
-          );
-        })}
-      </ul>
+      <ul className="comments">{commentItems}</ul>
     </>
   );
 }

@@ -8,12 +8,7 @@ import {
   ReplyPayload,
   SubmissionDataType,
 } from "../types/comment.types";
-import {
-  CreateFeedbackFormValues,
-  EditFeedbackFormValues,
-  FeedbackActionResult,
-  SuggestionType,
-} from "../types/feedback.types";
+import { FeedbackActionResult, SuggestionType } from "../types/feedback.types";
 
 /* Reusable Fetch Helper */
 export async function fetchWrapper(url: string, options: RequestInit = {}) {
@@ -141,31 +136,6 @@ export async function postCommentOrReply(
     success: true,
     payload: response.payload,
   });
-}
-
-/* Function checks if any form field values have changed by comparing each field in "currentValues" against "initialValues"; returns true as soon as a change is detected*/
-function hasFormChanged(initialValues, currentValues) {
-  //if(!in)
-
-  const formFieldNames = Object.keys(initialValues);
-
-  return formFieldNames.some(
-    (key) => initialValues[key] !== currentValues[key]
-  );
-}
-
-/* Function checks if the form has been modified by extracting current form values from an HTMLFormElement and comparing them to the provided initial values; if changes are detected, it updates the `isFormModified` state accordingly */
-export function handleFormChange(
-  currentTarget: HTMLFormElement,
-  initialFormData: CreateFeedbackFormValues | EditFeedbackFormValues,
-  isFormModified: boolean,
-  setIsFormModified: React.Dispatch<React.SetStateAction<boolean>>
-) {
-  const formData = new FormData(currentTarget);
-  const currentFormData = Object.fromEntries(formData);
-  const isChanged = hasFormChanged(initialFormData, currentFormData);
-
-  if (isChanged !== isFormModified) setIsFormModified(isChanged);
 }
 
 // This function creates a comment thread by associating replies with their respective parent comments

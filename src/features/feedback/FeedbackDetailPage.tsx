@@ -1,4 +1,4 @@
-import { useRouteLoaderData } from "react-router-dom";
+import { useActionData, useRouteLoaderData } from "react-router-dom";
 
 import { FeedbackType } from "../../types/feedback.types";
 import CommentCount from "../comments/CommentCount";
@@ -7,29 +7,31 @@ import FeedbackCard from "./FeedbackCard";
 import FeedbackItem from "./FeedbackItem";
 import UpvoteButton from "./UpvoteButton";
 import FeedbackDetailContent from "./FeedbackDetailContent";
-
-import { useState } from "react";
-import { createPortal } from "react-dom";
+import { useMemo } from "react";
+import { useAppDispatch, useAppSelector } from "../../types/hooks";
 import EditFeedback from "./EditFeedback";
+import { openEditFeedback } from "../../store/slices/feedbackDetailSlice";
 
 function FeedbackDetailPage(): React.JSX.Element {
+  const dispatch = useAppDispatch();
   const feedback = useRouteLoaderData("feedbackDetailData") as FeedbackType;
-  const [showEditFeedback, setShowEditFeedback] = useState(false);
 
   const { title, description, category, status } = feedback;
+  const editableFeedbackFields = useMemo(() => {
+    return {
+      title,
+      description,
+      category,
+      status,
+    };
+  }, [category, description, status, title]);
+
+  const isEditing = useAppSelector((state) => state.feedbackDetail.isEditing);
 
   return (
     <>
-      <button onClick={() => setShowEditFeedback(true)}>Edit</button>
-      {showEditFeedback &&
-        createPortal(
-          <EditFeedback
-            editableFeedback={{ title, description, category, status }}
-            closeModal={() => setShowEditFeedback(false)}
-          />,
-          document.body
-        )}
-
+      <button onClick={() => dispatch(openEditFeedback())}>Edit</button>
+      {isEditing && <EditFeedback editableFeedback={editableFeedbackFields} />}
       <FeedbackDetailContent>
         <>
           <FeedbackItem>
@@ -48,6 +50,7 @@ function FeedbackDetailPage(): React.JSX.Element {
 }
 
 export default FeedbackDetailPage;
+
 //
 
 //

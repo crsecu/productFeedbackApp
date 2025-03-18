@@ -2,9 +2,11 @@ import { EditedFeedbackType, StatusType } from "../../types/feedback.types";
 import FeedbackForm from "./FeedbackForm";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
-import { useParams } from "react-router-dom";
+import { useFetcher, useParams } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
 import { useAppDispatch } from "../../types/hooks";
+import BannerNotification from "../../ui/BannerNotification";
+import { closeEditFeedback } from "../../store/slices/feedbackDetailSlice";
 
 const statusOptions: StatusType[] = [
   "suggestion",
@@ -14,21 +16,22 @@ const statusOptions: StatusType[] = [
 ];
 interface EditFeedbackProps {
   editableFeedback: EditedFeedbackType;
-  closeModal: () => void;
+  // closeModal: () => void;
 }
 
 function EditFeedback({
   editableFeedback,
-  closeModal,
 }: EditFeedbackProps): React.JSX.Element {
   const dispatch = useAppDispatch();
+  const fetcher = useFetcher();
 
   const { feedbackId } = useParams();
+  const isSubmissionSuccessful = fetcher?.data?.success ?? null;
 
   //TO DO: Check this functionality after refactoring rest
   function handleCancel(hasFormChanged: boolean) {
     if (!hasFormChanged) {
-      closeModal();
+      dispatch(closeEditFeedback());
     } else {
       dispatch(
         showModal({
@@ -37,51 +40,70 @@ function EditFeedback({
       );
     }
   }
-
+  const notification = (
+    <BannerNotification
+      notificationType={
+        isSubmissionSuccessful ? "editFeedback_success" : "editFeedback_failed"
+      }
+    />
+  );
   return (
-    <div className="formModal">
-      <>
-        <h1>Editing title</h1>
+    <div className={`formModal ${!isSubmissionSuccessful ? "fullSize" : ""}`}>
+      <button
+        onClick={() => dispatch(closeEditFeedback())}
+        style={{ marginLeft: "100%" }}
+      >
+        x
+      </button>
+      {isSubmissionSuccessful !== null && notification}
+      {!isSubmissionSuccessful && (
+        <>
+          <h1>Editing title</h1>
 
-        <FeedbackForm
-          method="patch"
-          defaultValues={editableFeedback}
-          buttons={
-            <>
-              <button
-                type="button"
-                onClick={() => {
-                  dispatch(
-                    showModal({
-                      modalType: "delete_feedback",
-                      confirmPayload: feedbackId,
-                    })
-                  );
-                }}
-              >
-                Delete
-              </button>
-            </>
-          }
-          actionRoute="editFeedback"
-          onCancel={handleCancel}
-        >
-          <FormField
-            inputId="feedbackStatus"
-            label="Update Status"
-            description="Change feature state"
-            inputGuidanceId="feedbackStatusDesc"
+          <FeedbackForm
+            method="patch"
+            defaultValues={editableFeedback}
+            buttons={
+              <>
+                <button
+                  type="button"
+                  onClick={() => {
+                    dispatch(
+                      showModal({
+                        modalType: "delete_feedback",
+                        confirmPayload: feedbackId,
+                      })
+                    );
+                  }}
+                >
+                  Delete
+                </button>
+              </>
+            }
+            actionRoute="editFeedback"
+            onCancel={handleCancel}
+            FormComponent={fetcher.Form}
+            submissionStatus={fetcher.state}
+            actionResult={fetcher.data}
+            submitBtnText={"Update Feedback"}
           >
-            <SelectField
-              name="status"
-              id="feedbackStatus"
-              options={statusOptions}
-              describedById="feedbackStatusDesc"
-              initialValue={editableFeedback?.status}
-            />
-          </FormField>
-        </FeedbackForm>
-      </>
+            <FormField
+              inputId="feedbackStatus"
+              label="Update Status"
+              description="Change feature state"
+              inputGuidanceId="feedbackStatusDesc"
+            >
+              <SelectField
+                name="status"
+                id="feedbackStatus"
+                options={statusOptions}
+                describedById="feedbackStatusDesc"
+                initialValue={editableFeedback?.status}
+              />
+            </FormField>
+          </FeedbackForm>
+        </>
+      )}
     </div>
   );
 }

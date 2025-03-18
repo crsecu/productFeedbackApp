@@ -7,7 +7,9 @@ interface BannerNotificationProps {
     | "createFeedback_failed"
     | "createFeedback_success"
     | "editFeedback_failed"
-    | "editFeedback_success";
+    | "editFeedback_success"
+    | "addComment_success"
+    | "addComment_failed";
 }
 
 const messages = {
@@ -25,13 +27,24 @@ const messages = {
   },
   editFeedback_failed: {
     title: "Failed to Update Feedback",
-    message: "We couldn't update your feedback. Please try again.",
+    message:
+      "We couldn't update your feedback. Please try again or press Cancel to go back.",
     color: "#df4a4a",
   },
   editFeedback_success: {
     title: "Feedback Updated!",
     message: "Your feedback changes have been saved.",
     color: "#2e9f5a",
+  },
+  addComment_success: {
+    title: "Comment submitted!",
+    message: "Your comment has been submitted.",
+    color: "#53ac75",
+  },
+  addComment_failed: {
+    title: "Something went wrong!",
+    message: "Comment submission failed.",
+    color: "#9f562e",
   },
 };
 function BannerNotification({

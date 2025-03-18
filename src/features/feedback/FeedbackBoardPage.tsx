@@ -1,5 +1,5 @@
-import { Link, Outlet, useLoaderData } from "react-router-dom";
-import FeedbackBoardLayout from "../../ui/FeedbackBoardLayout";
+import { Link, useRouteLoaderData } from "react-router-dom";
+
 import { FeedbackBoardLoaderData } from "../../types/feedback.types";
 import PageHeader from "../../ui/PageHeader";
 import FilterByCategory from "./FilterByCategory";
@@ -11,8 +11,11 @@ import SortBy from "./SortBy";
 import TitleCard from "./TitleCard";
 
 function FeedbackBoardPage(): React.JSX.Element {
-  const dataFromLoader = useLoaderData() as FeedbackBoardLoaderData;
-
+  //const dataFromLoader = useLoaderData() as FeedbackBoardLoaderData;
+  const dataFromLoader = useRouteLoaderData(
+    "feedbackBoardData"
+  ) as FeedbackBoardLoaderData;
+  if (!dataFromLoader) return <p>Unavailable</p>;
   const { suggestions, roadmapStatusCounts, roadmapTotal } = dataFromLoader;
 
   const leftSection = (
@@ -43,13 +46,10 @@ function FeedbackBoardPage(): React.JSX.Element {
   );
 
   return (
-    <>
-      <Outlet />
-      <FeedbackBoardLayout
-        leftSection={leftSection}
-        mainSection={mainSection}
-      />
-    </>
+    <div className="feedbackBoard_layout">
+      <div className="feecbackBoard_leftSection">{leftSection}</div>
+      <main className="feedbackBoard_main">{mainSection}</main>
+    </div>
   );
 }
 

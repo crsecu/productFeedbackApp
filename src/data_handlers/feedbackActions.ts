@@ -76,8 +76,6 @@ export async function submitCommentAction({ request }: ActionFunctionArgs) {
 
   const intent = formData.get("intent") as "addComment";
 
-
-
   //TO DO: revisit types
   if (intent === "addComment") {
     const content = formData.get("content") as string;
@@ -100,8 +98,8 @@ export async function editFeedbackAction({
 
   const formEntries = Object.fromEntries(formData);
   const { intent, ...submissionData } = formEntries as Record<string, string>;
-  const actionType = intent as "editFeedback";
-
+  //const actionType = intent as "editFeedback";
+  const actionType = "editFeedback";
   //Form Error Handling
   const validationErrors: FeedbackFormErrors = {};
   if (submissionData.title.trim() === "")
@@ -114,7 +112,7 @@ export async function editFeedbackAction({
     //return { success: null, actionType: "editFeedback", validationErrors };
     return createFeedbackActionResult({ actionType, validationErrors });
   }
-
+  console.log("act type bbb", formEntries);
   assert(feedbackId);
 
   const response = await editFeedback(feedbackId, submissionData);

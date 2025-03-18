@@ -22,7 +22,7 @@ import RootRoute from "./ui/RootRoute";
 import { editFeedbackAction } from "./data_handlers/feedbackActions";
 
 import CreateFeedback from "./features/feedback/CreateFeedback";
-import DataProvider from "./data_handlers/DataProvider";
+import PageLayout from "./ui/PageLayout";
 import FeedbackBoardError from "./ui/FeedbackBoardError";
 
 import FeedbackDetailLayout from "./features/feedback/FeedbackDetailLayout";
@@ -38,35 +38,50 @@ const router = createBrowserRouter([
       },
       {
         path: "/feedbackBoard",
-        element: <FeedbackBoardPage />,
+        element: <PageLayout />,
         loader: feedbackBoardLoader,
+        id: "feedbackBoardData",
         errorElement: <FeedbackBoardError />,
-        shouldRevalidate: ({
-          currentUrl,
-          nextUrl,
-          actionResult,
-          formMethod,
-        }) => {
-          console.log("current", currentUrl);
-          console.log("next", nextUrl);
-          console.log("action result", actionResult);
-
-          /* Prevent revalidation if feedback submission fails or if there are any validation errors */
-          if (formMethod === "post" && !actionResult.success) {
-            console.log("Revalidation prevented: feedback submission failed");
-            return false;
-          }
-
-          //  Prevent revalidation if only search params change in the URL
-          if (
-            currentUrl.pathname === nextUrl.pathname &&
-            currentUrl.search !== nextUrl.search
-          ) {
-            console.log("Skipping revalidation: only search params changed");
-            return false;
+        shouldRevalidate: ({ actionResult }) => {
+          console.log("LOOK HERE", actionResult);
+          if (actionResult && !actionResult.success) {
+            return false; // ✅ Prevent clearing `useActionData()`
           }
         },
         children: [
+          {
+            index: true,
+            element: <FeedbackBoardPage />,
+            shouldRevalidate: ({
+              currentUrl,
+              nextUrl,
+              actionResult,
+              formMethod,
+            }) => {
+              console.log("current", currentUrl);
+              console.log("next", nextUrl);
+              console.log("action result", actionResult);
+
+              /* Prevent revalidation if feedback submission fails or if there are any validation errors */
+              if (formMethod === "post" && !actionResult.success) {
+                console.log(
+                  "Revalidation prevented: feedback submission failed"
+                );
+                return false;
+              }
+
+              //  Prevent revalidation if only search params change in the URL
+              if (
+                currentUrl.pathname === nextUrl.pathname &&
+                currentUrl.search !== nextUrl.search
+              ) {
+                console.log(
+                  "Skipping revalidation: only search params changed"
+                );
+                return false;
+              }
+            },
+          },
           {
             path: "createFeedback",
             element: <CreateFeedback />,
@@ -76,9 +91,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/developmentRoadmap",
-        element: <DataProvider PageComponent={RoadmapPage} />,
+        element: <PageLayout />,
         loader: roadmapDevLoader,
+        id: "roadmapData",
+        shouldRevalidate: ({ actionResult }) => {
+          if (actionResult && !actionResult.success) {
+            return false; // prevent clearing `useActionData()`
+          }
+        },
         children: [
+          {
+            index: true,
+            element: <RoadmapPage />,
+          },
           {
             path: "createFeedback",
             element: <CreateFeedback />,
@@ -109,8 +134,11 @@ const router = createBrowserRouter([
             id: "commentData", //might not need this id unless we need access to the comment data in a different route
             loader: commentDataLoader,
             action: submitCommentAction,
-            shouldRevalidate: ({ formMethod }) => {
+            shouldRevalidate: ({ formMethod, actionResult }) => {
               if (formMethod === "patch") return false;
+              if (actionResult && !actionResult.success) {
+                return false; // prevent clearing `useActionData()`
+              }
             },
           },
 

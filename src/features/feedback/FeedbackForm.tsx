@@ -1,10 +1,5 @@
 import { ReactNode, useState } from "react";
-import {
-  Form,
-  useActionData,
-  useFetcher,
-  useNavigation,
-} from "react-router-dom";
+import { FetcherFormProps, FormProps } from "react-router-dom";
 import {
   CreateFeedbackFormValues,
   EditFeedbackFormValues,
@@ -14,11 +9,17 @@ import FormField from "./FormField";
 import InputField from "./InputField";
 import FormFieldError from "./FormFieldError";
 import SelectField from "./SelectField";
-import { handleFormChange } from "../../utils/helpers";
-import BannerNotification from "../../ui/BannerNotification";
+
+type FormComponentType = React.ForwardRefExoticComponent<
+  (FetcherFormProps | FormProps) & React.RefAttributes<HTMLFormElement>
+>;
 
 interface FeedbackFormProps {
+  FormComponent: FormComponentType; //
   method: "post" | "patch";
+  submissionStatus: "idle" | "loading" | "submitting"; //
+  actionResult: FeedbackActionResult; //
+  submitBtnText: string;
   defaultValues?: CreateFeedbackFormValues | EditFeedbackFormValues;
   children?: ReactNode; //for: extra fields
   buttons?: ReactNode; //for: custom buttons
@@ -30,55 +31,33 @@ const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];
 
 function FeedbackForm({
   children,
+  FormComponent,
   method,
+  submissionStatus,
+  actionResult,
+  submitBtnText,
   defaultValues = { title: "", description: "", category: "" },
   buttons,
   actionRoute,
   onCancel,
 }: FeedbackFormProps): React.JSX.Element {
-  const fetcher = useFetcher();
-  const fetcherData =
-    fetcher?.data as FeedbackActionResult; /* editFeedback action res*/
-  const actionData =
-    useActionData() as FeedbackActionResult; /* addFeedback action res*/
-  const navigation = useNavigation();
-
-  const isEditing = method === "patch";
-  const FormComponent = isEditing ? fetcher.Form : Form;
-
   /* Track Dirty State */
   const [isDirty, setIsDirty] = useState(false);
 
-  const actionResponse = isEditing ? fetcherData : actionData;
-  const navigationState = isEditing ? fetcher.state : navigation.state;
+  const validationErrors = actionResult?.validationErrors ?? null;
 
-  const validationErrors = actionResponse?.validationErrors ?? null;
-  const isSubmissionSuccessful = actionResponse?.success ?? null; //TO DO: defaulting to null may not be necessary - check later
-  const isSubmitting = navigationState === "submitting";
+  const isSubmitting = submissionStatus === "submitting";
 
-  const successMessage = isEditing
-    ? "editFeedback_success"
-    : "createFeedback_success";
-
-  const failureMessage = isEditing
-    ? "editFeedback_failed"
-    : "createFeedback_failed";
-
-  //notification
-  const notification = (
-    <BannerNotification
-      notificationType={
-        isSubmissionSuccessful ? successMessage : failureMessage
-      }
-    ></BannerNotification>
-  );
-
-  function handleFormChange1(e: React.ChangeEvent<HTMLFormElement>) {
+  function handleFormChange(e: React.ChangeEvent<HTMLFormElement>) {
     const { name, value } = e.target;
+
     if (defaultValues && name in defaultValues) {
       const key = name as keyof typeof defaultValues;
       if (defaultValues[key] !== value) {
         setIsDirty(true);
+      } else {
+        console.log("did it change");
+        setIsDirty(false);
       }
     }
   }
@@ -87,7 +66,7 @@ function FeedbackForm({
   const formOutput = (
     <FormComponent
       method={method}
-      onChange={handleFormChange1}
+      onChange={handleFormChange}
       action={actionRoute}
     >
       <FormField
@@ -148,11 +127,7 @@ function FeedbackForm({
 
       <div>
         <button type="submit" disabled={!isDirty || isSubmitting}>
-          {isSubmitting
-            ? "Submitting..."
-            : isEditing
-            ? "Update Feedback"
-            : "Submit Feedback"}
+          {isSubmitting ? "Submitting..." : submitBtnText}
         </button>
         <button type="button" onClick={() => onCancel(isDirty)}>
           Cancel
@@ -162,12 +137,7 @@ function FeedbackForm({
       </div>
     </FormComponent>
   );
-  return (
-    <>
-      {isSubmissionSuccessful !== null && notification}
-      {formOutput}
-    </>
-  );
+  return <>{formOutput}</>;
 }
 
 export default FeedbackForm;

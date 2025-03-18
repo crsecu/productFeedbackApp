@@ -4,6 +4,7 @@ import { hideModal } from "../store/slices/modalSlice";
 import { showNotification } from "../store/slices/toastNotificationSlice";
 import { useAppDispatch, useAppSelector } from "../types/hooks";
 import assert from "../utils/TS_helpers";
+import { closeEditFeedback } from "../store/slices/feedbackDetailSlice";
 
 function GlobalModal(): React.JSX.Element | null {
   const dispatch = useAppDispatch();
@@ -13,7 +14,7 @@ function GlobalModal(): React.JSX.Element | null {
   );
 
   if (!isOpen) return null;
-
+  console.log("did GLOBAL MODAL RENDER");
   const handleConfirm = async () => {
     if (modalType === "delete_feedback") {
       try {
@@ -37,18 +38,15 @@ function GlobalModal(): React.JSX.Element | null {
       navigate(-1);
     }
 
-    dispatch(hideModal());
+    if (modalType === "cancel_editFeedback") {
+      dispatch(closeEditFeedback());
+    }
+
+    if (modalType) dispatch(hideModal());
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        zIndex: "999",
-        fontSize: "1.25rem",
-        backgroundColor: "yellow",
-      }}
-    >
+    <div className="globalModal">
       <p>{content}</p>
 
       <>

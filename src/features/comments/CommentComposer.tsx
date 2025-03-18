@@ -1,7 +1,8 @@
 import { useFetcher } from "react-router-dom";
 import { useAppSelector } from "../../types/hooks";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { CommentPayload, ReplyPayload } from "../../types/comment.types";
+import CommentBox from "./CommentBox";
 
 type CommentComposerProps = {
   children?: ReactNode;
@@ -10,6 +11,7 @@ type CommentComposerProps = {
   | {
       mode: "reply";
       payload: ReplyPayload;
+      onReplySubmitted: () => void;
     }
 );
 
@@ -20,10 +22,21 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const { name, username, image } = loggedInUser;
 
   const { children, mode, payload } = props;
+  const submissionResult = fetcher?.data;
+
+  const onReplySubmitted =
+    mode === "reply" ? props.onReplySubmitted : undefined;
+  useEffect(() => {
+    if (fetcher?.state === "idle" && fetcher?.data?.success) {
+      if (onReplySubmitted) {
+        console.log("SANTA");
+        onReplySubmitted();
+      }
+    }
+  }, [fetcher?.data?.success, fetcher?.state, mode, onReplySubmitted]);
 
   return (
     <>
-      {fetcher.state === "idle" && fetcher.data && <p>Comment added</p>}
       <fetcher.Form method="post" action=".">
         {children}
         <input
@@ -35,15 +48,10 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
             payload,
           })}
         />
-
-        <textarea id="commentInput" name="content"></textarea>
-        <button name="intent" value="addComment">
-          {fetcher.state !== "idle" ? "Posting comment..." : "Post Comment"}
-        </button>
-
-        {/* <button disabled={commentContent.trim() === ""}>
-          {fetcher.state !== "idle" ? "Posting comment..." : "Post Comment"}
-        </button> */}
+        <CommentBox
+          submissionStatus={fetcher?.state}
+          submissionResult={submissionResult}
+        />
       </fetcher.Form>
     </>
   );
