@@ -11,7 +11,6 @@ import SortBy from "./SortBy";
 import TitleCard from "./TitleCard";
 
 function FeedbackBoardPage(): React.JSX.Element {
-  //const dataFromLoader = useLoaderData() as FeedbackBoardLoaderData;
   const dataFromLoader = useRouteLoaderData(
     "feedbackBoardData"
   ) as FeedbackBoardLoaderData;

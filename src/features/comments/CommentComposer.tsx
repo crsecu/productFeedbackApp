@@ -17,7 +17,7 @@ type CommentComposerProps = {
 
 function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const fetcher = useFetcher();
-
+  console.log("AM I RERENDERINg");
   const loggedInUser = useAppSelector((state) => state.user.validatedUser);
   const { name, username, image } = loggedInUser;
 
@@ -26,6 +26,7 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
 
   const onReplySubmitted =
     mode === "reply" ? props.onReplySubmitted : undefined;
+
   useEffect(() => {
     if (fetcher?.state === "idle" && fetcher?.data?.success) {
       if (onReplySubmitted) {
@@ -39,6 +40,11 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
     <>
       <fetcher.Form method="post" action=".">
         {children}
+        {submissionResult?.success === false && (
+          <p className="error">
+            Failed to submit your comment. Please try again.
+          </p>
+        )}
         <input
           type="hidden"
           name="submissionData"

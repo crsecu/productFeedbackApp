@@ -49,61 +49,64 @@ function EditFeedback({
   );
   return (
     <div className={`formModal ${!isSubmissionSuccessful ? "fullSize" : ""}`}>
-      <button
-        onClick={() => dispatch(closeEditFeedback())}
-        style={{ marginLeft: "100%" }}
-      >
-        x
-      </button>
-      {isSubmissionSuccessful !== null && notification}
-      {!isSubmissionSuccessful && (
-        <>
-          <h1>Editing title</h1>
+      <div className="editFeedback">
+        {" "}
+        <button
+          onClick={() => dispatch(closeEditFeedback())}
+          style={{ marginLeft: "100%" }}
+        >
+          x
+        </button>
+        {isSubmissionSuccessful !== null && notification}
+        {!isSubmissionSuccessful && (
+          <>
+            <h1>Editing title</h1>
 
-          <FeedbackForm
-            method="patch"
-            defaultValues={editableFeedback}
-            buttons={
-              <>
-                <button
-                  type="button"
-                  onClick={() => {
-                    dispatch(
-                      showModal({
-                        modalType: "delete_feedback",
-                        confirmPayload: feedbackId,
-                      })
-                    );
-                  }}
-                >
-                  Delete
-                </button>
-              </>
-            }
-            actionRoute="editFeedback"
-            onCancel={handleCancel}
-            FormComponent={fetcher.Form}
-            submissionStatus={fetcher.state}
-            actionResult={fetcher.data}
-            submitBtnText={"Update Feedback"}
-          >
-            <FormField
-              inputId="feedbackStatus"
-              label="Update Status"
-              description="Change feature state"
-              inputGuidanceId="feedbackStatusDesc"
+            <FeedbackForm
+              method="patch"
+              defaultValues={editableFeedback}
+              buttons={
+                <>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      dispatch(
+                        showModal({
+                          modalType: "delete_feedback",
+                          confirmPayload: feedbackId,
+                        })
+                      );
+                    }}
+                  >
+                    Delete
+                  </button>
+                </>
+              }
+              actionRoute="editFeedback"
+              onCancel={handleCancel}
+              FormComponent={fetcher.Form}
+              submissionStatus={fetcher.state}
+              actionResult={fetcher.data}
+              submitBtnText={"Update Feedback"}
             >
-              <SelectField
-                name="status"
-                id="feedbackStatus"
-                options={statusOptions}
-                describedById="feedbackStatusDesc"
-                initialValue={editableFeedback?.status}
-              />
-            </FormField>
-          </FeedbackForm>
-        </>
-      )}
+              <FormField
+                inputId="feedbackStatus"
+                label="Update Status"
+                description="Change feature state"
+                inputGuidanceId="feedbackStatusDesc"
+              >
+                <SelectField
+                  name="status"
+                  id="feedbackStatus"
+                  options={statusOptions}
+                  describedById="feedbackStatusDesc"
+                  initialValue={editableFeedback?.status}
+                />
+              </FormField>
+            </FeedbackForm>
+          </>
+        )}
+      </div>
     </div>
   );
 }

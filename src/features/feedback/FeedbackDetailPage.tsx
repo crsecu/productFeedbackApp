@@ -1,4 +1,4 @@
-import { useActionData, useRouteLoaderData } from "react-router-dom";
+import { useRouteLoaderData } from "react-router-dom";
 
 import { FeedbackType } from "../../types/feedback.types";
 import CommentCount from "../comments/CommentCount";

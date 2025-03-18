@@ -5,6 +5,8 @@ import { CommentThreadEntry } from "../../types/comment.types";
 import CommentComposer from "../comments/CommentComposer";
 
 export interface CommentData {
+  success: boolean;
+  err?: string;
   commentHierarchy: CommentThreadEntry[];
   commentCount: number;
 }
@@ -20,6 +22,7 @@ function FeedbackDetailContent({
   const feedbackId = params.feedbackId as string;
 
   const commentData = useLoaderData() as CommentData;
+  console.log("this is the comment data from loader", commentData);
 
   const countLoader = commentData.commentCount;
 
@@ -28,14 +31,20 @@ function FeedbackDetailContent({
   return (
     <main style={{ paddingTop: "26px" }}>
       {children}
+      {!commentData.success ? (
+        <p className="error">OOPS.Failed to load comments.</p>
+      ) : (
+        <>
+          <CommentList commentCount={countLoader} comments={commentHierarchy} />
 
-      <CommentList commentCount={countLoader} comments={commentHierarchy} />
-      <CommentComposer
-        mode="comment"
-        payload={{ feedbackId, commentCount: countLoader }}
-      >
-        <h2>Add a Comment</h2>
-      </CommentComposer>
+          <CommentComposer
+            mode="comment"
+            payload={{ feedbackId, commentCount: countLoader }}
+          >
+            <h2>Add a Comment</h2>
+          </CommentComposer>
+        </>
+      )}
     </main>
   );
 }

@@ -53,11 +53,14 @@ export async function feedbackDetailLoader({ params }: LoaderFunctionArgs) {
 export async function commentDataLoader({ params }: LoaderFunctionArgs) {
   const feedbackId = params.feedbackId;
   assert(feedbackId, "feedbackId is invalid");
+  try {
+    const comments = await fetchWrapper(
+      `${API_URL}/comments?feedbackId=${feedbackId}`
+    );
 
-  const comments = await fetchWrapper(
-    `${API_URL}/comments?feedbackId=${feedbackId}`
-  );
-
-  const commentHierarchy = buildCommentHierarchy(comments);
-  return { commentHierarchy, commentCount: comments.length };
+    const commentHierarchy = buildCommentHierarchy(comments);
+    return { success: true, commentHierarchy, commentCount: comments.length };
+  } catch (err) {
+    return { success: false, error: err };
+  }
 }

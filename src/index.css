@@ -105,7 +105,6 @@ ul {
   left: 50%;
   transform: translate(-50%, -50%);
   background: rgb(227, 207, 219);
-  padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   z-index: 1;
@@ -143,11 +142,6 @@ textarea {
 .editFeedback {
   padding: 20px;
   background-color: rgb(130, 185, 134);
-  border: 16px solid orange;
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 100%;
 }
 
 .hidden {
@@ -201,4 +195,10 @@ textarea {
   margin-left: auto;
   top: 0;
   right: 0;
+}
+
+.error {
+  color: rgb(199, 48, 48);
+
+  font-size: 1.125rem;
 }

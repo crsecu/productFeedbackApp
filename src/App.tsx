@@ -136,6 +136,7 @@ const router = createBrowserRouter([
             action: submitCommentAction,
             shouldRevalidate: ({ formMethod, actionResult }) => {
               if (formMethod === "patch") return false;
+
               if (actionResult && !actionResult.success) {
                 return false; // prevent clearing `useActionData()`
               }
