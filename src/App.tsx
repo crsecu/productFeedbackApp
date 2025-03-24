@@ -42,45 +42,30 @@ const router = createBrowserRouter([
         loader: feedbackBoardLoader,
         id: "feedbackBoardData",
         errorElement: <FeedbackBoardError />,
-        shouldRevalidate: ({ actionResult }) => {
-          console.log("LOOK HERE", actionResult);
-          if (actionResult && !actionResult.success) {
-            return false; // ✅ Prevent clearing `useActionData()`
+        shouldRevalidate: ({
+          currentUrl,
+          nextUrl,
+          actionResult,
+          formMethod,
+        }) => {
+          console.log("current", currentUrl);
+          console.log("next", nextUrl);
+
+          /*  Prevent revalidation if only search params change in the URL */
+          if (currentUrl.search !== nextUrl.search) {
+            console.log("Skipping revalidation: only search params changed");
+            return false;
+          }
+
+          /* Prevent revalidation if feedback submission fails or if there are any validation errors */
+          if (formMethod === "post" && !actionResult?.success) {
+            return false;
           }
         },
         children: [
           {
             index: true,
             element: <FeedbackBoardPage />,
-            shouldRevalidate: ({
-              currentUrl,
-              nextUrl,
-              actionResult,
-              formMethod,
-            }) => {
-              console.log("current", currentUrl);
-              console.log("next", nextUrl);
-              console.log("action result", actionResult);
-
-              /* Prevent revalidation if feedback submission fails or if there are any validation errors */
-              if (formMethod === "post" && !actionResult.success) {
-                console.log(
-                  "Revalidation prevented: feedback submission failed"
-                );
-                return false;
-              }
-
-              //  Prevent revalidation if only search params change in the URL
-              if (
-                currentUrl.pathname === nextUrl.pathname &&
-                currentUrl.search !== nextUrl.search
-              ) {
-                console.log(
-                  "Skipping revalidation: only search params changed"
-                );
-                return false;
-              }
-            },
           },
           {
             path: "createFeedback",
@@ -117,7 +102,13 @@ const router = createBrowserRouter([
         id: "feedbackDetailData",
 
         loader: feedbackDetailLoader,
-        shouldRevalidate: ({ formMethod, actionResult }) => {
+        shouldRevalidate: ({
+          currentUrl,
+          nextUrl,
+          formMethod,
+          actionResult,
+        }) => {
+          console.log("detail current", currentUrl, "detail next", nextUrl);
           if (formMethod === "post") return false;
 
           /* Prevent revalidation if "editFeedback" submission fails or if there are any validation errors */

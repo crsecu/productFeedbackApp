@@ -6,6 +6,8 @@ interface CategoryItemProps {
   id: string;
   value: string;
   isDisabled: boolean;
+  selectedOption: string;
+
   // eslint-disable-next-line no-unused-vars
   onOptionChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -14,6 +16,7 @@ function CategoryItem({
   id,
   value,
   isDisabled,
+  selectedOption,
   onOptionChange,
 }: CategoryItemProps): React.JSX.Element {
   const categoryLabel = formatCategoryLabel(value);
@@ -26,8 +29,8 @@ function CategoryItem({
         name={name}
         id={id}
         value={value}
-        defaultChecked={value === "all"}
-        onChange={(e) => onOptionChange(e)}
+        checked={selectedOption === value}
+        onChange={onOptionChange}
       ></input>
       <label htmlFor={id}>{categoryLabel}</label>
     </li>

@@ -1,4 +1,4 @@
-import { Link, useRouteLoaderData } from "react-router-dom";
+import { Link, useLocation, useRouteLoaderData } from "react-router-dom";
 
 import { FeedbackBoardLoaderData } from "../../types/feedback.types";
 import PageHeader from "../../ui/PageHeader";
@@ -14,8 +14,10 @@ function FeedbackBoardPage(): React.JSX.Element {
   const dataFromLoader = useRouteLoaderData(
     "feedbackBoardData"
   ) as FeedbackBoardLoaderData;
-  if (!dataFromLoader) return <p>Unavailable</p>;
+
   const { suggestions, roadmapStatusCounts, roadmapTotal } = dataFromLoader;
+  const location = useLocation();
+  console.log("location FEEDBACK BOARD", location);
 
   const leftSection = (
     <>
@@ -37,7 +39,9 @@ function FeedbackBoardPage(): React.JSX.Element {
       <ActionBar>
         <SuggestionCount suggestions={suggestions} />
         <SortBy />
-        <Link to="createFeedback">Add Feedback</Link>
+        <Link to="createFeedback" state={{ from: location?.pathname }}>
+          Add Feedback
+        </Link>
       </ActionBar>
 
       <FeedbackList suggestions={suggestions} />

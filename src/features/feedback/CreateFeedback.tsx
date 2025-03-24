@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import {
   Form,
   useActionData,
+  useLocation,
   useNavigate,
   useNavigation,
 } from "react-router-dom";
@@ -20,6 +21,8 @@ const initialFormState = {
 function CreateFeedback(): React.JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("location CREATE FEEDBACK", location);
 
   /* data needed by FeedbackForm */
   const actionData = useActionData() as FeedbackActionResult;
@@ -58,7 +61,7 @@ function CreateFeedback(): React.JSX.Element {
           >
             View Details
           </button>
-          <button onClick={() => navigate(-1)}>Go Back</button>
+          <button onClick={() => navigate("..")}>Go Back</button>
         </>
       )}
     </BannerNotification>

@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { SuggestionType } from "../../types/feedback.types";
-import { useCallback } from "react";
+import { useMemo } from "react";
 
 interface SuggestionCountProps {
   suggestions: SuggestionType[];
@@ -11,7 +11,7 @@ function SuggestionCount({
   const [searchParams] = useSearchParams();
   const selectedCategory = searchParams.get("category") || "all";
 
-  const getSuggestionCount = useCallback(() => {
+  const suggestionCount = useMemo(() => {
     if (selectedCategory === "all") return suggestions.length;
 
     const matchingSuggestions = suggestions.filter(
@@ -20,8 +20,6 @@ function SuggestionCount({
 
     return matchingSuggestions.length;
   }, [selectedCategory, suggestions]);
-
-  const suggestionCount = getSuggestionCount();
 
   return (
     <h2>

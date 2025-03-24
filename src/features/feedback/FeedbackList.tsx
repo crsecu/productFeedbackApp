@@ -17,12 +17,9 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
   const category = searchParams.get("category") || "all";
   const sortBy = searchParams.get("sortBy") || "mostUpvotes";
 
-  const suggestionsSorted = useMemo(
-    () => sortFeedbackList(suggestions, category, sortBy),
-    [suggestions, category, sortBy]
-  );
-
   const feedbackItems = useMemo(() => {
+    const suggestionsSorted = sortFeedbackList(suggestions, category, sortBy);
+
     return suggestionsSorted.map((item) => {
       return (
         <li key={item.id}>
@@ -41,12 +38,12 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
         </li>
       );
     });
-  }, [suggestionsSorted]);
+  }, [category, sortBy, suggestions]);
 
   return (
     <section className="feedback_list">
       <h2>Feedback List</h2> {/* visually hidden heading */}
-      {suggestionsSorted.length === 0 ? (
+      {feedbackItems.length === 0 ? (
         <NoFeedbackEntries category={category} />
       ) : (
         <ul>{feedbackItems}</ul>

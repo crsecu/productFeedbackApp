@@ -1,6 +1,7 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import CategoryItem from "./CategoryItem";
+import { handleOptionChange } from "../../utils/helpers";
 
 const feedbackCategories = ["all", "ui", "ux", "enhancement", "bug", "feature"];
 
@@ -10,29 +11,26 @@ interface FilterByCategoryProps {
 function FilterByCategory({
   suggestionCount,
 }: FilterByCategoryProps): React.JSX.Element {
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedOption = searchParams.get("category") || "all";
 
-  //TO DO: Assess if memoizing handleOptionChange is worth the cost given its low complexity
-  function handleOptionChange(e: ChangeEvent<HTMLInputElement>) {
-    const selectedCategory = e.target.value;
-
-    setSearchParams((prevParams) => {
-      return { ...Object.fromEntries(prevParams), category: selectedCategory };
+  const categoryButtons = useMemo(() => {
+    return feedbackCategories.map((category, i) => {
+      return (
+        <CategoryItem
+          name="filterByCategory"
+          id={category}
+          value={category}
+          key={`${category + i}`}
+          selectedOption={selectedOption}
+          isDisabled={category !== "all" && suggestionCount === 0}
+          onOptionChange={(e) =>
+            handleOptionChange(e, setSearchParams, "category", "all")
+          }
+        />
+      );
     });
-  }
-
-  const categoryButtons = feedbackCategories.map((category, i) => {
-    return (
-      <CategoryItem
-        name="filterByCategory"
-        id={category}
-        value={category}
-        key={`${category + i}`}
-        onOptionChange={handleOptionChange}
-        isDisabled={category !== "all" && suggestionCount === 0}
-      />
-    );
-  });
+  }, [selectedOption, setSearchParams, suggestionCount]);
 
   return (
     <section>

@@ -1,8 +1,15 @@
+import { useRouteError } from "react-router-dom";
+import { errorMessage } from "../utils/helpers";
+
 function FeedbackBoardError(): React.JSX.Element {
+  const routeError = useRouteError();
+
+  const error = errorMessage(routeError);
+
   return (
     <div>
       <h1>Feedback Board Page error</h1>
-      <p>Something went wrong with Feedback Board Page.</p>
+      <h2 className="error">{error}</h2>
       <br></br>
       <p>
         TO DO: Think what should happen if Feedback Board Page cannot be

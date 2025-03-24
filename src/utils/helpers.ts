@@ -1,3 +1,4 @@
+import { isRouteErrorResponse, SetURLSearchParams } from "react-router-dom";
 import { User } from "../features/user/user.types";
 import { submitComment } from "../services/apiComment";
 import { fetchUserList } from "../services/apiFeedback";
@@ -9,15 +10,19 @@ import {
   SubmissionDataType,
 } from "../types/comment.types";
 import { FeedbackActionResult, SuggestionType } from "../types/feedback.types";
+import { ChangeEvent } from "react";
 
 /* Reusable Fetch Helper */
-export async function fetchWrapper(url: string, options: RequestInit = {}) {
+export async function fetchWrapper<T>(
+  url: string,
+  options: RequestInit = {}
+): Promise<T> {
   try {
     const res = await fetch(url, options);
 
     if (!res.ok) {
-      const errorDetails = await res.json();
-      throw Error(errorDetails.error || `HTTP Error: ${res.status}`);
+      const errorDetails = await res.text();
+      throw new Error(errorDetails || `HTTP Error: ${res.status}`);
     }
 
     return await res.json();
@@ -49,18 +54,30 @@ export async function validateUserCredentials(name: string, username: string) {
 
 //Format category label
 export function formatCategoryLabel(categoryLabel: string) {
+  if (categoryLabel === null) return categoryLabel;
+
   return categoryLabel.length === 2
     ? categoryLabel.toUpperCase()
     : categoryLabel.charAt(0).toUpperCase() + categoryLabel.slice(1);
 }
 
-//Filters a list of feedback entries based on the specified status
-export function filterFeedbackByStatus(
+// //Filters a list of feedback entries based on the specified status
+// export function filterFeedbackByStatus(
+//   feedbackList: SuggestionType[],
+//   status: string
+// ) {
+//   return feedbackList.filter(
+//     (feedbackEntry) => feedbackEntry.status === status
+//   );
+// }
+
+//Filters a list of feedback entries based on the specified category
+export function filterFeedbackByCategory(
   feedbackList: SuggestionType[],
-  status: string
+  category: string
 ) {
   return feedbackList.filter(
-    (feedbackEntry) => feedbackEntry.status === status
+    (feedbackEntry) => feedbackEntry.category === category
   );
 }
 
@@ -70,21 +87,25 @@ export function sortFeedbackList(
   category: string,
   sortByOption: string
 ) {
+  console.log("category ", category, "sortByOption ", sortByOption);
+
   const feedbackList =
-    category === "all"
-      ? [...list]
-      : list.filter((feedbackEntry) => feedbackEntry.category === category);
+    category === "all" ? list : filterFeedbackByCategory(list, category);
+  console.log("feedbackList??", feedbackList);
 
   return [...feedbackList].sort((a, b) => {
     switch (sortByOption) {
+      case "mostUpvotes":
+        return b.upvotes - a.upvotes;
       case "leastUpvotes":
         return a.upvotes - b.upvotes;
       case "mostComments":
         return b.commentCount - a.commentCount;
       case "leastComments":
         return a.commentCount - b.commentCount;
-      default: //mostUpvotes
-        return b.upvotes - a.upvotes;
+      default:
+        console.warn(`Unexpected sortByOption: "${sortByOption}"`);
+        return b.upvotes - a.upvotes; //safe fallback
     }
   });
 }
@@ -174,4 +195,39 @@ export function createFeedbackActionResult({
   payload = null,
 }: FeedbackActionResult) {
   return { actionType, success, validationErrors, message, payload };
+}
+/* Utility function that narrows the unknown error from useRouteError() */
+export function errorMessage(error: unknown): string {
+  if (isRouteErrorResponse(error)) {
+    return `${error.status} ${error.statusText}`;
+  } else if (error instanceof Error) {
+    return error.message;
+  } else if (typeof error === "string") {
+    return error;
+  } else {
+    console.error(error);
+    return "Unknown error";
+  }
+}
+
+/* Helper function to update search params based on user-selected criteria */
+export function handleOptionChange(
+  e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
+  setSearchParams: SetURLSearchParams,
+  paramName: string,
+  defaultOption: string
+): void {
+  const newOption = e.target.value;
+
+  setSearchParams((prevParams) => {
+    const newParams = new URLSearchParams(prevParams);
+
+    if (newOption === defaultOption) {
+      newParams.delete(paramName);
+    } else {
+      newParams.set(paramName, newOption);
+    }
+
+    return newParams;
+  });
 }

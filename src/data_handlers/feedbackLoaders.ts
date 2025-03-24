@@ -14,6 +14,7 @@ export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
   const data = await fetchFeedbackList("feedbackBoard");
 
   const { planned, "in-Progress": inProgress, live } = data;
+
   const suggestions = data.suggestion as SuggestionType[];
 
   const model: FeedbackBoardLoaderData = {

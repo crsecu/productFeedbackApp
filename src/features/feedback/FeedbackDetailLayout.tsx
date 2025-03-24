@@ -9,6 +9,7 @@ function FeedbackDetailLayout(): React.JSX.Element {
       <ActionBar>
         <button
           onClick={() => {
+            /* TO DO: Find a way to reset unwanted search params that carry out from feedbackBoard */
             navigate(-1);
           }}
         >
