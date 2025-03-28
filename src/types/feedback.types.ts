@@ -21,13 +21,6 @@ export interface NewFeedbackType extends CommonFeedbackFields {
   status: "suggestion";
 }
 
-export interface EditedFeedbackType {
-  title: string;
-  description: string;
-  category: CategoryType;
-  status: StatusType;
-}
-
 //Feedback Types by status
 export interface SuggestionType extends NewFeedbackType {
   id: string;
@@ -54,7 +47,7 @@ export type FeedbackType = RoadmapFeedbackType | SuggestionType;
 //Add/Edit Feedback Form Types
 export interface CreateFeedbackFormValues {
   title: string;
-  category: string;
+  category: CategoryType | "";
   description: string;
 }
 export interface EditFeedbackFormValues extends CreateFeedbackFormValues {
@@ -65,13 +58,27 @@ export interface FeedbackFormErrors {
   [key: string]: string;
 }
 
-export interface FeedbackActionResult {
-  success?: boolean | null; //true/false (form submission sucessful/failed), null (form wasn't submitted due to validation errors)
-  actionType: "createFeedback" | "editFeedback" | "addComment"; //identifies the type of action submitted
-  validationErrors?: FeedbackFormErrors | null;
-  message?: string | null; //human friendly message for both success/failure
-  payload?: Record<string, string | number> | null; //for now using payload to pass the id of new feedback; extend later if needed
-}
+export type ActionType = "createFeedback" | "editFeedback" | "addComment";
+
+/* Input of createFeddbackActionResult */
+export type CreateFeedbackActionResultArgs<T> =
+  | {
+      outcome: "validationError";
+      actionType: ActionType;
+      validationErrors: FeedbackFormErrors;
+    }
+  | { outcome: "failure"; actionType: ActionType; submitError: unknown }
+  | { outcome: "success"; actionType: ActionType; payload: T };
+
+/*Return value of createFeedbackActionResult  */
+export type FeedbackActionResult<T> = {
+  actionType: ActionType;
+  hasFormSubmitted: boolean;
+  success: boolean;
+  validationErrors: FeedbackFormErrors | null;
+  submitError: unknown | null;
+  payload: T | null;
+};
 
 export interface RoadmapStats {
   planned: number;
@@ -96,3 +103,15 @@ export type LoaderDataType =
   | FeedbackBoardLoaderData
   | RoadmapLoaderData
   | FeedbackType;
+
+export type SuccessResult<T> = {
+  success: true;
+  payload: T;
+};
+
+export type FailureResult = {
+  success: false;
+  error: unknown;
+};
+
+export type Result<T> = SuccessResult<T> | FailureResult;

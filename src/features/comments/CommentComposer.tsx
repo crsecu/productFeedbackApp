@@ -24,6 +24,7 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const { children, mode, payload } = props;
   const submissionResult = fetcher?.data;
 
+  console.log("comment submission result", submissionResult);
   const onReplySubmitted =
     mode === "reply" ? props.onReplySubmitted : undefined;
 

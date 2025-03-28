@@ -2,7 +2,9 @@ import {
   NewFeedbackType,
   FeedbackType,
   StatusType,
-  EditedFeedbackType,
+  SuggestionType,
+  Result,
+  EditFeedbackFormValues,
 } from "../types/feedback.types";
 import { fetchWrapper } from "../utils/helpers";
 
@@ -33,22 +35,28 @@ export async function fetchFeedbackList(
 }
 
 /* Fetch feedback by id */
-export async function fetchFeedbackById(feedbackId: string) {
-  return fetchWrapper(`${API_URL}/productRequests/${feedbackId}`);
-  // return fetchWrapper(`${API_URL}/productRequests/21112`);
+export async function fetchFeedbackById(
+  feedbackId: string
+): Promise<FeedbackType> {
+  return fetchWrapper<FeedbackType>(`${API_URL}/productRequests/${feedbackId}`);
 }
 
 /* Submit new feedback */
-export async function submitFeedback(feedback: NewFeedbackType) {
+export async function submitFeedback(
+  feedback: NewFeedbackType
+): Promise<Result<SuggestionType>> {
   try {
-    const data = await fetchWrapper(`${API_URL}/productRequests`, {
-      method: "POST",
-      body: JSON.stringify(feedback),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
+    const data = await fetchWrapper<SuggestionType>(
+      `${API_URL}/productRequests`,
+      {
+        method: "POST",
+        body: JSON.stringify(feedback),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("data create", data);
     return { success: true, payload: data };
   } catch (err) {
     console.error("Something went wrong inside SubmitFeedback", err);
@@ -59,10 +67,10 @@ export async function submitFeedback(feedback: NewFeedbackType) {
 /* Edit feedback entry */
 export async function editFeedback(
   feedbackId: string,
-  editedFeedback: EditedFeedbackType
-) {
+  editedFeedback: EditFeedbackFormValues
+): Promise<Result<EditFeedbackFormValues>> {
   try {
-    const data = await fetchWrapper(
+    const data = await fetchWrapper<FeedbackType>(
       `${API_URL}/productRequests/${feedbackId}`,
       {
         method: "PATCH",
@@ -83,19 +91,24 @@ export async function editFeedback(
 }
 
 /* Delete feedback entry */
-export async function deleteFeedback(feedbackId: string) {
-  return fetchWrapper(`${API_URL}/productRequests/${feedbackId}`, {
-    method: "DELETE",
-  });
+export async function deleteFeedback(
+  feedbackId: string
+): Promise<FeedbackType> {
+  return fetchWrapper<FeedbackType>(
+    `${API_URL}/productRequests/${feedbackId}`,
+    {
+      method: "DELETE",
+    }
+  );
 }
 
 /* Update backend with current vote count after user's upvote/unvote actions */
 export async function persistFeedbackVote(
   feedbackId: string,
   voteCount: number
-) {
+): Promise<number> {
   try {
-    const data = await fetchWrapper(
+    const data = await fetchWrapper<FeedbackType>(
       `${API_URL}/productRequests/${feedbackId}`,
       {
         method: "PATCH",
@@ -106,19 +119,16 @@ export async function persistFeedbackVote(
       }
     );
 
-    if (!("upvotes" in data)) {
-      throw new Error();
-    }
-
     return data.upvotes;
   } catch (err) {
-    throw new Error();
+    console.error("Something went wrong while upvoting feedback", err);
+    throw err;
   }
 }
 
 /* Fetch user list */
 export async function fetchUserList() {
-  return fetchWrapper(`${API_URL}/userList`);
+  //return fetchWrapper(`${API_URL}/userList?username=${username}`);
 }
 
 /* Update commentCount when a new comment/reply is added - currently working only incrementing commentCount
@@ -127,12 +137,17 @@ export async function fetchUserList() {
 export async function updateCommentCount(
   feedbackId: string,
   updatedCommentCount: number
-) {
-  return fetchWrapper(`${API_URL}/productRequests/${feedbackId}`, {
-    method: "PATCH",
-    body: JSON.stringify({ commentCount: updatedCommentCount }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+): Promise<number> {
+  const data = await fetchWrapper<FeedbackType>(
+    `${API_URL}/productRequests/${feedbackId}`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({ commentCount: updatedCommentCount }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return data.upvotes;
 }

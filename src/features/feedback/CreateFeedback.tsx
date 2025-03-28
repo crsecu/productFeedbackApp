@@ -9,14 +9,19 @@ import {
 import FeedbackForm from "./FeedbackForm";
 
 import { showModal } from "../../store/slices/modalSlice";
-import { FeedbackActionResult } from "../../types/feedback.types";
+import {
+  SuggestionType,
+  FeedbackActionResult,
+  CreateFeedbackFormValues,
+} from "../../types/feedback.types";
+
 import BannerNotification from "../../ui/BannerNotification";
 
 const initialFormState = {
   title: "",
   category: "feature",
   description: "",
-};
+} as CreateFeedbackFormValues;
 
 function CreateFeedback(): React.JSX.Element {
   const dispatch = useDispatch();
@@ -25,7 +30,9 @@ function CreateFeedback(): React.JSX.Element {
   console.log("location CREATE FEEDBACK", location);
 
   /* data needed by FeedbackForm */
-  const actionData = useActionData() as FeedbackActionResult;
+  const actionData = useActionData() as FeedbackActionResult<SuggestionType>;
+  console.log("create feedback", actionData);
+
   const navigation = useNavigation();
   const isSubmissionSuccessful = actionData?.success ?? null;
   const newFeedackId = actionData?.payload?.id;

@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, ActionFunction } from "react-router-dom";
+import { ActionFunctionArgs } from "react-router-dom";
 
 import { editFeedback, submitFeedback } from "../services/apiFeedback";
 import {
@@ -7,16 +7,20 @@ import {
 } from "../utils/helpers";
 import {
   CategoryType,
+  EditFeedbackFormValues,
+  FeedbackActionResult,
   FeedbackFormErrors,
   NewFeedbackType,
+  StatusType,
+  SuggestionType,
 } from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
 import { SubmissionDataType } from "../types/comment.types";
 
 /* Submit New Feedback Action*/
-export const createFeedbackAction: ActionFunction = async ({
+export async function createFeedbackAction({
   request,
-}: ActionFunctionArgs) => {
+}: ActionFunctionArgs): Promise<FeedbackActionResult<SuggestionType>> {
   const actionType = "createFeedback";
 
   const formData = await request.formData();
@@ -47,7 +51,11 @@ export const createFeedbackAction: ActionFunction = async ({
   // action couldn't submit because of validation errors
   if (Object.keys(validationErrors).length > 0) {
     //return { success: null, actionType: "createFeedback", validationErrors };
-    return createFeedbackActionResult({ actionType, validationErrors });
+    return createFeedbackActionResult({
+      actionType,
+      outcome: "validationError",
+      validationErrors,
+    });
   }
 
   const response = await submitFeedback(feedback);
@@ -56,17 +64,17 @@ export const createFeedbackAction: ActionFunction = async ({
   if (!response.success)
     return createFeedbackActionResult({
       actionType,
-      success: false,
-      //TO DO: pass message: response.error after defining the types of errors returned when fetch fails
+      outcome: "failure",
+      submitError: response.error,
     });
 
   // action submission successful
   return createFeedbackActionResult({
     actionType,
-    success: true,
+    outcome: "success",
     payload: response.payload,
   });
-};
+}
 
 /* ------------------------------------------------------------ */
 /* ------------------------------------------------------------ */
@@ -81,8 +89,9 @@ export async function submitCommentAction({ request }: ActionFunctionArgs) {
     const content = formData.get("content") as string;
     const submissionDataJSON = formData.get("submissionData") as string;
     const submissionData: SubmissionDataType = JSON.parse(submissionDataJSON);
-    return postCommentOrReply(content, submissionData, intent);
+    return await postCommentOrReply(content, submissionData, intent);
   }
+
   return null;
 }
 
@@ -92,43 +101,51 @@ export async function submitCommentAction({ request }: ActionFunctionArgs) {
 export async function editFeedbackAction({
   request,
   params,
-}: ActionFunctionArgs) {
+}: ActionFunctionArgs): Promise<FeedbackActionResult<EditFeedbackFormValues>> {
+  const actionType = "editFeedback";
   const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
 
-  const formEntries = Object.fromEntries(formData);
-  const { intent, ...submissionData } = formEntries as Record<string, string>;
-  //const actionType = intent as "editFeedback";
-  const actionType = "editFeedback";
+  const data = Object.fromEntries(formData) as {
+    title: string;
+    description: string;
+    category: CategoryType;
+    status: StatusType;
+  };
+
   //Form Error Handling
   const validationErrors: FeedbackFormErrors = {};
-  if (submissionData.title.trim() === "")
+  if (data.title.trim() === "")
     validationErrors.title = "Please enter a valid title";
-  if (submissionData.description.trim() === "")
+  if (data.description.trim() === "")
     validationErrors.description = "Please enter a valid description";
 
   // action couldn't submit because of validation errors
   if (Object.keys(validationErrors).length > 0) {
     //return { success: null, actionType: "editFeedback", validationErrors };
-    return createFeedbackActionResult({ actionType, validationErrors });
+    return createFeedbackActionResult<EditFeedbackFormValues>({
+      actionType,
+      outcome: "validationError",
+      validationErrors,
+    });
   }
-  console.log("act type bbb", formEntries);
+
   assert(feedbackId);
 
-  const response = await editFeedback(feedbackId, submissionData);
+  const response = await editFeedback(feedbackId, data);
 
   // action submission failed
   if (!response.success)
-    return createFeedbackActionResult({
+    return createFeedbackActionResult<EditFeedbackFormValues>({
       actionType,
-      success: false,
-      //TO DO: pass message: response.error after defining the types of errors returned when fetch fails
+      outcome: "failure",
+      submitError: response.error,
     });
 
   // action submission successful
-  return createFeedbackActionResult({
+  return createFeedbackActionResult<EditFeedbackFormValues>({
     actionType,
-    success: true,
+    outcome: "success",
     payload: response.payload,
   });
 }

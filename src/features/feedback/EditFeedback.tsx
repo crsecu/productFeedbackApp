@@ -1,4 +1,4 @@
-import { EditedFeedbackType, StatusType } from "../../types/feedback.types";
+import { EditFeedbackFormValues, StatusType } from "../../types/feedback.types";
 import FeedbackForm from "./FeedbackForm";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
@@ -15,7 +15,7 @@ const statusOptions: StatusType[] = [
   "live",
 ];
 interface EditFeedbackProps {
-  editableFeedback: EditedFeedbackType;
+  editableFeedback: EditFeedbackFormValues;
   // closeModal: () => void;
 }
 
@@ -50,7 +50,6 @@ function EditFeedback({
   return (
     <div className={`formModal ${!isSubmissionSuccessful ? "fullSize" : ""}`}>
       <div className="editFeedback">
-        {" "}
         <button
           onClick={() => dispatch(closeEditFeedback())}
           style={{ marginLeft: "100%" }}

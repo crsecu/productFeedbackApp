@@ -7,11 +7,11 @@ interface CommentCountProps {
 function CommentCount({ count }: CommentCountProps): React.JSX.Element {
   //extract commentCount from loader data when available
   const loaderData = useLoaderData() as CommentData;
-  const commentCount = loaderData?.commentCount || count;
+  const commentCount = loaderData?.commentCount ?? count;
 
   return (
     <>
-      <span>Comment count {commentCount ? commentCount : 0}</span>
+      <span>Comment count {commentCount}</span>
       <br></br>
     </>
   );

@@ -1,7 +1,7 @@
 import { isRouteErrorResponse, SetURLSearchParams } from "react-router-dom";
 import { User } from "../features/user/user.types";
 import { submitComment } from "../services/apiComment";
-import { fetchUserList } from "../services/apiFeedback";
+import { API_URL } from "../services/apiFeedback";
 import {
   BaseCommentType,
   CommentListType,
@@ -9,7 +9,11 @@ import {
   ReplyPayload,
   SubmissionDataType,
 } from "../types/comment.types";
-import { FeedbackActionResult, SuggestionType } from "../types/feedback.types";
+import {
+  CreateFeedbackActionResultArgs,
+  FeedbackActionResult,
+  SuggestionType,
+} from "../types/feedback.types";
 import { ChangeEvent } from "react";
 
 /* Reusable Fetch Helper */
@@ -37,23 +41,32 @@ export async function fetchWrapper<T>(
   }
 }
 
-/* The validateUserCredentials function fetches the user list from mock API and validates the input credentials
+/*
+ The validateUserCredetial func fetches a user from the mock API and validates the provided credentials
+ Throws an error if the user is not found or the name does not match
  */
-export async function validateUserCredentials(name: string, username: string) {
-  const userList: User[] = await fetchUserList();
+export async function validateUserCredentials(
+  name: string,
+  username: string
+): Promise<User> {
+  const userRes = await fetchWrapper<User[]>(
+    `${API_URL}/userList?username=${username}`
+  );
+  const user = userRes[0];
 
-  const validatedUser = userList.find((user) => {
-    return (
-      user.name.toLowerCase() === name.toLocaleLowerCase() &&
-      user.username.toLowerCase() === username.toLowerCase()
-    );
-  });
+  if (!user) {
+    throw new Error("User not found");
+  }
 
-  return validatedUser;
+  if (user.name !== name) {
+    throw new Error("Incorrect name");
+  }
+
+  return user;
 }
 
 //Format category label
-export function formatCategoryLabel(categoryLabel: string) {
+export function formatCategoryLabel(categoryLabel: string): string {
   if (categoryLabel === null) return categoryLabel;
 
   return categoryLabel.length === 2
@@ -61,21 +74,11 @@ export function formatCategoryLabel(categoryLabel: string) {
     : categoryLabel.charAt(0).toUpperCase() + categoryLabel.slice(1);
 }
 
-// //Filters a list of feedback entries based on the specified status
-// export function filterFeedbackByStatus(
-//   feedbackList: SuggestionType[],
-//   status: string
-// ) {
-//   return feedbackList.filter(
-//     (feedbackEntry) => feedbackEntry.status === status
-//   );
-// }
-
 //Filters a list of feedback entries based on the specified category
 export function filterFeedbackByCategory(
   feedbackList: SuggestionType[],
   category: string
-) {
+): SuggestionType[] {
   return feedbackList.filter(
     (feedbackEntry) => feedbackEntry.category === category
   );
@@ -86,7 +89,7 @@ export function sortFeedbackList(
   list: SuggestionType[],
   category: string,
   sortByOption: string
-) {
+): SuggestionType[] {
   console.log("category ", category, "sortByOption ", sortByOption);
 
   const feedbackList =
@@ -117,7 +120,7 @@ export async function postCommentOrReply(
   content: string,
   submissionData: SubmissionDataType,
   actionType: "addComment"
-) {
+): Promise<FeedbackActionResult<BaseCommentType>> {
   const {
     author,
     mode,
@@ -143,18 +146,20 @@ export async function postCommentOrReply(
   }
 
   const response = await submitComment(baseComment, commentCount);
+  console.log("res", response);
 
   // action submission failed
   if (!response.success) {
-    return createFeedbackActionResult({
+    return createFeedbackActionResult<BaseCommentType>({
+      outcome: "failure",
       actionType,
-      success: false,
+      submitError: response.error,
     });
   }
   // action submission successful
-  return createFeedbackActionResult({
+  return createFeedbackActionResult<BaseCommentType>({
     actionType,
-    success: true,
+    outcome: "success",
     payload: response.payload,
   });
 }
@@ -187,15 +192,37 @@ export function buildCommentHierarchy(comments: CommentListType) {
 }
 
 //Factory function that creates the result object of an action function
-export function createFeedbackActionResult({
-  actionType,
-  success = null,
-  validationErrors = null,
-  message = null,
-  payload = null,
-}: FeedbackActionResult) {
-  return { actionType, success, validationErrors, message, payload };
+export function createFeedbackActionResult<T>(
+  input: CreateFeedbackActionResultArgs<T>
+): FeedbackActionResult<T> {
+  const base: FeedbackActionResult<T> = {
+    actionType: input.actionType,
+    hasFormSubmitted: input.outcome !== "validationError",
+    success: input.outcome === "success",
+    validationErrors: null,
+    submitError: null,
+    payload: null,
+  };
+
+  switch (input.outcome) {
+    case "validationError":
+      return {
+        ...base,
+        validationErrors: input.validationErrors,
+      };
+    case "failure":
+      return {
+        ...base,
+        submitError: input.submitError,
+      };
+    case "success":
+      return {
+        ...base,
+        payload: input.payload,
+      };
+  }
 }
+
 /* Utility function that narrows the unknown error from useRouteError() */
 export function errorMessage(error: unknown): string {
   if (isRouteErrorResponse(error)) {

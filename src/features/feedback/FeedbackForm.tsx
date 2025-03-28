@@ -18,7 +18,8 @@ interface FeedbackFormProps {
   FormComponent: FormComponentType; //
   method: "post" | "patch";
   submissionStatus: "idle" | "loading" | "submitting"; //
-  actionResult: FeedbackActionResult; //
+  actionResult: FeedbackActionResult<unknown>; //
+
   submitBtnText: string;
   defaultValues?: CreateFeedbackFormValues | EditFeedbackFormValues;
   children?: ReactNode; //for: extra fields

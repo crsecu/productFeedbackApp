@@ -8,6 +8,7 @@ import {
 import assert from "../utils/TS_helpers";
 import { buildCommentHierarchy, fetchWrapper } from "../utils/helpers";
 import { API_URL } from "../services/apiFeedback";
+import { CommentListType } from "../types/comment.types";
 
 // Fetch list of feedback entries for Feedback Board Page
 export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
@@ -55,7 +56,7 @@ export async function commentDataLoader({ params }: LoaderFunctionArgs) {
   const feedbackId = params.feedbackId;
   assert(feedbackId, "feedbackId is invalid");
   try {
-    const comments = await fetchWrapper(
+    const comments = await fetchWrapper<CommentListType>(
       `${API_URL}/comments?feedbackId=${feedbackId}`
     );
 
