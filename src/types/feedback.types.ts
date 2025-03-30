@@ -73,8 +73,7 @@ export type CreateFeedbackActionResultArgs<T> =
 /*Return value of createFeedbackActionResult  */
 export type FeedbackActionResult<T> = {
   actionType: ActionType;
-  hasFormSubmitted: boolean;
-  success: boolean;
+  submissionOutcome: "validationError" | "failure" | "success";
   validationErrors: FeedbackFormErrors | null;
   submitError: unknown | null;
   payload: T | null;

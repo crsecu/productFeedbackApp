@@ -7,6 +7,7 @@ import { showModal } from "../../store/slices/modalSlice";
 import { useAppDispatch } from "../../types/hooks";
 import BannerNotification from "../../ui/BannerNotification";
 import { closeEditFeedback } from "../../store/slices/feedbackDetailSlice";
+import { getFeedbackFormResponse } from "../../utils/helpers";
 
 const statusOptions: StatusType[] = [
   "suggestion",
@@ -16,17 +17,18 @@ const statusOptions: StatusType[] = [
 ];
 interface EditFeedbackProps {
   editableFeedback: EditFeedbackFormValues;
-  // closeModal: () => void;
 }
 
 function EditFeedback({
   editableFeedback,
 }: EditFeedbackProps): React.JSX.Element {
   const dispatch = useAppDispatch();
-  const fetcher = useFetcher();
 
   const { feedbackId } = useParams();
-  const isSubmissionSuccessful = fetcher?.data?.success ?? null;
+  const fetcher = useFetcher();
+
+  const { actionType, submissionOutcome, isSubmissionSuccessful, showForm } =
+    getFeedbackFormResponse<EditFeedbackFormValues>(fetcher?.data) || {};
 
   //TO DO: Check this functionality after refactoring rest
   function handleCancel(hasFormChanged: boolean) {
@@ -40,11 +42,11 @@ function EditFeedback({
       );
     }
   }
+
   const notification = (
     <BannerNotification
-      notificationType={
-        isSubmissionSuccessful ? "editFeedback_success" : "editFeedback_failed"
-      }
+      actionType={actionType}
+      notificationType={submissionOutcome}
     />
   );
   return (
@@ -56,8 +58,8 @@ function EditFeedback({
         >
           x
         </button>
-        {isSubmissionSuccessful !== null && notification}
-        {!isSubmissionSuccessful && (
+        {notification}
+        {showForm && (
           <>
             <h1>Editing title</h1>
 

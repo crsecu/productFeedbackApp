@@ -58,7 +58,10 @@ const router = createBrowserRouter([
           }
 
           /* Prevent revalidation if feedback submission fails or if there are any validation errors */
-          if (formMethod === "post" && !actionResult?.success) {
+          if (
+            formMethod === "post" &&
+            actionResult?.submissionOutcome !== "success"
+          ) {
             return false;
           }
         },
@@ -80,7 +83,7 @@ const router = createBrowserRouter([
         loader: roadmapDevLoader,
         id: "roadmapData",
         shouldRevalidate: ({ actionResult }) => {
-          if (actionResult && !actionResult.success) {
+          if (actionResult?.submissionOutcome !== "success") {
             return false; // prevent clearing `useActionData()`
           }
         },
@@ -112,7 +115,10 @@ const router = createBrowserRouter([
           if (formMethod === "post") return false;
 
           /* Prevent revalidation if "editFeedback" submission fails or if there are any validation errors */
-          if (formMethod === "patch" && !actionResult.success) {
+          if (
+            formMethod === "patch" &&
+            actionResult?.submissionOutcome !== "success"
+          ) {
             console.log("Revalidation prevented: EDIT FEEDBACK FAILED");
             return false;
           }
@@ -128,7 +134,7 @@ const router = createBrowserRouter([
             shouldRevalidate: ({ formMethod, actionResult }) => {
               if (formMethod === "patch") return false;
 
-              if (actionResult && !actionResult.success) {
+              if (actionResult?.submissionOutcome !== "success") {
                 return false; // prevent clearing `useActionData()`
               }
             },

@@ -1,8 +1,6 @@
-import { useDispatch } from "react-redux";
 import {
   Form,
   useActionData,
-  useLocation,
   useNavigate,
   useNavigation,
 } from "react-router-dom";
@@ -16,6 +14,8 @@ import {
 } from "../../types/feedback.types";
 
 import BannerNotification from "../../ui/BannerNotification";
+import { useAppDispatch } from "../../types/hooks";
+import { getFeedbackFormResponse } from "../../utils/helpers";
 
 const initialFormState = {
   title: "",
@@ -24,20 +24,19 @@ const initialFormState = {
 } as CreateFeedbackFormValues;
 
 function CreateFeedback(): React.JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
-  const location = useLocation();
-  console.log("location CREATE FEEDBACK", location);
-
-  /* data needed by FeedbackForm */
-  const actionData = useActionData() as FeedbackActionResult<SuggestionType>;
-  console.log("create feedback", actionData);
-
   const navigation = useNavigation();
-  const isSubmissionSuccessful = actionData?.success ?? null;
-  const newFeedackId = actionData?.payload?.id;
-  console.log("act data", actionData);
-  console.log("navigation", navigation);
+
+  const actionData = useActionData() as FeedbackActionResult<SuggestionType>;
+  const {
+    actionType,
+    submissionOutcome,
+    isSubmissionSuccessful,
+    showForm,
+    payload,
+  } = getFeedbackFormResponse<SuggestionType>(actionData) || {};
 
   function handleCancel(hasFormChanged: boolean) {
     if (!hasFormChanged) {
@@ -53,17 +52,14 @@ function CreateFeedback(): React.JSX.Element {
 
   const notification = (
     <BannerNotification
-      notificationType={
-        isSubmissionSuccessful
-          ? "createFeedback_success"
-          : "createFeedback_failed"
-      }
+      notificationType={submissionOutcome}
+      actionType={actionType}
     >
       {isSubmissionSuccessful && (
         <>
           <button
             onClick={() =>
-              navigate(`/feedbackDetail/${newFeedackId}`, { replace: true })
+              navigate(`/feedbackDetail/${payload?.id}`, { replace: true })
             }
           >
             View Details
@@ -76,8 +72,8 @@ function CreateFeedback(): React.JSX.Element {
 
   return (
     <div className={`formModal ${!isSubmissionSuccessful ? "fullSize" : ""}`}>
-      {isSubmissionSuccessful !== null && notification}
-      {!isSubmissionSuccessful && (
+      {notification}
+      {showForm && (
         <div className="createFeedback">
           <h1>Create New Feedback</h1>
           <FeedbackForm

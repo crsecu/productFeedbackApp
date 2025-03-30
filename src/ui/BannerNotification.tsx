@@ -1,62 +1,94 @@
 import { ReactNode } from "react";
+import { ActionType } from "../types/feedback.types";
 
-/* The Banner Notification is currently used to display success or error messages when adding or editing feedback. */
+export type NotificationType = "success" | "failure" | "validationError";
+
 interface BannerNotificationProps {
   children?: ReactNode;
-  notificationType:
-    | "createFeedback_failed"
-    | "createFeedback_success"
-    | "editFeedback_failed"
-    | "editFeedback_success"
-    | "addComment_success"
-    | "addComment_failed";
+  notificationType: NotificationType;
+  actionType: ActionType;
 }
 
-const messages = {
-  createFeedback_failed: {
-    title: "Failed to Create Feedback",
-    message:
-      "We couldn't submit your feedback. Please try again or press Cancel to go back.",
+const notificationColors = {
+  validationError: {
+    color: "#c6c4a3",
+  },
+  failure: {
     color: "#df4a4a",
   },
-  createFeedback_success: {
-    title: "Feedback Created!",
-    message:
-      "Your feedback has been added. You can view the details or go back to the previous page",
+  success: {
     color: "#2e9f5a",
-  },
-  editFeedback_failed: {
-    title: "Failed to Update Feedback",
-    message:
-      "We couldn't update your feedback. Please try again or press Cancel to go back.",
-    color: "#df4a4a",
-  },
-  editFeedback_success: {
-    title: "Feedback Updated!",
-    message: "Your feedback changes have been saved.",
-    color: "#2e9f5a",
-  },
-  addComment_success: {
-    title: "Comment submitted!",
-    message: "Your comment has been submitted.",
-    color: "#53ac75",
-  },
-  addComment_failed: {
-    title: "Something went wrong!",
-    message: "Comment submission failed.",
-    color: "#9f562e",
   },
 };
+
+const messages: Record<
+  ActionType,
+  Record<NotificationType, { title: string; message: string }>
+> = {
+  createFeedback: {
+    validationError: {
+      title: "Oops! Some Fields Need Your Attention",
+      message: "Please correct the highlighted fields and try again.",
+    },
+    failure: {
+      title: "Failed to Create Feedback",
+      message:
+        "We couldn't submit your feedback. Please try again or press Cancel to go back.",
+    },
+    success: {
+      title: "Feedback Created!",
+      message:
+        "Your feedback has been added. You can view the details or go back to the previous page",
+    },
+  },
+  editFeedback: {
+    validationError: {
+      title: "Oops! Some Fields Need Your Attention",
+      message: "Please correct the highlighted fields and try again.",
+    },
+    failure: {
+      title: "Failed to Update Feedback",
+      message:
+        "We couldn't update your feedback. Please try again or press Cancel to go back.",
+    },
+    success: {
+      title: "Feedback Updated!",
+      message: "Your feedback changes have been saved.",
+    },
+  },
+  addComment: {
+    validationError: {
+      title: "",
+      message: "",
+    },
+    success: {
+      title: "Comment submitted!",
+      message: "Your comment has been submitted.",
+    },
+    failure: {
+      title: "Something went wrong!",
+      message: "Comment submission failed.",
+    },
+  },
+};
+
+/* The Banner Notification is currently used to display success or error messages when adding or editing feedback. */
 function BannerNotification({
   children,
+  actionType,
   notificationType,
-}: BannerNotificationProps): React.JSX.Element {
-  const notificationMessage = messages[notificationType];
+}: BannerNotificationProps): React.JSX.Element | null {
+  if (!actionType && !notificationType) return null;
+  const bannerColor = notificationColors[notificationType]?.color;
+
+  const notificationMessage = messages[actionType]?.[notificationType];
+
+  if (!notificationMessage) return null;
 
   return (
     <div
       style={{
-        backgroundColor: notificationMessage.color,
+        backgroundColor: bannerColor,
         padding: "20px",
         marginBottom: "20px",
       }}

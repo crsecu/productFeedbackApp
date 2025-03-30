@@ -10,11 +10,13 @@ import {
   SubmissionDataType,
 } from "../types/comment.types";
 import {
+  ActionType,
   CreateFeedbackActionResultArgs,
   FeedbackActionResult,
   SuggestionType,
 } from "../types/feedback.types";
 import { ChangeEvent } from "react";
+import { NotificationType } from "../ui/BannerNotification";
 
 /* Reusable Fetch Helper */
 export async function fetchWrapper<T>(
@@ -197,8 +199,7 @@ export function createFeedbackActionResult<T>(
 ): FeedbackActionResult<T> {
   const base: FeedbackActionResult<T> = {
     actionType: input.actionType,
-    hasFormSubmitted: input.outcome !== "validationError",
-    success: input.outcome === "success",
+    submissionOutcome: input.outcome,
     validationErrors: null,
     submitError: null,
     payload: null,
@@ -257,4 +258,28 @@ export function handleOptionChange(
 
     return newParams;
   });
+}
+
+// Extracts and structures the result of a feedback form submission for easier consumption in UI components
+export function getFeedbackFormResponse<T>(
+  actionData: FeedbackActionResult<T>
+): {
+  actionType: ActionType;
+  submissionOutcome: NotificationType;
+  isSubmissionSuccessful: boolean;
+  showForm: boolean;
+  payload: T | null;
+} {
+  const { actionType, submissionOutcome, payload } = actionData || {};
+
+  const isSubmissionSuccessful = submissionOutcome === "success";
+  const showForm = !actionData || !isSubmissionSuccessful;
+
+  return {
+    actionType,
+    submissionOutcome,
+    isSubmissionSuccessful,
+    showForm,
+    payload,
+  };
 }
