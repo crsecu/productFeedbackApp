@@ -3,7 +3,7 @@ import {
   FeedbackType,
   StatusType,
   SuggestionType,
-  Result,
+  MutationResult,
   EditFeedbackFormValues,
 } from "../types/feedback.types";
 import { fetchWrapper } from "../utils/helpers";
@@ -44,7 +44,7 @@ export async function fetchFeedbackById(
 /* Submit new feedback */
 export async function submitFeedback(
   feedback: NewFeedbackType
-): Promise<Result<SuggestionType>> {
+): Promise<MutationResult<SuggestionType>> {
   try {
     const data = await fetchWrapper<SuggestionType>(
       `${API_URL}/productRequests`,
@@ -68,7 +68,7 @@ export async function submitFeedback(
 export async function editFeedback(
   feedbackId: string,
   editedFeedback: EditFeedbackFormValues
-): Promise<Result<EditFeedbackFormValues>> {
+): Promise<MutationResult<EditFeedbackFormValues>> {
   try {
     const data = await fetchWrapper<FeedbackType>(
       `${API_URL}/productRequests/${feedbackId}`,

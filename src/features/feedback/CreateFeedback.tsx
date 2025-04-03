@@ -9,7 +9,7 @@ import FeedbackForm from "./FeedbackForm";
 import { showModal } from "../../store/slices/modalSlice";
 import {
   SuggestionType,
-  FeedbackActionResult,
+  ActionResult,
   CreateFeedbackFormValues,
 } from "../../types/feedback.types";
 
@@ -29,7 +29,7 @@ function CreateFeedback(): React.JSX.Element {
   const navigate = useNavigate();
   const navigation = useNavigation();
 
-  const actionData = useActionData() as FeedbackActionResult<SuggestionType>;
+  const actionData = useActionData() as ActionResult<SuggestionType>;
   const {
     actionType,
     submissionOutcome,

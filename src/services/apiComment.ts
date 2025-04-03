@@ -1,5 +1,5 @@
 import { BaseCommentType } from "../types/comment.types";
-import { Result } from "../types/feedback.types";
+import { MutationResult } from "../types/feedback.types";
 import { fetchWrapper } from "../utils/helpers";
 import { updateCommentCount } from "./apiFeedback";
 import { API_URL } from "./apiFeedback";
@@ -13,7 +13,7 @@ export async function fetchComments(feedbackId: string) {
 export async function submitComment(
   commentData: BaseCommentType,
   currentCount: number
-): Promise<Result<BaseCommentType>> {
+): Promise<MutationResult<BaseCommentType>> {
   try {
     const createCommentPromise = fetchWrapper<BaseCommentType>(
       `${API_URL}/comments`,

@@ -11,9 +11,12 @@ import {
 } from "../types/comment.types";
 import {
   ActionType,
-  CreateFeedbackActionResultArgs,
-  FeedbackActionResult,
+  ActionResult,
+  FeedbackFormErrors,
   SuggestionType,
+  FailureResult,
+  SuccessResult,
+  ValidationErrorResult,
 } from "../types/feedback.types";
 import { ChangeEvent } from "react";
 import { NotificationType } from "../ui/BannerNotification";
@@ -44,7 +47,7 @@ export async function fetchWrapper<T>(
 }
 
 /*
- The validateUserCredetial func fetches a user from the mock API and validates the provided credentials
+ The validateUserCredentials func fetches a user from the mock API and validates the provided credentials
  Throws an error if the user is not found or the name does not match
  */
 export async function validateUserCredentials(
@@ -122,7 +125,7 @@ export async function postCommentOrReply(
   content: string,
   submissionData: SubmissionDataType,
   actionType: "addComment"
-): Promise<FeedbackActionResult<BaseCommentType>> {
+): Promise<ActionResult | ActionResult<BaseCommentType>> {
   const {
     author,
     mode,
@@ -130,7 +133,7 @@ export async function postCommentOrReply(
   } = submissionData;
 
   /* Common fields between comment and reply */
-  const baseComment: BaseCommentType = {
+  const comment: BaseCommentType = {
     feedbackId,
     type: mode,
     parentId: null,
@@ -142,28 +145,22 @@ export async function postCommentOrReply(
   if (mode === "reply") {
     const parent = (submissionData.payload as ReplyPayload).parent;
     const { author, id, type } = parent;
-    baseComment.replyingTo = author;
-    baseComment.parentId = id;
-    baseComment.parentType = type;
+    comment.replyingTo = author;
+    comment.parentId = id;
+    comment.parentType = type;
   }
 
-  const response = await submitComment(baseComment, commentCount);
-  console.log("res", response);
+  //Closure function that captures commentCount and passes it to submitComment func
+  const submitNewComment = (data: BaseCommentType) =>
+    submitComment(data, commentCount);
 
-  // action submission failed
-  if (!response.success) {
-    return createFeedbackActionResult<BaseCommentType>({
-      outcome: "failure",
-      actionType,
-      submitError: response.error,
-    });
-  }
-  // action submission successful
-  return createFeedbackActionResult<BaseCommentType>({
-    actionType,
-    outcome: "success",
-    payload: response.payload,
-  });
+  //Submit new comment and return a standardized result: success(if submission succeeds), or failure (if it fails)
+  const result = await performActionSubmission<
+    BaseCommentType,
+    BaseCommentType
+  >(actionType, comment, submitNewComment);
+
+  return result;
 }
 
 // This function creates a comment thread by associating replies with their respective parent comments
@@ -192,40 +189,62 @@ export function buildCommentHierarchy(comments: CommentListType) {
 
   return commentsThread;
 }
-
+/////////////////////////////////////////////////////////////////////////
 //Factory function that creates the result object of an action function
-export function createFeedbackActionResult<T>(
-  input: CreateFeedbackActionResultArgs<T>
-): FeedbackActionResult<T> {
-  const base: FeedbackActionResult<T> = {
-    actionType: input.actionType,
-    submissionOutcome: input.outcome,
-    validationErrors: null,
-    submitError: null,
-    payload: null,
-  };
+export function createActionResult(
+  outcome: "validationError",
+  data: ValidationErrorResult
+): ActionResult<null>;
 
-  switch (input.outcome) {
+export function createActionResult(
+  outcome: "failure",
+  data: FailureResult
+): ActionResult<null>;
+
+export function createActionResult<TPayload>(
+  outcome: "success",
+  data: SuccessResult<TPayload>
+): ActionResult<TPayload>;
+
+export function createActionResult<TPayload>(
+  outcome: "success" | "failure" | "validationError",
+  data: SuccessResult<TPayload> | FailureResult | ValidationErrorResult
+): ActionResult<TPayload> {
+  const base = {
+    actionType: data.actionType,
+  };
+  switch (outcome) {
     case "validationError":
       return {
         ...base,
-        validationErrors: input.validationErrors,
+        submissionOutcome: "validationError",
+        validationErrors: (data as { validationErrors: FeedbackFormErrors })
+          .validationErrors,
+        submitError: null,
+        payload: null,
       };
     case "failure":
       return {
         ...base,
-        submitError: input.submitError,
+        submissionOutcome: "failure",
+        validationErrors: null,
+        submitError: (data as { submitError: unknown }).submitError,
+        payload: null,
       };
     case "success":
       return {
         ...base,
-        payload: input.payload,
+        submissionOutcome: "success",
+        validationErrors: null,
+        submitError: null,
+        payload: (data as { payload: TPayload }).payload,
       };
   }
 }
 
 /* Utility function that narrows the unknown error from useRouteError() */
 export function errorMessage(error: unknown): string {
+  console.log("ATTENTION ERROR", error);
   if (isRouteErrorResponse(error)) {
     return `${error.status} ${error.statusText}`;
   } else if (error instanceof Error) {
@@ -261,9 +280,7 @@ export function handleOptionChange(
 }
 
 // Extracts and structures the result of a feedback form submission for easier consumption in UI components
-export function getFeedbackFormResponse<T>(
-  actionData: FeedbackActionResult<T>
-): {
+export function getFeedbackFormResponse<T>(actionData: ActionResult<T>): {
   actionType: ActionType;
   submissionOutcome: NotificationType;
   isSubmissionSuccessful: boolean;
@@ -282,4 +299,63 @@ export function getFeedbackFormResponse<T>(
     showForm,
     payload,
   };
+}
+
+/* This function validates form values used in action functions and
+returns an error object with messages for empty string fields*/
+export function getValidationErrors<T>(formValues: T): FeedbackFormErrors {
+  const validationErrors: FeedbackFormErrors = {};
+
+  for (const field in formValues) {
+    const value = formValues[field];
+
+    if (typeof value === "string" && value.trim() === "") {
+      validationErrors[field] = `Please enter a valid ${field}`;
+    }
+  }
+
+  console.log("lets check validation errors", validationErrors);
+  return validationErrors;
+}
+
+/* Helper functions that handles validation errors - returns a standardized action result: validationErrors*/
+export function handleValidationErrors<FormValuesType>(
+  actionType: ActionType,
+  formValues: FormValuesType
+): ActionResult | null {
+  const validationErrors = getValidationErrors<FormValuesType>(formValues);
+
+  if (Object.keys(validationErrors).length > 0) {
+    return createActionResult("validationError", {
+      actionType,
+      validationErrors,
+    });
+  }
+
+  return null;
+}
+
+/* This function handles form validation and submission - it returns a standardized action result: success, failure, validationError */
+//Submits some form data and return a standardized result
+export async function performActionSubmission<TSubmissionData, TPayload>(
+  actionType: ActionType,
+  submissionData: TSubmissionData,
+  // eslint-disable-next-line no-unused-vars
+  submitForm: (_data: TSubmissionData) => Promise<Result<TPayload>>
+): Promise<ActionResult | ActionResult<TPayload>> {
+  const submissionResult = await submitForm(submissionData);
+
+  // action submission failed
+  if (!submissionResult.success) {
+    return createActionResult("failure", {
+      actionType,
+      submitError: submissionResult.error,
+    });
+  }
+
+  // action submission successful
+  return createActionResult<TPayload>("success", {
+    actionType,
+    payload: submissionResult.payload,
+  });
 }

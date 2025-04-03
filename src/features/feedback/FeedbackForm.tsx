@@ -3,7 +3,7 @@ import { FetcherFormProps, FormProps } from "react-router-dom";
 import {
   CreateFeedbackFormValues,
   EditFeedbackFormValues,
-  FeedbackActionResult,
+  ActionResult,
 } from "../../types/feedback.types";
 import FormField from "./FormField";
 import InputField from "./InputField";
@@ -18,7 +18,7 @@ interface FeedbackFormProps {
   FormComponent: FormComponentType; //
   method: "post" | "patch";
   submissionStatus: "idle" | "loading" | "submitting"; //
-  actionResult: FeedbackActionResult<unknown>; //
+  actionResult: ActionResult<unknown>; //
 
   submitBtnText: string;
   defaultValues?: CreateFeedbackFormValues | EditFeedbackFormValues;

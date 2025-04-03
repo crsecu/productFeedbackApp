@@ -45,9 +45,11 @@ export type RoadmapFeedbackType = PlannedType | InProgressType | LiveType;
 export type FeedbackType = RoadmapFeedbackType | SuggestionType;
 
 //Add/Edit Feedback Form Types
+export type FeedbackFormKeys = "title" | "category" | "description" | "status";
+
 export interface CreateFeedbackFormValues {
   title: string;
-  category: CategoryType | "";
+  category: CategoryType;
   description: string;
 }
 export interface EditFeedbackFormValues extends CreateFeedbackFormValues {
@@ -60,24 +62,48 @@ export interface FeedbackFormErrors {
 
 export type ActionType = "createFeedback" | "editFeedback" | "addComment";
 
-/* Input of createFeddbackActionResult */
-export type CreateFeedbackActionResultArgs<T> =
+export type ValidationErrorResult = {
+  actionType: ActionType;
+  validationErrors: FeedbackFormErrors;
+};
+export type FailureResult = {
+  actionType: ActionType;
+  submitError: unknown;
+};
+export type SuccessResult<T> = {
+  actionType: ActionType;
+  payload: T;
+};
+
+/* Input type for createActionResult */
+// export type createActionResultArgs<T> =
+//   | (ValidationErrorResult & { outcome: "validationError" })
+//   | (FailureResult & { outcome: "failure" })
+//   | (SuccessResult<T> & { outcome: "success" });
+
+/*Return value of createActionResult  */
+export type ActionResult<TPayload = null> =
   | {
-      outcome: "validationError";
+      submissionOutcome: "validationError";
       actionType: ActionType;
       validationErrors: FeedbackFormErrors;
+      submitError: null;
+      payload: null;
     }
-  | { outcome: "failure"; actionType: ActionType; submitError: unknown }
-  | { outcome: "success"; actionType: ActionType; payload: T };
-
-/*Return value of createFeedbackActionResult  */
-export type FeedbackActionResult<T> = {
-  actionType: ActionType;
-  submissionOutcome: "validationError" | "failure" | "success";
-  validationErrors: FeedbackFormErrors | null;
-  submitError: unknown | null;
-  payload: T | null;
-};
+  | {
+      submissionOutcome: "failure";
+      actionType: ActionType;
+      validationErrors: null;
+      submitError: unknown;
+      payload: null;
+    }
+  | {
+      submissionOutcome: "success";
+      actionType: ActionType;
+      validationErrors: null;
+      submitError: null;
+      payload: TPayload;
+    };
 
 export interface RoadmapStats {
   planned: number;
@@ -103,14 +129,17 @@ export type LoaderDataType =
   | RoadmapLoaderData
   | FeedbackType;
 
-export type SuccessResult<T> = {
+// Represents a successful result from a mutation (data submission/update operation)
+export type MutationSuccess<T> = {
   success: true;
   payload: T;
 };
 
-export type FailureResult = {
+// Represents a failed result from a mutation (data submission/update operation)
+export type MutationFailure = {
   success: false;
   error: unknown;
 };
 
-export type Result<T> = SuccessResult<T> | FailureResult;
+//Union type for handling mutation outcomes (success or failure)
+export type MutationResult<T> = MutationSuccess<T> | MutationFailure;
