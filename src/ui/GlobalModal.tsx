@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteFeedback } from "../services/apiFeedback";
 import { hideModal } from "../store/slices/modalSlice";
 import { showNotification } from "../store/slices/toastNotificationSlice";
-import { useAppDispatch, useAppSelector } from "../types/hooks";
+import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
 import assert from "../utils/TS_helpers";
 import { closeEditFeedback } from "../store/slices/feedbackDetailSlice";
 

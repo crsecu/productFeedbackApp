@@ -14,7 +14,7 @@ import {
 } from "../../types/feedback.types";
 
 import BannerNotification from "../../ui/BannerNotification";
-import { useAppDispatch } from "../../types/hooks";
+import { useAppDispatch } from "../../types/redux.hooks";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 
 const initialFormState = {

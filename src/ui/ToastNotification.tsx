@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../types/hooks";
+import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
 import { hideNotification } from "../store/slices/toastNotificationSlice";
 import { useEffect } from "react";
 

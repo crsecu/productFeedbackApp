@@ -1,5 +1,5 @@
 import { useFetcher } from "react-router-dom";
-import { useAppSelector } from "../../types/hooks";
+import { useAppSelector } from "../../types/redux.hooks";
 import { ReactNode, useEffect } from "react";
 import { CommentPayload, ReplyPayload } from "../../types/comment.types";
 import CommentBox from "./CommentBox";

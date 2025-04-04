@@ -8,15 +8,17 @@ import {
 } from "../utils/helpers";
 import {
   CategoryType,
-  CreateFeedbackFormValues,
-  EditFeedbackFormValues,
-  ActionResult,
   NewFeedbackType,
-  StatusType,
   SuggestionType,
 } from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
 import { SubmissionDataType } from "../types/comment.types";
+import { ActionResult } from "../types/action.types";
+import {
+  CreateFeedbackFormValues,
+  EditFeedbackFormValues,
+} from "../types/form.types";
+import { StatusType } from "../types/roadmap.types";
 
 /* Submit New Feedback Action*/
 export async function createFeedbackAction({

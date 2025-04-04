@@ -4,7 +4,7 @@ import FormField from "./FormField";
 import SelectField from "./SelectField";
 import { useFetcher, useParams } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
-import { useAppDispatch } from "../../types/hooks";
+import { useAppDispatch } from "../../types/redux.hooks";
 import BannerNotification from "../../ui/BannerNotification";
 import { closeEditFeedback } from "../../store/slices/feedbackDetailSlice";
 import { getFeedbackFormResponse } from "../../utils/helpers";

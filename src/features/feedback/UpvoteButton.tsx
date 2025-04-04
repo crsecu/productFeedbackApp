@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../types/hooks";
+import { useAppDispatch, useAppSelector } from "../../types/redux.hooks";
 import { persistFeedbackVote } from "../../services/apiFeedback";
 import {
   trackUserUpvote,

@@ -1,13 +1,8 @@
-export interface CommentAuthor {
-  image: string;
-  name: string;
-  username: string;
-}
-
 /* "NewCommentType/NewReplyType" represents the data model for a comment/reply before it is sent to the server
-   JSON Server automatically assigns a unique id to each comment/reply upon creation
-   "CommentType/ReplyType" extends NewCommentType/NewReplyType to include the id field, representing the saved comment/reply returned by the server 
+JSON Server automatically assigns a unique id to each comment/reply upon creation
+"CommentType/ReplyType" extends NewCommentType/NewReplyType to include the id field, representing the saved comment/reply returned by the server 
 */
+
 export interface NewCommentType {
   feedbackId: string;
   type: "comment";
@@ -52,10 +47,10 @@ export type CommentListType = (CommentType | ReplyType)[];
 
 export type CommentKindType = "comment" | "reply";
 
-export type BasePayload = {
+export interface BasePayload {
   feedbackId: string;
   commentCount: number;
-};
+}
 
 export type CommentPayload = BasePayload;
 export type ReplyPayload = BasePayload & {
@@ -80,4 +75,10 @@ export interface BaseCommentType {
   content: string;
   user: CommentAuthor;
   replyingTo?: string;
+}
+
+export interface CommentAuthor {
+  image: string;
+  name: string;
+  username: string;
 }

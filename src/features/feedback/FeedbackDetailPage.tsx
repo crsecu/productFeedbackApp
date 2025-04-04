@@ -8,7 +8,7 @@ import FeedbackItem from "./FeedbackItem";
 import UpvoteButton from "./UpvoteButton";
 import FeedbackDetailContent from "./FeedbackDetailContent";
 import { useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../../types/hooks";
+import { useAppDispatch, useAppSelector } from "../../types/redux.hooks";
 import EditFeedback from "./EditFeedback";
 import { openEditFeedback } from "../../store/slices/feedbackDetailSlice";
 
