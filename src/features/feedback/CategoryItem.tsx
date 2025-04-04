@@ -5,7 +5,7 @@ interface CategoryItemProps {
   name: string;
   id: string;
   value: string;
-  isDisabled: boolean;
+  isDisabled?: boolean;
   selectedOption: string;
 
   // eslint-disable-next-line no-unused-vars

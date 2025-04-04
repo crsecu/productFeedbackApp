@@ -7,7 +7,7 @@ import {
   postCommentOrReply,
 } from "../utils/helpers";
 import {
-  CategoryType,
+  Category,
   NewFeedbackType,
   SuggestionType,
 } from "../types/feedback.types";
@@ -30,7 +30,7 @@ export async function createFeedbackAction({
   const formData = await request.formData();
   const formValues = Object.fromEntries(formData) as {
     title: string;
-    category: CategoryType;
+    category: Category;
     description: string;
   };
 
@@ -76,7 +76,7 @@ export async function editFeedbackAction({
   const formValues = Object.fromEntries(formData) as {
     title: string;
     description: string;
-    category: CategoryType;
+    category: Category;
     status: StatusType;
   };
 

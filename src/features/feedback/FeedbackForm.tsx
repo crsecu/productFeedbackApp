@@ -1,14 +1,15 @@
 import { ReactNode, useState } from "react";
 import { FetcherFormProps, FormProps } from "react-router-dom";
-import {
-  CreateFeedbackFormValues,
-  EditFeedbackFormValues,
-  ActionResult,
-} from "../../types/feedback.types";
+
 import FormField from "./FormField";
 import InputField from "./InputField";
 import FormFieldError from "./FormFieldError";
 import SelectField from "./SelectField";
+import { ActionResult } from "../../types/action.types";
+import {
+  CreateFeedbackFormValues,
+  EditFeedbackFormValues,
+} from "../../types/form.types";
 
 type FormComponentType = React.ForwardRefExoticComponent<
   (FetcherFormProps | FormProps) & React.RefAttributes<HTMLFormElement>

@@ -3,9 +3,9 @@
    "FeedbackType" extends NewFeedbackType to include the id field, representing the saved feedback entry returned by the server 
 */
 
-// Status and category types
 import { RoadmapFeedbackType } from "./roadmap.types";
 
+// Status and category types
 export const CATEGORY_OPTIONS = [
   "feature",
   "ui",
@@ -14,13 +14,13 @@ export const CATEGORY_OPTIONS = [
   "bug",
 ] as const;
 
-export type CategoryType = (typeof CATEGORY_OPTIONS)[number];
+export type Category = (typeof CATEGORY_OPTIONS)[number];
 
-//export type CategoryType = "feature" | "ui" | "ux" | "enhancement" | "bug";
+//export type Category = "feature" | "ui" | "ux" | "enhancement" | "bug";
 
 export interface CommonFeedbackFields {
   title: string;
-  category: CategoryType;
+  category: Category;
   upvotes: number;
   description: string;
   commentCount: number;
