@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { RoadmapStats, RoadmapStatusType } from "../../types/feedback.types";
+
 import RoadmapPreviewItem from "./RoadmapPreviewItem";
+import { RoadmapStats, RoadmapStatus } from "../../types/roadmap.types";
 
 interface RoadmapPreviewProps {
   roadmapStats: RoadmapStats;
@@ -8,16 +9,14 @@ interface RoadmapPreviewProps {
 }
 
 // This func renders a list of RoadmapPreviewItem components from roadmap stats
-function renderRoadmapPreviewItems(
-  stats: Record<RoadmapStatusType, number>
-): JSX.Element[] {
+function renderRoadmapPreviewItems(stats: RoadmapStats): JSX.Element[] {
   return Object.keys(stats).map((status) => {
-    const count = stats[status as RoadmapStatusType];
+    const count = stats[status as RoadmapStatus];
 
     return (
       <RoadmapPreviewItem
         key={status}
-        stage={status as RoadmapStatusType}
+        stage={status as RoadmapStatus}
         count={count}
       />
     );

@@ -1,26 +1,26 @@
-import { fetchFeedbackList, fetchFeedbackById } from "../services/apiFeedback";
-import { LoaderFunctionArgs } from "react-router-dom";
 import {
-  FeedbackBoardLoaderData,
-  FeedbackType,
-  SuggestionType,
-} from "../types/feedback.types";
+  fetchAndGroupFeedback,
+  fetchFeedbackById,
+} from "../services/apiFeedback";
+import { LoaderFunctionArgs } from "react-router-dom";
+import { Feedback } from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
 import { buildCommentHierarchy, fetchWrapper } from "../utils/helpers";
 import { API_URL } from "../services/apiFeedback";
 import { CommentListType } from "../types/comment.types";
+import { FeedbackBoardLoaderData } from "../types/loader.types";
+import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 
-// Fetch list of feedback entries for Feedback Board Page
+// Loader for Feedback Board Page
+// returns grouped suggestions and roadmap-related feedback counts
 export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
-  const data = await fetchFeedbackList("feedbackBoard");
+  const data = await fetchAndGroupFeedback("feedbackBoard");
 
-  const { planned, "in-Progress": inProgress, live } = data;
+  const { suggestion, planned, "in-Progress": inProgress, live } = data;
 
-  const suggestions = data.suggestion as SuggestionType[];
-
-  const model: FeedbackBoardLoaderData = {
-    suggestions,
-    roadmapTotal: live.length + inProgress.length + planned.length,
+  const feedbackBoardData: FeedbackBoardLoaderData = {
+    suggestions: suggestion,
+    roadmapFeedbackCount: live.length + inProgress.length + planned.length,
     roadmapStatusCounts: {
       live: live.length,
       "in-Progress": inProgress.length,
@@ -28,25 +28,25 @@ export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
     },
   };
 
-  return model;
+  return feedbackBoardData;
 }
 
-// Fetch list of feedback entries for Roadmap Development Page (status: planned, in-Progress, live)
-export async function roadmapDevLoader() {
-  const data = await fetchFeedbackList("developmentRoadmap");
+// Loader for Roadmap Page
+// returns grouped feedback (by status: planned, in-Progress, live)
+export async function roadmapDevLoader(): Promise<RoadmapFeedbackGroupedByStatus> {
+  const roadmapData = await fetchAndGroupFeedback("developmentRoadmap");
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  const { suggestion, ...roadmapFeedbackList } = data;
-
-  return roadmapFeedbackList;
+  return roadmapData;
 }
 
 // Fetch Feedback based on id
-export async function feedbackDetailLoader({ params }: LoaderFunctionArgs) {
+export async function feedbackDetailLoader({
+  params,
+}: LoaderFunctionArgs): Promise<Feedback> {
   const feedbackId = params.feedbackId;
   assert(feedbackId, "feedbackId is invalid");
 
-  const feedback: FeedbackType = await fetchFeedbackById(feedbackId);
+  const feedback = await fetchFeedbackById(feedbackId);
 
   return feedback;
 }
@@ -55,6 +55,7 @@ export async function feedbackDetailLoader({ params }: LoaderFunctionArgs) {
 export async function commentDataLoader({ params }: LoaderFunctionArgs) {
   const feedbackId = params.feedbackId;
   assert(feedbackId, "feedbackId is invalid");
+
   try {
     const comments = await fetchWrapper<CommentListType>(
       `${API_URL}/comments?feedbackId=${feedbackId}`

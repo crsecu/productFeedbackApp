@@ -10,16 +10,22 @@ import {
   SubmissionDataType,
 } from "../types/comment.types";
 import {
-  ActionType,
-  ActionResult,
-  FeedbackFormErrors,
+  Feedback,
+  FeedbackGroupedByStatus,
+  Status,
   SuggestionType,
-  FailureResult,
-  SuccessResult,
-  ValidationErrorResult,
 } from "../types/feedback.types";
 import { ChangeEvent } from "react";
 import { NotificationType } from "../ui/BannerNotification";
+import {
+  ActionResult,
+  ValidationErrorResult,
+  FailureResult,
+  SuccessResult,
+  ActionType,
+} from "../types/action.types";
+import { FeedbackFormErrors } from "../types/form.types";
+import { MutationResult } from "../types/mutation.types";
 
 /* Reusable Fetch Helper */
 export async function fetchWrapper<T>(
@@ -341,7 +347,7 @@ export async function performActionSubmission<TSubmissionData, TPayload>(
   actionType: ActionType,
   submissionData: TSubmissionData,
   // eslint-disable-next-line no-unused-vars
-  submitForm: (_data: TSubmissionData) => Promise<Result<TPayload>>
+  submitForm: (_data: TSubmissionData) => Promise<MutationResult<TPayload>>
 ): Promise<ActionResult | ActionResult<TPayload>> {
   const submissionResult = await submitForm(submissionData);
 
@@ -358,4 +364,43 @@ export async function performActionSubmission<TSubmissionData, TPayload>(
     actionType,
     payload: submissionResult.payload,
   });
+}
+
+//////////////////////////////////////
+//Func groups feedback by status
+export function groupFeedbackByStatus(
+  feedbackList: Feedback[]
+): FeedbackGroupedByStatus {
+  const feedbackGroupedByStatus: FeedbackGroupedByStatus = {
+    suggestion: [],
+    planned: [],
+    "in-Progress": [],
+    live: [],
+  };
+
+  const result = feedbackList.reduce(
+    (acc: FeedbackGroupedByStatus, cur: Feedback) => {
+      const status = cur.status;
+
+      switch (status) {
+        case "suggestion":
+          acc.suggestion.push(cur);
+          break;
+        case "planned":
+          acc.planned.push(cur);
+          break;
+        case "in-Progress":
+          acc["in-Progress"].push(cur);
+          break;
+        case "live":
+          acc.live.push(cur);
+          break;
+      }
+
+      return acc;
+    },
+    feedbackGroupedByStatus
+  );
+
+  return result;
 }

@@ -1,14 +1,22 @@
-import { InProgressType, LiveType, PlannedType } from "./feedback.types";
+import {
+  Feedback,
+  FeedbackGroupedByStatus,
+  Status,
+  SuggestionFeedback,
+} from "./feedback.types";
 
 //type of feedback belonging to Roadmap
-export type RoadmapFeedbackType = PlannedType | InProgressType | LiveType;
+export type RoadmapFeedbackType = Exclude<Feedback, SuggestionFeedback>;
 
-export type RoadmapStatusType = "planned" | "in-Progress" | "live"; //represents status types for Roadmap
-
-export type StatusType = RoadmapStatusType | "suggestion";
+export type RoadmapStatus = Exclude<Status, "suggestion">; //represents status types for Roadmap
 
 export interface RoadmapStats {
   planned: number;
   "in-Progress": number;
   live: number;
 }
+
+export type RoadmapFeedbackGroupedByStatus = Omit<
+  FeedbackGroupedByStatus,
+  "suggestion"
+>;

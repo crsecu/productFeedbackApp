@@ -1,6 +1,5 @@
 import { Link, useLocation, useRouteLoaderData } from "react-router-dom";
 
-import { FeedbackBoardLoaderData } from "../../types/feedback.types";
 import PageHeader from "../../ui/PageHeader";
 import FilterByCategory from "./FilterByCategory";
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
@@ -9,13 +8,15 @@ import ActionBar from "../../ui/ActionBar";
 import SuggestionCount from "./SuggestionCount";
 import SortBy from "./SortBy";
 import TitleCard from "./TitleCard";
+import { FeedbackBoardLoaderData } from "../../types/loader.types";
 
 function FeedbackBoardPage(): React.JSX.Element {
   const dataFromLoader = useRouteLoaderData(
     "feedbackBoardData"
   ) as FeedbackBoardLoaderData;
 
-  const { suggestions, roadmapStatusCounts, roadmapTotal } = dataFromLoader;
+  const { suggestions, roadmapFeedbackCount, roadmapStatusCounts } =
+    dataFromLoader;
   const location = useLocation();
   console.log("location FEEDBACK BOARD", location);
 
@@ -28,7 +29,7 @@ function FeedbackBoardPage(): React.JSX.Element {
         <FilterByCategory suggestionCount={suggestions.length} />
         <RoadmapPreviewTile
           roadmapStats={roadmapStatusCounts}
-          roadmapCount={roadmapTotal}
+          roadmapCount={roadmapFeedbackCount}
         />
       </aside>
     </>

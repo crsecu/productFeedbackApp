@@ -1,24 +1,24 @@
 //All types related to loader functions
 
 import {
-  SuggestionType,
-  PlannedType,
-  InProgressType,
-  LiveType,
   FeedbackType,
+  InProgressFeedback,
+  LiveFeedback,
+  PlannedFeedback,
+  SuggestionFeedback,
 } from "./feedback.types";
 import { RoadmapStats } from "./roadmap.types";
 
 export interface FeedbackBoardLoaderData {
-  suggestions: SuggestionType[];
-  roadmapTotal: number;
+  suggestions: SuggestionFeedback[];
+  roadmapFeedbackCount: number;
   roadmapStatusCounts: RoadmapStats;
 }
 
 export interface RoadmapLoaderData {
-  planned: PlannedType[];
-  "in-Progress": InProgressType[];
-  live: LiveType[];
+  planned: PlannedFeedback[];
+  "in-Progress": InProgressFeedback[];
+  live: LiveFeedback[];
 }
 
 export type LoaderDataType =

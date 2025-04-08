@@ -17,7 +17,6 @@ function FilterByCategory({
 
   const categoryButtons = useMemo(() => {
     return CATEGORY_OPTIONS.map((category, i) => {
-      console.log("boom", typeof category);
       return (
         <CategoryItem
           name="filterByCategory"
