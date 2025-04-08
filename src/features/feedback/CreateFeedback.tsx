@@ -7,15 +7,13 @@ import {
 import FeedbackForm from "./FeedbackForm";
 
 import { showModal } from "../../store/slices/modalSlice";
-import {
-  SuggestionType,
-  ActionResult,
-  CreateFeedbackFormValues,
-} from "../../types/feedback.types";
+import { SuggestionFeedback } from "../../types/feedback.types";
 
 import BannerNotification from "../../ui/BannerNotification";
 import { useAppDispatch } from "../../types/redux.hooks";
 import { getFeedbackFormResponse } from "../../utils/helpers";
+import { CreateFeedbackFormValues } from "../../types/form.types";
+import { ActionResult } from "../../types/action.types";
 
 const initialFormState = {
   title: "",
@@ -29,14 +27,14 @@ function CreateFeedback(): React.JSX.Element {
   const navigate = useNavigate();
   const navigation = useNavigation();
 
-  const actionData = useActionData() as ActionResult<SuggestionType>;
+  const actionData = useActionData() as ActionResult<SuggestionFeedback>;
   const {
     actionType,
     submissionOutcome,
     isSubmissionSuccessful,
     showForm,
     payload,
-  } = getFeedbackFormResponse<SuggestionType>(actionData) || {};
+  } = getFeedbackFormResponse<SuggestionFeedback>(actionData) || {};
 
   function handleCancel(hasFormChanged: boolean) {
     if (!hasFormChanged) {

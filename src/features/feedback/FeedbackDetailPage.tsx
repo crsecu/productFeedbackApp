@@ -1,6 +1,6 @@
 import { useRouteLoaderData } from "react-router-dom";
 
-import { FeedbackType } from "../../types/feedback.types";
+import { Feedback } from "../../types/feedback.types";
 import CommentCount from "../comments/CommentCount";
 import FeedbackCard from "./FeedbackCard";
 
@@ -14,7 +14,7 @@ import { openEditFeedback } from "../../store/slices/feedbackDetailSlice";
 
 function FeedbackDetailPage(): React.JSX.Element {
   const dispatch = useAppDispatch();
-  const feedback = useRouteLoaderData("feedbackDetailData") as FeedbackType;
+  const feedback = useRouteLoaderData("feedbackDetailData") as Feedback;
 
   const { title, description, category, status } = feedback;
   const editableFeedbackFields = useMemo(() => {

@@ -1,8 +1,7 @@
 import {
-  NewFeedbackType,
-  FeedbackType,
-  SuggestionType,
+  NewFeedback,
   Feedback,
+  SuggestionFeedback,
   FeedbackGroupedByStatus,
 } from "../types/feedback.types";
 import { EditFeedbackFormValues } from "../types/form.types";
@@ -53,10 +52,10 @@ export async function fetchFeedbackById(feedbackId: string): Promise<Feedback> {
 
 /* Submit new feedback */
 export async function submitFeedback(
-  feedback: NewFeedbackType
-): Promise<MutationResult<SuggestionType>> {
+  feedback: NewFeedback
+): Promise<MutationResult<SuggestionFeedback>> {
   try {
-    const data = await fetchWrapper<SuggestionType>(
+    const data = await fetchWrapper<SuggestionFeedback>(
       `${API_URL}/productRequests`,
       {
         method: "POST",
@@ -66,7 +65,6 @@ export async function submitFeedback(
         },
       }
     );
-    console.log("data create", data);
     return { success: true, payload: data };
   } catch (err) {
     console.error("Something went wrong inside SubmitFeedback", err);
@@ -80,7 +78,7 @@ export async function editFeedback(
   editedFeedback: EditFeedbackFormValues
 ): Promise<MutationResult<EditFeedbackFormValues>> {
   try {
-    const data = await fetchWrapper<FeedbackType>(
+    const data = await fetchWrapper<Feedback>(
       `${API_URL}/productRequests/${feedbackId}`,
       {
         method: "PATCH",
@@ -101,15 +99,10 @@ export async function editFeedback(
 }
 
 /* Delete feedback entry */
-export async function deleteFeedback(
-  feedbackId: string
-): Promise<FeedbackType> {
-  return fetchWrapper<FeedbackType>(
-    `${API_URL}/productRequests/${feedbackId}`,
-    {
-      method: "DELETE",
-    }
-  );
+export async function deleteFeedback(feedbackId: string): Promise<Feedback> {
+  return fetchWrapper<Feedback>(`${API_URL}/productRequests/${feedbackId}`, {
+    method: "DELETE",
+  });
 }
 
 /* Update backend with current vote count after user's upvote/unvote actions */
@@ -118,7 +111,7 @@ export async function persistFeedbackVote(
   voteCount: number
 ): Promise<number> {
   try {
-    const data = await fetchWrapper<FeedbackType>(
+    const data = await fetchWrapper<Feedback>(
       `${API_URL}/productRequests/${feedbackId}`,
       {
         method: "PATCH",
@@ -148,7 +141,7 @@ export async function updateCommentCount(
   feedbackId: string,
   updatedCommentCount: number
 ): Promise<number> {
-  const data = await fetchWrapper<FeedbackType>(
+  const data = await fetchWrapper<Feedback>(
     `${API_URL}/productRequests/${feedbackId}`,
     {
       method: "PATCH",

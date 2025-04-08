@@ -13,7 +13,7 @@ import {
   Feedback,
   FeedbackGroupedByStatus,
   Status,
-  SuggestionType,
+  SuggestionFeedback,
 } from "../types/feedback.types";
 import { ChangeEvent } from "react";
 import { NotificationType } from "../ui/BannerNotification";
@@ -87,9 +87,9 @@ export function formatCategoryLabel(categoryLabel: string): string {
 
 //Filters a list of feedback entries based on the specified category
 export function filterFeedbackByCategory(
-  feedbackList: SuggestionType[],
+  feedbackList: SuggestionFeedback[],
   category: string
-): SuggestionType[] {
+): SuggestionFeedback[] {
   return feedbackList.filter(
     (feedbackEntry) => feedbackEntry.category === category
   );
@@ -97,10 +97,10 @@ export function filterFeedbackByCategory(
 
 //Sort feedback list
 export function sortFeedbackList(
-  list: SuggestionType[],
+  list: SuggestionFeedback[],
   category: string,
   sortByOption: string
-): SuggestionType[] {
+): SuggestionFeedback[] {
   console.log("category ", category, "sortByOption ", sortByOption);
 
   const feedbackList =

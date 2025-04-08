@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ActionType } from "../types/feedback.types";
+import { ActionType } from "../types/action.types";
 
 export type NotificationType = "success" | "failure" | "validationError";
 
@@ -79,6 +79,7 @@ function BannerNotification({
   notificationType,
 }: BannerNotificationProps): React.JSX.Element | null {
   if (!actionType && !notificationType) return null;
+
   const bannerColor = notificationColors[notificationType]?.color;
 
   const notificationMessage = messages[actionType]?.[notificationType];

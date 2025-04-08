@@ -6,7 +6,7 @@ import {
 } from "./feedback.types";
 
 //type of feedback belonging to Roadmap
-export type RoadmapFeedbackType = Exclude<Feedback, SuggestionFeedback>;
+export type RoadmapFeedback = Exclude<Feedback, SuggestionFeedback>;
 
 export type RoadmapStatus = Exclude<Status, "suggestion">; //represents status types for Roadmap
 

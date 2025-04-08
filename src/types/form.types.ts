@@ -1,5 +1,4 @@
-import { Category } from "./feedback.types";
-import { StatusType } from "./roadmap.types";
+import { Category, Status } from "./feedback.types";
 
 //Add/Edit Feedback Form Types
 export type FeedbackFormKeys = "title" | "category" | "description" | "status";
@@ -10,7 +9,7 @@ export interface CreateFeedbackFormValues {
   description: string;
 }
 export interface EditFeedbackFormValues extends CreateFeedbackFormValues {
-  status: StatusType;
+  status: Status;
 }
 
 export interface FeedbackFormErrors {

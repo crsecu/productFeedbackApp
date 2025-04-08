@@ -1,9 +1,9 @@
 import { useSearchParams } from "react-router-dom";
-import { SuggestionType } from "../../types/feedback.types";
+import { SuggestionFeedback } from "../../types/feedback.types";
 import { useMemo } from "react";
 
 interface SuggestionCountProps {
-  suggestions: SuggestionType[];
+  suggestions: SuggestionFeedback[];
 }
 function SuggestionCount({
   suggestions,

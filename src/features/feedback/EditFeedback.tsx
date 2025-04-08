@@ -1,4 +1,3 @@
-import { EditFeedbackFormValues, StatusType } from "../../types/feedback.types";
 import FeedbackForm from "./FeedbackForm";
 import FormField from "./FormField";
 import SelectField from "./SelectField";
@@ -8,13 +7,9 @@ import { useAppDispatch } from "../../types/redux.hooks";
 import BannerNotification from "../../ui/BannerNotification";
 import { closeEditFeedback } from "../../store/slices/feedbackDetailSlice";
 import { getFeedbackFormResponse } from "../../utils/helpers";
+import { EditFeedbackFormValues } from "../../types/form.types";
+import { STATUS_OPTIONS } from "../../types/feedback.types";
 
-const statusOptions: StatusType[] = [
-  "suggestion",
-  "planned",
-  "in-Progress",
-  "live",
-];
 interface EditFeedbackProps {
   editableFeedback: EditFeedbackFormValues;
 }
@@ -99,7 +94,7 @@ function EditFeedback({
                 <SelectField
                   name="status"
                   id="feedbackStatus"
-                  options={statusOptions}
+                  options={STATUS_OPTIONS}
                   describedById="feedbackStatusDesc"
                   initialValue={editableFeedback?.status}
                 />

@@ -1,7 +1,7 @@
 //All types related to loader functions
 
 import {
-  FeedbackType,
+  Feedback,
   InProgressFeedback,
   LiveFeedback,
   PlannedFeedback,
@@ -24,4 +24,4 @@ export interface RoadmapLoaderData {
 export type LoaderDataType =
   | FeedbackBoardLoaderData
   | RoadmapLoaderData
-  | FeedbackType;
+  | Feedback;

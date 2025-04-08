@@ -8,8 +8,9 @@ import {
 } from "../utils/helpers";
 import {
   Category,
-  NewFeedbackType,
-  SuggestionType,
+  NewFeedback,
+  Status,
+  SuggestionFeedback,
 } from "../types/feedback.types";
 import assert from "../utils/TS_helpers";
 import { SubmissionDataType } from "../types/comment.types";
@@ -18,12 +19,13 @@ import {
   CreateFeedbackFormValues,
   EditFeedbackFormValues,
 } from "../types/form.types";
-import { StatusType } from "../types/roadmap.types";
 
 /* Submit New Feedback Action*/
 export async function createFeedbackAction({
   request,
-}: ActionFunctionArgs): Promise<ActionResult | ActionResult<SuggestionType>> {
+}: ActionFunctionArgs): Promise<
+  ActionResult | ActionResult<SuggestionFeedback>
+> {
   const actionType = "createFeedback";
 
   //Extract and parse form data from the request
@@ -43,7 +45,7 @@ export async function createFeedbackAction({
   //Return early if there are validation errors
   if (validationErrors) return validationErrors;
 
-  const newFeedback: NewFeedbackType = {
+  const newFeedback: NewFeedback = {
     ...formValues,
     status: "suggestion",
     upvotes: 0,
@@ -51,7 +53,7 @@ export async function createFeedbackAction({
   };
 
   //Submit new feedback and return a standardized result: success(if submission succeeds), or failure (if it fails)
-  const result = await performActionSubmission<NewFeedbackType, SuggestionType>(
+  const result = await performActionSubmission<NewFeedback, SuggestionFeedback>(
     actionType,
     newFeedback,
     submitFeedback
@@ -77,7 +79,7 @@ export async function editFeedbackAction({
     title: string;
     description: string;
     category: Category;
-    status: StatusType;
+    status: Status;
   };
 
   //Validate form input and ensure required fields are not whitespace-only (HTML "required" handles empty)

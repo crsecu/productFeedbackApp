@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import {
-  InProgressType,
-  LiveType,
-  PlannedType,
+  InProgressFeedback,
+  LiveFeedback,
+  PlannedFeedback,
 } from "../../types/feedback.types";
 import FeedbackItem from "../feedback/FeedbackItem";
 import UpvoteButton from "../feedback/UpvoteButton";
@@ -12,7 +12,7 @@ import { ReactNode } from "react";
 
 interface RoadmapStatusColumn {
   children: ReactNode;
-  feedbackList: PlannedType[] | InProgressType[] | LiveType[];
+  feedbackList: PlannedFeedback[] | InProgressFeedback[] | LiveFeedback[];
 }
 function RoadmapStatusColumn({
   children,

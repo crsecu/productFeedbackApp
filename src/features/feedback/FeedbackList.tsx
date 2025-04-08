@@ -5,11 +5,11 @@ import NoFeedbackEntries from "./NoFeedbackEntries";
 import { sortFeedbackList } from "../../utils/helpers";
 import FeedbackCard from "./FeedbackCard";
 import UpvoteButton from "./UpvoteButton";
-import { SuggestionType } from "../../types/feedback.types";
+import { SuggestionFeedback } from "../../types/feedback.types";
 import CommentCount from "../comments/CommentCount";
 
 interface FeedbackListProps {
-  suggestions: SuggestionType[];
+  suggestions: SuggestionFeedback[];
 }
 
 function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {

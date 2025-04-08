@@ -4,8 +4,6 @@ import CategoryItem from "./CategoryItem";
 import { handleOptionChange } from "../../utils/helpers";
 import { CATEGORY_OPTIONS } from "../../types/feedback.types";
 
-//const feedbackCategories = ["all", "ui", "ux", "enhancement", "bug", "feature"];
-
 interface FilterByCategoryProps {
   suggestionCount: number;
 }
