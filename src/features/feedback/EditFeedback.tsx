@@ -5,34 +5,35 @@ import { useFetcher, useParams } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
 import { useAppDispatch } from "../../types/redux.hooks";
 import BannerNotification from "../../ui/BannerNotification";
-import { closeEditFeedback } from "../../store/slices/feedbackDetailSlice";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import { EditFeedbackFormValues } from "../../types/form.types";
 import { STATUS_OPTIONS } from "../../types/feedback.types";
 
 interface EditFeedbackProps {
-  editableFeedback: EditFeedbackFormValues;
+  editableFeedback?: EditFeedbackFormValues;
+  setShowEditFeedback: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function EditFeedback({
   editableFeedback,
+  setShowEditFeedback,
 }: EditFeedbackProps): React.JSX.Element {
   const dispatch = useAppDispatch();
 
   const { feedbackId } = useParams();
   const fetcher = useFetcher();
-
+  console.log("Edit Feedback");
   const { actionType, submissionOutcome, isSubmissionSuccessful, showForm } =
     getFeedbackFormResponse<EditFeedbackFormValues>(fetcher?.data) || {};
 
-  //TO DO: Check this functionality after refactoring rest
   function handleCancel(hasFormChanged: boolean) {
     if (!hasFormChanged) {
-      dispatch(closeEditFeedback());
+      setShowEditFeedback(false);
     } else {
       dispatch(
         showModal({
           modalType: "cancel_editFeedback",
+          confirmPayload: feedbackId,
         })
       );
     }
@@ -48,7 +49,7 @@ function EditFeedback({
     <div className={`formModal ${!isSubmissionSuccessful ? "fullSize" : ""}`}>
       <div className="editFeedback">
         <button
-          onClick={() => dispatch(closeEditFeedback())}
+          onClick={() => setShowEditFeedback(false)}
           style={{ marginLeft: "100%" }}
         >
           x

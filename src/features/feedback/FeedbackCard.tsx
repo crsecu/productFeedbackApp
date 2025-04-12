@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
-import {
-  RoadmapFeedback,
-  SuggestionFeedback,
-} from "../../types/feedback.types";
+import { SuggestionFeedback } from "../../types/feedback.types";
+import { RoadmapFeedback } from "../../types/roadmap.types";
 
 interface FeedbackCardProps {
   children: ReactNode;

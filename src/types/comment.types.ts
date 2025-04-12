@@ -82,3 +82,10 @@ export interface CommentAuthor {
   name: string;
   username: string;
 }
+
+export interface CommentData {
+  success: boolean;
+  err?: string;
+  commentHierarchy: CommentThreadEntry[];
+  commentCount: number;
+}

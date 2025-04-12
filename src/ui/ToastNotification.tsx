@@ -13,7 +13,7 @@ function ToastNotification(): React.JSX.Element | null {
 
     const timeoutId = setTimeout(() => {
       dispatch(hideNotification());
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timeoutId);
   }, [dispatch, isVisible]);

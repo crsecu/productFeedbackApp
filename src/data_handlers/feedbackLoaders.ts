@@ -3,17 +3,20 @@ import {
   fetchFeedbackById,
 } from "../services/apiFeedback";
 import { LoaderFunctionArgs } from "react-router-dom";
-import { Feedback } from "../types/feedback.types";
+
 import assert from "../utils/TS_helpers";
 import { buildCommentHierarchy, fetchWrapper } from "../utils/helpers";
 import { API_URL } from "../services/apiFeedback";
 import { CommentListType } from "../types/comment.types";
 import { FeedbackBoardLoaderData } from "../types/loader.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
+import { Feedback } from "../types/feedback.types";
 
 // Loader for Feedback Board Page
 // returns grouped suggestions and roadmap-related feedback counts
-export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
+export async function feedbackBoardLoader({
+  request,
+}: LoaderFunctionArgs): Promise<FeedbackBoardLoaderData> {
   const data = await fetchAndGroupFeedback("feedbackBoard");
 
   const { suggestion, planned, "in-Progress": inProgress, live } = data;
@@ -42,13 +45,13 @@ export async function roadmapDevLoader(): Promise<RoadmapFeedbackGroupedByStatus
 // Fetch Feedback based on id
 export async function feedbackDetailLoader({
   params,
+  request,
 }: LoaderFunctionArgs): Promise<Feedback> {
+  //to do: type the return type
   const feedbackId = params.feedbackId;
   assert(feedbackId, "feedbackId is invalid");
 
-  const feedback = await fetchFeedbackById(feedbackId);
-
-  return feedback;
+  return await fetchFeedbackById(feedbackId);
 }
 
 // Fetch Comment List for Detail Page

@@ -1,51 +1,43 @@
-import { useRouteLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
+import { CommentThreadEntry } from "../../types/comment.types";
+import CommentComposer from "../comments/CommentComposer";
+import CommentList from "../comments/CommentList";
 
-import { Feedback } from "../../types/feedback.types";
-import CommentCount from "../comments/CommentCount";
-import FeedbackCard from "./FeedbackCard";
-
-import FeedbackItem from "./FeedbackItem";
-import UpvoteButton from "./UpvoteButton";
-import FeedbackDetailContent from "./FeedbackDetailContent";
-import { useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../../types/redux.hooks";
-import EditFeedback from "./EditFeedback";
-import { openEditFeedback } from "../../store/slices/feedbackDetailSlice";
+export interface CommentData {
+  success: boolean;
+  err?: string;
+  commentHierarchy: CommentThreadEntry[];
+  commentCount: number;
+}
 
 function FeedbackDetailPage(): React.JSX.Element {
-  const dispatch = useAppDispatch();
-  const feedback = useRouteLoaderData("feedbackDetailData") as Feedback;
+  const params = useParams();
+  const feedbackId = params.feedbackId as string;
 
-  const { title, description, category, status } = feedback;
-  const editableFeedbackFields = useMemo(() => {
-    return {
-      title,
-      description,
-      category,
-      status,
-    };
-  }, [category, description, status, title]);
+  console.log("FeedbackDetailPage");
+  const commentData = useLoaderData() as CommentData;
 
-  const isEditing = useAppSelector((state) => state.feedbackDetail.isEditing);
+  const countLoader = commentData.commentCount;
+
+  const commentHierarchy = commentData.commentHierarchy;
 
   return (
-    <>
-      <button onClick={() => dispatch(openEditFeedback())}>Edit</button>
-      {isEditing && <EditFeedback editableFeedback={editableFeedbackFields} />}
-      <FeedbackDetailContent>
+    <main style={{ paddingTop: "26px" }}>
+      {!commentData.success ? (
+        <p className="error">OOPS.Failed to load comments.</p>
+      ) : (
         <>
-          <FeedbackItem>
-            <UpvoteButton
-              feedbackId={feedback.id}
-              initialUpvoteCount={feedback.upvotes}
-            />
-            <FeedbackCard feedback={feedback}>
-              <CommentCount />
-            </FeedbackCard>
-          </FeedbackItem>
+          <CommentList commentCount={countLoader} comments={commentHierarchy} />
+
+          <CommentComposer
+            mode="comment"
+            payload={{ feedbackId, commentCount: countLoader }}
+          >
+            <h2>Add a Comment</h2>
+          </CommentComposer>
         </>
-      </FeedbackDetailContent>
-    </>
+      )}
+    </main>
   );
 }
 

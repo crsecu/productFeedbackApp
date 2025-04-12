@@ -39,7 +39,8 @@ function GlobalModal(): React.JSX.Element | null {
     }
 
     if (modalType === "cancel_editFeedback") {
-      dispatch(closeEditFeedback());
+      //dispatch(closeEditFeedback());
+      navigate(`/feedbackDetail/${confirmPayload}`, { replace: true });
     }
 
     if (modalType) dispatch(hideModal());

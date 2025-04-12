@@ -25,18 +25,18 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const { children, mode, payload } = props;
   const submissionResult = fetcher?.data;
 
-  console.log("comment submission result", submissionResult);
-
   const onReplySubmitted =
     mode === "reply" ? props.onReplySubmitted : undefined;
 
   useEffect(() => {
-    if (fetcher?.state === "idle" && fetcher?.data?.success) {
+    console.log("I should run", fetcher);
+    if (fetcher?.state === "idle" && submissionResult?.submissionOutcome) {
+      console.log("I should run ????");
       if (onReplySubmitted) {
         onReplySubmitted();
       }
     }
-  }, [fetcher?.data?.success, fetcher?.state, mode, onReplySubmitted]);
+  }, [fetcher, onReplySubmitted, submissionResult?.submissionOutcome]);
 
   const notification = (
     <BannerNotification

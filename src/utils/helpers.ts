@@ -320,7 +320,6 @@ export function getValidationErrors<T>(formValues: T): FeedbackFormErrors {
     }
   }
 
-  console.log("lets check validation errors", validationErrors);
   return validationErrors;
 }
 

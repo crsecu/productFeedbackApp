@@ -24,6 +24,7 @@ import { editFeedbackAction } from "./data_handlers/feedbackActions";
 import CreateFeedback from "./features/feedback/CreateFeedback";
 import PageLayout from "./ui/PageLayout";
 import FeedbackBoardError from "./ui/FeedbackBoardError";
+import EditFeedback from "./features/feedback/EditFeedback";
 
 import FeedbackDetailLayout from "./features/feedback/FeedbackDetailLayout";
 
@@ -111,7 +112,13 @@ const router = createBrowserRouter([
           formMethod,
           actionResult,
         }) => {
-          console.log("detail current", currentUrl, "detail next", nextUrl);
+          // console.log("detail current", currentUrl, "detail next", nextUrl);
+          // console.log("2000", actionResult);
+          //prevent revalidation when canceling edit feedback
+          if (currentUrl.pathname === nextUrl.pathname && !actionResult) {
+            console.log("I SHOULD PREVENT NOW");
+            //return false;
+          }
           if (formMethod === "post") return false;
 
           /* Prevent revalidation if "editFeedback" submission fails or if there are any validation errors */
@@ -131,15 +138,22 @@ const router = createBrowserRouter([
             id: "commentData", //might not need this id unless we need access to the comment data in a different route
             loader: commentDataLoader,
             action: submitCommentAction,
-            shouldRevalidate: ({ formMethod, actionResult }) => {
+            shouldRevalidate: ({
+              formMethod,
+              actionResult,
+              currentUrl,
+              nextUrl,
+            }) => {
               if (formMethod === "patch") return false;
 
               if (actionResult?.submissionOutcome !== "success") {
                 return false; // prevent clearing `useActionData()`
               }
+
+              console.log("Hi CURRENT", currentUrl);
+              console.log("Hi NEXT", nextUrl);
             },
           },
-
           {
             path: "editFeedback",
             action: editFeedbackAction,

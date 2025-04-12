@@ -1,18 +1,12 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import CommentList from "../comments/CommentList";
 import { memo, ReactNode } from "react";
-import { CommentThreadEntry } from "../../types/comment.types";
-import CommentComposer from "../comments/CommentComposer";
 
-export interface CommentData {
-  success: boolean;
-  err?: string;
-  commentHierarchy: CommentThreadEntry[];
-  commentCount: number;
-}
+import CommentComposer from "../comments/CommentComposer";
+import { CommentData } from "./FeedbackDetailPage";
 
 interface FeedbackDetailContentProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 function FeedbackDetailContent({
@@ -20,9 +14,8 @@ function FeedbackDetailContent({
 }: FeedbackDetailContentProps): React.JSX.Element {
   const params = useParams();
   const feedbackId = params.feedbackId as string;
-
+  console.log("yu");
   const commentData = useLoaderData() as CommentData;
-  console.log("this is the comment data from loader", commentData);
 
   const countLoader = commentData.commentCount;
 
