@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
+import { SubmissionOutcome } from "../../types/action.types";
 
 interface CommentBoxProps {
   submissionStatus: "idle" | "loading" | "submitting";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  submissionResult: any;
+  submissionOutcome: SubmissionOutcome;
 }
 function CommentBox({
   submissionStatus,
-  submissionResult,
+  submissionOutcome,
 }: CommentBoxProps): React.JSX.Element {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    if (submissionStatus === "idle" && submissionResult?.success) {
+    if (submissionStatus === "idle" && submissionOutcome === "success") {
       setContent("");
     }
-  }, [submissionResult?.success, submissionStatus]);
+  }, [submissionOutcome, submissionStatus]);
   return (
     <>
       <textarea

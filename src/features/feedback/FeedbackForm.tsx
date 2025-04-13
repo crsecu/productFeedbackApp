@@ -10,6 +10,7 @@ import {
   CreateFeedbackFormValues,
   EditFeedbackFormValues,
 } from "../../types/form.types";
+import { CATEGORY_OPTIONS } from "../../types/feedback.types";
 
 type FormComponentType = React.ForwardRefExoticComponent<
   (FetcherFormProps | FormProps) & React.RefAttributes<HTMLFormElement>
@@ -18,7 +19,7 @@ type FormComponentType = React.ForwardRefExoticComponent<
 interface FeedbackFormProps {
   FormComponent: FormComponentType; //
   method: "post" | "patch";
-  submissionStatus: "idle" | "loading" | "submitting"; //
+  submissionStatus: "idle" | "loading" | "submitting";
   actionResult: ActionResult<unknown>; //
 
   submitBtnText: string;
@@ -29,8 +30,6 @@ interface FeedbackFormProps {
   onCancel: (isDirty: boolean) => void;
 }
 
-const feedbackCategories = ["feature", "ui", "ux", "enhancement", "bug"];
-
 function FeedbackForm({
   children,
   FormComponent,
@@ -38,7 +37,7 @@ function FeedbackForm({
   submissionStatus,
   actionResult,
   submitBtnText,
-  defaultValues = { title: "", description: "", category: "" },
+  defaultValues = { title: "", description: "", category: "feature" },
   buttons,
   actionRoute,
   onCancel,
@@ -99,7 +98,7 @@ function FeedbackForm({
         <SelectField
           name="category"
           id="feedbackCategory"
-          options={feedbackCategories}
+          options={CATEGORY_OPTIONS}
           describedById="feedbackCategoryDesc"
           initialValue={defaultValues?.category}
         />

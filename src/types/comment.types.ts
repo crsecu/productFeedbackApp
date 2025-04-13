@@ -1,51 +1,42 @@
-/* "NewCommentType/NewReplyType" represents the data model for a comment/reply before it is sent to the server
+/* "NewComment/NewReply" represents the data model for a comment/reply before it is sent to the server
 JSON Server automatically assigns a unique id to each comment/reply upon creation
-"CommentType/ReplyType" extends NewCommentType/NewReplyType to include the id field, representing the saved comment/reply returned by the server 
+"Comment/Reply" types represent the saved comment/reply returned by the server 
 */
 
-export interface NewCommentType {
+//These are the fields shared by both comment/reply
+export interface BaseCommentFields {
   feedbackId: string;
+  id: string;
+  content: string;
+  user: CommentAuthor;
+}
+
+export interface Comment extends BaseCommentFields {
   type: "comment";
   parentId: null;
   parentType: null;
-  content: string;
-  user: CommentAuthor;
 }
+export type NewComment = Omit<Comment, "id">;
 
-export interface CommentType extends NewCommentType {
-  id: string;
-}
-
-export interface NewReplyType {
-  feedbackId: string;
+export interface Reply extends BaseCommentFields {
   type: "reply";
   parentId: string;
   parentType: CommentKindType;
-  content: string;
   replyingTo: string;
-  user: CommentAuthor;
 }
+export type NewReply = Omit<Reply, "id">;
 
-export interface ReplyType extends NewReplyType {
-  id: string;
-}
+export type CommentKindType = "comment" | "reply";
+export type CommentListType = (Comment | Reply)[];
 
 /* Type annotation for comment/reply that belongs to a comment thread (data is transformed from flat structure to nested structure after fetching)*/
-export interface CommentThreadEntry {
-  id: string;
-  feedbackId: string;
+export interface CommentThreadEntry extends BaseCommentFields {
   type: CommentKindType;
   parentId: string | null;
   parentType: CommentKindType | null;
-  content: string;
   replyingTo?: string;
-  user: CommentAuthor;
   replies: CommentThreadEntry[];
 }
-
-export type CommentListType = (CommentType | ReplyType)[];
-
-export type CommentKindType = "comment" | "reply";
 
 export interface BasePayload {
   feedbackId: string;
@@ -53,6 +44,7 @@ export interface BasePayload {
 }
 
 export type CommentPayload = BasePayload;
+
 export type ReplyPayload = BasePayload & {
   parent: {
     id: string | null;
@@ -67,7 +59,7 @@ export interface SubmissionDataType {
   payload: CommentPayload | ReplyPayload;
 }
 
-export interface BaseCommentType {
+export interface NewCommentOrReply {
   feedbackId: string;
   type: CommentKindType;
   parentId: string | null;

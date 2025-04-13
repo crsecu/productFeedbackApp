@@ -11,10 +11,7 @@ function CommentList({
   commentCount,
   comments,
 }: CommentListProps): React.JSX.Element {
-  console.log("rendering CommentList");
-
   const commentItems = useMemo(() => {
-    console.log("recomputing commentItems");
     if (commentCount === 0) return;
 
     return comments.map((comment) => (

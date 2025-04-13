@@ -1,4 +1,4 @@
-import { RoadmapLoaderData } from "../../types/feedback.types";
+import { RoadmapLoaderData } from "../../types/loader.types";
 import RoadmapColumnHeader from "./RoadmapColumnHeader";
 import RoadmapStatusColumn from "./RoadmapStatusColumn";
 

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { formatCategoryLabel } from "../../utils/helpers";
-import { Status } from "../../types/feedback.types";
+import { Category, Status } from "../../types/feedback.types";
 
 interface SelectFieldProps {
   name: string;
@@ -8,7 +8,7 @@ interface SelectFieldProps {
   isRequired?: boolean;
   initialValue?: string;
   describedById?: string;
-  options: readonly Status[];
+  options: readonly Status[] | readonly Category[];
 }
 
 function SelectField({

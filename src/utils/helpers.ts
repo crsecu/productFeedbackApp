@@ -3,7 +3,7 @@ import { User } from "../features/user/user.types";
 import { submitComment } from "../services/apiComment";
 import { API_URL } from "../services/apiFeedback";
 import {
-  BaseCommentType,
+  NewCommentOrReply,
   CommentListType,
   CommentThreadEntry,
   ReplyPayload,
@@ -12,17 +12,16 @@ import {
 import {
   Feedback,
   FeedbackGroupedByStatus,
-  Status,
   SuggestionFeedback,
 } from "../types/feedback.types";
 import { ChangeEvent } from "react";
-import { NotificationType } from "../ui/BannerNotification";
 import {
   ActionResult,
   ValidationErrorResult,
   FailureResult,
   SuccessResult,
   ActionType,
+  SubmissionOutcome,
 } from "../types/action.types";
 import { FeedbackFormErrors } from "../types/form.types";
 import { MutationResult } from "../types/mutation.types";
@@ -131,7 +130,7 @@ export async function postCommentOrReply(
   content: string,
   submissionData: SubmissionDataType,
   actionType: "addComment"
-): Promise<ActionResult | ActionResult<BaseCommentType>> {
+): Promise<ActionResult | ActionResult<NewCommentOrReply>> {
   const {
     author,
     mode,
@@ -139,7 +138,7 @@ export async function postCommentOrReply(
   } = submissionData;
 
   /* Common fields between comment and reply */
-  const comment: BaseCommentType = {
+  const comment: NewCommentOrReply = {
     feedbackId,
     type: mode,
     parentId: null,
@@ -157,13 +156,13 @@ export async function postCommentOrReply(
   }
 
   //Closure function that captures commentCount and passes it to submitComment func
-  const submitNewComment = (data: BaseCommentType) =>
+  const submitNewComment = (data: NewCommentOrReply) =>
     submitComment(data, commentCount);
 
   //Submit new comment and return a standardized result: success(if submission succeeds), or failure (if it fails)
   const result = await performActionSubmission<
-    BaseCommentType,
-    BaseCommentType
+    NewCommentOrReply,
+    NewCommentOrReply
   >(actionType, comment, submitNewComment);
 
   return result;
@@ -213,7 +212,7 @@ export function createActionResult<TPayload>(
 ): ActionResult<TPayload>;
 
 export function createActionResult<TPayload>(
-  outcome: "success" | "failure" | "validationError",
+  outcome: SubmissionOutcome,
   data: SuccessResult<TPayload> | FailureResult | ValidationErrorResult
 ): ActionResult<TPayload> {
   const base = {
@@ -288,7 +287,7 @@ export function handleOptionChange(
 // Extracts and structures the result of a feedback form submission for easier consumption in UI components
 export function getFeedbackFormResponse<T>(actionData: ActionResult<T>): {
   actionType: ActionType;
-  submissionOutcome: NotificationType;
+  submissionOutcome: SubmissionOutcome;
   isSubmissionSuccessful: boolean;
   showForm: boolean;
   payload: T | null;

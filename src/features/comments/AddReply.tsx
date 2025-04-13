@@ -36,9 +36,6 @@ function AddReply({
         Reply Now
       </button>
 
-      {/* <div className={showCommentBox ? "" : "hidden"}>
-        <CommentComposer mode="reply" payload={replyPayload}></CommentComposer>
-      </div> */}
       {showCommentBox && (
         <CommentComposer
           mode="reply"

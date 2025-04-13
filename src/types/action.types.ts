@@ -4,6 +4,8 @@ import { FeedbackFormErrors } from "./form.types";
 
 export type ActionType = "createFeedback" | "editFeedback" | "addComment";
 
+export type SubmissionOutcome = "success" | "failure" | "validationError";
+
 export type ValidationErrorResult = {
   actionType: ActionType;
   validationErrors: FeedbackFormErrors;

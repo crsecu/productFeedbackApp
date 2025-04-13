@@ -3,7 +3,6 @@ import {
   fetchFeedbackById,
 } from "../services/apiFeedback";
 import { LoaderFunctionArgs } from "react-router-dom";
-
 import assert from "../utils/TS_helpers";
 import { buildCommentHierarchy, fetchWrapper } from "../utils/helpers";
 import { API_URL } from "../services/apiFeedback";
@@ -14,9 +13,7 @@ import { Feedback } from "../types/feedback.types";
 
 // Loader for Feedback Board Page
 // returns grouped suggestions and roadmap-related feedback counts
-export async function feedbackBoardLoader({
-  request,
-}: LoaderFunctionArgs): Promise<FeedbackBoardLoaderData> {
+export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
   const data = await fetchAndGroupFeedback("feedbackBoard");
 
   const { suggestion, planned, "in-Progress": inProgress, live } = data;
@@ -45,7 +42,6 @@ export async function roadmapDevLoader(): Promise<RoadmapFeedbackGroupedByStatus
 // Fetch Feedback based on id
 export async function feedbackDetailLoader({
   params,
-  request,
 }: LoaderFunctionArgs): Promise<Feedback> {
   //to do: type the return type
   const feedbackId = params.feedbackId;

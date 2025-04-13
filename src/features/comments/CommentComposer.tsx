@@ -23,30 +23,28 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const { name, username, image } = useAppSelector(getLoggedInUser);
 
   const { children, mode, payload } = props;
-  const submissionResult = fetcher?.data;
+  const { actionType, submissionOutcome } = fetcher?.data || {};
 
   const onReplySubmitted =
     mode === "reply" ? props.onReplySubmitted : undefined;
 
   useEffect(() => {
-    console.log("I should run", fetcher);
-    if (fetcher?.state === "idle" && submissionResult?.submissionOutcome) {
-      console.log("I should run ????");
+    if (fetcher?.state === "idle" && submissionOutcome === "success") {
       if (onReplySubmitted) {
         onReplySubmitted();
       }
     }
-  }, [fetcher, onReplySubmitted, submissionResult?.submissionOutcome]);
+  }, [fetcher, onReplySubmitted, submissionOutcome]);
 
   const notification = (
     <BannerNotification
-      actionType={submissionResult?.actionType}
-      notificationType={submissionResult?.submissionOutcome}
+      actionType={actionType}
+      notificationType={submissionOutcome}
     />
   );
   return (
     <>
-      {notification}
+      {submissionOutcome !== "success" && notification}
       <fetcher.Form method="post" action=".">
         {children}
         <input
@@ -60,7 +58,7 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
         />
         <CommentBox
           submissionStatus={fetcher?.state}
-          submissionResult={submissionResult}
+          submissionOutcome={submissionOutcome}
         />
       </fetcher.Form>
     </>

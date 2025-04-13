@@ -1,11 +1,9 @@
 import { ReactNode } from "react";
-import { ActionType } from "../types/action.types";
-
-export type NotificationType = "success" | "failure" | "validationError";
+import { ActionType, SubmissionOutcome } from "../types/action.types";
 
 interface BannerNotificationProps {
   children?: ReactNode;
-  notificationType: NotificationType;
+  notificationType: SubmissionOutcome;
   actionType: ActionType;
 }
 
@@ -23,7 +21,7 @@ const notificationColors = {
 
 const messages: Record<
   ActionType,
-  Record<NotificationType, { title: string; message: string }>
+  Record<SubmissionOutcome, { title: string; message: string }>
 > = {
   createFeedback: {
     validationError: {
