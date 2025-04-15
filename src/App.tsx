@@ -24,9 +24,9 @@ import { editFeedbackAction } from "./data_handlers/feedbackActions";
 import CreateFeedback from "./features/feedback/CreateFeedback";
 import PageLayout from "./ui/PageLayout";
 import FeedbackBoardError from "./ui/FeedbackBoardError";
-import EditFeedback from "./features/feedback/EditFeedback";
 
 import FeedbackDetailLayout from "./features/feedback/FeedbackDetailLayout";
+import GlobalStyles from "./styles/GlobalStyles";
 
 const router = createBrowserRouter([
   {
@@ -167,7 +167,12 @@ const router = createBrowserRouter([
 ]);
 
 function App(): React.JSX.Element {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <GlobalStyles />
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;
