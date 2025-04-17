@@ -29,10 +29,7 @@ function AddReply({
 
   return (
     <>
-      <button
-        className="addReply"
-        onClick={() => setShowCommentBox((prevState) => !prevState)}
-      >
+      <button onClick={() => setShowCommentBox((prevState) => !prevState)}>
         Reply Now
       </button>
 

@@ -4,7 +4,7 @@ interface UserAvatarProps {
 function UserAvatar({ imageUrl }: UserAvatarProps): React.JSX.Element {
   return (
     <div>
-      <img src={imageUrl} alt="" style={{ borderRadius: "50%" }} />
+      <img src={imageUrl} alt="" />
     </div>
   );
 }

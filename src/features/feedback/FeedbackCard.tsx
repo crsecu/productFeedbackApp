@@ -11,16 +11,15 @@ function FeedbackCard({
   children,
   feedback,
 }: FeedbackCardProps): React.JSX.Element {
-  if (!feedback)
-    return <article className="feedback_card">No matching value found</article>;
+  if (!feedback) return <article>No matching value found</article>;
 
   const { description, category, status } = feedback;
 
   return (
     <>
-      <article className="feedback_card">
-        {/* TO DO: change to h3 for FeedbackBoard */}
-        <h1>{feedback.title}</h1>
+      <article>
+        {/* TO DO: change to h1 for FeedbackDetail */}
+        <h3>{feedback.title}</h3>
         {status !== "suggestion" && <p>* {status}</p>}
         <p>{description}</p>
         <p>{category}</p>

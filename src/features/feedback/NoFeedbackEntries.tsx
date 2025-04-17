@@ -15,7 +15,7 @@ function NoFeedbackEntries({
     ) : (
       <>
         No feedback found in the
-        <span style={{ fontWeight: "bold" }}>{formatCategory}</span> category.
+        <span>{formatCategory}</span> category.
       </>
     );
   return (

@@ -1,53 +1,63 @@
-import { useLoaderData, useParams } from "react-router-dom";
-import { CommentThreadEntry } from "../../types/comment.types";
-import CommentComposer from "../comments/CommentComposer";
-import CommentList from "../comments/CommentList";
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import ActionBar from "../../ui/ActionBar";
+import FeedbackItem from "./FeedbackItem";
+import CommentCount from "../comments/CommentCount";
+import FeedbackCard from "./FeedbackCard";
+import UpvoteButton from "./UpvoteButton";
 
-export interface CommentData {
-  success: boolean;
-  err?: string;
-  commentHierarchy: CommentThreadEntry[];
-  commentCount: number;
-}
+import { Feedback } from "../../types/feedback.types";
+import EditFeedback from "./EditFeedback";
+import { useState, useMemo } from "react";
 
 function FeedbackDetailPage(): React.JSX.Element {
-  const params = useParams();
-  const feedbackId = params.feedbackId as string;
+  const navigate = useNavigate();
+  const feedback = useLoaderData() as Feedback;
 
-  console.log("FeedbackDetailPage");
-  const commentData = useLoaderData() as CommentData;
+  const [showEditFeedback, setShowEditFeedback] = useState(false);
 
-  const countLoader = commentData.commentCount;
+  const { id, upvotes, title, description, category, status } = feedback;
 
-  const commentHierarchy = commentData.commentHierarchy;
+  const editableFeedbackFields = useMemo(() => {
+    return {
+      title,
+      description,
+      category,
+      status,
+    };
+  }, [category, description, status, title]);
 
   return (
-    <main style={{ paddingTop: "26px" }}>
-      {!commentData.success ? (
-        <p className="error">OOPS.Failed to load comments.</p>
-      ) : (
-        <>
-          <CommentList commentCount={countLoader} comments={commentHierarchy} />
+    <>
+      <ActionBar>
+        <button
+          onClick={() => {
+            /* TO DO: Find a way to reset unwanted search params that carry out from feedbackBoard */
+            navigate(-1);
+          }}
+        >
+          Go Back
+        </button>
 
-          <CommentComposer
-            mode="comment"
-            payload={{ feedbackId, commentCount: countLoader }}
-          >
-            <h2>Add a Comment</h2>
-          </CommentComposer>
-        </>
+        <button onClick={() => setShowEditFeedback(true)}>Edit Feedback</button>
+      </ActionBar>
+
+      {showEditFeedback && (
+        <EditFeedback
+          editableFeedback={editableFeedbackFields}
+          setShowEditFeedback={setShowEditFeedback}
+        />
       )}
-    </main>
+
+      <FeedbackItem>
+        <UpvoteButton feedbackId={id} initialUpvoteCount={upvotes} />
+        <FeedbackCard feedback={feedback}>
+          <CommentCount />
+        </FeedbackCard>
+      </FeedbackItem>
+
+      <Outlet />
+    </>
   );
 }
 
 export default FeedbackDetailPage;
-
-//
-
-//
-
-//
-
-/* TO DO: instead of checking for "dataFromLoader" in the component, throw an error in the loader to prevent rendering when data is missing */
-//if (!dataFromLoader) return <h1>Feedback Detail is not available.</h1>;

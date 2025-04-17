@@ -4,7 +4,7 @@ interface UserInfo {
 }
 function UserInfo({ name, username }: UserInfo): React.JSX.Element {
   return (
-    <div className="comment__authorInfo">
+    <div>
       <p>
         <strong>{name}</strong>
       </p>

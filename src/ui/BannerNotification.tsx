@@ -78,23 +78,15 @@ function BannerNotification({
 }: BannerNotificationProps): React.JSX.Element | null {
   if (!actionType && !notificationType) return null;
 
-  const bannerColor = notificationColors[notificationType]?.color;
+  // /const bannerColor = notificationColors[notificationType]?.color;
 
   const notificationMessage = messages[actionType]?.[notificationType];
 
   if (!notificationMessage) return null;
 
   return (
-    <div
-      style={{
-        backgroundColor: bannerColor,
-        padding: "20px",
-        marginBottom: "20px",
-      }}
-    >
-      <p style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
-        {notificationMessage.title}
-      </p>
+    <div>
+      <p>{notificationMessage.title}</p>
       <p>{notificationMessage.message}</p>
       {children}
     </div>

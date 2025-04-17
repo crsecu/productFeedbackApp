@@ -1,7 +1,7 @@
-import { RoadmapStatusType } from "../../types/feedback.types";
+import { RoadmapStatus } from "../../types/roadmap.types";
 
 interface RoadmapPreviewItemProps {
-  stage: RoadmapStatusType;
+  stage: RoadmapStatus;
   count: number;
 }
 function RoadmapPreviewItem({
@@ -11,7 +11,7 @@ function RoadmapPreviewItem({
   return (
     <li>
       <span>{stage}</span>
-      <span style={{ fontWeight: "bold" }}> {count}</span>
+      <span> {count}</span>
     </li>
   );
 }

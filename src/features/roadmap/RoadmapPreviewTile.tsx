@@ -33,12 +33,15 @@ function RoadmapPreviewTile({
   const roadmapPreviewItems = renderRoadmapPreviewItems(roadmapStats);
 
   return (
-    <section>
-      <div style={{ display: "flex" }}>
-        <h2>Roadmap</h2> {/*TO DO: add a clearer title for ADA */}
+    <section aria-labelledby="roadmapPreview">
+      <div>
+        <h2 id="roadmapPreview" className="sr-only">
+          Roadmap Summary
+        </h2>
+
         <button
           onClick={() => navigate("/developmentRoadmap")}
-          aria-label="View full roadmap"
+          aria-label="View full roadmap page with planned, in-progress, and live feedback"
           disabled={!roadmapCount}
         >
           View

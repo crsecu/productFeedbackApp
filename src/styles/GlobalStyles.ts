@@ -123,9 +123,9 @@ margin: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-html {
-  interpolate-size: allow-keywords;
-}
+  html {
+    interpolate-size: allow-keywords;
+  }
 }
 
 body {
@@ -142,6 +142,15 @@ input, button, textarea, select {
 font: inherit;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
 p, h1, h2, h3, h4, h5, h6 {
 overflow-wrap: break-word;
 }
@@ -156,8 +165,46 @@ text-wrap: balance;
 
 #root, #__next {
 isolation: isolate;
-}`;
+}
 
+
+
+
+/* BASE STYLES */
+
+body {
+  font-family: 'Jost', sans-serif;
+  color: var(--color-text-dark);
+  font-size: var(--font-size-body-1);
+  background-color: var(--color-background);
+}
+
+button {
+  cursor: pointer;
+}
+
+*:disabled {
+  cursor: not-allowed;
+}
+
+
+
+
+
+
+
+/* A11Y */
+
+/* Hiding class, making content visible only to screen readers but not visually */
+.sr-only:not(:focus):not(:active) {
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
+}
 //SAVE FOR LATER
 //active state buttons
 // &:active {
@@ -165,4 +212,5 @@ isolation: isolate;
 //   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
 // }
 
+`;
 export default GlobalStyles;

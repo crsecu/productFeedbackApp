@@ -27,12 +27,12 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
 
   return (
     <>
-      <div aria-label="Comment by ..." className="comment">
+      <div aria-label="Comment by ...">
         <UserAvatar imageUrl={image} />
-        <div style={{ display: "flex" }}>
+        <div>
           <UserInfo name={name} username={username} />
         </div>
-        <p style={{ marginBottom: "none" }}>{content}</p>
+        <p>{content}</p>
         {parentType !== "reply" && (
           <AddReply parentComment={comment} commentCount={commentCount} />
         )}

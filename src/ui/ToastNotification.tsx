@@ -23,7 +23,7 @@ function ToastNotification(): React.JSX.Element | null {
 
   if (!isVisible) return null;
   return (
-    <div style={{ backgroundColor: toastNotificationColor }}>
+    <div>
       <button onClick={() => dispatch(hideNotification())}>x</button>
       <p>{message}</p>
     </div>

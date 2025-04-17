@@ -14,7 +14,6 @@ import HomePage from "./ui/HomePage";
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
 import RoadmapPage from "./features/roadmap/RoadmapPage";
 
-import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import ErrorPage from "./ui/ErrorPage";
 import NotFoundPage from "./ui/NotFoundPage";
 import RootRoute from "./ui/RootRoute";
@@ -25,8 +24,9 @@ import CreateFeedback from "./features/feedback/CreateFeedback";
 import PageLayout from "./ui/PageLayout";
 import FeedbackBoardError from "./ui/FeedbackBoardError";
 
-import FeedbackDetailLayout from "./features/feedback/FeedbackDetailLayout";
 import GlobalStyles from "./styles/GlobalStyles";
+import FeedbackDetailCommentThread from "./features/feedback/FeedbackDetailCommentThread";
+import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -102,7 +102,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/feedbackDetail/:feedbackId",
-        element: <FeedbackDetailLayout />,
+        element: <FeedbackDetailPage />,
         id: "feedbackDetailData",
 
         loader: feedbackDetailLoader,
@@ -134,7 +134,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <FeedbackDetailPage />,
+            element: <FeedbackDetailCommentThread />,
             id: "commentData", //might not need this id unless we need access to the comment data in a different route
             loader: commentDataLoader,
             action: submitCommentAction,

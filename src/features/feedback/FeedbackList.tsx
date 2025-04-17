@@ -41,7 +41,7 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
   }, [category, sortBy, suggestions]);
 
   return (
-    <section className="feedback_list">
+    <section>
       <h2>Feedback List</h2> {/* visually hidden heading */}
       {feedbackItems.length === 0 ? (
         <NoFeedbackEntries category={category} />

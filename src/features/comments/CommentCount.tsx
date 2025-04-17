@@ -1,5 +1,5 @@
 import { useRouteLoaderData } from "react-router-dom";
-import { CommentData } from "../feedback/FeedbackDetailPage";
+import { CommentData } from "../feedback/FeedbackDetailCommentThread";
 
 interface CommentCountProps {
   count?: number; // used by FeedbackBoard

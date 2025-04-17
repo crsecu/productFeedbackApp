@@ -47,13 +47,8 @@ function EditFeedback({
   );
   return (
     <div className={`formModal ${!isSubmissionSuccessful ? "fullSize" : ""}`}>
-      <div className="editFeedback">
-        <button
-          onClick={() => setShowEditFeedback(false)}
-          style={{ marginLeft: "100%" }}
-        >
-          x
-        </button>
+      <div>
+        <button onClick={() => setShowEditFeedback(false)}>x</button>
         {notification}
         {showForm && (
           <>

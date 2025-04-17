@@ -4,7 +4,7 @@ interface FormFieldErrorProps {
 function FormFieldError({
   errorMessage,
 }: FormFieldErrorProps): React.JSX.Element {
-  return <p style={{ color: "red", fontWeight: "bold" }}>{errorMessage}</p>;
+  return <p>{errorMessage}</p>;
 }
 
 export default FormFieldError;

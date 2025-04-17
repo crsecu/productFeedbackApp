@@ -3,7 +3,7 @@ import CommentList from "../comments/CommentList";
 import { memo, ReactNode } from "react";
 
 import CommentComposer from "../comments/CommentComposer";
-import { CommentData } from "./FeedbackDetailPage";
+import { CommentData } from "../../types/comment.types";
 
 interface FeedbackDetailContentProps {
   children?: ReactNode;
@@ -22,10 +22,10 @@ function FeedbackDetailContent({
   const commentHierarchy = commentData.commentHierarchy;
 
   return (
-    <main style={{ paddingTop: "26px" }}>
+    <main>
       {children}
       {!commentData.success ? (
-        <p className="error">OOPS.Failed to load comments.</p>
+        <p>OOPS.Failed to load comments.</p>
       ) : (
         <>
           <CommentList commentCount={countLoader} comments={commentHierarchy} />

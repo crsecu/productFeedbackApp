@@ -34,7 +34,7 @@ function RoadmapStatusBoard({
 
   return (
     <main>
-      <ul className="roadmap_devStatusPhases">{roadmapColumns}</ul>;
+      <ul>{roadmapColumns}</ul>;
     </main>
   );
 }

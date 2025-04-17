@@ -29,7 +29,7 @@ function CommentList({
       <h2>
         <span>{commentCount}</span> Comments
       </h2>
-      <ul className="comments">{commentItems}</ul>
+      <ul>{commentItems}</ul>
     </>
   );
 }

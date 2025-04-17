@@ -32,8 +32,11 @@ function FilterByCategory({
   }, [selectedOption, setSearchParams, suggestionCount]);
 
   return (
-    <section>
-      <h2>Filter Suggestions by category</h2> {/* visually hidden heading */}
+    <section aria-labelledby="filterByCategory">
+      <h2 id="filterByCategory" className="sr-only">
+        Filter Suggestions by category
+      </h2>
+      {/* visually hidden heading */}
       <ul>
         <CategoryItem
           name="filterByCategory"

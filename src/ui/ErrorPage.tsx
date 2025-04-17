@@ -6,7 +6,7 @@ function ErrorPage(): React.JSX.Element {
   console.log(":( error", error);
   return (
     <div>
-      <h2 style={{ color: "darkRed" }}>Oops! You've encountered an error</h2>
+      <h2>Oops! You've encountered an error</h2>
       <p>{error.data || error.message}</p>
     </div>
   );

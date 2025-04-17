@@ -69,10 +69,10 @@ function CreateFeedback(): React.JSX.Element {
   );
 
   return (
-    <div className={`formModal ${!isSubmissionSuccessful ? "fullSize" : ""}`}>
+    <div>
       {notification}
       {showForm && (
-        <div className="createFeedback">
+        <div>
           <h1>Create New Feedback</h1>
           <FeedbackForm
             method="post"

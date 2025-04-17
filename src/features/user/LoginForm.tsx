@@ -39,7 +39,7 @@ function LoginForm(): React.JSX.Element {
   return (
     <div>
       <p>Please type in your credentials below</p>
-      {validationError && <p className="loginError">{validationError}</p>}
+      {validationError && <p>{validationError}</p>}
       <form>
         <label htmlFor="name">Name</label>
         <input

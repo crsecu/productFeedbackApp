@@ -5,7 +5,7 @@ function NotFoundPage(): React.JSX.Element {
   return (
     <div>
       <button onClick={() => navigate(-1)}>Go Back</button>
-      <h1 style={{ color: "green" }}>404 - Page Not Found</h1>
+      <h1>404 - Page Not Found</h1>
     </div>
   );
 }

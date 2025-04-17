@@ -4,7 +4,6 @@ import { hideModal } from "../store/slices/modalSlice";
 import { showNotification } from "../store/slices/toastNotificationSlice";
 import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
 import assert from "../utils/TS_helpers";
-import { closeEditFeedback } from "../store/slices/feedbackDetailSlice";
 
 function GlobalModal(): React.JSX.Element | null {
   const dispatch = useAppDispatch();
