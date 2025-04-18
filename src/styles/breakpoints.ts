@@ -1,13 +1,11 @@
-interface ScreenSize {
-  xs: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-  xxl: string;
-}
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-const screenSize: ScreenSize = {
+const breakpointKeys = ["xs", "sm", "md", "lg", "xl", "xxl"] as const;
+type BreakpointKey = (typeof breakpointKeys)[number];
+type breakpointWidths = { [breakpointWidths in BreakpointKey]: string };
+
+const breakpointWidths: breakpointWidths = {
   xs: "400px", // for small screen mobile
   sm: "600px", // for mobile screen
   md: "900px", // for tablets
@@ -17,12 +15,12 @@ const screenSize: ScreenSize = {
 };
 
 export const device = {
-  xs: `(max-width: ${screenSize.xs})`,
-  sm: `(max-width: ${screenSize.sm})`,
-  md: `(max-width: ${screenSize.md})`,
-  lg: `(max-width: ${screenSize.lg})`,
-  xl: `(max-width: ${screenSize.xl})`,
-  xxl: `(max-width: ${screenSize.xxl})`,
+  xs: `(max-width: ${breakpointWidths.xs})`,
+  sm: `(max-width: ${breakpointWidths.sm})`,
+  md: `(max-width: ${breakpointWidths.md})`,
+  lg: `(max-width: ${breakpointWidths.lg})`,
+  xl: `(max-width: ${breakpointWidths.xl})`,
+  xxl: `(max-width: ${breakpointWidths.xxl})`,
 };
 
 export default device;

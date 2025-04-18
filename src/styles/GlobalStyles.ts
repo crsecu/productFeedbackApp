@@ -120,6 +120,7 @@ box-sizing: border-box;
 
 * {
 margin: 0;
+padding: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -191,6 +192,10 @@ button {
 
 
 
+/* Scroll-locking */
+.no-scroll {
+  overflow: hidden;
+}
 
 
 /* A11Y */

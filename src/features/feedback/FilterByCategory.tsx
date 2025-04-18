@@ -6,9 +6,11 @@ import { CATEGORY_OPTIONS } from "../../types/feedback.types";
 
 interface FilterByCategoryProps {
   suggestionCount: number;
+  onFilterSelect?: () => void;
 }
 function FilterByCategory({
   suggestionCount,
+  onFilterSelect,
 }: FilterByCategoryProps): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedOption = searchParams.get("category") || "all";
@@ -23,13 +25,14 @@ function FilterByCategory({
           key={`${category + i}`}
           selectedOption={selectedOption}
           isDisabled={suggestionCount === 0}
-          onOptionChange={(e) =>
-            handleOptionChange(e, setSearchParams, "category", "all")
-          }
+          onOptionChange={(e) => {
+            handleOptionChange(e, setSearchParams, "category", "all");
+            onFilterSelect?.();
+          }}
         />
       );
     });
-  }, [selectedOption, setSearchParams, suggestionCount]);
+  }, [onFilterSelect, selectedOption, setSearchParams, suggestionCount]);
 
   return (
     <section aria-labelledby="filterByCategory">
@@ -45,9 +48,10 @@ function FilterByCategory({
           key="allCategory"
           selectedOption={selectedOption}
           //isDisabled={suggestionCount === 0}
-          onOptionChange={(e) =>
-            handleOptionChange(e, setSearchParams, "category", "all")
-          }
+          onOptionChange={(e) => {
+            handleOptionChange(e, setSearchParams, "category", "all");
+            onFilterSelect?.();
+          }}
         />
         {categoryButtons}
       </ul>

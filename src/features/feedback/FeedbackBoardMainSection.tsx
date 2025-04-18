@@ -1,12 +1,16 @@
 import { ReactNode } from "react";
+import styled from "styled-components";
 
+const StyledFeedbackBoardMainSection = styled.main``;
 interface FeedbackBoardMainSectionProps {
   children: ReactNode;
 }
 function FeedbackBoardMainSection({
   children,
 }: FeedbackBoardMainSectionProps): React.JSX.Element {
-  return <main>{children}</main>;
+  return (
+    <StyledFeedbackBoardMainSection>{children}</StyledFeedbackBoardMainSection>
+  );
 }
 
 export default FeedbackBoardMainSection;
