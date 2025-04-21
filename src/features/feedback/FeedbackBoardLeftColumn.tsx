@@ -1,4 +1,6 @@
 import { ReactNode, useCallback, useState } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoCloseSharp } from "react-icons/io5";
 import PageHeader from "../../ui/PageHeader";
 import TitleCard from "./TitleCard";
 
@@ -10,8 +12,6 @@ const StyledFeedbackBoardLeftColumn = styled.div`
   overflow: hidden;
 `;
 
-const HamburgerButton = styled.button``;
-
 const Overlay = styled.div`
   position: fixed;
   width: 100%;
@@ -22,6 +22,15 @@ const Overlay = styled.div`
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
+`;
+
+const IconButton = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
 `;
 
 interface FeedbackBoardLeftColumnProps {
@@ -50,9 +59,15 @@ function FeedbackBoardLeftColumn({
       <StyledFeedbackBoardLeftColumn>
         <PageHeader>
           <TitleCard />
-          <HamburgerButton onClick={handleSidebarVisibility}>
-            Open
-          </HamburgerButton>
+          {showSidebar ? (
+            <IconButton onClick={handleSidebarVisibility}>
+              <IoCloseSharp size={"1.6rem"} strokeWidth={16} />
+            </IconButton>
+          ) : (
+            <IconButton onClick={handleSidebarVisibility}>
+              <GiHamburgerMenu size={"1.25rem"} />
+            </IconButton>
+          )}
         </PageHeader>
 
         <FeedbackBoardSidebar

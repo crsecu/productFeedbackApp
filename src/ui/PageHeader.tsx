@@ -2,12 +2,14 @@ import styled from "styled-components";
 
 const StyledPageHeader = styled.header`
   position: relative;
-  z-index: 2;
   display: flex;
   justify-content: space-between;
-  padding: 16px;
+  z-index: 2;
+  align-items: center;
   background-color: pink;
+  padding: 12px 20px;
 `;
+
 interface PageHeaderProps {
   children: React.ReactNode;
 }

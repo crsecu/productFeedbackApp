@@ -79,6 +79,13 @@ const GlobalStyles = createGlobalStyle`
 --line-height-body-2: 1.47;
 --line-height-body-3: 1.46;
 
+ /* Letter Spacing */
+ --letter-spacing-h1: -0.33px;
+ --letter-spacing-h2: -0.25px;
+ --letter-spacing-h3: -0.25px;
+ --letter-spacing-h4: -0.2px
+
+
 
 }
 
