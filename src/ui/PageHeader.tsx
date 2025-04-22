@@ -6,8 +6,13 @@ const StyledPageHeader = styled.header`
   justify-content: space-between;
   z-index: 2;
   align-items: center;
-  background-color: pink;
   padding: 12px 20px;
+  background: radial-gradient(
+    circle at 100%,
+    #e84d70 0%,
+    #a337f6 53%,
+    #28a7ed 115%
+  );
 `;
 
 interface PageHeaderProps {

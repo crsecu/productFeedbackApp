@@ -37,6 +37,7 @@ const GlobalStyles = createGlobalStyle`
 --color-background: #F7F8FD;      // app background
 --color-surface: #FFFFFF;         // background for cards, modals, dropdowns
 
+--color-accent: #4661E6;
 --color-surface-accent: #F2F4FF;  // soft, tinted surface (e.g., tag backgrounds, inputs)
 --color-surface-accent-hover: #CFD7FF;
 --color-surface-accent-active: #4661E6;
@@ -47,7 +48,7 @@ const GlobalStyles = createGlobalStyle`
 
  /* FEEDBACK STATUS COLORS */
 --color-status-planned: #F49F85;
---color-status-in-progress: #AD1FEA;
+--color-status-in-Progress: #AD1FEA;
 --color-status-live: #62BCFA;
 
 
@@ -55,14 +56,17 @@ const GlobalStyles = createGlobalStyle`
 --font-family-base: 'Jost', sans-serif;
 
 /* Font Sizes */
---font-size-h1: 1.5rem;
---font-size-h2: 1.25rem;
---font-size-h3: 1.125rem;
---font-size-h4: 0.875rem;
 
---font-size-body-1: 1rem;
---font-size-body-2: 0.938rem;
---font-size-body-3: 0.813rem;
+
+/* DESKTOP - move to its corresponding breakpoint
+--font-size-h1: 1.5rem; // 24px
+--font-size-h2: 1.25rem; // 20px
+--font-size-h3: 1.125rem; // 18px
+--font-size-h4: 0.875rem; // 14px */
+
+--font-size-body-1: 1rem; // 16px
+--font-size-body-2: 0.938rem; // 15px
+--font-size-body-3: 0.813rem; //13px
 
 /* Font Weights */
 --font-weight-regular: 400;
@@ -80,12 +84,14 @@ const GlobalStyles = createGlobalStyle`
 --line-height-body-3: 1.46;
 
  /* Letter Spacing */
- --letter-spacing-h1: -0.33px;
- --letter-spacing-h2: -0.25px;
- --letter-spacing-h3: -0.25px;
- --letter-spacing-h4: -0.2px
+--letter-spacing-h1: -0.33px;
+--letter-spacing-h2: -0.25px;
+--letter-spacing-h3: -0.25px;
+--letter-spacing-h4: -0.2px;
 
 
+ /* Border */
+--border-radius: 15px;
 
 }
 

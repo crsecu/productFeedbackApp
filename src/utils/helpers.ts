@@ -74,6 +74,13 @@ export async function validateUserCredentials(
 
   return user;
 }
+//Capitalize first letter
+export function capitalizeFirstLetter(word: string): string {
+  if (word === "")
+    console.error("capitalizeFirstLetter: cannot capitalize empty string");
+
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
 
 //Format category label
 export function formatCategoryLabel(categoryLabel: string): string {
@@ -81,7 +88,7 @@ export function formatCategoryLabel(categoryLabel: string): string {
 
   return categoryLabel.length === 2
     ? categoryLabel.toUpperCase()
-    : categoryLabel.charAt(0).toUpperCase() + categoryLabel.slice(1);
+    : capitalizeFirstLetter(categoryLabel);
 }
 
 //Filters a list of feedback entries based on the specified category

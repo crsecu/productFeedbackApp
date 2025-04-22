@@ -2,14 +2,18 @@ import { ReactNode } from "react";
 import styled from "styled-components";
 
 const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
-  background-color: #c5c5a4;
+  background-color: var(--color-background);
   position: absolute;
   right: 0;
 
-  width: ${(props) => (props.$show ? "90%" : 0)};
+  width: ${(props) => (props.$show ? "75%" : 0)};
   height: 100vh;
   transition: all 1s;
   overflow: hidden;
+  padding: ${(props) => (props.$show ? "25px" : "0")};
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
 `;
 
 interface FeedbackBoardSidebarProps {

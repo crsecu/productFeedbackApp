@@ -22,9 +22,9 @@ export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData> {
     suggestions: suggestion,
     roadmapFeedbackCount: live.length + inProgress.length + planned.length,
     roadmapStatusCounts: {
-      live: live.length,
-      "in-Progress": inProgress.length,
       planned: planned.length,
+      "in-Progress": inProgress.length,
+      live: live.length,
     },
   };
 

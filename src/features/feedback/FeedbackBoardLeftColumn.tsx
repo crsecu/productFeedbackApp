@@ -31,6 +31,7 @@ const IconButton = styled.button`
   margin: 0;
   display: flex;
   align-items: center;
+  color: var(--color-text-light);
 `;
 
 interface FeedbackBoardLeftColumnProps {
@@ -60,7 +61,8 @@ function FeedbackBoardLeftColumn({
         <PageHeader>
           <TitleCard />
           {showSidebar ? (
-            <IconButton onClick={handleSidebarVisibility}>
+            /* onClick={handleSidebarVisibility} */
+            <IconButton>
               <IoCloseSharp size={"1.6rem"} strokeWidth={16} />
             </IconButton>
           ) : (

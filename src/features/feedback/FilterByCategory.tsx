@@ -3,6 +3,16 @@ import { useSearchParams } from "react-router-dom";
 import CategoryItem from "./CategoryItem";
 import { handleOptionChange } from "../../utils/helpers";
 import { CATEGORY_OPTIONS } from "../../types/feedback.types";
+import styled from "styled-components";
+import { Card } from "../../styles/features/FeedbackStyles";
+
+const StyledFilterByCategory = styled(Card)``;
+
+const CategoryList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 14px;
+`;
 
 interface FilterByCategoryProps {
   suggestionCount: number;
@@ -35,12 +45,12 @@ function FilterByCategory({
   }, [onFilterSelect, selectedOption, setSearchParams, suggestionCount]);
 
   return (
-    <section aria-labelledby="filterByCategory">
+    <StyledFilterByCategory aria-labelledby="filterByCategory">
       <h2 id="filterByCategory" className="sr-only">
         Filter Suggestions by category
       </h2>
       {/* visually hidden heading */}
-      <ul>
+      <CategoryList>
         <CategoryItem
           name="filterByCategory"
           id="all"
@@ -54,8 +64,8 @@ function FilterByCategory({
           }}
         />
         {categoryButtons}
-      </ul>
-    </section>
+      </CategoryList>
+    </StyledFilterByCategory>
   );
 }
 

@@ -1,8 +1,23 @@
-import { useNavigate } from "react-router-dom";
-
 import RoadmapPreviewItem from "./RoadmapPreviewItem";
 import { RoadmapStats, RoadmapStatus } from "../../types/roadmap.types";
+import styled from "styled-components";
+import { Card } from "../../styles/features/FeedbackStyles";
+import { StyledLink } from "../../styles/UIStyles";
 
+const StyledRoadmapPreviewTile = styled(Card)`
+  flex-direction: column;
+  gap: 14px;
+
+  & div,
+  li {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & h2 {
+    font-size: 1.125rem;
+  }
+`;
 interface RoadmapPreviewProps {
   roadmapStats: RoadmapStats;
   roadmapCount: number;
@@ -27,28 +42,30 @@ function RoadmapPreviewTile({
   roadmapStats,
   roadmapCount,
 }: RoadmapPreviewProps): React.JSX.Element {
-  const navigate = useNavigate();
-
   //TO DO: Assess if memoizing renderRoadmapPreviewItems is worth the cost given its low complexity
   const roadmapPreviewItems = renderRoadmapPreviewItems(roadmapStats);
 
   return (
-    <section aria-labelledby="roadmapPreview">
+    <StyledRoadmapPreviewTile aria-labelledby="roadmapPreview">
       <div>
-        <h2 id="roadmapPreview" className="sr-only">
-          Roadmap Summary
-        </h2>
+        <h2 id="roadmapPreview">Roadmap</h2>
 
-        <button
+        {/* <button
           onClick={() => navigate("/developmentRoadmap")}
           aria-label="View full roadmap page with planned, in-progress, and live feedback"
           disabled={!roadmapCount}
         >
           View
-        </button>
+        </button> */}
+        <StyledLink
+          to="/developmentRoadmap"
+          aria-label="View full roadmap page with planned, in-progress, and live feedback"
+        >
+          View
+        </StyledLink>
       </div>
       <ul>{roadmapPreviewItems}</ul>
-    </section>
+    </StyledRoadmapPreviewTile>
   );
 }
 
