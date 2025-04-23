@@ -1,7 +1,17 @@
+import styled from "styled-components";
 import { StatusIndicator } from "../../styles/features/RoadmapStyles";
-import { StrongText } from "../../styles/UIStyles";
+
 import { RoadmapStatus } from "../../types/roadmap.types";
 import { capitalizeFirstLetter } from "../../utils/helpers";
+
+const Status = styled.span`
+  font-size: var(--text-base);
+`;
+
+const Count = styled.span`
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-bold);
+`;
 
 interface RoadmapPreviewItemProps {
   stage: RoadmapStatus;
@@ -14,11 +24,11 @@ function RoadmapPreviewItem({
   const roadmapStatus = capitalizeFirstLetter(stage);
   return (
     <li>
-      <span>
+      <Status>
         <StatusIndicator $status={stage} />
         {roadmapStatus}
-      </span>
-      <StrongText>{count}</StrongText>
+      </Status>
+      <Count>{count}</Count>
     </li>
   );
 }

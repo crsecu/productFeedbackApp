@@ -23,7 +23,7 @@ const Label = styled.label`
   background-color: var(--color-surface-accent);
   color: var(--color-text-accent);
   font-size: var(--font-size-body-3);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
   padding: 5px 16px;
   border-radius: 10px;
 `;

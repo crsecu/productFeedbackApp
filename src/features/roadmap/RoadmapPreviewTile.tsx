@@ -3,10 +3,11 @@ import { RoadmapStats, RoadmapStatus } from "../../types/roadmap.types";
 import styled from "styled-components";
 import { Card } from "../../styles/features/FeedbackStyles";
 import { StyledLink } from "../../styles/UIStyles";
+import { H2 } from "../../styles/Typography";
 
 const StyledRoadmapPreviewTile = styled(Card)`
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 
   & div,
   li {
@@ -14,8 +15,10 @@ const StyledRoadmapPreviewTile = styled(Card)`
     justify-content: space-between;
   }
 
-  & h2 {
-    font-size: 1.125rem;
+  & ul {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
   }
 `;
 interface RoadmapPreviewProps {
@@ -48,7 +51,7 @@ function RoadmapPreviewTile({
   return (
     <StyledRoadmapPreviewTile aria-labelledby="roadmapPreview">
       <div>
-        <h2 id="roadmapPreview">Roadmap</h2>
+        <H2 id="roadmapPreview">Roadmap</H2>
 
         {/* <button
           onClick={() => navigate("/developmentRoadmap")}

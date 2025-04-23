@@ -1,8 +1,14 @@
 import { useSearchParams } from "react-router-dom";
 import { handleOptionChange } from "../../utils/helpers";
-/* TO DO: It may be beneficial to create a custom hook for handling the option change
-as it's also used inside FilterByCategory component; 
-*/
+import styled from "styled-components";
+
+const SelectSortBy = styled.select`
+  background-color: var(--color-action-bar);
+  color: var(--color-text-light);
+  border: none;
+  font-weight: var(--font-weight-bold);
+`;
+
 function SortBy(): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortByOption = searchParams.get("sortBy") || "mostUpvotes";
@@ -10,8 +16,8 @@ function SortBy(): React.JSX.Element {
 
   return (
     <div>
-      <label htmlFor="sortBy">Sort by:</label>
-      <select
+      <label htmlFor="sortBy">Sort by :</label>
+      <SelectSortBy
         id="sortBy"
         value={sortByOption}
         onChange={(e) =>
@@ -22,7 +28,7 @@ function SortBy(): React.JSX.Element {
         <option value="leastUpvotes">Least Upvotes</option>
         <option value="mostComments">Most Comments</option>
         <option value="leastComments">Least Comments</option>
-      </select>
+      </SelectSortBy>
     </div>
   );
 }

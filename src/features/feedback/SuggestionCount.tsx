@@ -1,6 +1,17 @@
 import { useSearchParams } from "react-router-dom";
 import { SuggestionFeedback } from "../../types/feedback.types";
 import { useMemo } from "react";
+import { H2 } from "../../styles/Typography";
+import styled from "styled-components";
+import device from "../../styles/breakpoints";
+
+const StyledSuggestionCount = styled(H2)`
+  display: none;
+
+  @media ${device.md} {
+    display: block;
+  }
+`;
 
 interface SuggestionCountProps {
   suggestions: SuggestionFeedback[];
@@ -22,9 +33,9 @@ function SuggestionCount({
   }, [selectedCategory, suggestions]);
 
   return (
-    <h2>
+    <StyledSuggestionCount>
       <span>{suggestionCount}</span> Suggestions
-    </h2>
+    </StyledSuggestionCount>
   );
 }
 

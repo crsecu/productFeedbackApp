@@ -1,24 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { H1 } from "../../styles/Typography";
+import device from "../../styles/breakpoints";
 
-const StyledTitleCard = styled.div``;
-const SubHeading = styled.span`
-  font-size: var(--font-size-body-3);
-  font-weight: 500;
-  line-height: var(--line-height-body-3);
+const StyledTitleCard = styled.div`
+  display: flex;
+  flex-direction: column-reverse;
+`;
+const MainHeading = styled.h1`
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
   color: var(--color-text-light);
   opacity: 0.75;
+`;
+
+const BrandingText = styled.span`
+  font-size: 0.938rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.19px;
+  color: var(--color-text-light);
+
+  @media ${device.md} {
+    letter-spacing: -0.25px;
+  }
 `;
 
 function TitleCard(): React.JSX.Element {
   const navigate = useNavigate();
   return (
     <StyledTitleCard>
-      <H1 onClick={() => navigate("/")} $textLight>
-        Frontend Mentor
-      </H1>
-      <SubHeading>Feedback Board</SubHeading>
+      <MainHeading>Feedback Board</MainHeading>
+      <BrandingText onClick={() => navigate("/")}>Frontend Mentor</BrandingText>
     </StyledTitleCard>
   );
 }

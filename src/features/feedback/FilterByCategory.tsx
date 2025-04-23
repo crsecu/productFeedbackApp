@@ -11,7 +11,9 @@ const StyledFilterByCategory = styled(Card)``;
 const CategoryList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  gap: 20px 14px;
+  gap: 20px 12px;
+  padding-top: 6px;
+  padding-bottom: 14px;
 `;
 
 interface FilterByCategoryProps {

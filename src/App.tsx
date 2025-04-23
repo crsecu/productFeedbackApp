@@ -27,6 +27,7 @@ import FeedbackBoardError from "./ui/FeedbackBoardError";
 import GlobalStyles from "./styles/GlobalStyles";
 import FeedbackDetailCommentThread from "./features/feedback/FeedbackDetailCommentThread";
 import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
+import TypographyTokens from "./styles/TypographyTokens";
 
 const router = createBrowserRouter([
   {
@@ -169,6 +170,7 @@ const router = createBrowserRouter([
 function App(): React.JSX.Element {
   return (
     <>
+      <TypographyTokens />
       <GlobalStyles />
       <RouterProvider router={router} />
     </>
