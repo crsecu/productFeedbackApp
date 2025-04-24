@@ -1,4 +1,4 @@
-import { Link, useLocation, useRouteLoaderData } from "react-router-dom";
+import { useLocation, useRouteLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
@@ -12,6 +12,7 @@ import { FeedbackBoardLoaderData } from "../../types/loader.types";
 import FeedbackBoardMainSection from "./FeedbackBoardMainSection";
 
 import FeedbackBoardLeftColumn from "./FeedbackBoardLeftColumn";
+import { PrimaryLinkButton } from "../../styles/UIStyles";
 
 const StyledFeedbackBoardPage = styled.div``;
 
@@ -38,9 +39,15 @@ function FeedbackBoardPage(): React.JSX.Element {
         <ActionBar ariaLabel="Suggestions toolbar">
           <SuggestionCount suggestions={suggestions} />
           <SortBy />
-          <Link to="createFeedback" state={{ from: location?.pathname }}>
+          {/* <Link to="createFeedback" state={{ from: location?.pathname }}>
             Add Feedback
-          </Link>
+          </Link> */}
+          <PrimaryLinkButton
+            to="createFeedback"
+            state={{ from: location?.pathname }}
+          >
+            + Add Feedback
+          </PrimaryLinkButton>
         </ActionBar>
         <FeedbackList suggestions={suggestions} />
       </FeedbackBoardMainSection>

@@ -7,7 +7,13 @@ import FeedbackCard from "./FeedbackCard";
 import UpvoteButton from "./UpvoteButton";
 import { SuggestionFeedback } from "../../types/feedback.types";
 import CommentCount from "../comments/CommentCount";
+import styled from "styled-components";
+const StyledFeedbackList = styled.section`
+  display: flex;
 
+  padding: 10px 24px;
+  background-color: var(--color-background);
+`;
 interface FeedbackListProps {
   suggestions: SuggestionFeedback[];
 }
@@ -41,14 +47,14 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
   }, [category, sortBy, suggestions]);
 
   return (
-    <section>
-      <h2>Feedback List</h2> {/* visually hidden heading */}
+    <StyledFeedbackList>
+      <h2 className="sr-only">Feedback List</h2> {/* visually hidden heading */}
       {feedbackItems.length === 0 ? (
         <NoFeedbackEntries category={category} />
       ) : (
         <ul>{feedbackItems}</ul>
       )}
-    </section>
+    </StyledFeedbackList>
   );
 }
 

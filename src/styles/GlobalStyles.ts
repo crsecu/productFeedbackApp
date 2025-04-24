@@ -193,10 +193,3 @@ button {
 
 `;
 export default GlobalStyles;
-
-/*SAVE FOR LATER
-/*active state buttons
-/* &:active {
-/*   transform: scale(0.98);
-/*   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
-*/

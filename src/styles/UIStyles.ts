@@ -1,7 +1,7 @@
 /* Reusable UI components such as buttons, links etc */
 
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledLink = styled(Link)`
   font-size: 0.813rem;
@@ -14,3 +14,60 @@ export const StyledLink = styled(Link)`
 export const StrongText = styled.span`
   font-weight: var(--font-weight-bold);
 `;
+
+/* BUTTONS */
+type ButtonStyleProps = {
+  $bgColor?: string;
+  $bgColorHover?: string;
+};
+
+/* Regular Button */
+const buttonStyles = css`
+  font-size: var(--font-size-body-3);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-light);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 11px;
+`;
+
+export const BaseButton = styled.button<ButtonStyleProps>`
+  ${buttonStyles}
+
+  background-color: ${(props) => props.$bgColor};
+
+  &:hover {
+    background-color: ${(props) => props.$bgColorHover};
+  }
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+export const PrimaryButton = styled(BaseButton).attrs(() => ({
+  $bgColor: "var(--color-primary)",
+  $bgColorHover: "var(--color-primary-hover)",
+}))``;
+
+/* Link Button */
+export const BaseLinkButton = styled(Link)<ButtonStyleProps>`
+  ${buttonStyles}
+
+  background-color: ${(props) => props.$bgColor};
+
+  &:hover {
+    background-color: ${(props) => props.$bgColorHover};
+  }
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+`;
+
+export const PrimaryLinkButton = styled(BaseLinkButton).attrs(() => ({
+  $bgColor: "var(--color-primary)",
+  $bgColorHover: "var(--color-primary-hover)",
+}))``;

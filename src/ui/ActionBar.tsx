@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 const StyledActionBar = styled.section`
   display: flex;
+  align-items: center;
+
   background-color: var(--color-action-bar);
   color: var(--color-text-light);
-  padding: 12px 20px;
+  padding: 10px 24px;
 `;
 
 interface ActionBarProps {
