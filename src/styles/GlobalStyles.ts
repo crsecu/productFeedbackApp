@@ -65,7 +65,7 @@ const GlobalStyles = createGlobalStyle`
 /* jost-regular - latin */
 @font-face {
   font-family: 'Jost';
-  src: url('../fonts/jost-v18-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/jost-v18-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   font-style: normal;
   font-weight: 400;
   font-display: swap; /* Check https:/*developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
@@ -73,7 +73,7 @@ const GlobalStyles = createGlobalStyle`
 /* jost-600 - latin */
 @font-face {
   font-family: 'Jost';
-  src: url('../fonts/jost-v18-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/jost-v18-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   font-style: normal;
   font-weight: 600;
   font-display: swap; /* Check https:/*developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
@@ -81,7 +81,7 @@ const GlobalStyles = createGlobalStyle`
 /* jost-700 - latin */
 @font-face {
   font-family: 'Jost';
-  src: url('../fonts/jost-v18-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  src: url('/fonts/jost-v18-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   font-style: normal;
   font-weight: 700;
   font-display: swap; /* Check https:/*developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
