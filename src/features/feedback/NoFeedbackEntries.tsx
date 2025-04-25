@@ -19,13 +19,14 @@ function NoFeedbackEntries({
       </>
     );
   return (
-    <div>
+    <>
       <div>
+        <img src="/assets/no-feedback-yet.svg" alt="No feedback" />
         <p>{noFeedbackText}</p>
         <p>Got a suggestion? Found a bug that needs to be squashed?</p>
         <p>We love hearing about new ideas to improve our app.</p>
       </div>
-    </div>
+    </>
   );
 }
 

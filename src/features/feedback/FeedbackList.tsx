@@ -1,18 +1,25 @@
 import { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import FeedbackItem from "./FeedbackItem";
+import FeedbackCard from "./FeedbackCard";
 import NoFeedbackEntries from "./NoFeedbackEntries";
 import { sortFeedbackList } from "../../utils/helpers";
-import FeedbackCard from "./FeedbackCard";
+import FeedbackCardContent from "./FeedbackCardContent";
 import UpvoteButton from "./UpvoteButton";
 import { SuggestionFeedback } from "../../types/feedback.types";
 import CommentCount from "../comments/CommentCount";
 import styled from "styled-components";
+
 const StyledFeedbackList = styled.section`
   display: flex;
+  justify-content: center;
 
-  padding: 10px 24px;
-  background-color: var(--color-background);
+  padding: 28px 24px;
+
+  & ul {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
 `;
 interface FeedbackListProps {
   suggestions: SuggestionFeedback[];
@@ -29,18 +36,18 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
     return suggestionsSorted.map((item) => {
       return (
         <li key={item.id}>
-          <FeedbackItem>
+          <FeedbackCard>
             <UpvoteButton
               feedbackId={item.id}
               initialUpvoteCount={item.upvotes}
             />
 
             <Link to={`/feedbackDetail/${item.id}`}>
-              <FeedbackCard feedback={item}>
+              <FeedbackCardContent feedback={item}>
                 <CommentCount count={item.commentCount} />
-              </FeedbackCard>
+              </FeedbackCardContent>
             </Link>
-          </FeedbackItem>
+          </FeedbackCard>
         </li>
       );
     });

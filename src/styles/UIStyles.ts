@@ -25,6 +25,7 @@ type ButtonStyleProps = {
 const buttonStyles = css`
   font-size: var(--font-size-body-3);
   font-weight: var(--font-weight-bold);
+  background-color: #cdd2ee;
   color: var(--color-text-light);
   border: none;
   padding: 10px 16px;
@@ -71,3 +72,11 @@ export const PrimaryLinkButton = styled(BaseLinkButton).attrs(() => ({
   $bgColor: "var(--color-primary)",
   $bgColorHover: "var(--color-primary-hover)",
 }))``;
+
+/* Box with rounded corners used for: category labels, upvote button */
+export const labelBox = css`
+  background-color: var(--color-surface-accent);
+  color: var(--color-text-accent); //
+  border-radius: 10px;
+  padding: 5px 16px; //
+`;

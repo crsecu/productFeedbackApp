@@ -4,9 +4,9 @@ import {
   LiveFeedback,
   PlannedFeedback,
 } from "../../types/feedback.types";
-import FeedbackItem from "../feedback/FeedbackItem";
-import UpvoteButton from "../feedback/UpvoteButton";
 import FeedbackCard from "../feedback/FeedbackCard";
+import UpvoteButton from "../feedback/UpvoteButton";
+import FeedbackCardContent from "../feedback/FeedbackCardContent";
 
 import { ReactNode } from "react";
 
@@ -22,17 +22,17 @@ function RoadmapStatusColumn({
   const statusColumns = feedbackList.map((feedbackItem) => {
     return (
       <li key={feedbackItem.id}>
-        <FeedbackItem>
+        <FeedbackCard>
           <UpvoteButton
             feedbackId={feedbackItem.id}
             initialUpvoteCount={feedbackItem.upvotes}
           />
           <Link to={`/feedbackDetail/${feedbackItem.id}`}>
-            <FeedbackCard feedback={feedbackItem}>
+            <FeedbackCardContent feedback={feedbackItem}>
               <h3>{feedbackItem.title}</h3>
-            </FeedbackCard>
+            </FeedbackCardContent>
           </Link>
-        </FeedbackItem>
+        </FeedbackCard>
       </li>
     );
   });

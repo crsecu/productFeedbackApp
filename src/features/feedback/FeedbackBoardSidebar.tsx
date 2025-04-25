@@ -4,6 +4,7 @@ import styled from "styled-components";
 const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
   background-color: var(--color-background);
   position: absolute;
+  z-index: 2;
   right: 0;
 
   width: ${(props) => (props.$show ? "75%" : 0)};
@@ -27,7 +28,6 @@ function FeedbackBoardSidebar({
   isOpen,
   ariaLabel,
 }: FeedbackBoardSidebarProps): React.JSX.Element {
-  console.log("show", isOpen);
   return (
     <>
       <StyledFeedbackBoardSidebar $show={isOpen} aria-label={ariaLabel}>

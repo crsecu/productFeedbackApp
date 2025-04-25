@@ -6,8 +6,37 @@ import {
   getIsFeedbackUpvoted,
 } from "../../store/slices/userSlice";
 import { showNotification } from "../../store/slices/toastNotificationSlice";
-
 import { useState } from "react";
+import styled from "styled-components";
+import { IoChevronUpSharp } from "react-icons/io5";
+
+const StyledUpvoteButton = styled.button`
+  position: absolute;
+  bottom: 24px;
+  left: 28px;
+
+  padding: 6px 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--color-surface-accent);
+  color: var(--color-text-dark);
+  font-weight: bold;
+
+  & svg {
+    margin-bottom: 2px;
+    margin-right: 5px;
+    color: var(--color-secondary);
+  }
+
+  & path {
+    stroke-width: 18%;
+  }
+`;
+
+const StyledChevronUp = styled(IoChevronUpSharp)`
+  display: inline-block;
+  vertical-align: middle;
+`;
 
 interface UpvoteButtonProps {
   feedbackId: string;
@@ -50,13 +79,14 @@ function UpvoteButton({
   }
 
   return (
-    <button
+    <StyledUpvoteButton
       disabled={isLoading}
       onClick={handleUpvote}
       className={isFeedbackUpvoted ? "upvoted" : ""}
     >
-      ^ <span>{isLoading ? "Upvoting..." : upvoteCount}</span>
-    </button>
+      <StyledChevronUp size="0.65rem" />{" "}
+      <span>{isLoading ? "Upvoting..." : upvoteCount}</span>
+    </StyledUpvoteButton>
   );
 }
 

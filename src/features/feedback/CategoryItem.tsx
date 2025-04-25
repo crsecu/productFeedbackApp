@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import { formatCategoryLabel } from "../../utils/helpers";
 import styled from "styled-components";
+import { CategoryLabel } from "../../styles/features/FeedbackStyles";
 
 const Input = styled.input`
   &[type="radio"] {
@@ -17,15 +18,6 @@ const Input = styled.input`
       border: 2px solid var(--color-primary);
     }
   }
-`;
-
-const Label = styled.label`
-  background-color: var(--color-surface-accent);
-  color: var(--color-text-accent);
-  font-size: var(--font-size-body-3);
-  font-weight: var(--font-weight-semibold);
-  padding: 5px 16px;
-  border-radius: 10px;
 `;
 
 interface CategoryItemProps {
@@ -59,7 +51,7 @@ function CategoryItem({
         checked={selectedOption === value}
         onChange={onOptionChange}
       ></Input>
-      <Label htmlFor={id}>{categoryLabel}</Label>
+      <CategoryLabel htmlFor={id}>{categoryLabel}</CategoryLabel>
     </li>
   );
 }

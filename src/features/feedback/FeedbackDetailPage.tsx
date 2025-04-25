@@ -1,8 +1,8 @@
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import ActionBar from "../../ui/ActionBar";
-import FeedbackItem from "./FeedbackItem";
-import CommentCount from "../comments/CommentCount";
 import FeedbackCard from "./FeedbackCard";
+import CommentCount from "../comments/CommentCount";
+import FeedbackCardContent from "./FeedbackCardContent";
 import UpvoteButton from "./UpvoteButton";
 
 import { Feedback } from "../../types/feedback.types";
@@ -48,12 +48,12 @@ function FeedbackDetailPage(): React.JSX.Element {
         />
       )}
 
-      <FeedbackItem>
+      <FeedbackCard>
         <UpvoteButton feedbackId={id} initialUpvoteCount={upvotes} />
-        <FeedbackCard feedback={feedback}>
+        <FeedbackCardContent feedback={feedback}>
           <CommentCount />
-        </FeedbackCard>
-      </FeedbackItem>
+        </FeedbackCardContent>
+      </FeedbackCard>
 
       <Outlet />
     </>
