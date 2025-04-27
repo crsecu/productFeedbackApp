@@ -8,7 +8,8 @@ const TypographyTokens = createGlobalStyle`
 --text-sm: 0.875rem;  /* 14px */
 --text-base: 1rem;    /* 16px */
 --text-lg: 1.125rem;  /* 18px */
---text-xl: 1.5rem;    /* 24px */
+--text-xl: 1.25rem;   /* 20px */
+--text-xxl: 1.5rem;    /* 24px */
 
 /* Heading sizes (mobile-first) */
 --font-size-h1: var(--text-lg); 
@@ -46,7 +47,7 @@ const TypographyTokens = createGlobalStyle`
 
 @media ${device.md} {
  :root {
- --font-size-h1: var(--text-xl);
+ --font-size-h1: var(--text-xxl);
 
  --font-size-body-1: var(--text-base);  /* 16px */
  --font-size-body-2: 0.938rem;  /* 15px */

@@ -1,16 +1,18 @@
 import { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import FeedbackCard from "./FeedbackCard";
-import NoFeedbackEntries from "./NoFeedbackEntries";
+import EmptyFeedbackState from "./EmptyFeedbackState";
 import { sortFeedbackList } from "../../utils/helpers";
 import FeedbackCardContent from "./FeedbackCardContent";
 import UpvoteButton from "./UpvoteButton";
 import { SuggestionFeedback } from "../../types/feedback.types";
 import CommentCount from "../comments/CommentCount";
 import styled from "styled-components";
+import device from "../../styles/breakpoints";
 
 const StyledFeedbackList = styled.section`
   display: flex;
+  flex-direction: column;
   justify-content: center;
 
   padding: 28px 24px;
@@ -19,6 +21,10 @@ const StyledFeedbackList = styled.section`
     display: flex;
     flex-direction: column;
     gap: 18px;
+  }
+
+  @media ${device.md} {
+    padding: 0;
   }
 `;
 interface FeedbackListProps {
@@ -57,7 +63,7 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
     <StyledFeedbackList>
       <h2 className="sr-only">Feedback List</h2> {/* visually hidden heading */}
       {feedbackItems.length === 0 ? (
-        <NoFeedbackEntries category={category} />
+        <EmptyFeedbackState category={category} />
       ) : (
         <ul>{feedbackItems}</ul>
       )}

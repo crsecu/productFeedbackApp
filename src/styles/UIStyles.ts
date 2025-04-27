@@ -26,7 +26,7 @@ const buttonStyles = css`
   font-size: var(--font-size-body-3);
   font-weight: var(--font-weight-bold);
   background-color: #cdd2ee;
-  color: var(--color-text-light);
+  color: var(--color-text-soft-accent);
   border: none;
   padding: 10px 16px;
   border-radius: 11px;

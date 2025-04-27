@@ -13,8 +13,18 @@ import FeedbackBoardMainSection from "./FeedbackBoardMainSection";
 
 import FeedbackBoardLeftColumn from "./FeedbackBoardLeftColumn";
 import { PrimaryLinkButton } from "../../styles/UIStyles";
+import device from "../../styles/breakpoints";
 
-const StyledFeedbackBoardPage = styled.div``;
+const StyledFeedbackBoardPage = styled.div`
+  @media ${device.md} {
+    padding: 28px 34px;
+  }
+
+  @media ${device.lg} {
+    display: flex;
+    gap: 30px;
+  }
+`;
 
 function FeedbackBoardPage(): React.JSX.Element {
   const location = useLocation();

@@ -11,6 +11,10 @@ const MainHeading = styled.h1`
   font-weight: var(--font-weight-medium);
   color: var(--color-text-light);
   opacity: 0.75;
+
+  @media ${device.md} {
+    font-size: 0.938rem;
+  }
 `;
 
 const BrandingText = styled.span`
@@ -20,6 +24,7 @@ const BrandingText = styled.span`
   color: var(--color-text-light);
 
   @media ${device.md} {
+    font-size: var(--text-xl);
     letter-spacing: -0.25px;
   }
 `;

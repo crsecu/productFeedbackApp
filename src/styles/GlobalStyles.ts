@@ -30,7 +30,8 @@ const GlobalStyles = createGlobalStyle`
 --color-text-light: #FFFFFF;     /* text on dark backgrounds (e.g. buttons, action bar) */
 --color-text-dark: #3A4374;      /* default body and heading text */
 --color-text-muted: #647196;     /* secondary text (e.g. metadata, descriptions) */
---color-text-accent: #4661E6;    /* tags, or interactive labels */
+--color-text-accent: #4661E6;
+--color-text-soft-accent: #F2F4FF;   /* tags, or interactive labels */
 
 
 /* BACKGROUNDS */ 
@@ -57,6 +58,8 @@ const GlobalStyles = createGlobalStyle`
 
 
  /* Border */
+
+--border-radius-sm: 12px;
 --border-radius: 15px;
 
 }

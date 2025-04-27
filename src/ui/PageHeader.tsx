@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import device from "../styles/breakpoints";
 
 const StyledPageHeader = styled.header`
   position: relative;
@@ -13,6 +14,17 @@ const StyledPageHeader = styled.header`
     #a337f6 53%,
     #28a7ed 115%
   );
+
+  @media ${device.md} {
+    flex-basis: 250px;
+    border-radius: var(--border-radius-sm);
+    align-items: end;
+    padding-bottom: 22vpx;
+
+    & button {
+      display: none;
+    }
+  }
 `;
 
 interface PageHeaderProps {

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
+import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
   background-color: var(--color-background);
@@ -14,7 +15,27 @@ const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
   padding: ${(props) => (props.$show ? "25px" : "0")};
   display: flex;
   flex-direction: column;
-  row-gap: 24px;
+  gap: 24px;
+
+  @media ${device.md} {
+    position: initial;
+    width: auto;
+
+    height: initial;
+    flex-direction: row;
+    gap: 8px;
+    padding: 0;
+
+    & section {
+      border-radius: var(--border-radius-sm);
+      //flex-basis: 250px;
+      flex: 1;
+    }
+  }
+
+  @media ${device.lg} {
+    flex-direction: column;
+  }
 `;
 
 interface FeedbackBoardSidebarProps {

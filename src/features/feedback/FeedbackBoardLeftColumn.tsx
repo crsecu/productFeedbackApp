@@ -7,9 +7,22 @@ import TitleCard from "./TitleCard";
 import styled from "styled-components";
 import FeedbackBoardSidebar from "./FeedbackBoardSidebar";
 import FilterByCategory from "./FilterByCategory";
+import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardLeftColumn = styled.div`
   overflow: hidden;
+
+  @media ${device.md} {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 34px;
+  }
+
+  @media ${device.lg} {
+    flex-direction: column;
+    width: 24%;
+    gap: 24px;
+  }
 `;
 
 const Overlay = styled.div`
@@ -23,6 +36,10 @@ const Overlay = styled.div`
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
+
+  @media ${device.md} {
+    display: none;
+  }
 `;
 
 const IconButton = styled.button`
@@ -62,8 +79,7 @@ function FeedbackBoardLeftColumn({
         <PageHeader>
           <TitleCard />
           {showSidebar ? (
-            /* onClick={handleSidebarVisibility} */
-            <IconButton>
+            <IconButton onClick={handleSidebarVisibility}>
               <IoCloseSharp size={"1.6rem"} strokeWidth={16} />
             </IconButton>
           ) : (
