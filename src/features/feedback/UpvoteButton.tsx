@@ -9,10 +9,11 @@ import { showNotification } from "../../store/slices/toastNotificationSlice";
 import { useState } from "react";
 import styled from "styled-components";
 import { IoChevronUpSharp } from "react-icons/io5";
+import device from "../../styles/breakpoints";
 
 const StyledUpvoteButton = styled.button`
   position: absolute;
-  bottom: 24px;
+  bottom: 23px;
   left: 28px;
 
   padding: 6px 14px;
@@ -30,6 +31,30 @@ const StyledUpvoteButton = styled.button`
 
   & path {
     stroke-width: 18%;
+  }
+
+  @media ${device.sm} {
+    position: initial;
+    height: fit-content;
+    padding: 10px 8px 8px;
+
+    & svg {
+      display: block;
+      margin: auto;
+      margin-bottom: 5px;
+      height: 14px;
+      width: 14px;
+    }
+  }
+
+  @media ${device.md} {
+    padding: 12px 10px 8px;
+
+    & svg {
+      margin-bottom: 5px;
+      height: 14px;
+      width: 14px;
+    }
   }
 `;
 

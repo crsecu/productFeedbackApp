@@ -1,7 +1,16 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
+import device from "../../styles/breakpoints";
 
-const StyledFeedbackBoardMainSection = styled.main``;
+const StyledFeedbackBoardMainSection = styled.main`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  @media ${device.sm} {
+    gap: 24px;
+  }
+`;
 interface FeedbackBoardMainSectionProps {
   children: ReactNode;
 }

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { CategoryLabel } from "../../styles/features/FeedbackStyles";
 import { H3 } from "../../styles/Typography";
 import { formatCategoryLabel } from "../../utils/helpers";
+import device from "../../styles/breakpoints";
 
 const StyledFeedbackCardContent = styled.div`
   display: flex;
@@ -17,6 +18,15 @@ const StyledFeedbackCardContent = styled.div`
 
   & label {
     width: fit-content;
+  }
+
+  @media ${device.sm} {
+    gap: 3px;
+
+    flex-shrink: 2.5;
+    & label {
+      margin-top: 6px;
+    }
   }
 `;
 

@@ -162,6 +162,11 @@ body {
   background-color: var(--color-background);
 }
 
+#root {
+  height: 100dvh;
+  height: 100vh;
+}
+
 button {
   cursor: pointer;
 }

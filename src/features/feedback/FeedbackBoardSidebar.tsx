@@ -9,6 +9,7 @@ const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
   right: 0;
 
   width: ${(props) => (props.$show ? "75%" : 0)};
+  max-width: 270px;
   height: 100vh;
   transition: all 1s;
   overflow: hidden;
@@ -17,24 +18,32 @@ const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
   flex-direction: column;
   gap: 24px;
 
-  @media ${device.md} {
+  @media ${device.sm} {
     position: initial;
-    width: auto;
-
     height: initial;
     flex-direction: row;
-    gap: 8px;
-    padding: 0;
+    flex-grow: 1;
+    max-width: initial;
+    gap: 10px;
 
     & section {
       border-radius: var(--border-radius-sm);
-      //flex-basis: 250px;
-      flex: 1;
+
+      &:first-of-type {
+        flex: 1;
+      }
+
+      &:last-of-type {
+        flex: 1;
+      }
     }
   }
 
   @media ${device.lg} {
     flex-direction: column;
+    flex-grow: initial;
+    width: auto;
+    gap: 24px;
   }
 `;
 

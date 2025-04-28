@@ -10,11 +10,9 @@ import FilterByCategory from "./FilterByCategory";
 import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardLeftColumn = styled.div`
-  overflow: hidden;
-
-  @media ${device.md} {
+  @media ${device.sm} {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 34px;
   }
 
@@ -22,6 +20,15 @@ const StyledFeedbackBoardLeftColumn = styled.div`
     flex-direction: column;
     width: 24%;
     gap: 24px;
+    flex-grow: initial;
+  }
+
+  @media ${device.xl} {
+    width: 20%;
+  }
+
+  @media ${device.xxl} {
+    width: 18%;
   }
 `;
 
@@ -37,7 +44,7 @@ const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
 
-  @media ${device.md} {
+  @media ${device.sm} {
     display: none;
   }
 `;

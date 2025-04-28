@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import device from "../styles/breakpoints";
 
 const StyledActionBar = styled.section`
   display: flex;
@@ -7,6 +8,11 @@ const StyledActionBar = styled.section`
   background-color: var(--color-action-bar);
   color: var(--color-text-light);
   padding: 10px 24px;
+
+  @media ${device.sm} {
+    padding: 14px 12px 14px 16px;
+    border-radius: var(--border-radius-sm);
+  }
 `;
 
 interface ActionBarProps {

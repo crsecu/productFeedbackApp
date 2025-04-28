@@ -8,7 +8,7 @@ import device from "../../styles/breakpoints";
 const StyledSuggestionCount = styled(H2)`
   display: none;
 
-  @media ${device.md} {
+  @media ${device.sm} {
     display: block;
   }
 `;

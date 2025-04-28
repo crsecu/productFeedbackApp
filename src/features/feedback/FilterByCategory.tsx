@@ -5,15 +5,22 @@ import { handleOptionChange } from "../../utils/helpers";
 import { CATEGORY_OPTIONS } from "../../types/feedback.types";
 import styled from "styled-components";
 import { Card } from "../../styles/features/FeedbackStyles";
+import device from "../../styles/breakpoints";
 
 const StyledFilterByCategory = styled(Card)``;
 
 const CategoryList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  gap: 20px 12px;
+  gap: 22px 8px;
   padding-top: 6px;
   padding-bottom: 14px;
+
+  & li:nth-child(4) {
+    margin-right: 6px;
+  }
+  @media ${device.lg} {
+  }
 `;
 
 interface FilterByCategoryProps {

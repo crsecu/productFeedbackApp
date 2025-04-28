@@ -13,9 +13,9 @@ import device from "../../styles/breakpoints";
 const StyledFeedbackList = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  flex-grow: 1;
 
-  padding: 28px 24px;
+  padding: 28px 24px 46px;
 
   & ul {
     display: flex;
@@ -23,8 +23,12 @@ const StyledFeedbackList = styled.section`
     gap: 18px;
   }
 
-  @media ${device.md} {
+  @media ${device.sm} {
     padding: 0;
+
+    & ul {
+      gap: 14px;
+    }
   }
 `;
 interface FeedbackListProps {
@@ -50,8 +54,10 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
 
             <Link to={`/feedbackDetail/${item.id}`}>
               <FeedbackCardContent feedback={item}>
-                <CommentCount count={item.commentCount} />
+                {/* <CommentCount count={item.commentCount} /> */}
+                <p></p>
               </FeedbackCardContent>
+              <CommentCount count={item.commentCount} />
             </Link>
           </FeedbackCard>
         </li>

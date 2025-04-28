@@ -15,15 +15,23 @@ const StyledPageHeader = styled.header`
     #28a7ed 115%
   );
 
-  @media ${device.md} {
-    flex-basis: 250px;
+  @media ${device.sm} {
+    /* flex-basis: 225px; */
     border-radius: var(--border-radius-sm);
     align-items: end;
-    padding-bottom: 22vpx;
+    padding-bottom: 22px;
 
     & button {
       display: none;
     }
+  }
+
+  @media ${device.md} {
+    flex-basis: 225px;
+  }
+
+  @media ${device.lg} {
+    flex-basis: 137px;
   }
 `;
 

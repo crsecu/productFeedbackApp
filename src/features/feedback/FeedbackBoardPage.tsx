@@ -16,13 +16,29 @@ import { PrimaryLinkButton } from "../../styles/UIStyles";
 import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @media ${device.sm} {
+    padding: 28px 24px;
+  }
+
   @media ${device.md} {
     padding: 28px 34px;
   }
 
   @media ${device.lg} {
-    display: flex;
+    flex-direction: row;
     gap: 30px;
+  }
+
+  @media ${device.xl} {
+    padding: 28px 6vw;
+  }
+
+  @media ${device.xxl} {
+    padding: 28px 10vw;
   }
 `;
 

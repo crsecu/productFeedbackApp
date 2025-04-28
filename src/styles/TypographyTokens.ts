@@ -45,13 +45,14 @@ const TypographyTokens = createGlobalStyle`
 }
 
 
-@media ${device.md} {
+@media ${device.sm} {
  :root {
  --font-size-h1: var(--text-xxl);
-
  --font-size-body-1: var(--text-base);  /* 16px */
  --font-size-body-2: 0.938rem;  /* 15px */
  --font-size-body-3: 0.813rem;  /* 13px */
+
+ --font-size-h3: var(--text-lg);
 
  }
 }

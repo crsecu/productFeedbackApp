@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { Card } from "../../styles/features/FeedbackStyles";
 import { StyledLink } from "../../styles/UIStyles";
 import { H2 } from "../../styles/Typography";
+import device from "../../styles/breakpoints";
 
 const StyledRoadmapPreviewTile = styled(Card)`
-  flex-direction: column;
-  gap: 18px;
+  display: initial;
 
   & div,
   li {
@@ -19,6 +19,10 @@ const StyledRoadmapPreviewTile = styled(Card)`
     display: flex;
     flex-direction: column;
     row-gap: 6px;
+    margin-top: 20px;
+  }
+
+  @media ${device.lg} {
   }
 `;
 interface RoadmapPreviewProps {

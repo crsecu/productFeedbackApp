@@ -6,6 +6,8 @@ import device from "../../styles/breakpoints";
 
 const StyledEmptyFeedbackState = styled.div`
   background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  flex-grow: 1;
 
   & div {
     width: 84%;
@@ -41,7 +43,7 @@ const NoFeedbackText = styled.p`
   letter-spacing: -0.25px;
   text-align: center;
 
-  @media ${device.md} {
+  @media ${device.sm} {
     font-size: var(--text-xxl);
     letter-spacing: -0.33px;
   }

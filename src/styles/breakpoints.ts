@@ -9,8 +9,8 @@ const breakpointWidths: breakpointWidths = {
   sm: "640px", // landscape mobile, small tablets
   md: "768px", // tablets
   lg: "1024px", // for laptops, large tablets
-  xl: "1280", // 	desktops, widescreen laptops
-  xxl: "1536", // large monitors
+  xl: "1280px", // 	desktops, widescreen laptops
+  xxl: "1536px", // large monitors
 };
 
 export const device = {

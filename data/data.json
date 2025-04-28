@@ -19,8 +19,8 @@
     {
       "id": "1",
       "title": "Add tags for solutions",
-      "category": "feature",
-      "upvotes": 125,
+      "category": "enhancement",
+      "upvotes": 126,
       "status": "suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
       "commentCount": 2
