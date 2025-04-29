@@ -1,6 +1,16 @@
 import { useMemo, useState } from "react";
 import { CommentThreadEntry } from "../../types/comment.types";
 import CommentComposer from "./CommentComposer";
+import styled from "styled-components";
+import { ReplyButton } from "../../styles/UIStyles";
+
+const StyledAddReply = styled.div`
+  & button {
+    position: absolute;
+    right: 0;
+    top: 35px;
+  }
+`;
 
 interface AddReplyProps {
   parentComment: CommentThreadEntry;
@@ -28,10 +38,13 @@ function AddReply({
   );
 
   return (
-    <>
-      <button onClick={() => setShowCommentBox((prevState) => !prevState)}>
-        Reply Now
-      </button>
+    <StyledAddReply>
+      <ReplyButton
+        className="reply"
+        onClick={() => setShowCommentBox((prevState) => !prevState)}
+      >
+        Reply
+      </ReplyButton>
 
       {showCommentBox && (
         <CommentComposer
@@ -40,7 +53,7 @@ function AddReply({
           onReplySubmitted={() => setShowCommentBox(false)}
         ></CommentComposer>
       )}
-    </>
+    </StyledAddReply>
   );
 }
 

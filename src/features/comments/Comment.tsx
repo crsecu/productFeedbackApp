@@ -3,6 +3,52 @@ import { CommentThreadEntry } from "../../types/comment.types";
 import UserAvatar from "../user/UserAvatar";
 import UserInfo from "../user/UserInfo";
 import AddReply from "./AddReply";
+import styled from "styled-components";
+import User from "../user/User";
+
+const StyledComment = styled.li`
+  position: relative;
+  padding-top: 22px;
+
+  &:after {
+    content: " ";
+    display: block;
+    opacity: 0.25;
+    border-bottom: 1px solid #8c92b3;
+    margin-top: 22px;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  &:last-child:after {
+    display: none;
+  }
+
+  & ul {
+    margin-left: 18px;
+    position: relative;
+
+    & li:after {
+      display: none;
+    }
+
+    & .reply {
+      top: 13px;
+    }
+  }
+
+  & ul:after {
+    content: "";
+    position: absolute;
+    opacity: 10%;
+    border-left: 1px solid var(--color-muted);
+    top: 2px;
+    left: -20px;
+    height: 58%;
+  }
+`;
 
 interface CommentProps {
   comment: CommentThreadEntry;
@@ -18,28 +64,29 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
   const replies = useMemo(() => {
     return comment.replies.map((commentReply) => {
       return (
-        <li key={commentReply.id}>
-          <Comment comment={commentReply} commentCount={commentCount} />
-        </li>
+        <Comment
+          comment={commentReply}
+          commentCount={commentCount}
+          key={commentReply.id}
+        />
       );
     });
   }, [comment.replies, commentCount]);
 
   return (
-    <>
-      <div aria-label="Comment by ...">
+    <StyledComment aria-label="Comment by ...">
+      <User>
         <UserAvatar imageUrl={image} />
-        <div>
-          <UserInfo name={name} username={username} />
-        </div>
-        <p>{content}</p>
-        {parentType !== "reply" && (
-          <AddReply parentComment={comment} commentCount={commentCount} />
-        )}
-      </div>
+        <UserInfo name={name} username={username} />
+      </User>
+
+      <p>{content}</p>
+      {parentType !== "reply" && (
+        <AddReply parentComment={comment} commentCount={commentCount} />
+      )}
 
       {comment.replies && comment.replies.length > 0 && <ul>{replies}</ul>}
-    </>
+    </StyledComment>
   );
 }
 

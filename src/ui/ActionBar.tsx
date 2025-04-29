@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import device from "../styles/breakpoints";
 
-const StyledActionBar = styled.section`
+const StyledActionBar = styled.section<{ $isMinimal?: boolean }>`
   display: flex;
   align-items: center;
 
-  background-color: var(--color-action-bar);
+  background-color: ${(props) =>
+    props.$isMinimal ? "initial" : "var(--color-action-bar)"};
+
   color: var(--color-text-light);
-  padding: 10px 24px;
+  padding: ${(props) => (props.$isMinimal ? 0 : "10px 24px")};
 
   @media ${device.sm} {
     padding: 14px 12px 14px 16px;
@@ -18,10 +20,20 @@ const StyledActionBar = styled.section`
 interface ActionBarProps {
   children: React.ReactNode;
   ariaLabel?: string;
+  isMinimal?: boolean;
 }
-function ActionBar({ children, ariaLabel }: ActionBarProps): React.JSX.Element {
+function ActionBar({
+  children,
+  ariaLabel,
+  isMinimal,
+}: ActionBarProps): React.JSX.Element {
   const sectionProps = ariaLabel ? { "aria-label": ariaLabel } : {};
-  return <StyledActionBar {...sectionProps}>{children}</StyledActionBar>;
+
+  return (
+    <StyledActionBar {...sectionProps} $isMinimal={isMinimal}>
+      {children}
+    </StyledActionBar>
+  );
 }
 
 export default ActionBar;

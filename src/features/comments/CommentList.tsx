@@ -1,6 +1,10 @@
 import { memo, useMemo } from "react";
 import { CommentThreadEntry } from "../../types/comment.types";
 import Comment from "./Comment";
+import { H2 } from "../../styles/Typography";
+import styled from "styled-components";
+
+const CommentUL = styled.ul``;
 
 interface CommentListProps {
   commentCount: number;
@@ -15,9 +19,7 @@ function CommentList({
     if (commentCount === 0) return;
 
     return comments.map((comment) => (
-      <li key={comment.id}>
-        <Comment comment={comment} commentCount={commentCount} />
-      </li>
+      <Comment comment={comment} commentCount={commentCount} key={comment.id} />
     ));
   }, [comments, commentCount]);
 
@@ -26,10 +28,10 @@ function CommentList({
 
   return (
     <>
-      <h2>
+      <H2>
         <span>{commentCount}</span> Comments
-      </h2>
-      <ul>{commentItems}</ul>
+      </H2>
+      <CommentUL>{commentItems}</CommentUL>
     </>
   );
 }

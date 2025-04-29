@@ -2,6 +2,13 @@ import { useLoaderData, useParams } from "react-router-dom";
 import { CommentData } from "../../types/comment.types";
 import CommentComposer from "../comments/CommentComposer";
 import CommentList from "../comments/CommentList";
+import styled from "styled-components";
+import { panelStyles } from "../../styles/features/FeedbackStyles";
+import { H2 } from "../../styles/Typography";
+
+const StyledFeedbackDetailCommentThread = styled.main`
+  ${panelStyles}
+`;
 
 function FeedbackDetailCommentThread(): React.JSX.Element {
   const params = useParams();
@@ -14,22 +21,21 @@ function FeedbackDetailCommentThread(): React.JSX.Element {
   const commentHierarchy = commentData.commentHierarchy;
 
   return (
-    <main>
-      {!commentData.success ? (
-        <p>OOPS.Failed to load comments.</p>
-      ) : (
-        <>
+    <>
+      <StyledFeedbackDetailCommentThread>
+        {!commentData.success ? (
+          <p>OOPS.Failed to load comments.</p>
+        ) : (
           <CommentList commentCount={countLoader} comments={commentHierarchy} />
-
-          <CommentComposer
-            mode="comment"
-            payload={{ feedbackId, commentCount: countLoader }}
-          >
-            <h2>Add a Comment</h2>
-          </CommentComposer>
-        </>
-      )}
-    </main>
+        )}
+      </StyledFeedbackDetailCommentThread>
+      <CommentComposer
+        mode="comment"
+        payload={{ feedbackId, commentCount: countLoader }}
+      >
+        <H2>Add a Comment</H2>
+      </CommentComposer>
+    </>
   );
 }
 

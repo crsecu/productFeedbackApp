@@ -1,13 +1,12 @@
 import { memo, ReactNode } from "react";
 import styled from "styled-components";
 import device from "../../styles/breakpoints";
+import { panelStyles } from "../../styles/features/FeedbackStyles";
 
 const StyledFeedbackCard = styled.div`
-  position: relative;
-  background-color: var(--color-surface);
-  border-radius: var(--border-radius);
+  ${panelStyles}
 
-  padding: 28px;
+  position: relative;
 
   & p {
     text-wrap: wrap;

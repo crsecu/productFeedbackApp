@@ -8,7 +8,44 @@ import UpvoteButton from "./UpvoteButton";
 import { Feedback } from "../../types/feedback.types";
 import EditFeedback from "./EditFeedback";
 import { useState, useMemo } from "react";
+import { GoBackButton, SecondaryButton } from "../../styles/UIStyles";
+import styled from "styled-components";
+import device from "../../styles/breakpoints";
 
+const StyledFeedbackDetailPage = styled.div`
+  //TO DO: create reusable Page styling
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+  padding: 28px 24px;
+
+  @media ${device.sm} {
+    padding: 28px 24px;
+  }
+
+  @media ${device.md} {
+    padding: 28px 34px;
+  }
+
+  @media ${device.lg} {
+    flex-direction: row;
+    gap: 30px;
+  }
+
+  @media ${device.xl} {
+    padding: 28px 6vw;
+  }
+
+  @media ${device.xxl} {
+    padding: 28px 10vw;
+  }
+`;
+
+const EditFeedbackButton = styled(SecondaryButton)`
+  margin-left: auto;
+`;
 function FeedbackDetailPage(): React.JSX.Element {
   const navigate = useNavigate();
   const feedback = useLoaderData() as Feedback;
@@ -27,18 +64,20 @@ function FeedbackDetailPage(): React.JSX.Element {
   }, [category, description, status, title]);
 
   return (
-    <>
-      <ActionBar>
-        <button
+    <StyledFeedbackDetailPage>
+      <ActionBar isMinimal={true}>
+        <GoBackButton
           onClick={() => {
             /* TO DO: Find a way to reset unwanted search params that carry out from feedbackBoard */
             navigate(-1);
           }}
         >
           Go Back
-        </button>
+        </GoBackButton>
 
-        <button onClick={() => setShowEditFeedback(true)}>Edit Feedback</button>
+        <EditFeedbackButton onClick={() => setShowEditFeedback(true)}>
+          Edit Feedback
+        </EditFeedbackButton>
       </ActionBar>
 
       {showEditFeedback && (
@@ -56,7 +95,7 @@ function FeedbackDetailPage(): React.JSX.Element {
       </FeedbackCard>
 
       <Outlet />
-    </>
+    </StyledFeedbackDetailPage>
   );
 }
 

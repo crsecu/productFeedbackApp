@@ -1,11 +1,16 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { labelBox } from "../UIStyles";
 
-export const Card = styled.section`
+export const panelStyles = css`
   background-color: var(--color-surface);
-  border-radius: var(--border-radius);
-  padding: 20px;
+  border-radius: var(--border-radius-sm);
+  padding: 22px;
+`;
+
+export const Card = styled.section`
+  ${panelStyles}
   display: flex;
+  padding: 20px;
 `;
 
 export const CategoryLabel = styled.label`

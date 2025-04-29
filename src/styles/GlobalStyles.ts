@@ -25,11 +25,13 @@ const GlobalStyles = createGlobalStyle`
 --color-danger-hover: #E98888;
 --color-danger-active: #E98888;
 
+--color-muted: #647196;
+
 
 /* TEXT COLORS */
 --color-text-light: #FFFFFF;     /* text on dark backgrounds (e.g. buttons, action bar) */
 --color-text-dark: #3A4374;      /* default body and heading text */
---color-text-muted: #647196;     /* secondary text (e.g. metadata, descriptions) */
+--color-text-muted: var(--color-muted);     /* secondary text (e.g. metadata, descriptions) */
 --color-text-accent: #4661E6;
 --color-text-soft-accent: #F2F4FF;   /* tags, or interactive labels */
 

@@ -5,6 +5,18 @@ import { CommentPayload, ReplyPayload } from "../../types/comment.types";
 import CommentBox from "./CommentBox";
 import { getLoggedInUser } from "../../store/slices/userSlice";
 import BannerNotification from "../../ui/BannerNotification";
+import styled from "styled-components";
+import { panelStyles } from "../../styles/features/FeedbackStyles";
+
+const StyledCommentComposer = styled.div`
+  ${panelStyles}
+
+  & div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`;
 
 type CommentComposerProps = {
   children?: ReactNode;
@@ -43,7 +55,7 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
     />
   );
   return (
-    <>
+    <StyledCommentComposer>
       {submissionOutcome !== "success" && notification}
       <fetcher.Form method="post" action=".">
         {children}
@@ -61,7 +73,7 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
           submissionOutcome={submissionOutcome}
         />
       </fetcher.Form>
-    </>
+    </StyledCommentComposer>
   );
 }
 
