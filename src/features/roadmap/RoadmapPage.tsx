@@ -10,6 +10,7 @@ import {
 } from "../../styles/UIStyles";
 import { H1 } from "../../styles/Typography";
 import RoadmapStatusTabBar from "./RoadmapStatusTabBar";
+import device from "../../styles/breakpoints";
 
 const StyledRoadmapPage = styled.div`
   ${PageStyles}
@@ -49,8 +50,8 @@ function RoadmapPage(): React.JSX.Element {
         </PrimaryLinkButton>
       </ActionBar>
       <main>
-        {/* <RoadmapStatusBoard dataFromLoader={dataFromLoader} /> */}
         <RoadmapStatusTabBar dataFromLoader={dataFromLoader} />
+        {/* <RoadmapStatusBoard dataFromLoader={dataFromLoader} /> */}
       </main>
     </StyledRoadmapPage>
   );

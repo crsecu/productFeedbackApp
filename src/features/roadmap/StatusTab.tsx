@@ -12,8 +12,10 @@ function StatusTab({
   handleClick,
 }: StatusTabProps): React.JSX.Element {
   const tabName = capitalizeFirstLetter(tabId);
+
   return (
     <button
+      type="button"
       role="tab"
       aria-selected={activeTab === tabId}
       aria-controls={`tabpanel-${tabId}`}

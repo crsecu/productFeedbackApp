@@ -1,6 +1,6 @@
 import { RoadmapLoaderData } from "../../types/loader.types";
-import RoadmapColumnHeader from "./RoadmapColumnHeader";
-import FeedbackStatusList from "./FeedbackStatusList";
+import RoadmapStatusHeader from "./RoadmapStatusHeader";
+import RoadmapStatusSection from "./RoadmapStatusSection";
 
 interface RoadmapStatusBoardProps {
   dataFromLoader: RoadmapLoaderData;
@@ -15,13 +15,13 @@ function renderRoadmapColumns(
       console.log("list by status", feedbackList);
 
       return (
-        <section>
-          <FeedbackStatusList feedbackList={feedbackList}>
-            <RoadmapColumnHeader
+        <section key={`section-${status}`}>
+          <RoadmapStatusSection feedbackList={feedbackList}>
+            <RoadmapStatusHeader
               statusTitle={status}
               feedbackCount={feedbackList.length}
             />
-          </FeedbackStatusList>
+          </RoadmapStatusSection>
         </section>
       );
     }
@@ -32,7 +32,7 @@ function RoadmapStatusBoard({
   dataFromLoader,
 }: RoadmapStatusBoardProps): React.JSX.Element {
   //TO DO: Assess if memoizing renderRoadmapColumn is worth the cost given its low complexity
-  console.log("ddd", dataFromLoader);
+
   const roadmapSections = renderRoadmapColumns(dataFromLoader);
 
   return <>{roadmapSections}</>;

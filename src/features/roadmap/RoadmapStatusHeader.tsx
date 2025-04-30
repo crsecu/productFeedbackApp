@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { H2 } from "../../styles/Typography";
 import { RoadmapStatus } from "../../types/roadmap.types";
 
-const StyledRoadmapColumnHeader = styled.div``;
-interface RoadmapColumnHeader {
+const StyledRoadmapStatusHeader = styled.div``;
+interface RoadmapStatusHeader {
   statusTitle: RoadmapStatus;
   feedbackCount: number;
 }
@@ -14,18 +14,18 @@ const statusDescription = {
   live: "Released features",
 };
 
-function RoadmapColumnHeader({
+function RoadmapStatusHeader({
   statusTitle,
   feedbackCount,
-}: RoadmapColumnHeader): React.JSX.Element {
+}: RoadmapStatusHeader): React.JSX.Element {
   return (
-    <StyledRoadmapColumnHeader>
+    <StyledRoadmapStatusHeader>
       <H2>
         {statusTitle} <span>({feedbackCount})</span>
       </H2>
       <p>{statusDescription[statusTitle]}</p>
-    </StyledRoadmapColumnHeader>
+    </StyledRoadmapStatusHeader>
   );
 }
 
-export default RoadmapColumnHeader;
+export default RoadmapStatusHeader;

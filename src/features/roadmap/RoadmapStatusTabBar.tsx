@@ -1,10 +1,10 @@
 import { useState } from "react";
 import StatusTab from "./StatusTab";
 import { RoadmapLoaderData } from "../../types/loader.types";
-import RoadmapColumnHeader from "./RoadmapColumnHeader";
+import RoadmapStatusHeader from "./RoadmapStatusHeader";
 
 import { RoadmapStatus } from "../../types/roadmap.types";
-import FeedbackStatusList from "./FeedbackStatusList";
+import RoadmapStatusSection from "./RoadmapStatusSection";
 
 interface RoadmapStatusTabBarProps {
   dataFromLoader: RoadmapLoaderData;
@@ -15,33 +15,32 @@ function RoadmapStatusTabBar({
 }: RoadmapStatusTabBarProps): React.JSX.Element {
   const [activeTab, setActiveTab] = useState<RoadmapStatus>("planned");
 
-  console.log("activeTab", activeTab);
+  const tabButtons = (
+    Object.keys(dataFromLoader) as Array<keyof RoadmapLoaderData>
+  ).map((status) => {
+    return (
+      <StatusTab
+        key={`key-${status}`}
+        tabId={status}
+        handleClick={setActiveTab}
+        activeTab={activeTab}
+      />
+    );
+  });
+
   return (
     <>
-      <div role="tablist" aria-label="Sample Tabs">
-        <StatusTab
-          tabId="planned"
-          handleClick={setActiveTab}
-          activeTab={activeTab}
-        />
-        <StatusTab
-          tabId="in-Progress"
-          handleClick={setActiveTab}
-          activeTab={activeTab}
-        />
-        <StatusTab
-          tabId="live"
-          handleClick={setActiveTab}
-          activeTab={activeTab}
-        />
+      <div role="tablist" aria-label="Sample Tabs" id="roadmap-tablist">
+        {tabButtons}
       </div>
+
       <section role="tabpanel" id={`tabpanel-${activeTab}`}>
-        <FeedbackStatusList feedbackList={dataFromLoader[activeTab]}>
-          <RoadmapColumnHeader
+        <RoadmapStatusSection feedbackList={dataFromLoader[activeTab]}>
+          <RoadmapStatusHeader
             statusTitle={activeTab}
             feedbackCount={dataFromLoader[activeTab].length}
           />
-        </FeedbackStatusList>
+        </RoadmapStatusSection>
       </section>
     </>
   );

@@ -10,16 +10,16 @@ import FeedbackCardContent from "../feedback/FeedbackCardContent";
 
 import { ReactNode } from "react";
 
-interface FeedbackStatusListProps {
+interface RoadmapStatusSectionProps {
   children: ReactNode;
   feedbackList: PlannedFeedback[] | InProgressFeedback[] | LiveFeedback[];
 }
 
 /* This component renders a feedback card list based on status: planned, in-Progress, live */
-function FeedbackStatusList({
+function RoadmapStatusSection({
   children,
   feedbackList,
-}: FeedbackStatusListProps): React.JSX.Element {
+}: RoadmapStatusSectionProps): React.JSX.Element {
   //TO DO: memoize
   const feedbackCards = feedbackList.map((feedbackItem) => {
     return (
@@ -45,4 +45,4 @@ function FeedbackStatusList({
   );
 }
 
-export default FeedbackStatusList;
+export default RoadmapStatusSection;
