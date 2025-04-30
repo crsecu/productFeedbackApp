@@ -53,10 +53,7 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
             />
 
             <Link to={`/feedbackDetail/${item.id}`}>
-              <FeedbackCardContent feedback={item}>
-                {/* <CommentCount count={item.commentCount} /> */}
-                <p></p>
-              </FeedbackCardContent>
+              <FeedbackCardContent feedback={item} />
               <CommentCount count={item.commentCount} />
             </Link>
           </FeedbackCard>

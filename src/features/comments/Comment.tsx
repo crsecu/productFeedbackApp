@@ -29,14 +29,10 @@ const StyledComment = styled.li`
   & ul {
     margin-left: 18px;
     position: relative;
+  }
 
-    & li:after {
-      display: none;
-    }
-
-    & .reply {
-      top: 13px;
-    }
+  & ul & li:after {
+    display: none;
   }
 
   & ul:after {
@@ -47,6 +43,10 @@ const StyledComment = styled.li`
     top: 2px;
     left: -20px;
     height: 58%;
+  }
+
+  & .reply {
+    top: 38px;
   }
 `;
 

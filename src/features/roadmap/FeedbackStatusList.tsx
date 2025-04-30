@@ -10,16 +10,18 @@ import FeedbackCardContent from "../feedback/FeedbackCardContent";
 
 import { ReactNode } from "react";
 
-interface RoadmapStatusColumn {
+interface FeedbackStatusListProps {
   children: ReactNode;
   feedbackList: PlannedFeedback[] | InProgressFeedback[] | LiveFeedback[];
 }
-function RoadmapStatusColumn({
+
+/* This component renders a feedback card list based on status: planned, in-Progress, live */
+function FeedbackStatusList({
   children,
   feedbackList,
-}: RoadmapStatusColumn): React.JSX.Element {
+}: FeedbackStatusListProps): React.JSX.Element {
   //TO DO: memoize
-  const statusColumns = feedbackList.map((feedbackItem) => {
+  const feedbackCards = feedbackList.map((feedbackItem) => {
     return (
       <li key={feedbackItem.id}>
         <FeedbackCard>
@@ -28,9 +30,7 @@ function RoadmapStatusColumn({
             initialUpvoteCount={feedbackItem.upvotes}
           />
           <Link to={`/feedbackDetail/${feedbackItem.id}`}>
-            <FeedbackCardContent feedback={feedbackItem}>
-              <h3>{feedbackItem.title}</h3>
-            </FeedbackCardContent>
+            <FeedbackCardContent feedback={feedbackItem} />
           </Link>
         </FeedbackCard>
       </li>
@@ -38,11 +38,11 @@ function RoadmapStatusColumn({
   });
 
   return (
-    <li>
+    <>
       {children}
-      <ul>{statusColumns}</ul>
-    </li>
+      <ul>{feedbackCards}</ul>
+    </>
   );
 }
 
-export default RoadmapStatusColumn;
+export default FeedbackStatusList;

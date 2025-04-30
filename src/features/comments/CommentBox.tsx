@@ -9,7 +9,11 @@ const Textarea = styled.textarea`
   width: 100%;
   height: 80px;
   margin: 20px 0 10px;
+  padding: 16px;
   border-radius: 5px;
+
+  &::placeholder {
+  }
 `;
 interface CommentBoxProps {
   submissionStatus: "idle" | "loading" | "submitting";
@@ -33,6 +37,8 @@ function CommentBox({
         name="content"
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        maxLength={250}
+        placeholder="Type your comment here"
       ></Textarea>
 
       <div>

@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { SuggestionFeedback } from "../../types/feedback.types";
 import { RoadmapFeedback } from "../../types/roadmap.types";
 import styled from "styled-components";
@@ -35,12 +34,10 @@ const FeedbackTitle = styled(H3)`
 `;
 
 interface FeedbackCardContentProps {
-  children: ReactNode;
   feedback: RoadmapFeedback | SuggestionFeedback;
 }
 
 function FeedbackCardContent({
-  children,
   feedback,
 }: FeedbackCardContentProps): React.JSX.Element {
   if (!feedback) return <article>No matching value found</article>;
@@ -55,7 +52,6 @@ function FeedbackCardContent({
       {status !== "suggestion" && <p>* {status}</p>}
       <p>{description}</p>
       <CategoryLabel>{categoryLabel}</CategoryLabel>
-      {children}
     </StyledFeedbackCardContent>
   );
 }

@@ -12,33 +12,16 @@ import { FeedbackBoardLoaderData } from "../../types/loader.types";
 import FeedbackBoardMainSection from "./FeedbackBoardMainSection";
 
 import FeedbackBoardLeftColumn from "./FeedbackBoardLeftColumn";
-import { PrimaryLinkButton } from "../../styles/UIStyles";
+import { PageStyles, PrimaryLinkButton } from "../../styles/UIStyles";
 import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  @media ${device.sm} {
-    padding: 28px 24px;
-  }
-
-  @media ${device.md} {
-    padding: 28px 34px;
-  }
+  ${PageStyles}
+  padding: 0;
 
   @media ${device.lg} {
     flex-direction: row;
     gap: 30px;
-  }
-
-  @media ${device.xl} {
-    padding: 28px 6vw;
-  }
-
-  @media ${device.xxl} {
-    padding: 28px 10vw;
   }
 `;
 

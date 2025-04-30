@@ -8,39 +8,16 @@ import UpvoteButton from "./UpvoteButton";
 import { Feedback } from "../../types/feedback.types";
 import EditFeedback from "./EditFeedback";
 import { useState, useMemo } from "react";
-import { GoBackButton, SecondaryButton } from "../../styles/UIStyles";
+import {
+  GoBackButton,
+  PageStyles,
+  SecondaryButton,
+} from "../../styles/UIStyles";
 import styled from "styled-components";
-import device from "../../styles/breakpoints";
 
 const StyledFeedbackDetailPage = styled.div`
-  //TO DO: create reusable Page styling
-
-  display: flex;
-  flex-direction: column;
+  ${PageStyles}
   gap: 24px;
-  height: 100%;
-  padding: 28px 24px;
-
-  @media ${device.sm} {
-    padding: 28px 24px;
-  }
-
-  @media ${device.md} {
-    padding: 28px 34px;
-  }
-
-  @media ${device.lg} {
-    flex-direction: row;
-    gap: 30px;
-  }
-
-  @media ${device.xl} {
-    padding: 28px 6vw;
-  }
-
-  @media ${device.xxl} {
-    padding: 28px 10vw;
-  }
 `;
 
 const EditFeedbackButton = styled(SecondaryButton)`
@@ -89,9 +66,10 @@ function FeedbackDetailPage(): React.JSX.Element {
 
       <FeedbackCard>
         <UpvoteButton feedbackId={id} initialUpvoteCount={upvotes} />
-        <FeedbackCardContent feedback={feedback}>
+        <div>
+          <FeedbackCardContent feedback={feedback} />
           <CommentCount />
-        </FeedbackCardContent>
+        </div>
       </FeedbackCard>
 
       <Outlet />

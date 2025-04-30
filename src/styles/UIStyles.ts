@@ -2,6 +2,8 @@
 
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import device from "./breakpoints";
+
 export const StyledLink = styled(Link)`
   font-size: 0.813rem;
   font-weight: var(--font-weight-semibold);
@@ -77,14 +79,16 @@ export const PrimaryLinkButton = styled(BaseLinkButton).attrs(() => ({
   $bgColorHover: "var(--color-primary-hover)",
 }))``;
 
-export const GoBackButton = styled.button`
+export const GoBackBtnStyles = css`
   ${buttonStyles}
 
-  color: var(--color-text-muted);
+  padding: 0;
+  padding-left: 18px;
+
   background: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' viewBox='0 0 7 10' fill='none'%3E%3Cpath d='M6 9L2 5L6 1' stroke='%234661E6' stroke-width='2'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: left;
+  background-position: left bottom 4px;
 
   &:hover {
     text-decoration: underline;
@@ -93,6 +97,17 @@ export const GoBackButton = styled.button`
   &:active {
     transform: scale(0.98);
   }
+`;
+
+export const GoBackButton = styled.button`
+  ${GoBackBtnStyles}
+  color: var(--color-text-muted);
+`;
+
+export const GoBackLinkButton = styled(Link)`
+  ${GoBackBtnStyles}
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' viewBox='0 0 7 10' fill='none'%3E%3Cpath d='M6 9L2 5L6 1' stroke='%23CDD2EE' stroke-width='2'/%3E%3C/svg%3E");
 `;
 
 export const ReplyButton = styled.button`
@@ -110,4 +125,24 @@ export const labelBox = css`
   color: var(--color-text-accent); //
   border-radius: 10px;
   padding: 5px 16px; //
+`;
+
+/* Page Level styles */
+export const PageStyles = css`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 28px 24px;
+
+  @media ${device.md} {
+    padding: 28px 34px;
+  }
+
+  @media ${device.xl} {
+    padding: 28px 6vw;
+  }
+
+  @media ${device.xxl} {
+    padding: 28px 10vw;
+  }
 `;

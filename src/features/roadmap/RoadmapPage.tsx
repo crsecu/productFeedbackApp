@@ -1,24 +1,58 @@
-import { Link, Outlet, useRouteLoaderData } from "react-router-dom";
-
-import { RoadmapLoaderData } from "../../types/feedback.types";
+import { Outlet, useRouteLoaderData } from "react-router-dom";
 import RoadmapStatusBoard from "./RoadmapStatusBoard";
 import ActionBar from "../../ui/ActionBar";
+import { RoadmapLoaderData } from "../../types/loader.types";
+import styled from "styled-components";
+import {
+  GoBackLinkButton,
+  PageStyles,
+  PrimaryLinkButton,
+} from "../../styles/UIStyles";
+import { H1 } from "../../styles/Typography";
+import RoadmapStatusTabBar from "./RoadmapStatusTabBar";
+
+const StyledRoadmapPage = styled.div`
+  ${PageStyles}
+  padding: 0;
+
+  & section:first-child {
+    justify-content: space-between;
+    padding: 24px 20px;
+  }
+
+  & section div > h1 {
+    margin-top: 6px;
+  }
+
+  & main {
+    display: flex;
+  }
+`;
 
 function RoadmapPage(): React.JSX.Element {
   const dataFromLoader = useRouteLoaderData("roadmapData") as RoadmapLoaderData;
+
   return (
-    <>
+    <StyledRoadmapPage>
       <Outlet />
       <ActionBar>
-        <Link to="/feedbackBoard">Go Back</Link>
-        <h1>Roadmap</h1>
-        <Link to={"createFeedback"} state={{ from: location.pathname }}>
-          Add Feedback
-        </Link>
-      </ActionBar>
+        <div>
+          <GoBackLinkButton to="/feedbackBoard">Go Back</GoBackLinkButton>
+          <H1>Roadmap</H1>
+        </div>
 
-      <RoadmapStatusBoard dataFromLoader={dataFromLoader} />
-    </>
+        <PrimaryLinkButton
+          to={"createFeedback"}
+          state={{ from: location.pathname }}
+        >
+          + Add Feedback
+        </PrimaryLinkButton>
+      </ActionBar>
+      <main>
+        {/* <RoadmapStatusBoard dataFromLoader={dataFromLoader} /> */}
+        <RoadmapStatusTabBar dataFromLoader={dataFromLoader} />
+      </main>
+    </StyledRoadmapPage>
   );
 }
 

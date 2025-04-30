@@ -1,7 +1,10 @@
-import { RoadmapStatusType } from "../../types/feedback.types";
+import styled from "styled-components";
+import { H2 } from "../../styles/Typography";
+import { RoadmapStatus } from "../../types/roadmap.types";
 
+const StyledRoadmapColumnHeader = styled.div``;
 interface RoadmapColumnHeader {
-  statusTitle: RoadmapStatusType;
+  statusTitle: RoadmapStatus;
   feedbackCount: number;
 }
 
@@ -16,12 +19,12 @@ function RoadmapColumnHeader({
   feedbackCount,
 }: RoadmapColumnHeader): React.JSX.Element {
   return (
-    <div>
-      <h2>
+    <StyledRoadmapColumnHeader>
+      <H2>
         {statusTitle} <span>({feedbackCount})</span>
-      </h2>
+      </H2>
       <p>{statusDescription[statusTitle]}</p>
-    </div>
+    </StyledRoadmapColumnHeader>
   );
 }
 

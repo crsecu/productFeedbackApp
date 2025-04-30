@@ -17,7 +17,8 @@ const StyledFeedbackCard = styled.div`
     gap: 26px;
     padding: 28px 22px;
 
-    & a {
+    & > div,
+    a {
       display: flex;
       justify-content: space-between;
       gap: 6px;
