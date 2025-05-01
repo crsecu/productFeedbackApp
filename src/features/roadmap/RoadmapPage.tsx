@@ -10,7 +10,8 @@ import {
 } from "../../styles/UIStyles";
 import { H1 } from "../../styles/Typography";
 import RoadmapStatusTabBar from "./RoadmapStatusTabBar";
-import device from "../../styles/breakpoints";
+
+import { useIsMobile } from "../../utils/customHooks";
 
 const StyledRoadmapPage = styled.div`
   ${PageStyles}
@@ -33,6 +34,8 @@ const StyledRoadmapPage = styled.div`
 function RoadmapPage(): React.JSX.Element {
   const dataFromLoader = useRouteLoaderData("roadmapData") as RoadmapLoaderData;
 
+  const isMobile = useIsMobile();
+
   return (
     <StyledRoadmapPage>
       <Outlet />
@@ -50,8 +53,11 @@ function RoadmapPage(): React.JSX.Element {
         </PrimaryLinkButton>
       </ActionBar>
       <main>
-        <RoadmapStatusTabBar dataFromLoader={dataFromLoader} />
-        {/* <RoadmapStatusBoard dataFromLoader={dataFromLoader} /> */}
+        {isMobile ? (
+          <RoadmapStatusTabBar dataFromLoader={dataFromLoader} />
+        ) : (
+          <RoadmapStatusBoard dataFromLoader={dataFromLoader} />
+        )}
       </main>
     </StyledRoadmapPage>
   );
