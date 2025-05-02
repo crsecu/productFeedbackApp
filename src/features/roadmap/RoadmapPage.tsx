@@ -18,7 +18,7 @@ const StyledRoadmapPage = styled.div`
   ${PageStyles}
   padding: 0;
 
-  & section:first-child {
+  & > section:first-child {
     justify-content: space-between;
     padding: 24px 20px;
   }

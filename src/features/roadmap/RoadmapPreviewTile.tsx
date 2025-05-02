@@ -1,12 +1,15 @@
 import RoadmapPreviewItem from "./RoadmapPreviewItem";
 import { RoadmapStats, RoadmapStatus } from "../../types/roadmap.types";
 import styled from "styled-components";
-import { Card } from "../../styles/features/FeedbackStyles";
+import { panelStyles } from "../../styles/features/FeedbackStyles";
 import { StyledLink } from "../../styles/UIStyles";
 import { H2 } from "../../styles/Typography";
 import device from "../../styles/breakpoints";
 
-const StyledRoadmapPreviewTile = styled(Card)`
+const StyledRoadmapPreviewTile = styled.section`
+  ${panelStyles}
+  padding: 20px;
+
   display: initial;
 
   & div,

@@ -11,10 +11,11 @@ import FeedbackCardContent from "../feedback/FeedbackCardContent";
 import { ReactNode } from "react";
 import CommentCount from "../comments/CommentCount";
 import styled from "styled-components";
-import { StyledFeedbackCard } from "../feedback/FeedbackCard";
-import { RoadmapStatus } from "../../types/roadmap.types";
 
-const RoadmapFeedbackCard = styled(StyledFeedbackCard)<{
+import { RoadmapStatus } from "../../types/roadmap.types";
+import FeedbackCard from "../feedback/FeedbackCard";
+
+const RoadmapFeedbackCard = styled(FeedbackCard)<{
   $status: RoadmapStatus;
 }>`
   border-top: 6px solid ${({ $status }) => `var(--color-status-${$status})`};

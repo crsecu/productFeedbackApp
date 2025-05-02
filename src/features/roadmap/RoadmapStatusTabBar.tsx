@@ -18,7 +18,7 @@ const TabButtons = styled.div`
 const TabPanel = styled.section`
   @media ${device.sm} {
     &[role="tabpanel"] {
-      padding: 28px 10vw;
+      /* padding: 28px 10vw; */
     }
   }
 `;

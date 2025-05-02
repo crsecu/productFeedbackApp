@@ -31,6 +31,53 @@ const StyledFeedbackList = styled.section`
     }
   }
 `;
+
+const SuggestionCard = styled(FeedbackCard)`
+  @media ${device.sm} {
+    display: flex;
+    gap: 26px;
+    padding: 28px 22px;
+
+    & a {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      flex-grow: 1;
+    }
+  }
+
+  @media ${device.md} {
+    gap: 36px;
+    padding: 28px;
+  }
+`;
+
+const UpvoteButtonSuggestion = styled(UpvoteButton)`
+  @media ${device.sm} {
+    position: initial;
+    height: fit-content;
+    padding: 10px 8px 8px;
+
+    & svg {
+      display: block;
+      margin: auto;
+      margin-bottom: 5px;
+      height: 14px;
+      width: 14px;
+    }
+  }
+
+  @media ${device.md} {
+    padding: 12px 10px 8px;
+
+    & svg {
+      margin-bottom: 5px;
+      height: 14px;
+      width: 14px;
+    }
+  }
+`;
+
 interface FeedbackListProps {
   suggestions: SuggestionFeedback[];
 }
@@ -46,8 +93,8 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
     return suggestionsSorted.map((item) => {
       return (
         <li key={item.id}>
-          <FeedbackCard>
-            <UpvoteButton
+          <SuggestionCard>
+            <UpvoteButtonSuggestion
               feedbackId={item.id}
               initialUpvoteCount={item.upvotes}
             />
@@ -56,7 +103,7 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
               <FeedbackCardContent feedback={item} />
               <CommentCount count={item.commentCount} />
             </Link>
-          </FeedbackCard>
+          </SuggestionCard>
         </li>
       );
     });

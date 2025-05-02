@@ -4,10 +4,13 @@ import CategoryItem from "./CategoryItem";
 import { handleOptionChange } from "../../utils/helpers";
 import { CATEGORY_OPTIONS } from "../../types/feedback.types";
 import styled from "styled-components";
-import { Card } from "../../styles/features/FeedbackStyles";
+import { panelStyles } from "../../styles/features/FeedbackStyles";
 import device from "../../styles/breakpoints";
 
-const StyledFilterByCategory = styled(Card)``;
+const StyledFilterByCategory = styled.section`
+  ${panelStyles}
+  padding: 20px;
+`;
 
 const CategoryList = styled.ul`
   display: flex;

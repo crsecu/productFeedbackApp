@@ -9,7 +9,6 @@ import { showNotification } from "../../store/slices/toastNotificationSlice";
 import { useState } from "react";
 import styled from "styled-components";
 import { IoChevronUpSharp } from "react-icons/io5";
-import device from "../../styles/breakpoints";
 
 const StyledUpvoteButton = styled.button`
   position: absolute;
@@ -32,30 +31,6 @@ const StyledUpvoteButton = styled.button`
   & path {
     stroke-width: 18%;
   }
-
-  @media ${device.sm} {
-    position: initial;
-    height: fit-content;
-    padding: 10px 8px 8px;
-
-    & svg {
-      display: block;
-      margin: auto;
-      margin-bottom: 5px;
-      height: 14px;
-      width: 14px;
-    }
-  }
-
-  @media ${device.md} {
-    padding: 12px 10px 8px;
-
-    & svg {
-      margin-bottom: 5px;
-      height: 14px;
-      width: 14px;
-    }
-  }
 `;
 
 const StyledChevronUp = styled(IoChevronUpSharp)`
@@ -66,11 +41,13 @@ const StyledChevronUp = styled(IoChevronUpSharp)`
 interface UpvoteButtonProps {
   feedbackId: string;
   initialUpvoteCount: number;
+  className?: string;
 }
 
 function UpvoteButton({
   feedbackId,
   initialUpvoteCount,
+  className,
 }: UpvoteButtonProps): React.JSX.Element {
   const dispatch = useAppDispatch();
 
@@ -105,9 +82,10 @@ function UpvoteButton({
 
   return (
     <StyledUpvoteButton
+      className={className}
       disabled={isLoading}
       onClick={handleUpvote}
-      className={isFeedbackUpvoted ? "upvoted" : ""}
+      // className={isFeedbackUpvoted ? "upvoted" : ""}
     >
       <StyledChevronUp size="0.65rem" />{" "}
       <span>{isLoading ? "Upvoting..." : upvoteCount}</span>

@@ -4,16 +4,16 @@ import { useEffect, useState } from "react";
 
 /* Hook that returns true if the viewport width is less than 768px (mobile + tablet breakpoint)  */
 export function useIsMobile(): boolean {
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 640);
 
   useEffect(() => {
     const handleResize = debounce(() => {
       const viewportWidth = window.innerWidth;
       if (
-        (isMobile && viewportWidth >= 768) ||
-        (!isMobile && viewportWidth < 768)
+        (isMobile && viewportWidth >= 640) ||
+        (!isMobile && viewportWidth < 640)
       ) {
-        setIsMobile(viewportWidth < 768);
+        setIsMobile(viewportWidth < 640);
       }
     }, 100);
 

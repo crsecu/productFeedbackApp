@@ -12,13 +12,14 @@ const StyledCommentCount = styled.div`
   padding-top: 26px;
   justify-content: flex-end;
 
-  @media ${device.sm} {
+  //This style is only needed in FeedbackBoard;
+  // it slightly pushes down the comment count (might not be needed)
+  /* @media ${device.sm} {
     margin: 0;
     align-items: center;
-    //padding-top: 10px;
     padding-top: 0;
     gap: 9px;
-  }
+  } */
 `;
 
 interface CommentCountProps {
