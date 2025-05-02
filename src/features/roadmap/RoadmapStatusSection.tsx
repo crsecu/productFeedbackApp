@@ -4,11 +4,22 @@ import {
   LiveFeedback,
   PlannedFeedback,
 } from "../../types/feedback.types";
-import FeedbackCard from "../feedback/FeedbackCard";
+
 import UpvoteButton from "../feedback/UpvoteButton";
 import FeedbackCardContent from "../feedback/FeedbackCardContent";
 
 import { ReactNode } from "react";
+import CommentCount from "../comments/CommentCount";
+import styled from "styled-components";
+import { StyledFeedbackCard } from "../feedback/FeedbackCard";
+import { RoadmapStatus } from "../../types/roadmap.types";
+
+const RoadmapFeedbackCard = styled(StyledFeedbackCard)<{
+  $status: RoadmapStatus;
+}>`
+  border-top: 6px solid ${({ $status }) => `var(--color-status-${$status})`};
+  border-radius: 6px;
+`;
 
 interface RoadmapStatusSectionProps {
   children: ReactNode;
@@ -24,15 +35,16 @@ function RoadmapStatusSection({
   const feedbackCards = feedbackList.map((feedbackItem) => {
     return (
       <li key={feedbackItem.id}>
-        <FeedbackCard>
+        <RoadmapFeedbackCard $status={feedbackItem.status}>
           <UpvoteButton
             feedbackId={feedbackItem.id}
             initialUpvoteCount={feedbackItem.upvotes}
           />
           <Link to={`/feedbackDetail/${feedbackItem.id}`}>
             <FeedbackCardContent feedback={feedbackItem} />
+            <CommentCount count={feedbackItem.commentCount} />
           </Link>
-        </FeedbackCard>
+        </RoadmapFeedbackCard>
       </li>
     );
   });

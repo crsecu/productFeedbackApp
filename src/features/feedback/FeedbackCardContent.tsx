@@ -3,16 +3,28 @@ import { RoadmapFeedback } from "../../types/roadmap.types";
 import styled from "styled-components";
 import { CategoryLabel } from "../../styles/features/FeedbackStyles";
 import { H3 } from "../../styles/Typography";
-import { formatCategoryLabel } from "../../utils/helpers";
+import {
+  capitalizeFirstLetter,
+  formatCategoryLabel,
+} from "../../utils/helpers";
 import device from "../../styles/breakpoints";
+import { StatusIndicator } from "../../styles/features/RoadmapStyles";
 
-const StyledFeedbackCardContent = styled.div`
+export const StyledFeedbackCardContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
 
   & p {
     color: var(--color-text-muted);
+  }
+
+  & p:first-child {
+    margin-bottom: 8px;
+  }
+
+  & p:first-child span {
+    margin-right: 4px;
   }
 
   & label {
@@ -44,12 +56,17 @@ function FeedbackCardContent({
 
   const { title, description, category, status } = feedback;
   const categoryLabel = formatCategoryLabel(category);
+  const statusLabel = capitalizeFirstLetter(status);
 
   return (
     <StyledFeedbackCardContent>
       {/* TO DO: change to h1 for FeedbackDetail */}
+      {status !== "suggestion" && (
+        <p>
+          <StatusIndicator $status={status} /> {statusLabel}
+        </p>
+      )}
       <FeedbackTitle>{title}</FeedbackTitle>
-      {status !== "suggestion" && <p>* {status}</p>}
       <p>{description}</p>
       <CategoryLabel>{categoryLabel}</CategoryLabel>
     </StyledFeedbackCardContent>

@@ -9,7 +9,7 @@ const StyledCommentCount = styled.div`
   display: flex;
   gap: 9px;
   margin-left: auto;
-  padding-top: 20px;
+  padding-top: 26px;
   justify-content: flex-end;
 
   @media ${device.sm} {

@@ -18,7 +18,7 @@ function renderRoadmapColumns(
         <section key={`section-${status}`}>
           <RoadmapStatusSection feedbackList={feedbackList}>
             <RoadmapStatusHeader
-              statusTitle={status}
+              status={status}
               feedbackCount={feedbackList.length}
             />
           </RoadmapStatusSection>

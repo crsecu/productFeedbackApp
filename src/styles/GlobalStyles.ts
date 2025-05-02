@@ -59,10 +59,14 @@ const GlobalStyles = createGlobalStyle`
 --font-family-base: 'Jost', sans-serif;
 
 
- /* Border */
+/* Border */
 
 --border-radius-sm: 12px;
 --border-radius: 15px;
+
+/* Divider line */
+
+--color-divider: rgba(140, 146, 179, 0.25);
 
 }
 

@@ -13,8 +13,8 @@ const StyledComment = styled.li`
   &:after {
     content: " ";
     display: block;
-    opacity: 0.25;
-    border-bottom: 1px solid #8c92b3;
+
+    border-bottom: 1px solid var(--color-divider);
     margin-top: 22px;
   }
 

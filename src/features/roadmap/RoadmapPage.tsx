@@ -12,6 +12,7 @@ import { H1 } from "../../styles/Typography";
 import RoadmapStatusTabBar from "./RoadmapStatusTabBar";
 
 import { useIsMobile } from "../../utils/customHooks";
+import device from "../../styles/breakpoints";
 
 const StyledRoadmapPage = styled.div`
   ${PageStyles}
@@ -28,6 +29,23 @@ const StyledRoadmapPage = styled.div`
 
   & main {
     display: flex;
+    flex-direction: column;
+  }
+
+  & main section {
+    padding: 28px 24px 46px;
+  }
+
+  & main section ul {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  @media ${device.md} {
+    & main {
+      flex-direction: row;
+    }
   }
 `;
 

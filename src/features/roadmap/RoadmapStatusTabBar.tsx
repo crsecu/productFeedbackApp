@@ -5,6 +5,23 @@ import RoadmapStatusHeader from "./RoadmapStatusHeader";
 
 import { RoadmapStatus } from "../../types/roadmap.types";
 import RoadmapStatusSection from "./RoadmapStatusSection";
+import styled from "styled-components";
+import device from "../../styles/breakpoints";
+
+const TabButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--color-divider);
+`;
+
+const TabPanel = styled.section`
+  @media ${device.sm} {
+    &[role="tabpanel"] {
+      padding: 28px 10vw;
+    }
+  }
+`;
 
 interface RoadmapStatusTabBarProps {
   dataFromLoader: RoadmapLoaderData;
@@ -13,36 +30,40 @@ interface RoadmapStatusTabBarProps {
 function RoadmapStatusTabBar({
   dataFromLoader,
 }: RoadmapStatusTabBarProps): React.JSX.Element {
-  const [activeTab, setActiveTab] = useState<RoadmapStatus>("planned");
+  const [activeTab, setActiveTab] = useState<RoadmapStatus>("in-Progress");
 
   const tabButtons = (
     Object.keys(dataFromLoader) as Array<keyof RoadmapLoaderData>
   ).map((status) => {
+    const feedbackCount = dataFromLoader[status].length;
+
     return (
       <StatusTab
         key={`key-${status}`}
         tabId={status}
         handleClick={setActiveTab}
         activeTab={activeTab}
-      />
+      >
+        {feedbackCount}
+      </StatusTab>
     );
   });
 
   return (
-    <>
-      <div role="tablist" aria-label="Sample Tabs" id="roadmap-tablist">
+    <div>
+      <TabButtons role="tablist" aria-label="Sample Tabs" id="roadmap-tablist">
         {tabButtons}
-      </div>
+      </TabButtons>
 
-      <section role="tabpanel" id={`tabpanel-${activeTab}`}>
+      <TabPanel role="tabpanel" id={`tabpanel-${activeTab}`}>
         <RoadmapStatusSection feedbackList={dataFromLoader[activeTab]}>
           <RoadmapStatusHeader
-            statusTitle={activeTab}
+            status={activeTab}
             feedbackCount={dataFromLoader[activeTab].length}
           />
         </RoadmapStatusSection>
-      </section>
-    </>
+      </TabPanel>
+    </div>
   );
 }
 
