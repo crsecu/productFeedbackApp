@@ -1,16 +1,25 @@
 import { memo, ReactNode } from "react";
 import styled from "styled-components";
-import { panelStyles } from "../../styles/features/FeedbackStyles";
+import { Card, panelStyles } from "../../styles/features/FeedbackStyles";
+import device from "../../styles/breakpoints";
 
-export const StyledFeedbackCard = styled.article`
+export const StyledFeedbackCard = styled(Card)`
   ${panelStyles}
 
-  position: relative;
+  & a, > div {
+    gap: 22px;
+  }
 
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  @media ${device.sm} {
+    display: flex;
+    gap: 36px;
+    padding: 28px 22px;
 
-  & p {
-    text-wrap: wrap;
+    & a,
+    > div {
+      flex-direction: row;
+      gap: 50px;
+    }
   }
 `;
 

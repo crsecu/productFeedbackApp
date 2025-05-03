@@ -4,11 +4,11 @@ import FeedbackCard from "./FeedbackCard";
 import EmptyFeedbackState from "./EmptyFeedbackState";
 import { sortFeedbackList } from "../../utils/helpers";
 import FeedbackCardContent from "./FeedbackCardContent";
-import UpvoteButton from "./UpvoteButton";
 import { SuggestionFeedback } from "../../types/feedback.types";
 import CommentCount from "../comments/CommentCount";
 import styled from "styled-components";
 import device from "../../styles/breakpoints";
+import { UpvoteButtonDynamic } from "../../styles/features/FeedbackStyles";
 
 const StyledFeedbackList = styled.section`
   display: flex;
@@ -39,8 +39,7 @@ const SuggestionCard = styled(FeedbackCard)`
     padding: 28px 22px;
 
     & a {
-      display: flex;
-      justify-content: space-between;
+      flex-direction: row;
       gap: 6px;
       flex-grow: 1;
     }
@@ -49,32 +48,6 @@ const SuggestionCard = styled(FeedbackCard)`
   @media ${device.md} {
     gap: 36px;
     padding: 28px;
-  }
-`;
-
-const UpvoteButtonSuggestion = styled(UpvoteButton)`
-  @media ${device.sm} {
-    position: initial;
-    height: fit-content;
-    padding: 10px 8px 8px;
-
-    & svg {
-      display: block;
-      margin: auto;
-      margin-bottom: 5px;
-      height: 14px;
-      width: 14px;
-    }
-  }
-
-  @media ${device.md} {
-    padding: 12px 10px 8px;
-
-    & svg {
-      margin-bottom: 5px;
-      height: 14px;
-      width: 14px;
-    }
   }
 `;
 
@@ -94,7 +67,7 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
       return (
         <li key={item.id}>
           <SuggestionCard>
-            <UpvoteButtonSuggestion
+            <UpvoteButtonDynamic
               feedbackId={item.id}
               initialUpvoteCount={item.upvotes}
             />

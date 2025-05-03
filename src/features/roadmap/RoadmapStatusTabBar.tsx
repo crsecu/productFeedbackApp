@@ -11,14 +11,21 @@ import device from "../../styles/breakpoints";
 const TabButtons = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 6vw;
   border-bottom: 1px solid var(--color-divider);
+
+  @media ${device.sm} {
+    padding: 0 10vw;
+  }
 `;
 
 const TabPanel = styled.section`
+  &[role="tabpanel"] {
+    padding: 28px 7vw;
+  }
   @media ${device.sm} {
     &[role="tabpanel"] {
-      /* padding: 28px 10vw; */
+      padding: 28px 12vw;
     }
   }
 `;

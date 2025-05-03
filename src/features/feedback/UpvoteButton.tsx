@@ -12,7 +12,7 @@ import { IoChevronUpSharp } from "react-icons/io5";
 
 const StyledUpvoteButton = styled.button`
   position: absolute;
-  bottom: 23px;
+  bottom: 20px;
   left: 28px;
 
   padding: 6px 14px;

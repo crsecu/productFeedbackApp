@@ -3,7 +3,6 @@ import ActionBar from "../../ui/ActionBar";
 import FeedbackCard from "./FeedbackCard";
 import CommentCount from "../comments/CommentCount";
 import FeedbackCardContent from "./FeedbackCardContent";
-import UpvoteButton from "./UpvoteButton";
 
 import { Feedback } from "../../types/feedback.types";
 import EditFeedback from "./EditFeedback";
@@ -14,6 +13,7 @@ import {
   SecondaryButton,
 } from "../../styles/UIStyles";
 import styled from "styled-components";
+import { UpvoteButtonDynamic } from "../../styles/features/FeedbackStyles";
 
 const StyledFeedbackDetailPage = styled.div`
   ${PageStyles}
@@ -65,7 +65,7 @@ function FeedbackDetailPage(): React.JSX.Element {
       )}
 
       <FeedbackCard>
-        <UpvoteButton feedbackId={id} initialUpvoteCount={upvotes} />
+        <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />
         <div>
           <FeedbackCardContent feedback={feedback} />
           <CommentCount />

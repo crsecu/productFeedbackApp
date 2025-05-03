@@ -23,7 +23,7 @@ const StyledRoadmapPage = styled.div`
     padding: 24px 20px;
   }
 
-  & section div > h1 {
+  & > section div > h1 {
     margin-top: 6px;
   }
 
@@ -34,6 +34,7 @@ const StyledRoadmapPage = styled.div`
 
   & main section {
     padding: 28px 24px 46px;
+    flex: 1;
   }
 
   & main section ul {
@@ -45,6 +46,11 @@ const StyledRoadmapPage = styled.div`
   @media ${device.md} {
     & main {
       flex-direction: row;
+      gap: 10px;
+    }
+
+    & main section {
+      padding: 28px 0 46px;
     }
   }
 `;

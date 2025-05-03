@@ -1,6 +1,11 @@
+import styled from "styled-components";
 import { RoadmapLoaderData } from "../../types/loader.types";
 import RoadmapStatusHeader from "./RoadmapStatusHeader";
 import RoadmapStatusSection from "./RoadmapStatusSection";
+
+const Section = styled.section`
+  width: 33%;
+`;
 
 interface RoadmapStatusBoardProps {
   dataFromLoader: RoadmapLoaderData;
@@ -15,14 +20,14 @@ function renderRoadmapColumns(
       console.log("list by status", feedbackList);
 
       return (
-        <section key={`section-${status}`}>
+        <Section key={`section-${status}`}>
           <RoadmapStatusSection feedbackList={feedbackList}>
             <RoadmapStatusHeader
               status={status}
               feedbackCount={feedbackList.length}
             />
           </RoadmapStatusSection>
-        </section>
+        </Section>
       );
     }
   );

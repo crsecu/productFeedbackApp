@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { H2 } from "../../styles/Typography";
 import { RoadmapStatus } from "../../types/roadmap.types";
 import { capitalizeFirstLetter } from "../../utils/helpers";
+import device from "../../styles/breakpoints";
 
 const StyledRoadmapStatusHeader = styled.div`
   & h2 {
@@ -9,6 +10,10 @@ const StyledRoadmapStatusHeader = styled.div`
   }
 
   margin-bottom: 24px;
+
+  @media ${device.md} {
+    min-height: 78px;
+  }
 `;
 interface RoadmapStatusHeader {
   status: RoadmapStatus;
