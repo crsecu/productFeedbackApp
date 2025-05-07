@@ -1,13 +1,17 @@
 import { memo, ReactNode } from "react";
 import styled from "styled-components";
-import { Card, panelStyles } from "../../styles/features/FeedbackStyles";
+import { Card } from "../../styles/features/FeedbackStyles";
 import device from "../../styles/breakpoints";
 
 export const StyledFeedbackCard = styled(Card)`
-  ${panelStyles}
-
-  & a, > div {
+  & a,
+  > div {
     gap: 22px;
+  }
+
+  & a div,
+  div div {
+    max-width: 95%;
   }
 
   @media ${device.sm} {
@@ -18,7 +22,12 @@ export const StyledFeedbackCard = styled(Card)`
     & a,
     > div {
       flex-direction: row;
-      gap: 50px;
+      justify-content: space-between;
+    }
+
+    & a div,
+    div div {
+      max-width: 86%;
     }
   }
 `;

@@ -10,8 +10,8 @@ export const StatusIndicator = styled.span<{ $status: RoadmapStatus }>`
   margin-right: 14px;
 `;
 
-export const StatusIndicator1 = styled.p<{ $status: RoadmapStatus }>`
-  margin-bottom: 14px;
+export const RoadmapStatusDot = styled.span<{ $status: RoadmapStatus }>`
+  margin-bottom: 4px;
 
   &:before {
     content: "";
@@ -20,7 +20,7 @@ export const StatusIndicator1 = styled.p<{ $status: RoadmapStatus }>`
     height: 8px;
     border-radius: 50%;
     background-color: ${(props) => `var(--color-status-${props.$status})`};
-    margin-right: 4px;
+    margin-right: 14px;
     vertical-align: baseline;
   }
 `;

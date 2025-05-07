@@ -3,16 +3,19 @@ import { RoadmapFeedback } from "../../types/roadmap.types";
 import styled from "styled-components";
 import { CategoryLabel } from "../../styles/features/FeedbackStyles";
 import { H3 } from "../../styles/Typography";
-import { formatCategoryLabel } from "../../utils/helpers";
-import device from "../../styles/breakpoints";
+import {
+  capitalizeFirstLetter,
+  formatCategoryLabel,
+} from "../../utils/helpers";
 
-import { ReactNode } from "react";
+import { RoadmapStatusDot } from "../../styles/features/RoadmapStyles";
 
 export const StyledFeedbackCardContent = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
   gap: 10px;
+  word-break: break-word;
 
   & h3,
   h3 + p {
@@ -26,31 +29,10 @@ export const StyledFeedbackCardContent = styled.div`
     -webkit-line-clamp: 2;
   }
 
-  & p {
+  & h3 + p {
     color: var(--color-text-muted);
     min-height: 39px;
   }
-
-  & p:first-child {
-    margin-bottom: 8px;
-  }
-
-  & p:first-child span {
-    margin-right: 4px;
-  }
-
-  & label {
-    width: fit-content;
-  }
-
-  /* @media ${device.sm} {
-    gap: 3px;
-
-    flex-shrink: 2.5;
-    & label {
-      margin-top: 6px;
-    }
-  } */
 `;
 
 const FeedbackTitle = styled(H3)`
@@ -58,25 +40,26 @@ const FeedbackTitle = styled(H3)`
 `;
 
 interface FeedbackCardContentProps {
-  children?: ReactNode;
   feedback: RoadmapFeedback | SuggestionFeedback;
   className?: string;
 }
 
 function FeedbackCardContent({
-  children,
   feedback,
   className,
 }: FeedbackCardContentProps): React.JSX.Element {
   if (!feedback) return <article>No matching value found</article>;
 
-  const { title, description, category } = feedback;
+  const { title, description, category, status } = feedback;
   const categoryLabel = formatCategoryLabel(category);
-
+  const statusLabel = capitalizeFirstLetter(status);
   return (
     <StyledFeedbackCardContent className={className}>
       {/* TO DO: change to h1 for FeedbackDetail */}
-      {children}
+
+      {status !== "suggestion" && (
+        <RoadmapStatusDot $status={status}>{statusLabel}</RoadmapStatusDot>
+      )}
 
       <FeedbackTitle>{title}</FeedbackTitle>
       <p>{description}</p>

@@ -21,10 +21,9 @@ export const Card = styled.article`
     text-wrap: wrap;
   }
 
-  & > div,
-  a {
+  & a,
+  > div {
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
     flex-grow: 1;
   }
@@ -34,6 +33,7 @@ export const CategoryLabel = styled.label`
   ${labelBox}
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-body-3);
+  width: fit-content;
 `;
 
 export const UpvoteButtonDynamic = styled(UpvoteButton)`

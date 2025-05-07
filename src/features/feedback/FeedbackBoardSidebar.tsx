@@ -29,20 +29,25 @@ const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
     & section {
       border-radius: var(--border-radius-sm);
 
-      &:first-of-type {
-        flex: 1;
-      }
-
       &:last-of-type {
-        flex: 1;
+        flex-grow: 1;
       }
+    }
+  }
+
+  @media ${device.md} {
+    & section:first-child {
+      flex-grow: 1;
+    }
+    & section:last-child {
+      flex-grow: 10;
     }
   }
 
   @media ${device.lg} {
     flex-direction: column;
     flex-grow: initial;
-    width: auto;
+    width: 240px;
     gap: 24px;
   }
 `;

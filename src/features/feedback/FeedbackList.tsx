@@ -34,14 +34,10 @@ const StyledFeedbackList = styled.section`
 
 const SuggestionCard = styled(FeedbackCard)`
   @media ${device.sm} {
-    display: flex;
     gap: 26px;
-    padding: 28px 22px;
 
     & a {
-      flex-direction: row;
       gap: 6px;
-      flex-grow: 1;
     }
   }
 

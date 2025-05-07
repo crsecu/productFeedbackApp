@@ -10,6 +10,10 @@ import device from "../../styles/breakpoints";
 const StyledFilterByCategory = styled.section`
   ${panelStyles}
   padding: 20px;
+
+  @media ${device.sm} {
+    padding-right: 0;
+  }
 `;
 
 const CategoryList = styled.ul`
@@ -19,10 +23,10 @@ const CategoryList = styled.ul`
   padding-top: 6px;
   padding-bottom: 14px;
 
+  max-width: 200px;
+
   & li:nth-child(4) {
     margin-right: 6px;
-  }
-  @media ${device.lg} {
   }
 `;
 

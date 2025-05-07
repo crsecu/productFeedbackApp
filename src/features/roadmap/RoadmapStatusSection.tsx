@@ -12,8 +12,6 @@ import { ReactNode } from "react";
 import CommentCount from "../comments/CommentCount";
 import styled from "styled-components";
 import { RoadmapStatus } from "../../types/roadmap.types";
-import { StatusIndicator1 } from "../../styles/features/RoadmapStyles";
-import { capitalizeFirstLetter } from "../../utils/helpers";
 import device from "../../styles/breakpoints";
 import { Card } from "../../styles/features/FeedbackStyles";
 
@@ -26,7 +24,6 @@ const RoadmapFeedbackCard = styled(Card)<{
 
   & a {
     height: 100%;
-    flex-direction: column;
   }
 
   & button,
@@ -43,8 +40,7 @@ const RoadmapFeedbackCard = styled(Card)<{
   }
 
   @media (max-width: 1023px) {
-    & button,
-    span,
+    & span,
     p,
     h3 {
       font-size: var(--text-xs);
@@ -52,7 +48,9 @@ const RoadmapFeedbackCard = styled(Card)<{
   }
 `;
 
-const RoadmapFeedbackCardContent = styled(FeedbackCardContent)``;
+const RoadmapFeedbackCardContent = styled(FeedbackCardContent)`
+  max-width: ;
+`;
 
 interface RoadmapStatusSectionProps {
   children: ReactNode;
@@ -66,7 +64,6 @@ function RoadmapStatusSection({
 }: RoadmapStatusSectionProps): React.JSX.Element {
   //TO DO: memoize
   const feedbackCards = feedbackList.map((feedbackItem) => {
-    const statusLabel = capitalizeFirstLetter(feedbackItem.status);
     return (
       <li key={feedbackItem.id}>
         <RoadmapFeedbackCard $status={feedbackItem.status}>
@@ -75,10 +72,6 @@ function RoadmapStatusSection({
             initialUpvoteCount={feedbackItem.upvotes}
           />
           <Link to={`/feedbackDetail/${feedbackItem.id}`}>
-            <StatusIndicator1 $status={feedbackItem.status}>
-              <span aria-hidden="true"></span> {statusLabel}
-            </StatusIndicator1>
-
             <RoadmapFeedbackCardContent feedback={feedbackItem} />
             <CommentCount count={feedbackItem.commentCount} />
           </Link>

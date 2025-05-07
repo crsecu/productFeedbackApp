@@ -1,12 +1,9 @@
 import styled from "styled-components";
-import { StatusIndicator } from "../../styles/features/RoadmapStyles";
+import { RoadmapStatusDot } from "../../styles/features/RoadmapStyles";
 
 import { RoadmapStatus } from "../../types/roadmap.types";
 import { capitalizeFirstLetter } from "../../utils/helpers";
-
-const Status = styled.span`
-  font-size: var(--text-base);
-`;
+const StyledRoadmapPreviewItem = styled.li``;
 
 const Count = styled.span`
   font-size: var(--text-base);
@@ -23,13 +20,11 @@ function RoadmapPreviewItem({
 }: RoadmapPreviewItemProps): React.JSX.Element {
   const roadmapStatus = capitalizeFirstLetter(stage);
   return (
-    <li>
-      <Status>
-        <StatusIndicator $status={stage} />
-        {roadmapStatus}
-      </Status>
+    <StyledRoadmapPreviewItem>
+      <RoadmapStatusDot $status={stage}>{roadmapStatus}</RoadmapStatusDot>
+
       <Count>{count}</Count>
-    </li>
+    </StyledRoadmapPreviewItem>
   );
 }
 

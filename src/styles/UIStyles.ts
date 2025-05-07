@@ -133,6 +133,9 @@ export const PageStyles = css`
   flex-direction: column;
   height: 100%;
   padding: 28px 24px;
+  @media ${device.sm} {
+    padding: 28px 24px;
+  }
 
   @media ${device.md} {
     padding: 28px 34px;

@@ -20,6 +20,12 @@ const StyledFeedbackDetailPage = styled.div`
   gap: 24px;
 `;
 
+const FeedbackDetailCardContent = styled(FeedbackCardContent)`
+  & h3,
+  h3 + p {
+    display: block;
+  }
+`;
 const EditFeedbackButton = styled(SecondaryButton)`
   margin-left: auto;
 `;
@@ -67,7 +73,7 @@ function FeedbackDetailPage(): React.JSX.Element {
       <FeedbackCard>
         <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />
         <div>
-          <FeedbackCardContent feedback={feedback} />
+          <FeedbackDetailCardContent feedback={feedback} />
           <CommentCount />
         </div>
       </FeedbackCard>
