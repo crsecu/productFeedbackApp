@@ -3,8 +3,9 @@ import { CommentData } from "../../types/comment.types";
 import CommentComposer from "../comments/CommentComposer";
 import CommentList from "../comments/CommentList";
 import styled from "styled-components";
-import { panelStyles } from "../../styles/features/FeedbackStyles";
+
 import { H2 } from "../../styles/Typography";
+import { panelStyles } from "../../styles/UIStyles";
 
 const StyledFeedbackDetailCommentThread = styled.main`
   ${panelStyles}

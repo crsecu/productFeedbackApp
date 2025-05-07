@@ -11,6 +11,10 @@ import { panelStyles } from "../../styles/features/FeedbackStyles";
 const StyledCommentComposer = styled.div`
   ${panelStyles}
 
+  & h2 {
+    padding-bottom: 4px;
+  }
+
   & div {
     display: flex;
     justify-content: space-between;

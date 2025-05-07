@@ -1,8 +1,8 @@
 import RoadmapPreviewItem from "./RoadmapPreviewItem";
 import { RoadmapStats, RoadmapStatus } from "../../types/roadmap.types";
 import styled from "styled-components";
-import { panelStyles } from "../../styles/features/FeedbackStyles";
-import { StyledLink } from "../../styles/UIStyles";
+
+import { panelStyles, StyledLink } from "../../styles/UIStyles";
 import { H2 } from "../../styles/Typography";
 import device from "../../styles/breakpoints";
 

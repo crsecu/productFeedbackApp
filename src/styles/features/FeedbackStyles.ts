@@ -1,13 +1,7 @@
-import styled, { css } from "styled-components";
-import { labelBox } from "../UIStyles";
+import styled from "styled-components";
+import { labelBox, panelStyles } from "../UIStyles";
 import device from "../breakpoints";
 import UpvoteButton from "../../features/feedback/UpvoteButton";
-
-export const panelStyles = css`
-  background-color: var(--color-surface);
-  border-radius: var(--border-radius-sm);
-  padding: 22px;
-`;
 
 export const Card = styled.article`
   ${panelStyles}
@@ -80,3 +74,4 @@ export const StyledFeedbackCard1 = styled.article`
     justify-content: space-between;
   }
 `;
+export { panelStyles };

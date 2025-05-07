@@ -1,20 +1,7 @@
 import { useEffect, useState } from "react";
 import { SubmissionOutcome } from "../../types/action.types";
-import styled from "styled-components";
-import { PrimaryButton } from "../../styles/UIStyles";
+import { PrimaryButton, Textarea } from "../../styles/UIStyles";
 
-const Textarea = styled.textarea`
-  border: none;
-  background-color: var(--color-background);
-  width: 100%;
-  height: 80px;
-  margin: 20px 0 10px;
-  padding: 16px;
-  border-radius: 5px;
-
-  &::placeholder {
-  }
-`;
 interface CommentBoxProps {
   submissionStatus: "idle" | "loading" | "submitting";
   submissionOutcome: SubmissionOutcome;

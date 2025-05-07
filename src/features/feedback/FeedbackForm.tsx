@@ -11,6 +11,14 @@ import {
   EditFeedbackFormValues,
 } from "../../types/form.types";
 import { CATEGORY_OPTIONS } from "../../types/feedback.types";
+import styled from "styled-components";
+import { CancelButton, PrimaryButton, Textarea } from "../../styles/UIStyles";
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+`;
 
 type FormComponentType = React.ForwardRefExoticComponent<
   (FetcherFormProps | FormProps) & React.RefAttributes<HTMLFormElement>
@@ -87,7 +95,6 @@ function FeedbackForm({
           <FormFieldError errorMessage={validationErrors.title} />
         )}
       </FormField>
-      <br></br>
 
       <FormField
         inputId="feedbackCategory"
@@ -112,7 +119,8 @@ function FeedbackForm({
         description="Include any specific comments on what should be improved, added, etc."
         inputGuidanceId="feedbackDescriptionDesc"
       >
-        <textarea
+        <Textarea
+          $height={120}
           name="description"
           id="feedbackDescription"
           aria-describedby="feedbackDescriptionDesc"
@@ -124,18 +132,17 @@ function FeedbackForm({
           <FormFieldError errorMessage={validationErrors.description} />
         )}
       </FormField>
-      <br></br>
 
-      <div>
-        <button type="submit" disabled={!isDirty || isSubmitting}>
+      <ButtonContainer>
+        <PrimaryButton type="submit" disabled={!isDirty || isSubmitting}>
           {isSubmitting ? "Submitting..." : submitBtnText}
-        </button>
-        <button type="button" onClick={() => onCancel(isDirty)}>
+        </PrimaryButton>
+        <CancelButton type="button" onClick={() => onCancel(isDirty)}>
           Cancel
-        </button>
+        </CancelButton>
 
         {buttons}
-      </div>
+      </ButtonContainer>
     </FormComponent>
   );
   return <>{formOutput}</>;

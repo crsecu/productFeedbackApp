@@ -4,8 +4,9 @@ import CategoryItem from "./CategoryItem";
 import { handleOptionChange } from "../../utils/helpers";
 import { CATEGORY_OPTIONS } from "../../types/feedback.types";
 import styled from "styled-components";
-import { panelStyles } from "../../styles/features/FeedbackStyles";
+
 import device from "../../styles/breakpoints";
+import { panelStyles } from "../../styles/UIStyles";
 
 const StyledFilterByCategory = styled.section`
   ${panelStyles}

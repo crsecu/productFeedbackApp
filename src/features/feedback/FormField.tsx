@@ -1,5 +1,25 @@
 import { ReactNode } from "react";
+import styled from "styled-components";
 
+const StyledFormField = styled.div`
+  margin-bottom: 20px;
+  & label {
+    display: block;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.18px;
+    margin-bottom: 2px;
+  }
+
+  & span {
+    color: var(--color-text-muted);
+    display: block;
+  }
+
+  & input,
+  select {
+    margin-top: 16px;
+  }
+`;
 interface FormField {
   children: ReactNode;
   inputId: string;
@@ -16,11 +36,11 @@ function FormField({
   inputGuidanceId,
 }: FormField): React.JSX.Element {
   return (
-    <div>
+    <StyledFormField>
       <label htmlFor={inputId}>{label}</label>
       <span id={inputGuidanceId}>{description}</span>
       {children}
-    </div>
+    </StyledFormField>
   );
 }
 

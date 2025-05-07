@@ -15,6 +15,11 @@ import { getFeedbackFormResponse } from "../../utils/helpers";
 import { CreateFeedbackFormValues } from "../../types/form.types";
 import { ActionResult } from "../../types/action.types";
 
+import { FormPage, FormSection, GoBackButton } from "../../styles/UIStyles";
+import ActionBar from "../../ui/ActionBar";
+import createFeedbackIcon from "../../assets/images/createFeedback-icon.svg";
+import { H1 } from "../../styles/Typography";
+
 const initialFormState = {
   title: "",
   category: "feature",
@@ -69,11 +74,15 @@ function CreateFeedback(): React.JSX.Element {
   );
 
   return (
-    <div>
+    <FormPage>
       {notification}
+      <ActionBar isMinimal={true}>
+        <GoBackButton onClick={() => navigate(-1)}>Go Back</GoBackButton>
+      </ActionBar>
       {showForm && (
-        <div>
-          <h1>Create New Feedback</h1>
+        <FormSection>
+          <img src={createFeedbackIcon} alt="" />
+          <H1>Create New Feedback</H1>
           <FeedbackForm
             method="post"
             defaultValues={initialFormState}
@@ -82,11 +91,11 @@ function CreateFeedback(): React.JSX.Element {
             FormComponent={Form}
             submissionStatus={navigation.state}
             actionResult={actionData}
-            submitBtnText={"Submit Feedback"}
+            submitBtnText={"Add Feedback"}
           />
-        </div>
+        </FormSection>
       )}
-    </div>
+    </FormPage>
   );
 }
 

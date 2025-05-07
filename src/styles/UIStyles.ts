@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import device from "./breakpoints";
 
+/* White backdrop */
+export const panelStyles = css`
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-sm);
+  padding: 22px;
+`;
+
 export const StyledLink = styled(Link)`
   font-size: 0.813rem;
   font-weight: var(--font-weight-semibold);
@@ -30,7 +37,7 @@ const buttonStyles = css`
   color: var(--color-text-soft-accent);
   border: none;
   padding: 10px 16px;
-  border-radius: 11px;
+  border-radius: 10px;
 `;
 
 export const BaseButton = styled.button<ButtonStyleProps>`
@@ -106,7 +113,6 @@ export const GoBackButton = styled.button`
 
 export const GoBackLinkButton = styled(Link)`
   ${GoBackBtnStyles}
-
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' viewBox='0 0 7 10' fill='none'%3E%3Cpath d='M6 9L2 5L6 1' stroke='%23CDD2EE' stroke-width='2'/%3E%3C/svg%3E");
 `;
 
@@ -118,6 +124,16 @@ export const ReplyButton = styled.button`
   background: none;
   font-weight: var(--font-weight-semibold);
 `;
+
+export const CancelButton = styled(BaseButton).attrs(() => ({
+  $bgColor: "var(--color-tertiary)",
+  $bgColorHover: "var(--color-tertiary-hover)",
+}))``;
+
+export const DeleteButton = styled(BaseButton).attrs(() => ({
+  $bgColor: "var(--color-danger)",
+  $bgColorHover: "var(--color-danger-hover)",
+}))``;
 
 /* Box with rounded corners used for: category labels, upvote button */
 export const labelBox = css`
@@ -147,5 +163,39 @@ export const PageStyles = css`
 
   @media ${device.xxl} {
     padding: 28px 10vw;
+  }
+`;
+
+export const FormPage = styled.div`
+  ${PageStyles}
+  gap: 44px;
+  height: initial;
+`;
+
+export const FormSection = styled.section`
+  ${panelStyles}
+  position: relative;
+  flex: 1;
+
+  & img {
+    position: absolute;
+    top: -16px;
+  }
+
+  & h1 {
+    margin: 16px 0;
+  }
+`;
+
+export const Textarea = styled.textarea<{ $height?: number }>`
+  border: none;
+  background-color: var(--color-background);
+  width: 100%;
+  height: ${(props) => (props.$height ? props.$height : 80)}px;
+  margin: 16px 0 10px;
+  padding: 16px;
+  border-radius: var(--border-radius-xs);
+
+  &::placeholder {
   }
 `;

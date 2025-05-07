@@ -1,3 +1,15 @@
+import styled from "styled-components";
+
+const StyledInputField = styled.input`
+  border: none;
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-xs);
+  padding: 16px;
+
+  height: 48px;
+  width: 100%;
+`;
+
 interface InputFieldProps {
   name: string;
   id: string;
@@ -16,14 +28,14 @@ function InputField({
   describedById,
 }: InputFieldProps): React.JSX.Element {
   return (
-    <input
+    <StyledInputField
       type={type}
       name={name}
       id={id}
       aria-describedby={describedById}
       defaultValue={initialValue}
       required={isRequired}
-    ></input>
+    ></StyledInputField>
   );
 }
 

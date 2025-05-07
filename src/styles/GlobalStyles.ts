@@ -61,6 +61,7 @@ const GlobalStyles = createGlobalStyle`
 
 /* Border */
 
+--border-radius-xs: 5px;
 --border-radius-sm: 12px;
 --border-radius: 15px;
 
@@ -129,6 +130,7 @@ max-width: 100%;
 
 input, button, textarea, select {
 font: inherit;
+color: inherit;
 }
 
 a {

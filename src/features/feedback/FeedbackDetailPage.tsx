@@ -18,6 +18,10 @@ import { UpvoteButtonDynamic } from "../../styles/features/FeedbackStyles";
 const StyledFeedbackDetailPage = styled.div`
   ${PageStyles}
   gap: 24px;
+
+  & > section {
+    min-height: 40px;
+  }
 `;
 
 const FeedbackDetailCardContent = styled(FeedbackCardContent)`
@@ -26,9 +30,11 @@ const FeedbackDetailCardContent = styled(FeedbackCardContent)`
     display: block;
   }
 `;
-const EditFeedbackButton = styled(SecondaryButton)`
+const EditFeedbackButton = styled(SecondaryButton)<{ $hideButton?: boolean }>`
   margin-left: auto;
+  ${(props) => props.$hideButton && "display: none"};
 `;
+
 function FeedbackDetailPage(): React.JSX.Element {
   const navigate = useNavigate();
   const feedback = useLoaderData() as Feedback;
@@ -58,7 +64,10 @@ function FeedbackDetailPage(): React.JSX.Element {
           Go Back
         </GoBackButton>
 
-        <EditFeedbackButton onClick={() => setShowEditFeedback(true)}>
+        <EditFeedbackButton
+          onClick={() => setShowEditFeedback(true)}
+          $hideButton={showEditFeedback}
+        >
           Edit Feedback
         </EditFeedbackButton>
       </ActionBar>

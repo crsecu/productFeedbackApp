@@ -8,6 +8,8 @@ import BannerNotification from "../../ui/BannerNotification";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import { EditFeedbackFormValues } from "../../types/form.types";
 import { STATUS_OPTIONS } from "../../types/feedback.types";
+import { DeleteButton, FormSection } from "../../styles/UIStyles";
+import editFeedbackIcon from "../../assets/images/editFeedback-icon.svg";
 
 interface EditFeedbackProps {
   editableFeedback?: EditFeedbackFormValues;
@@ -47,11 +49,12 @@ function EditFeedback({
   );
   return (
     <div className={`formModal ${!isSubmissionSuccessful ? "fullSize" : ""}`}>
-      <div>
+      <>
         <button onClick={() => setShowEditFeedback(false)}>x</button>
         {notification}
         {showForm && (
-          <>
+          <FormSection>
+            <img src={editFeedbackIcon} alt="" />
             <h1>Editing title</h1>
 
             <FeedbackForm
@@ -59,7 +62,7 @@ function EditFeedback({
               defaultValues={editableFeedback}
               buttons={
                 <>
-                  <button
+                  <DeleteButton
                     type="button"
                     onClick={() => {
                       dispatch(
@@ -71,7 +74,7 @@ function EditFeedback({
                     }}
                   >
                     Delete
-                  </button>
+                  </DeleteButton>
                 </>
               }
               actionRoute="editFeedback"
@@ -79,7 +82,7 @@ function EditFeedback({
               FormComponent={fetcher.Form}
               submissionStatus={fetcher.state}
               actionResult={fetcher.data}
-              submitBtnText={"Update Feedback"}
+              submitBtnText={"Save Changes"}
             >
               <FormField
                 inputId="feedbackStatus"
@@ -96,9 +99,9 @@ function EditFeedback({
                 />
               </FormField>
             </FeedbackForm>
-          </>
+          </FormSection>
         )}
-      </div>
+      </>
     </div>
   );
 }
