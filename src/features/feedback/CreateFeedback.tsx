@@ -18,6 +18,7 @@ import { ActionResult } from "../../types/action.types";
 import { FormPage, FormSection, GoBackButton } from "../../styles/UIStyles";
 import ActionBar from "../../ui/ActionBar";
 import createFeedbackIcon from "../../assets/images/createFeedback-icon.svg";
+import formSuccess from "../../assets/images/form-success.svg";
 import { H1 } from "../../styles/Typography";
 
 const initialFormState = {
@@ -53,6 +54,8 @@ function CreateFeedback(): React.JSX.Element {
     }
   }
 
+  //const submissionIcon = isSubmissionSuccessful ? formSuccess : "";
+
   const notification = (
     <BannerNotification
       notificationType={submissionOutcome}
@@ -67,7 +70,6 @@ function CreateFeedback(): React.JSX.Element {
           >
             View Details
           </button>
-          <button onClick={() => navigate("..")}>Go Back</button>
         </>
       )}
     </BannerNotification>
@@ -75,26 +77,28 @@ function CreateFeedback(): React.JSX.Element {
 
   return (
     <FormPage>
-      {notification}
       <ActionBar isMinimal={true}>
         <GoBackButton onClick={() => navigate(-1)}>Go Back</GoBackButton>
       </ActionBar>
-      {showForm && (
-        <FormSection>
-          <img src={createFeedbackIcon} alt="" />
-          <H1>Create New Feedback</H1>
-          <FeedbackForm
-            method="post"
-            defaultValues={initialFormState}
-            actionRoute="."
-            onCancel={handleCancel}
-            FormComponent={Form}
-            submissionStatus={navigation.state}
-            actionResult={actionData}
-            submitBtnText={"Add Feedback"}
-          />
-        </FormSection>
-      )}
+      <FormSection>
+        {notification}
+        {showForm && (
+          <>
+            <img src={createFeedbackIcon} alt="" />
+            <H1>Create New Feedback</H1>
+            <FeedbackForm
+              method="post"
+              defaultValues={initialFormState}
+              actionRoute="."
+              onCancel={handleCancel}
+              FormComponent={Form}
+              submissionStatus={navigation.state}
+              actionResult={actionData}
+              submitBtnText={"Add Feedback"}
+            />
+          </>
+        )}
+      </FormSection>
     </FormPage>
   );
 }

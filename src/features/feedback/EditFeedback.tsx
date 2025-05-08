@@ -10,9 +10,10 @@ import { EditFeedbackFormValues } from "../../types/form.types";
 import { STATUS_OPTIONS } from "../../types/feedback.types";
 import { DeleteButton, FormSection } from "../../styles/UIStyles";
 import editFeedbackIcon from "../../assets/images/editFeedback-icon.svg";
+import { H1 } from "../../styles/Typography";
 
 interface EditFeedbackProps {
-  editableFeedback?: EditFeedbackFormValues;
+  editableFeedback: EditFeedbackFormValues;
   setShowEditFeedback: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -55,7 +56,7 @@ function EditFeedback({
         {showForm && (
           <FormSection>
             <img src={editFeedbackIcon} alt="" />
-            <h1>Editing title</h1>
+            <H1>Editing "{editableFeedback.title}"</H1>
 
             <FeedbackForm
               method="patch"

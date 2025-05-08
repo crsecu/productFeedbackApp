@@ -14,6 +14,7 @@ import {
 } from "../../styles/UIStyles";
 import styled from "styled-components";
 import { UpvoteButtonDynamic } from "../../styles/features/FeedbackStyles";
+import { createPortal } from "react-dom";
 
 const StyledFeedbackDetailPage = styled.div`
   ${PageStyles}
@@ -52,6 +53,8 @@ function FeedbackDetailPage(): React.JSX.Element {
     };
   }, [category, description, status, title]);
 
+  const rootEl = document.getElementById("root")!;
+
   return (
     <StyledFeedbackDetailPage>
       <ActionBar isMinimal={true}>
@@ -72,12 +75,14 @@ function FeedbackDetailPage(): React.JSX.Element {
         </EditFeedbackButton>
       </ActionBar>
 
-      {showEditFeedback && (
-        <EditFeedback
-          editableFeedback={editableFeedbackFields}
-          setShowEditFeedback={setShowEditFeedback}
-        />
-      )}
+      {showEditFeedback &&
+        createPortal(
+          <EditFeedback
+            editableFeedback={editableFeedbackFields}
+            setShowEditFeedback={setShowEditFeedback}
+          />,
+          rootEl
+        )}
 
       <FeedbackCard>
         <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />

@@ -183,7 +183,7 @@ export const FormSection = styled.section`
   }
 
   & h1 {
-    margin: 16px 0;
+    margin: 18px 0;
   }
 `;
 
