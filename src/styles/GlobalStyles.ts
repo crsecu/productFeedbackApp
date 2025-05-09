@@ -174,6 +174,7 @@ body {
 #root {
   height: 100dvh;
   height: 100vh;
+  position: relative;
 }
 
 button {

@@ -18,18 +18,9 @@ const StyledFeedbackBoardLeftColumn = styled.div`
 
   @media ${device.lg} {
     flex-direction: column;
-    //width: 24%;
 
     gap: 24px;
     flex-grow: initial;
-  }
-
-  @media ${device.xl} {
-    width: 20%;
-  }
-
-  @media ${device.xxl} {
-    width: 18%;
   }
 `;
 

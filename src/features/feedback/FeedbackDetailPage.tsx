@@ -18,7 +18,9 @@ import { createPortal } from "react-dom";
 
 const StyledFeedbackDetailPage = styled.div`
   ${PageStyles}
-  gap: 24px;
+  gap: 16px;
+  margin-top: 28px;
+  width: 92vw;
 
   & > section {
     min-height: 40px;
@@ -31,9 +33,8 @@ const FeedbackDetailCardContent = styled(FeedbackCardContent)`
     display: block;
   }
 `;
-const EditFeedbackButton = styled(SecondaryButton)<{ $hideButton?: boolean }>`
+const EditFeedbackButton = styled(SecondaryButton)`
   margin-left: auto;
-  ${(props) => props.$hideButton && "display: none"};
 `;
 
 function FeedbackDetailPage(): React.JSX.Element {
@@ -57,42 +58,41 @@ function FeedbackDetailPage(): React.JSX.Element {
 
   return (
     <StyledFeedbackDetailPage>
-      <ActionBar isMinimal={true}>
-        <GoBackButton
-          onClick={() => {
-            /* TO DO: Find a way to reset unwanted search params that carry out from feedbackBoard */
-            navigate(-1);
-          }}
-        >
-          Go Back
-        </GoBackButton>
-
-        <EditFeedbackButton
-          onClick={() => setShowEditFeedback(true)}
-          $hideButton={showEditFeedback}
-        >
-          Edit Feedback
-        </EditFeedbackButton>
-      </ActionBar>
-
-      {showEditFeedback &&
+      {showEditFeedback ? (
         createPortal(
           <EditFeedback
             editableFeedback={editableFeedbackFields}
             setShowEditFeedback={setShowEditFeedback}
           />,
           rootEl
-        )}
+        )
+      ) : (
+        <>
+          <ActionBar isMinimal={true}>
+            <GoBackButton
+              onClick={() => {
+                /* TO DO: Find a way to reset unwanted search params that carry out from feedbackBoard */
+                navigate(-1);
+              }}
+            >
+              Go Back
+            </GoBackButton>
 
-      <FeedbackCard>
-        <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />
-        <div>
-          <FeedbackDetailCardContent feedback={feedback} />
-          <CommentCount />
-        </div>
-      </FeedbackCard>
+            <EditFeedbackButton onClick={() => setShowEditFeedback(true)}>
+              Edit Feedback
+            </EditFeedbackButton>
+          </ActionBar>
+          <FeedbackCard>
+            <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />
+            <div>
+              <FeedbackDetailCardContent feedback={feedback} />
+              <CommentCount />
+            </div>
+          </FeedbackCard>
 
-      <Outlet />
+          <Outlet />
+        </>
+      )}
     </StyledFeedbackDetailPage>
   );
 }

@@ -1,5 +1,13 @@
 import { ReactNode } from "react";
 import { ActionType, SubmissionOutcome } from "../types/action.types";
+import formSuccess from "../assets/images/form-success.svg";
+import styled from "styled-components";
+
+const StyledBannerNotification = styled.div`
+  & p:first-of-type {
+    font-weight: var(--font-weight-bold);
+  }
+`;
 
 interface BannerNotificationProps {
   children?: ReactNode;
@@ -85,11 +93,12 @@ function BannerNotification({
   if (!notificationMessage) return null;
 
   return (
-    <div>
+    <StyledBannerNotification>
+      <img src={formSuccess} alt="" />
       <p>{notificationMessage.title}</p>
       <p>{notificationMessage.message}</p>
       {children}
-    </div>
+    </StyledBannerNotification>
   );
 }
 

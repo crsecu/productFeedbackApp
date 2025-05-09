@@ -9,8 +9,6 @@ export const Card = styled.article`
   position: relative;
   padding-bottom: 26px;
 
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
-
   & p {
     text-wrap: wrap;
   }

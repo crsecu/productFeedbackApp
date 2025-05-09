@@ -7,6 +7,7 @@ import device from "./breakpoints";
 /* White backdrop */
 export const panelStyles = css`
   background-color: var(--color-surface);
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
   border-radius: var(--border-radius-sm);
   padding: 22px;
 `;
@@ -30,7 +31,7 @@ type ButtonStyleProps = {
 };
 
 /* Regular Button */
-const buttonStyles = css`
+export const buttonStyles = css`
   font-size: var(--font-size-body-3);
   font-weight: var(--font-weight-bold);
   background-color: #cdd2ee;
@@ -140,36 +141,55 @@ export const labelBox = css`
   background-color: var(--color-surface-accent);
   color: var(--color-text-accent); //
   border-radius: 10px;
-  padding: 5px 16px; //
+  padding: 5px 16px;
 `;
 
 /* Page Level styles */
 export const PageStyles = css`
   display: flex;
   flex-direction: column;
+  margin: auto;
   height: 100%;
-  padding: 28px 24px;
-  @media ${device.sm} {
-    padding: 28px 24px;
-  }
 
-  @media ${device.md} {
-    padding: 28px 34px;
+  @media ${device.sm} {
+    margin-top: 28px;
+    width: 92vw;
   }
 
   @media ${device.xl} {
-    padding: 28px 6vw;
+    width: 88vw;
   }
 
   @media ${device.xxl} {
-    padding: 28px 10vw;
+    width: 85vw;
   }
 `;
 
 export const FormPage = styled.div`
   ${PageStyles}
+  padding-top: 28px;
   gap: 44px;
   height: initial;
+  width: 90vw;
+
+  @media ${device.sm} {
+    width: 85vw;
+  }
+
+  @media ${device.md} {
+    width: 75vw;
+  }
+
+  @media ${device.lg} {
+    width: 65vw;
+  }
+  @media ${device.xl} {
+    width: 55vw;
+  }
+
+  @media ${device.xxl} {
+    width: 40vw;
+  }
 `;
 
 export const FormSection = styled.section`
@@ -184,6 +204,10 @@ export const FormSection = styled.section`
 
   & h1 {
     margin: 18px 0;
+  }
+
+  @media ${device.sm} {
+    padding: 36px;
   }
 `;
 

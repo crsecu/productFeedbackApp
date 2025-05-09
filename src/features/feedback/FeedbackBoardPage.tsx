@@ -17,7 +17,7 @@ import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardPage = styled.div`
   ${PageStyles}
-  padding: 0;
+  width: initial;
 
   @media ${device.lg} {
     flex-direction: row;

@@ -13,11 +13,20 @@ import {
 import { CATEGORY_OPTIONS } from "../../types/feedback.types";
 import styled from "styled-components";
 import { CancelButton, PrimaryButton, Textarea } from "../../styles/UIStyles";
+import device from "../../styles/breakpoints";
 
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
+
+  @media ${device.sm} {
+    flex-direction: row-reverse;
+
+    & button:nth-child(3) {
+      margin-right: auto;
+    }
+  }
 `;
 
 type FormComponentType = React.ForwardRefExoticComponent<
