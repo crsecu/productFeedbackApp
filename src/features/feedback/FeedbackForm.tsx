@@ -14,6 +14,7 @@ import { CATEGORY_OPTIONS } from "../../types/feedback.types";
 import styled from "styled-components";
 import { CancelButton, PrimaryButton, Textarea } from "../../styles/UIStyles";
 import device from "../../styles/breakpoints";
+import Tooltip from "../../ui/Tooltip";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -65,6 +66,10 @@ function FeedbackForm({
   const validationErrors = actionResult?.validationErrors ?? null;
 
   const isSubmitting = submissionStatus === "submitting";
+  const tooltipText =
+    method === "patch"
+      ? "Can’t save—form is unchanged."
+      : "Fill out the form to enable submit.";
 
   function handleFormChange(e: React.ChangeEvent<HTMLFormElement>) {
     const { name, value } = e.target;
@@ -143,9 +148,20 @@ function FeedbackForm({
       </FormField>
 
       <ButtonContainer>
-        <PrimaryButton type="submit" disabled={!isDirty || isSubmitting}>
+        {!isDirty || isSubmitting ? (
+          <Tooltip text={tooltipText}>
+            <PrimaryButton type="submit" disabled={!isDirty || isSubmitting}>
+              {isSubmitting ? "Submitting..." : submitBtnText}
+            </PrimaryButton>
+          </Tooltip>
+        ) : (
+          <PrimaryButton type="submit" disabled={!isDirty || isSubmitting}>
+            {isSubmitting ? "Submitting..." : submitBtnText}
+          </PrimaryButton>
+        )}
+        {/* <PrimaryButton type="submit" disabled={!isDirty || isSubmitting}>
           {isSubmitting ? "Submitting..." : submitBtnText}
-        </PrimaryButton>
+        </PrimaryButton> */}
         <CancelButton type="button" onClick={() => onCancel(isDirty)}>
           Cancel
         </CancelButton>

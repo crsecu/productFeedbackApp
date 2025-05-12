@@ -50,9 +50,14 @@ export const BaseButton = styled.button<ButtonStyleProps>`
     background-color: ${(props) => props.$bgColorHover};
   }
 
-  &:active {
+  &:enabled:active {
     transform: scale(0.98);
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  &:disabled {
+    background-color: var(--color-background-disabled);
+    color: var(--color-text-disabled);
   }
 `;
 

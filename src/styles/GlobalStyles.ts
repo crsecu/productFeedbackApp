@@ -60,7 +60,6 @@ const GlobalStyles = createGlobalStyle`
 
 
 /* Border */
-
 --border-radius-xs: 5px;
 --border-radius-sm: 12px;
 --border-radius: 15px;
@@ -69,6 +68,10 @@ const GlobalStyles = createGlobalStyle`
 
 --color-divider: rgba(140, 146, 179, 0.25);
 
+/* DISABLED STATE STYLES */
+--color-background-disabled: #EAEAEA;
+--color-text-disabled: #9499b7;
+--color-border-disabled: #E0E3F5;
 }
 
 /* FONTS */
@@ -185,7 +188,10 @@ button {
   cursor: not-allowed;
 }
 
-
+*:focus-visible {
+	outline: 2px solid #008853;
+	outline-offset: 6px;
+}
 
 
 
@@ -207,6 +213,7 @@ button {
   white-space: nowrap; 
   width: 1px;
 }
+
 
 
 `;
