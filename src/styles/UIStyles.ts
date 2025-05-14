@@ -71,6 +71,11 @@ export const SecondaryButton = styled(BaseButton).attrs(() => ({
   $bgColorHover: "var(--color-secondary-hover)",
 }))``;
 
+export const TertiaryButton = styled(BaseButton).attrs(() => ({
+  $bgColor: "var(--color-tertiary)",
+  $bgColorHover: "var(--color-tertiary-hover)",
+}))``;
+
 /* Link Buttons */
 export const BaseLinkButton = styled(Link)<ButtonStyleProps>`
   ${buttonStyles}
@@ -140,6 +145,25 @@ export const DeleteButton = styled(BaseButton).attrs(() => ({
   $bgColor: "var(--color-danger)",
   $bgColorHover: "var(--color-danger-hover)",
 }))``;
+
+export const CloseButton = styled.button`
+  position: absolute;
+  right: -6px;
+  top: -8px;
+  border: none;
+  font-size: 28px;
+  background: none;
+  color: var(--color-tertiary);
+
+  &:hover svg path {
+    fill: var(--color-tertiary-hover);
+  }
+
+  &:active svg path {
+    transform: scale(0.98);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+`;
 
 /* Box with rounded corners used for: category labels, upvote button */
 export const labelBox = css`

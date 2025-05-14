@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from "react";
 import { CommentPayload, ReplyPayload } from "../../types/comment.types";
 import CommentBox from "./CommentBox";
 import { getLoggedInUser } from "../../store/slices/userSlice";
-import BannerNotification from "../../ui/BannerNotification";
+import BannerNotification from "../../ui/notifications/BannerNotification";
 import styled from "styled-components";
 import { panelStyles } from "../../styles/features/FeedbackStyles";
 

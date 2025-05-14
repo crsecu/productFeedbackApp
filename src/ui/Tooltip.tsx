@@ -4,6 +4,10 @@ const StyledToolTip = styled.div`
   position: relative;
   display: inline-block;
 
+  & button {
+    width: 100%;
+  }
+
   &:hover span {
     visibility: visible;
   }

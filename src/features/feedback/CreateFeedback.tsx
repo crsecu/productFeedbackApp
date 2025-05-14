@@ -1,5 +1,6 @@
 import {
   Form,
+  Link,
   useActionData,
   useNavigate,
   useNavigation,
@@ -9,13 +10,18 @@ import FeedbackForm from "./FeedbackForm";
 import { showModal } from "../../store/slices/modalSlice";
 import { SuggestionFeedback } from "../../types/feedback.types";
 
-import BannerNotification from "../../ui/BannerNotification";
+import BannerNotification from "../../ui/notifications/BannerNotification";
 import { useAppDispatch } from "../../types/redux.hooks";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import { CreateFeedbackFormValues } from "../../types/form.types";
 import { ActionResult } from "../../types/action.types";
 
-import { FormPage, FormSection, GoBackButton } from "../../styles/UIStyles";
+import {
+  FormPage,
+  FormSection,
+  GoBackButton,
+  TertiaryButton,
+} from "../../styles/UIStyles";
 import ActionBar from "../../ui/ActionBar";
 import createFeedbackIcon from "../../assets/images/createFeedback-icon.svg";
 
@@ -54,8 +60,6 @@ function CreateFeedback(): React.JSX.Element {
     }
   }
 
-  //const submissionIcon = isSubmissionSuccessful ? formSuccess : "";
-
   const notification = (
     <BannerNotification
       notificationType={submissionOutcome}
@@ -63,13 +67,13 @@ function CreateFeedback(): React.JSX.Element {
     >
       {isSubmissionSuccessful && (
         <>
-          <button
-            onClick={() =>
-              navigate(`/feedbackDetail/${payload?.id}`, { replace: true })
-            }
+          <TertiaryButton
+            as={Link}
+            to={`/feedbackDetail/${payload?.id}`}
+            replace
           >
             View Details
-          </button>
+          </TertiaryButton>
         </>
       )}
     </BannerNotification>
@@ -80,25 +84,24 @@ function CreateFeedback(): React.JSX.Element {
       <ActionBar isMinimal={true}>
         <GoBackButton onClick={() => navigate(-1)}>Go Back</GoBackButton>
       </ActionBar>
-      <FormSection>
-        {notification}
-        {showForm && (
-          <>
-            <img src={createFeedbackIcon} alt="" />
-            <H1>Create New Feedback</H1>
-            <FeedbackForm
-              method="post"
-              defaultValues={initialFormState}
-              actionRoute="."
-              onCancel={handleCancel}
-              FormComponent={Form}
-              submissionStatus={navigation.state}
-              actionResult={actionData}
-              submitBtnText={"Add Feedback"}
-            />
-          </>
-        )}
-      </FormSection>
+      {notification}
+
+      {showForm && (
+        <FormSection>
+          <img src={createFeedbackIcon} alt="" />
+          <H1>Create New Feedback</H1>
+          <FeedbackForm
+            method="post"
+            defaultValues={initialFormState}
+            actionRoute="."
+            onCancel={handleCancel}
+            FormComponent={Form}
+            submissionStatus={navigation.state}
+            actionResult={actionData}
+            submitBtnText={"Add Feedback"}
+          />
+        </FormSection>
+      )}
     </FormPage>
   );
 }

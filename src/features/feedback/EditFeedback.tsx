@@ -4,11 +4,11 @@ import SelectField from "./SelectField";
 import { useFetcher, useParams } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
 import { useAppDispatch } from "../../types/redux.hooks";
-import BannerNotification from "../../ui/BannerNotification";
+import BannerNotification from "../../ui/notifications/BannerNotification";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import { EditFeedbackFormValues } from "../../types/form.types";
 import { STATUS_OPTIONS } from "../../types/feedback.types";
-import { DeleteButton, FormSection } from "../../styles/UIStyles";
+import { CloseButton, DeleteButton, FormSection } from "../../styles/UIStyles";
 import editFeedbackIcon from "../../assets/images/editFeedback-icon.svg";
 import { H1 } from "../../styles/Typography";
 import { IoCloseCircleSharp } from "react-icons/io5";
@@ -37,25 +37,6 @@ const StyledEditFeedback = styled.div`
 
   @media ${device.xxl} {
     max-width: 45%;
-  }
-`;
-
-const CloseButton = styled.button`
-  position: absolute;
-  right: -6px;
-  top: -8px;
-  border: none;
-  font-size: 28px;
-  background: none;
-  color: var(--color-tertiary);
-
-  &:hover svg path {
-    fill: var(--color-tertiary-hover);
-  }
-
-  &:active svg path {
-    transform: scale(0.98);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
   }
 `;
 
@@ -93,6 +74,7 @@ function EditFeedback({
     <BannerNotification
       actionType={actionType}
       notificationType={submissionOutcome}
+      onClose={() => setShowEditFeedback(false)}
     />
   );
   return (
