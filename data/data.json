@@ -27,17 +27,17 @@
     },
     {
       "id": "2",
-      "title": "123Add a dark theme option",
-      "category": "feature",
+      "title": " c",
+      "category": "ux",
       "upvotes": 101,
       "status": "suggestion",
-      "description": "It would help people with light sensitivities and who prefer dark mode.\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer t",
+      "description": " c",
       "commentCount": 4
     },
     {
       "id": "3",
       "title": "Q&A within the challenge hubs",
-      "category": "feature",
+      "category": "enhancement",
       "upvotes": 65,
       "status": "suggestion",
       "description": "Challenge-specific Q&A would make for easy reference.",
@@ -46,7 +46,7 @@
     {
       "id": "4",
       "title": "Add image/video upload to feedback",
-      "category": "enhancement",
+      "category": "bug",
       "upvotes": 51,
       "status": "suggestion",
       "description": "Images and screencasts can enhance comments on solutions.",
@@ -55,7 +55,7 @@
     {
       "id": "5",
       "title": "Ability to follow others",
-      "category": "feature",
+      "category": "bug",
       "upvotes": 42,
       "status": "suggestion",
       "description": "Stay updated on comments and solutions other people post.",

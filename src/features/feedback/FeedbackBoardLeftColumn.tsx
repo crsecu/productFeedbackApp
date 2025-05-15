@@ -8,6 +8,7 @@ import styled from "styled-components";
 import FeedbackBoardSidebar from "./FeedbackBoardSidebar";
 import FilterByCategory from "./FilterByCategory";
 import device from "../../styles/breakpoints";
+import { Overlay } from "../../styles/UIStyles";
 
 const StyledFeedbackBoardLeftColumn = styled.div`
   @media ${device.sm} {
@@ -24,18 +25,7 @@ const StyledFeedbackBoardLeftColumn = styled.div`
   }
 `;
 
-const Overlay = styled.div`
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-
+const SidebarOverlay = styled(Overlay)`
   @media ${device.sm} {
     display: none;
   }
@@ -73,7 +63,7 @@ function FeedbackBoardLeftColumn({
 
   return (
     <>
-      {showSidebar && <Overlay onClick={() => setShowSidebar(false)} />}
+      {showSidebar && <SidebarOverlay onClick={() => setShowSidebar(false)} />}
       <StyledFeedbackBoardLeftColumn>
         <PageHeader>
           <TitleCard />

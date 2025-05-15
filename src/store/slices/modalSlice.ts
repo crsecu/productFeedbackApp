@@ -1,22 +1,43 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+interface ModalText {
+  title: string;
+  description: string;
+  decisionButton: string;
+  wayoutButton: string;
+}
 type ModalType =
   | "delete_feedback"
   | "cancel_editFeedback"
   | "cancel_addFeedback";
 
-const MODAL_MESSAGES: Record<ModalType, string> = {
-  cancel_addFeedback:
-    "Are you sure you want to cancel creating this feedback? Your changes will be lost.",
-  cancel_editFeedback:
-    "Are you sure you want to cancel editing this feedback? Unsaved changes will be lost.",
-  delete_feedback: "Are you sure you want to delete this feedback?",
+const MODAL_MESSAGES: Record<ModalType, ModalText> = {
+  cancel_addFeedback: {
+    title: "Discard Feedback Draft?",
+    description:
+      "You will loose all the information entered for this feedback.",
+    decisionButton: "Discard Feedback",
+    wayoutButton: "Keep it",
+  },
+  cancel_editFeedback: {
+    title: "Discard Feedback Changes?",
+    description: "You will loose all the changes made to this feedback.",
+    decisionButton: "Discard changes",
+    wayoutButton: "Keep editing",
+  },
+  delete_feedback: {
+    title: "Delete Feedback?",
+    description:
+      "This action will permanently remove the feedback and cannot be undone.",
+    decisionButton: "Delete",
+    wayoutButton: "Cancel",
+  },
 };
 
 interface ModalState {
   isOpen: boolean;
   modalType: ModalType | null;
-  content: string | null;
+  content: ModalText | null;
   confirmPayload: string | undefined;
 }
 

@@ -180,6 +180,10 @@ body {
   position: relative;
 }
 
+:root:has(.no-doc-scroll) {
+  overflow: hidden;
+}
+
 button {
   cursor: pointer;
 }

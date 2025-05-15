@@ -14,7 +14,8 @@ interface StyledBannerProps {
 const StyledBannerNotification = styled.section<StyledBannerProps>`
   ${panelStyles}
   position: relative;
-  z-index: 0;
+  z-index: 1;
+  margin-bottom: 35px;
 
   &::before {
     content: "";
@@ -124,7 +125,7 @@ function BannerNotification({
       $notificationType={notificationType}
       $themeColor={notificationMessage.iconColor}
     >
-      {onClose && (
+      {onClose && notificationType === "success" && (
         <button onClick={onClose}>
           <IoCloseSharp />
         </button>

@@ -4,6 +4,57 @@ import { hideModal } from "../store/slices/modalSlice";
 import { showNotification } from "../store/slices/toastNotificationSlice";
 import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
 import assert from "../utils/TS_helpers";
+import styled from "styled-components";
+import {
+  buttonStyles,
+  Overlay,
+  panelStyles,
+  TertiaryButton,
+} from "../styles/UIStyles";
+
+const StyledGlobalModal = styled.div`
+  ${panelStyles}
+
+  border-radius: var(--border-radius-xs);
+  position: fixed;
+  inset: 0px;
+  width: fit-content;
+  max-width: 310px;
+  height: fit-content;
+  margin: auto;
+  padding: 20px;
+  z-index: 1;
+
+  & p {
+    padding: 0 10px;
+    text-align: center;
+  }
+  & div {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    margin-top: 18px;
+  }
+
+  & button {
+    min-width: 115px;
+    padding: 7px 14px;
+  }
+`;
+
+const ModalTitle = styled.p`
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 6px;
+  text-align: center;
+`;
+
+const CancelButton = styled.button`
+  ${buttonStyles}
+  color: var(--color-primary);
+  background: none;
+  border: 2px solid;
+`;
 
 function GlobalModal(): React.JSX.Element | null {
   const dispatch = useAppDispatch();
@@ -12,6 +63,9 @@ function GlobalModal(): React.JSX.Element | null {
     (state) => state.modal
   );
 
+  const { title, description, decisionButton, wayoutButton } = content || {};
+
+  console.log("con", content);
   if (!isOpen) return null;
   console.log("did GLOBAL MODAL RENDER");
   const handleConfirm = async () => {
@@ -38,7 +92,6 @@ function GlobalModal(): React.JSX.Element | null {
     }
 
     if (modalType === "cancel_editFeedback") {
-      //dispatch(closeEditFeedback());
       navigate(`/feedbackDetail/${confirmPayload}`, { replace: true });
     }
 
@@ -46,14 +99,23 @@ function GlobalModal(): React.JSX.Element | null {
   };
 
   return (
-    <div className="globalModal">
-      <p>{content}</p>
+    <>
+      {isOpen && <Overlay />}
+      <StyledGlobalModal>
+        {isOpen && <span className="no-doc-scroll"></span>}
 
-      <>
-        <button onClick={handleConfirm}>Confirm</button>
-        <button onClick={() => dispatch(hideModal())}>Cancel</button>
-      </>
-    </div>
+        <ModalTitle>{title}</ModalTitle>
+        <p>{description}</p>
+        <div>
+          <TertiaryButton onClick={handleConfirm}>
+            {decisionButton}
+          </TertiaryButton>
+          <CancelButton onClick={() => dispatch(hideModal())}>
+            {wayoutButton}
+          </CancelButton>
+        </div>
+      </StyledGlobalModal>
+    </>
   );
 }
 
