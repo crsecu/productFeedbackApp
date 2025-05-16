@@ -13,7 +13,7 @@ import { IoChevronUpSharp } from "react-icons/io5";
 const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
   position: absolute;
   bottom: 20px;
-  left: 28px;
+  /* left: 28px; */
   font-size: var(--text-xs);
 
   padding: 6px 14px;
@@ -39,7 +39,10 @@ const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
   }
 
   &:hover {
-    background-color: var(--color-surface-accent-hover);
+    background-color: ${(props) =>
+      props.$isUpvoted
+        ? "var(--color-secondary-hover)"
+        : "var(--color-surface-accent-hover)"};
   }
 `;
 

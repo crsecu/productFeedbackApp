@@ -38,7 +38,7 @@
       "id": "3",
       "title": "Q&A within the challenge hubs",
       "category": "enhancement",
-      "upvotes": 71,
+      "upvotes": 72,
       "status": "suggestion",
       "description": "Challenge-specific Q&A would make for easy reference.",
       "commentCount": 1
@@ -46,8 +46,8 @@
     {
       "id": "4",
       "title": "Add image/video upload to feedback",
-      "category": "bug",
-      "upvotes": 54,
+      "category": "feature",
+      "upvotes": 55,
       "status": "suggestion",
       "description": "Images and screencasts can enhance comments on solutions.",
       "commentCount": 2

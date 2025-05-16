@@ -5,10 +5,12 @@ import styled from "styled-components";
 import { ReplyButton } from "../../styles/UIStyles";
 
 const StyledAddReply = styled.div`
-  & div {
+  & > div {
     box-shadow: none;
+    padding: 22px 0px;
   }
-  & button {
+
+  & > button {
     position: absolute;
     right: 0;
     top: 35px;
@@ -42,10 +44,7 @@ function AddReply({
 
   return (
     <StyledAddReply>
-      <ReplyButton
-        className="reply"
-        onClick={() => setShowCommentBox((prevState) => !prevState)}
-      >
+      <ReplyButton onClick={() => setShowCommentBox((prevState) => !prevState)}>
         Reply
       </ReplyButton>
 

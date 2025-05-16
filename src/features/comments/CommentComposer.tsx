@@ -14,12 +14,6 @@ const StyledCommentComposer = styled.div`
   & h2 {
     padding-bottom: 4px;
   }
-
-  & div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
 `;
 
 type CommentComposerProps = {
