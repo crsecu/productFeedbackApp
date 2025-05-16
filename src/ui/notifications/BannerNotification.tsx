@@ -6,6 +6,7 @@ import { panelStyles } from "../../styles/UIStyles.ts";
 import { IoCloseSharp } from "react-icons/io5";
 
 import { buildNotificationMessage } from "./notificationMessages.tsx";
+import device from "../../styles/breakpoints.ts";
 interface StyledBannerProps {
   $notificationType: SubmissionOutcome;
   $themeColor: string;
@@ -52,10 +53,6 @@ const StyledBannerNotification = styled.section<StyledBannerProps>`
     right: 16px;
   }
 
-  & h1 {
-    margin-bottom: 4px;
-  }
-
   ${(props) =>
     props.$notificationType !== "success" &&
     css<StyledBannerProps>`
@@ -85,12 +82,22 @@ const StyledBannerNotification = styled.section<StyledBannerProps>`
           left: -12px;
         }
       }
+    `}
+`;
 
-      & p:first-child {
-        color: ${(props) => props.$themeColor && props.$themeColor};
-        margin-bottom: 0;
-        font-weight: var(--font-weight-semibold);
-        font-size: var(--text-sm);
+const Title = styled(H1)<StyledBannerProps>`
+  margin-bottom: 4px;
+
+  ${(props) =>
+    props.$notificationType !== "success" &&
+    css<StyledBannerProps>`
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-semibold);
+      color: ${(props) => props.$themeColor && props.$themeColor};
+      margin-bottom: 0;
+
+      @media ${device.sm} {
+        font-size: var(--text-lg);
       }
     `}
 `;
@@ -136,10 +143,17 @@ function BannerNotification({
           color={notificationMessage.iconColor}
         />
       }
+
       <div>
-        <H1 as={notificationType !== "success" ? "p" : "h1"}>
+        <Title
+          as={notificationType !== "success" ? "p" : "h1"}
+          $notificationType={notificationType}
+          $themeColor={notificationMessage.iconColor}
+        >
           {notificationMessage.content.title}
-        </H1>
+        </Title>
+        {/* <p>{notificationMessage.content.title}</p> */}
+
         <p>{notificationMessage.content.message}</p>
       </div>
 

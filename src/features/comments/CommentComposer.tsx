@@ -73,6 +73,7 @@ function CommentComposer(props: CommentComposerProps): React.JSX.Element {
           })}
         />
         <CommentBox
+          mode={mode}
           submissionStatus={fetcher?.state}
           submissionOutcome={submissionOutcome}
         />

@@ -19,6 +19,7 @@ export const H1 = styled.h1<{ $textLight?: boolean }>`
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-h1);
   letter-spacing: var(--letter-spacing-h1);
+
   ${(props) =>
     props.$textLight &&
     css`

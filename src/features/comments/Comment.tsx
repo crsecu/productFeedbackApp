@@ -81,6 +81,7 @@ function Comment({ comment, commentCount }: CommentProps): React.JSX.Element {
       </User>
 
       <p>{content}</p>
+
       {parentType !== "reply" && (
         <AddReply parentComment={comment} commentCount={commentCount} />
       )}

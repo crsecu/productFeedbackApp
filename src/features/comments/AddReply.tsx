@@ -5,6 +5,9 @@ import styled from "styled-components";
 import { ReplyButton } from "../../styles/UIStyles";
 
 const StyledAddReply = styled.div`
+  & div {
+    box-shadow: none;
+  }
   & button {
     position: absolute;
     right: 0;
