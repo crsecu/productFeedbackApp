@@ -10,26 +10,36 @@ import { useState } from "react";
 import styled from "styled-components";
 import { IoChevronUpSharp } from "react-icons/io5";
 
-const StyledUpvoteButton = styled.button`
+const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
   position: absolute;
   bottom: 20px;
   left: 28px;
+  font-size: var(--text-xs);
 
   padding: 6px 14px;
   border: none;
   border-radius: 10px;
-  background-color: var(--color-surface-accent);
-  color: var(--color-text-dark);
+  background-color: ${(props) =>
+    props.$isUpvoted
+      ? `var(--color-secondary)`
+      : `var(--color-surface-accent)`};
+  color: ${(props) =>
+    props.$isUpvoted ? `var(--color-text-light)` : `var(--color-text-dark)`};
   font-weight: bold;
 
   & svg {
     margin-bottom: 2px;
     margin-right: 5px;
-    color: var(--color-secondary);
+    color: ${(props) =>
+      props.$isUpvoted ? `var(--color-text-light)` : `var(--color-text-dark)`};
   }
 
   & path {
     stroke-width: 18%;
+  }
+
+  &:hover {
+    background-color: var(--color-surface-accent-hover);
   }
 `;
 
@@ -82,6 +92,7 @@ function UpvoteButton({
 
   return (
     <StyledUpvoteButton
+      $isUpvoted={isFeedbackUpvoted}
       className={className}
       disabled={isLoading}
       onClick={handleUpvote}

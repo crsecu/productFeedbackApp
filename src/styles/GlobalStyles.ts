@@ -192,10 +192,34 @@ button {
   cursor: not-allowed;
 }
 
-*:focus-visible {
-	outline: 2px solid #008853;
-	outline-offset: 6px;
+
+/* input:not([type=radio]):focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible  {
+  outline: none;
+  box-shadow:
+  0 0 8px 1px var(--color-primary-hover),
+  0 0 10px 2px var(--color-secondary-hover);  
+} */
+
+input:not([type=radio]):focus, textarea:focus, select:focus{
+  outline: 1px solid var(--color-secondary);
 }
+/* button:focus, a:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+} */
+
+
+
+
+//hightline focus
+/* *:focus-visible {
+  outline: none;
+  box-shadow:
+   0 0 8px 1px var(--color-primary-hover),
+   0 0 10px 2px var(--color-secondary-hover);  
+} */
+
+
 
 
 

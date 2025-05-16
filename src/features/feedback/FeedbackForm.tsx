@@ -64,11 +64,11 @@ function FeedbackForm({
   const [isDirty, setIsDirty] = useState(false);
 
   const validationErrors = actionResult?.validationErrors ?? null;
-
+  console.log("val", validationErrors);
   const isSubmitting = submissionStatus === "submitting";
   const tooltipText =
     method === "patch"
-      ? "Can’t save—form is unchanged."
+      ? "Can't save—form is unchanged."
       : "Fill out the form to enable submit.";
 
   function handleFormChange(e: React.ChangeEvent<HTMLFormElement>) {
@@ -109,7 +109,6 @@ function FeedbackForm({
           <FormFieldError errorMessage={validationErrors.title} />
         )}
       </FormField>
-
       <FormField
         inputId="feedbackCategory"
         label="Category"
@@ -124,9 +123,7 @@ function FeedbackForm({
           initialValue={defaultValues?.category}
         />
       </FormField>
-
       {children}
-
       <FormField
         inputId="feedbackDescription"
         label="Feedback Detail"
@@ -146,7 +143,6 @@ function FeedbackForm({
           <FormFieldError errorMessage={validationErrors.description} />
         )}
       </FormField>
-
       <ButtonContainer>
         {!isDirty || isSubmitting ? (
           <Tooltip text={tooltipText}>

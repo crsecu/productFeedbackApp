@@ -13,7 +13,7 @@ const StyledInputField = styled.input`
 interface InputFieldProps {
   name: string;
   id: string;
-  type?: string; //
+  type?: string;
   isRequired?: boolean;
   initialValue?: string;
   describedById?: string;

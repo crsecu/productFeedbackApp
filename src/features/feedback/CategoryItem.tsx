@@ -3,20 +3,22 @@ import { formatCategoryLabel } from "../../utils/helpers";
 import styled from "styled-components";
 import { CategoryLabel } from "../../styles/features/FeedbackStyles";
 
-const Input = styled.input`
-  &[type="radio"] {
-    //opacity: 0;
-    position: fixed;
-    width: 0;
+const RadioInput = styled.input`
+  position: fixed;
+  width: 0;
 
-    &:checked + label {
-      color: var(--color-text-light);
-      background-color: var(--color-accent);
-    }
+  &:hover + label {
+    background-color: var(--color-surface-accent-hover);
+  }
 
-    &:focus + label {
-      border: 2px solid var(--color-primary);
-    }
+  &:checked + label {
+    color: var(--color-text-light);
+    background-color: var(--color-accent);
+  }
+
+  &:focus-visible + label {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
   }
 `;
 
@@ -42,7 +44,7 @@ function CategoryItem({
 
   return (
     <li>
-      <Input
+      <RadioInput
         disabled={isDisabled}
         type="radio"
         name={name}
@@ -50,7 +52,7 @@ function CategoryItem({
         value={value}
         checked={selectedOption === value}
         onChange={onOptionChange}
-      ></Input>
+      ></RadioInput>
       <CategoryLabel htmlFor={id}>{categoryLabel}</CategoryLabel>
     </li>
   );

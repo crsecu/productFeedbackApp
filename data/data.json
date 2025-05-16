@@ -29,7 +29,7 @@
       "id": "2",
       "title": " c",
       "category": "ux",
-      "upvotes": 101,
+      "upvotes": 103,
       "status": "suggestion",
       "description": " c",
       "commentCount": 4
@@ -38,7 +38,7 @@
       "id": "3",
       "title": "Q&A within the challenge hubs",
       "category": "enhancement",
-      "upvotes": 65,
+      "upvotes": 71,
       "status": "suggestion",
       "description": "Challenge-specific Q&A would make for easy reference.",
       "commentCount": 1
@@ -47,7 +47,7 @@
       "id": "4",
       "title": "Add image/video upload to feedback",
       "category": "bug",
-      "upvotes": 51,
+      "upvotes": 54,
       "status": "suggestion",
       "description": "Images and screencasts can enhance comments on solutions.",
       "commentCount": 2
@@ -139,7 +139,7 @@
       "category": "feature",
       "description": "d",
       "status": "suggestion",
-      "upvotes": 0,
+      "upvotes": 1,
       "commentCount": 0
     },
     {
@@ -147,6 +147,42 @@
       "title": "dfd",
       "category": "feature",
       "description": "ff",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "214c",
+      "title": " 11",
+      "category": "feature",
+      "description": " 11",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "62ea",
+      "title": "1",
+      "category": "feature",
+      "description": "1",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "9785",
+      "title": "1",
+      "category": "feature",
+      "description": "1",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "5813",
+      "title": "1",
+      "category": "feature",
+      "description": "1",
       "status": "suggestion",
       "upvotes": 0,
       "commentCount": 0
