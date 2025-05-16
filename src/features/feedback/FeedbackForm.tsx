@@ -104,10 +104,8 @@ function FeedbackForm({
           type="text"
           describedById="feedbackTitleDesc"
           initialValue={defaultValues?.title}
+          validationError={validationErrors?.title}
         />
-        {validationErrors?.title && (
-          <FormFieldError errorMessage={validationErrors.title} />
-        )}
       </FormField>
       <FormField
         inputId="feedbackCategory"
@@ -131,6 +129,7 @@ function FeedbackForm({
         inputGuidanceId="feedbackDescriptionDesc"
       >
         <Textarea
+          $validationErr={!!validationErrors?.description}
           $height={120}
           name="description"
           id="feedbackDescription"

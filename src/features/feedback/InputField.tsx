@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import FormFieldError from "./FormFieldError";
 
-const StyledInputField = styled.input`
+const StyledInputField = styled.input<{ $validationErr: boolean }>`
   border: none;
   background-color: var(--color-background);
   border-radius: var(--border-radius-xs);
@@ -8,6 +9,9 @@ const StyledInputField = styled.input`
 
   height: 48px;
   width: 100%;
+  outline: ${(props) =>
+    props.$validationErr ? "2px solid var(--color-danger)" : "none"};
+  margin-bottom: ${(props) => (props.$validationErr ? "10px" : 0)};
 `;
 
 interface InputFieldProps {
@@ -17,6 +21,7 @@ interface InputFieldProps {
   isRequired?: boolean;
   initialValue?: string;
   describedById?: string;
+  validationError?: string;
 }
 
 function InputField({
@@ -26,16 +31,23 @@ function InputField({
   isRequired = true,
   initialValue,
   describedById,
+  validationError,
 }: InputFieldProps): React.JSX.Element {
+  console.log("err", validationError);
   return (
-    <StyledInputField
-      type={type}
-      name={name}
-      id={id}
-      aria-describedby={describedById}
-      defaultValue={initialValue}
-      required={isRequired}
-    ></StyledInputField>
+    <>
+      <StyledInputField
+        $validationErr={!!validationError}
+        type={type}
+        name={name}
+        id={id}
+        aria-describedby={describedById}
+        defaultValue={initialValue}
+        required={isRequired}
+      ></StyledInputField>
+
+      {validationError && <FormFieldError errorMessage={validationError} />}
+    </>
   );
 }
 

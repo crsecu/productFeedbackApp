@@ -240,7 +240,10 @@ export const FormSection = styled.section`
   }
 `;
 
-export const Textarea = styled.textarea<{ $height?: number }>`
+export const Textarea = styled.textarea<{
+  $height?: number;
+  $validationErr?: boolean;
+}>`
   border: none;
   background-color: var(--color-background);
   width: 100%;
@@ -248,6 +251,9 @@ export const Textarea = styled.textarea<{ $height?: number }>`
   margin: 16px 0 10px;
   padding: 16px;
   border-radius: var(--border-radius-xs);
+  outline: ${(props) =>
+    props.$validationErr ? "2px solid var(--color-danger)" : "none"};
+  margin-bottom: ${(props) => props.$validationErr && "5px"};
 
   &::placeholder {
   }
