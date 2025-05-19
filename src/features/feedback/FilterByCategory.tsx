@@ -53,7 +53,12 @@ function FilterByCategory({
           selectedOption={selectedOption}
           isDisabled={suggestionCount === 0}
           onOptionChange={(e) => {
-            handleOptionChange(e, setSearchParams, "category", "all");
+            handleOptionChange(
+              setSearchParams,
+              "category",
+              "all",
+              e.target.value
+            );
             onFilterSelect?.();
           }}
         />
@@ -76,7 +81,12 @@ function FilterByCategory({
           selectedOption={selectedOption}
           //isDisabled={suggestionCount === 0}
           onOptionChange={(e) => {
-            handleOptionChange(e, setSearchParams, "category", "all");
+            handleOptionChange(
+              setSearchParams,
+              "category",
+              "all",
+              e.target.value
+            );
             onFilterSelect?.();
           }}
         />

@@ -57,6 +57,8 @@ const router = createBrowserRouter([
           if (currentUrl.search !== nextUrl.search) {
             console.log("Skipping revalidation: only search params changed");
             return false;
+          } else {
+            console.log("RELOAD");
           }
 
           /* Prevent revalidation if feedback submission fails or if there are any validation errors */

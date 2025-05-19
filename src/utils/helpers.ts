@@ -25,6 +25,7 @@ import {
 } from "../types/action.types";
 import { FeedbackFormErrors } from "../types/form.types";
 import { MutationResult } from "../types/mutation.types";
+import { Option } from "../types/customSelect";
 
 /* Reusable Fetch Helper */
 export async function fetchWrapper<T>(
@@ -271,23 +272,21 @@ export function errorMessage(error: unknown): string {
 
 /* Helper function to update search params based on user-selected criteria */
 export function handleOptionChange(
-  e: ChangeEvent<HTMLSelectElement | HTMLInputElement>,
   setSearchParams: SetURLSearchParams,
   paramName: string,
-  defaultOption: string
+  defaultOption: string,
+  currentQueryParamValue: string
 ): void {
-  const newOption = e.target.value;
-
   setSearchParams((prevParams) => {
-    const newParams = new URLSearchParams(prevParams);
+    const params = new URLSearchParams(prevParams);
 
-    if (newOption === defaultOption) {
-      newParams.delete(paramName);
+    if (currentQueryParamValue === defaultOption) {
+      params.delete(paramName);
     } else {
-      newParams.set(paramName, newOption);
+      params.set(paramName, currentQueryParamValue);
     }
 
-    return newParams;
+    return params;
   });
 }
 

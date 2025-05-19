@@ -1,6 +1,9 @@
 import { useSearchParams } from "react-router-dom";
 import { handleOptionChange } from "../../utils/helpers";
 import styled from "styled-components";
+import Select from "react-select";
+import { sortOptions } from "../../types/customSelect";
+import { Option } from "../../types/customSelect";
 
 const StyledSortBy = styled.div`
   margin-right: auto;
@@ -31,26 +34,44 @@ const SelectSortBy = styled.select`
   }
 `;
 
+function getOptionFromValue(
+  selectedOption: string,
+  options: Option[]
+): Option | undefined {
+  const result = options.find((option) => {
+    return option.value === selectedOption;
+  });
+
+  return result;
+}
+
 function SortBy(): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
-  const sortByOption = searchParams.get("sortBy") || "mostUpvotes";
-  console.log("sort option", sortByOption);
+  const sortByValue = searchParams.get("sortBy") || "mostUpvotes";
+  console.log("sort option", getOptionFromValue(sortByValue, sortOptions));
+
+  const selectedOption = getOptionFromValue(sortByValue, sortOptions);
 
   return (
     <StyledSortBy>
-      <label htmlFor="sortBy">Sort by :</label>
-      <SelectSortBy
-        id="sortBy"
-        value={sortByOption}
-        onChange={(e) =>
-          handleOptionChange(e, setSearchParams, "sortBy", "mostUpvotes")
-        }
-      >
-        <option value="mostUpvotes">Most Upvotes</option>
-        <option value="leastUpvotes">Least Upvotes</option>
-        <option value="mostComments">Most Comments</option>
-        <option value="leastComments">Least Comments</option>
-      </SelectSortBy>
+      <Select
+        options={sortOptions}
+        value={selectedOption}
+        onChange={(option) => {
+          if (option && "value" in option) {
+            if (option.value === selectedOption?.value) {
+              return;
+            }
+
+            handleOptionChange(
+              setSearchParams,
+              "sortBy",
+              "mostUpvotes",
+              option.value
+            );
+          }
+        }}
+      />
     </StyledSortBy>
   );
 }

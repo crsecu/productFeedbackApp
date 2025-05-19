@@ -48,6 +48,7 @@ function FeedbackBoardPage(): React.JSX.Element {
         <ActionBar ariaLabel="Suggestions toolbar">
           <SuggestionCount suggestions={suggestions} />
           <SortBy />
+
           <PrimaryLinkButton
             to="createFeedback"
             state={{ from: location?.pathname }}
