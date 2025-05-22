@@ -9,7 +9,11 @@ const StyledActionBar = styled.section<{ $isMinimal?: boolean }>`
     props.$isMinimal ? "initial" : "var(--color-action-bar)"};
 
   color: var(--color-text-light);
-  padding: ${(props) => (props.$isMinimal ? "0 " : "10px 24px")};
+  padding: ${(props) => (props.$isMinimal ? "0 " : "10px 20px")};
+
+  & a {
+    margin-left: auto;
+  }
 
   @media ${device.sm} {
     padding: ${(props) => (props.$isMinimal ? "0 " : "14px 12px 14px 16px")};

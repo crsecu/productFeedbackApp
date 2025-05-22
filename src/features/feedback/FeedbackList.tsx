@@ -15,7 +15,7 @@ const StyledFeedbackList = styled.section`
   flex-direction: column;
   flex-grow: 1;
 
-  padding: 28px 24px 46px;
+  padding: 28px 20px 46px;
 
   & ul {
     display: flex;

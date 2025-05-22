@@ -37,7 +37,7 @@ export const buttonStyles = css`
   background-color: #cdd2ee;
   color: var(--color-text-soft-accent);
   border: none;
-  padding: 10px 16px;
+  padding: 10px 16px 10px 14px;
   border-radius: 10px;
 `;
 

@@ -41,7 +41,7 @@ const GlobalStyles = createGlobalStyle`
 --color-surface: #FFFFFF;         /* background for cards, modals, dropdowns */
 
 --color-accent: #4661E6;
---color-surface-accent: #F2F4FF;  /* soft, tinted surface (e.g., tag backgrounds, inputs) */
+--color-surface-accent: #F2F4FE;  /* soft, tinted surface (e.g., tag backgrounds, inputs) */
 --color-surface-accent-hover: #CFD7FF;
 --color-surface-accent-active: #4661E6;
 

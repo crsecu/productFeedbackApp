@@ -19,7 +19,6 @@ const StyledRoadmapPage = styled.div`
   padding: 0;
 
   & > section:first-child {
-    justify-content: space-between;
     padding: 24px 20px;
   }
 

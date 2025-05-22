@@ -7,7 +7,7 @@ const StyledPageHeader = styled.header`
   justify-content: space-between;
   z-index: 2;
   align-items: center;
-  padding: 12px 24px;
+  padding: 12px 20px;
   background: radial-gradient(
     circle at 100%,
     #e84d70 0%,

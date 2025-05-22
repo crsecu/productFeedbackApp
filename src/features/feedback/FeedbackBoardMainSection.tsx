@@ -7,6 +7,10 @@ const StyledFeedbackBoardMainSection = styled.main`
   flex-direction: column;
   flex-grow: 1;
 
+  & > section {
+    gap: 2px;
+  }
+
   @media ${device.sm} {
     gap: 24px;
   }
