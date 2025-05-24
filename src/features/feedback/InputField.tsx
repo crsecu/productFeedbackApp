@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import FormFieldError from "./FormFieldError";
 
-const StyledInputField = styled.input<{ $validationErr: boolean }>`
+export const StyledInputField = styled.input<{ $validationErr?: boolean }>`
   border: none;
   background-color: var(--color-background);
   border-radius: var(--border-radius-xs);

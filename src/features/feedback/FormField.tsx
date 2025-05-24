@@ -19,7 +19,21 @@ const StyledFormField = styled.div`
   select {
     margin-top: 16px;
   }
+
+  & .formSelect__control {
+    margin-top: 16px;
+    padding: 6px 16px;
+  }
+
+  & .formSelect__control path {
+    stroke: var(--color-secondary);
+  }
+
+  & .formSelect__dropdown-indicator {
+    margin-left: auto;
+  }
 `;
+
 interface FormField {
   children: ReactNode;
   inputId: string;

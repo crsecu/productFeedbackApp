@@ -4,7 +4,7 @@ import { FetcherFormProps, FormProps } from "react-router-dom";
 import FormField from "./FormField";
 import InputField from "./InputField";
 import FormFieldError from "./FormFieldError";
-import SelectField from "./SelectField";
+
 import { ActionResult } from "../../types/action.types";
 import {
   CreateFeedbackFormValues,
@@ -15,6 +15,9 @@ import styled from "styled-components";
 import { CancelButton, PrimaryButton, Textarea } from "../../styles/UIStyles";
 import device from "../../styles/breakpoints";
 import Tooltip from "../../ui/Tooltip";
+import SelectInput from "../../ui/SelectInput";
+import { formatCategoryLabel } from "../../utils/helpers";
+import { Option } from "../../types/customSelect";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -29,6 +32,11 @@ const ButtonContainer = styled.div`
     }
   }
 `;
+
+const categoryOptions: Option[] = CATEGORY_OPTIONS.map((category) => ({
+  value: category,
+  label: formatCategoryLabel(category),
+}));
 
 type FormComponentType = React.ForwardRefExoticComponent<
   (FetcherFormProps | FormProps) & React.RefAttributes<HTMLFormElement>
@@ -73,6 +81,7 @@ function FeedbackForm({
 
   function handleFormChange(e: React.ChangeEvent<HTMLFormElement>) {
     const { name, value } = e.target;
+    console.log("form is changing", name, value);
 
     if (defaultValues && name in defaultValues) {
       const key = name as keyof typeof defaultValues;
@@ -113,12 +122,23 @@ function FeedbackForm({
         description="Choose a category for your feedback"
         inputGuidanceId="feedbackCategoryDesc"
       >
-        <SelectField
+        <SelectInput
           name="category"
-          id="feedbackCategory"
-          options={CATEGORY_OPTIONS}
-          describedById="feedbackCategoryDesc"
-          initialValue={defaultValues?.category}
+          instanceId="feedbackCategory"
+          options={categoryOptions}
+          defaultValue={categoryOptions.find(
+            (option) => option.value === defaultValues.category
+          )}
+          aria-labelledby="feedbackCategoryDesc"
+          classNamePrefix="formSelect"
+          onChange={(newValue) => {
+            console.log("new value, ", newValue);
+            if (newValue?.value !== categoryOptions[0].value) {
+              setIsDirty(true);
+            } else {
+              setIsDirty(false);
+            }
+          }}
         />
       </FormField>
       {children}

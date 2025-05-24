@@ -36,11 +36,11 @@
     },
     {
       "id": "3",
-      "title": "Q&A within the challenge hubs",
-      "category": "enhancement",
+      "title": "2Q&A within the challenge hubs",
+      "category": "ui",
       "upvotes": 72,
       "status": "suggestion",
-      "description": "Challenge-specific Q&A would make for easy reference.",
+      "description": "Challenge-specific Q&A would make for easy reference.1",
       "commentCount": 1
     },
     {
@@ -73,7 +73,7 @@
     {
       "id": "7",
       "title": "More comprehensive reports",
-      "category": "feature",
+      "category": "enhancement",
       "upvotes": 123,
       "status": "planned",
       "description": "It would be great to see a more detailed breakdown of solutions.",
@@ -91,7 +91,7 @@
     {
       "id": "9",
       "title": "One-click portfolio generation",
-      "category": "feature",
+      "category": "enhancement",
       "upvotes": 62,
       "status": "in-Progress",
       "description": "Add ability to create professional looking portfolio from profile.\nAdd ability to create professional looking portfolio from profile.Add ability to create professional looking portfolio from profile.Add ability to create professional looking portfol\n",
@@ -255,6 +255,60 @@
       "title": "d",
       "category": "feature",
       "description": "d",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "424c",
+      "title": "f",
+      "category": "feature",
+      "description": "f",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "5c64",
+      "title": "strawberry",
+      "category": "feature",
+      "description": "dsd",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "52f4",
+      "title": "www",
+      "category": "bug",
+      "description": "www",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "b90c",
+      "title": "wewe",
+      "category": "ux",
+      "description": "we",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "ce5b",
+      "title": "d1111",
+      "category": "ux",
+      "description": "d",
+      "status": "suggestion",
+      "upvotes": 0,
+      "commentCount": 0
+    },
+    {
+      "id": "3f16",
+      "title": "77777777777777",
+      "category": "ux",
+      "description": "7",
       "status": "suggestion",
       "upvotes": 0,
       "commentCount": 0

@@ -1,10 +1,10 @@
 // Status and category TYPES
 export const CATEGORY_OPTIONS = [
+  "feature",
   "ui",
   "ux",
   "enhancement",
   "bug",
-  "feature",
 ] as const;
 
 export type Category = (typeof CATEGORY_OPTIONS)[number];

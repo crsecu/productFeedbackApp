@@ -1,9 +1,10 @@
 import { components, DropdownIndicatorProps, GroupBase } from "react-select";
 
-function DropdownIndicator(
-  props: JSX.IntrinsicAttributes &
-    DropdownIndicatorProps<unknown, boolean, GroupBase<unknown>>
-): React.JSX.Element {
+function DropdownIndicator<
+  Option,
+  IsMulti extends boolean,
+  Group extends GroupBase<Option>
+>(props: DropdownIndicatorProps<Option, IsMulti, Group>) {
   return (
     <components.DropdownIndicator {...props}>
       <svg
@@ -13,7 +14,7 @@ function DropdownIndicator(
         viewBox="0 0 10 7"
         fill="none"
       >
-        <path id="Path 2" d="M1 1L5 5L9 1" stroke="white" stroke-width="2" />
+        <path id="Path 2" d="M1 1L5 5L9 1" stroke="white" strokeWidth="2" />
       </svg>
     </components.DropdownIndicator>
   );

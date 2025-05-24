@@ -5,7 +5,10 @@ import { useFetcher, useParams } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
 import { useAppDispatch } from "../../types/redux.hooks";
 import BannerNotification from "../../ui/notifications/BannerNotification";
-import { getFeedbackFormResponse } from "../../utils/helpers";
+import {
+  capitalizeFirstLetter,
+  getFeedbackFormResponse,
+} from "../../utils/helpers";
 import { EditFeedbackFormValues } from "../../types/form.types";
 import { STATUS_OPTIONS } from "../../types/feedback.types";
 import { CloseButton, DeleteButton, FormSection } from "../../styles/UIStyles";
@@ -14,6 +17,8 @@ import { H1 } from "../../styles/Typography";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import styled from "styled-components";
 import device from "../../styles/breakpoints";
+import { Option } from "../../types/customSelect";
+import SelectInput from "../../ui/SelectInput";
 
 const StyledEditFeedback = styled.div`
   position: absolute;
@@ -40,6 +45,11 @@ const StyledEditFeedback = styled.div`
   }
 `;
 
+const statusOptions: Option[] = STATUS_OPTIONS.map((status) => ({
+  value: status,
+  label: capitalizeFirstLetter(status),
+}));
+
 interface EditFeedbackProps {
   editableFeedback: EditFeedbackFormValues;
   setShowEditFeedback: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,7 +63,7 @@ function EditFeedback({
 
   const { feedbackId } = useParams();
   const fetcher = useFetcher();
-  console.log("Edit Feedback");
+
   const { actionType, submissionOutcome, isSubmissionSuccessful, showForm } =
     getFeedbackFormResponse<EditFeedbackFormValues>(fetcher?.data) || {};
 
@@ -121,12 +131,15 @@ function EditFeedback({
               description="Change feature state"
               inputGuidanceId="feedbackStatusDesc"
             >
-              <SelectField
+              <SelectInput
                 name="status"
-                id="feedbackStatus"
-                options={STATUS_OPTIONS}
-                describedById="feedbackStatusDesc"
-                initialValue={editableFeedback?.status}
+                instanceId="feedbackStatus"
+                options={statusOptions}
+                defaultValue={statusOptions.find(
+                  (option) => option.value === editableFeedback.status
+                )}
+                aria-labelledby="feedbackStatusDesc"
+                classNamePrefix="formSelect"
               />
             </FormField>
           </FeedbackForm>
