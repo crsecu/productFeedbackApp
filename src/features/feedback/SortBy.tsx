@@ -67,7 +67,6 @@ function getOptionFromValue(
 function SortBy(): React.JSX.Element {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortByValue = searchParams.get("sortBy") || "mostUpvotes";
-  console.log("sort option", getOptionFromValue(sortByValue, sortOptions));
 
   const selectedOption = getOptionFromValue(sortByValue, sortOptions);
   assert(selectedOption);

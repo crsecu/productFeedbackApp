@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { FetcherFormProps, FormProps } from "react-router-dom";
 
 import FormField from "./FormField";
@@ -6,18 +6,16 @@ import InputField from "./InputField";
 import FormFieldError from "./FormFieldError";
 
 import { ActionResult } from "../../types/action.types";
-import {
-  CreateFeedbackFormValues,
-  EditFeedbackFormValues,
-} from "../../types/form.types";
+import { CreateFeedbackFormValues } from "../../types/form.types";
 import { CATEGORY_OPTIONS } from "../../types/feedback.types";
 import styled from "styled-components";
 import { CancelButton, PrimaryButton, Textarea } from "../../styles/UIStyles";
 import device from "../../styles/breakpoints";
 import Tooltip from "../../ui/Tooltip";
 import SelectInput from "../../ui/SelectInput";
-import { formatCategoryLabel } from "../../utils/helpers";
+import { formatCategoryLabel, useFormChangeTracker } from "../../utils/helpers";
 import { Option } from "../../types/customSelect";
+import { isKeyOf } from "../../utils/TS_helpers";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -42,63 +40,58 @@ type FormComponentType = React.ForwardRefExoticComponent<
   (FetcherFormProps | FormProps) & React.RefAttributes<HTMLFormElement>
 >;
 
-interface FeedbackFormProps {
+interface FeedbackFormProps<Type extends CreateFeedbackFormValues> {
   FormComponent: FormComponentType; //
   method: "post" | "patch";
   submissionStatus: "idle" | "loading" | "submitting";
   actionResult: ActionResult<unknown>; //
-
   submitBtnText: string;
-  defaultValues?: CreateFeedbackFormValues | EditFeedbackFormValues;
-  children?: ReactNode; //for: extra fields
+  defaultValues: Type;
+  children?: (
+    onFieldChange: <K extends Extract<keyof Type, string>>(
+      fieldName: K,
+      fieldValue: Type[K]
+    ) => void
+  ) => ReactNode;
   buttons?: ReactNode; //for: custom buttons
   actionRoute?: string; //url to which the form will be submitted
-  onCancel: (isDirty: boolean) => void;
+  onCancel: (isChanged: boolean) => void;
 }
 
-function FeedbackForm({
+function FeedbackForm<Type extends CreateFeedbackFormValues>({
   children,
   FormComponent,
   method,
   submissionStatus,
   actionResult,
   submitBtnText,
-  defaultValues = { title: "", description: "", category: "feature" },
+  defaultValues,
   buttons,
   actionRoute,
   onCancel,
-}: FeedbackFormProps): React.JSX.Element {
+}: FeedbackFormProps<Type>): React.JSX.Element {
   /* Track Dirty State */
-  const [isDirty, setIsDirty] = useState(false);
+  const [isFormDirty, handleFieldChange] = useFormChangeTracker(defaultValues);
 
   const validationErrors = actionResult?.validationErrors ?? null;
-  console.log("val", validationErrors);
+
   const isSubmitting = submissionStatus === "submitting";
+
   const tooltipText =
     method === "patch"
       ? "Can't save—form is unchanged."
       : "Fill out the form to enable submit.";
 
-  function handleFormChange(e: React.ChangeEvent<HTMLFormElement>) {
-    const { name, value } = e.target;
-    console.log("form is changing", name, value);
-
-    if (defaultValues && name in defaultValues) {
-      const key = name as keyof typeof defaultValues;
-      if (defaultValues[key] !== value) {
-        setIsDirty(true);
-      } else {
-        console.log("did it change");
-        setIsDirty(false);
-      }
-    }
-  }
-
   /* FORM CODE */
   const formOutput = (
     <FormComponent
       method={method}
-      onChange={handleFormChange}
+      onChange={(e: React.ChangeEvent<HTMLFormElement>) => {
+        const { name, value } = e.target;
+        if (isKeyOf<Type>(defaultValues, name)) {
+          handleFieldChange(name, value);
+        }
+      }}
       action={actionRoute}
     >
       <FormField
@@ -131,17 +124,19 @@ function FeedbackForm({
           )}
           aria-labelledby="feedbackCategoryDesc"
           classNamePrefix="formSelect"
-          onChange={(newValue) => {
-            console.log("new value, ", newValue);
-            if (newValue?.value !== categoryOptions[0].value) {
-              setIsDirty(true);
-            } else {
-              setIsDirty(false);
+          onChange={(newVal, actionMeta) => {
+            if (actionMeta.name === undefined || !newVal) return;
+
+            if (isKeyOf<Type>(defaultValues, actionMeta.name)) {
+              handleFieldChange(
+                actionMeta.name,
+                newVal.value as Type[typeof actionMeta.name]
+              );
             }
           }}
         />
       </FormField>
-      {children}
+      {children && children(handleFieldChange)}
       <FormField
         inputId="feedbackDescription"
         label="Feedback Detail"
@@ -163,21 +158,21 @@ function FeedbackForm({
         )}
       </FormField>
       <ButtonContainer>
-        {!isDirty || isSubmitting ? (
+        {!isFormDirty || isSubmitting ? (
           <Tooltip text={tooltipText}>
-            <PrimaryButton type="submit" disabled={!isDirty || isSubmitting}>
+            <PrimaryButton
+              type="submit"
+              disabled={!isFormDirty || isSubmitting}
+            >
               {isSubmitting ? "Submitting..." : submitBtnText}
             </PrimaryButton>
           </Tooltip>
         ) : (
-          <PrimaryButton type="submit" disabled={!isDirty || isSubmitting}>
+          <PrimaryButton type="submit" disabled={!isFormDirty || isSubmitting}>
             {isSubmitting ? "Submitting..." : submitBtnText}
           </PrimaryButton>
         )}
-        {/* <PrimaryButton type="submit" disabled={!isDirty || isSubmitting}>
-          {isSubmitting ? "Submitting..." : submitBtnText}
-        </PrimaryButton> */}
-        <CancelButton type="button" onClick={() => onCancel(isDirty)}>
+        <CancelButton type="button" onClick={() => onCancel(isFormDirty)}>
           Cancel
         </CancelButton>
 
@@ -185,7 +180,12 @@ function FeedbackForm({
       </ButtonContainer>
     </FormComponent>
   );
-  return <>{formOutput}</>;
+  return (
+    <>
+      <h2 style={{ color: "purple" }}>{isFormDirty ? "DIRTY" : "NOT dirty"}</h2>
+      {formOutput}
+    </>
+  );
 }
 
 export default FeedbackForm;

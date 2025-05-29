@@ -14,7 +14,7 @@ import {
   FeedbackGroupedByStatus,
   SuggestionFeedback,
 } from "../types/feedback.types";
-import { ChangeEvent } from "react";
+import { useRef, useState } from "react";
 import {
   ActionResult,
   ValidationErrorResult,
@@ -25,7 +25,6 @@ import {
 } from "../types/action.types";
 import { FeedbackFormErrors } from "../types/form.types";
 import { MutationResult } from "../types/mutation.types";
-import { Option } from "../types/customSelect";
 
 /* Reusable Fetch Helper */
 export async function fetchWrapper<T>(
@@ -108,11 +107,8 @@ export function sortFeedbackList(
   category: string,
   sortByOption: string
 ): SuggestionFeedback[] {
-  console.log("category ", category, "sortByOption ", sortByOption);
-
   const feedbackList =
     category === "all" ? list : filterFeedbackByCategory(list, category);
-  console.log("feedbackList??", feedbackList);
 
   return [...feedbackList].sort((a, b) => {
     switch (sortByOption) {
@@ -407,4 +403,90 @@ export function groupFeedbackByStatus(
   );
 
   return result;
+}
+
+/* Set form dirty state */
+
+export function hasFormChanged<T>(
+  defaultFormValues: T,
+  currentFormValues: T,
+  stateSetter: React.Dispatch<React.SetStateAction<boolean>>
+): void {
+  for (const fieldName in currentFormValues) {
+    const defaultFieldValue = defaultFormValues[fieldName];
+    const currentFieldValue = currentFormValues[fieldName];
+
+    if (currentFieldValue !== defaultFieldValue) {
+      console.log("different value");
+
+      stateSetter(true);
+      return;
+    }
+  }
+
+  stateSetter(false);
+}
+
+////////////////////////////////////////////////////////
+interface FieldValueTracker {
+  name: string;
+  initialValue: string;
+  currentValue: null | string;
+  isDirty: boolean;
+}
+
+function createFieldTrackers<Type>(
+  defaultFormValues: Type
+): Record<keyof Type, FieldValueTracker> {
+  const tracker = {} as Record<keyof Type, FieldValueTracker>;
+
+  for (const field in defaultFormValues) {
+    tracker[field] = {
+      name: field,
+      initialValue: defaultFormValues[field] as string,
+      currentValue: null,
+      isDirty: false,
+    };
+  }
+
+  return tracker;
+}
+
+//Track Form Dirty State Custom Hook
+export function useFormChangeTracker<Type extends Record<string, string>>(
+  initialValues: Type
+) {
+  const formValues = useRef(createFieldTrackers(initialValues));
+  const [isFormDirty, setIsDirty1] = useState(false);
+
+  function handleFieldChange<K extends Extract<keyof Type, string>>(
+    fieldName: K,
+    fieldValue: Type[K]
+  ): void {
+    const fieldTracker = formValues.current[fieldName];
+
+    fieldTracker.currentValue = fieldValue;
+    fieldTracker.isDirty =
+      fieldTracker.currentValue !== fieldTracker.initialValue;
+
+    if (fieldTracker.isDirty) {
+      if (isFormDirty) return;
+      setIsDirty1(true);
+    } else {
+      let dirtyFieldCount = 0;
+
+      //field not changed, isDirty === true
+      for (const field in formValues.current) {
+        const currentFieldValue = formValues.current[field];
+
+        if (currentFieldValue.isDirty) {
+          dirtyFieldCount += 1;
+        }
+      }
+
+      if (dirtyFieldCount === 0) setIsDirty1(false);
+    }
+  }
+
+  return [isFormDirty, handleFieldChange] as const;
 }

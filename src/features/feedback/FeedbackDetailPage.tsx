@@ -55,6 +55,7 @@ function FeedbackDetailPage(): React.JSX.Element {
   }, [category, description, status, title]);
 
   const rootEl = document.getElementById("root")!;
+  console.log("editable", editableFeedbackFields);
 
   return (
     <StyledFeedbackDetailPage>

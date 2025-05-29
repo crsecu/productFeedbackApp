@@ -65,9 +65,8 @@ function GlobalModal(): React.JSX.Element | null {
 
   const { title, description, decisionButton, wayoutButton } = content || {};
 
-  console.log("con", content);
   if (!isOpen) return null;
-  console.log("did GLOBAL MODAL RENDER");
+
   const handleConfirm = async () => {
     if (modalType === "delete_feedback") {
       try {

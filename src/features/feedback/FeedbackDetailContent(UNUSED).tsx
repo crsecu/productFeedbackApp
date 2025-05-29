@@ -14,7 +14,7 @@ function FeedbackDetailContent({
 }: FeedbackDetailContentProps): React.JSX.Element {
   const params = useParams();
   const feedbackId = params.feedbackId as string;
-  console.log("yu");
+
   const commentData = useLoaderData() as CommentData;
 
   const countLoader = commentData.commentCount;

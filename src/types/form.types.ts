@@ -4,10 +4,12 @@ import { Category, Status } from "./feedback.types";
 export type FeedbackFormKeys = "title" | "category" | "description" | "status";
 
 export interface CreateFeedbackFormValues {
+  [key: string]: string;
   title: string;
   category: Category;
   description: string;
 }
+
 export interface EditFeedbackFormValues extends CreateFeedbackFormValues {
   status: Status;
 }

@@ -27,11 +27,11 @@ import createFeedbackIcon from "../../assets/images/createFeedback-icon.svg";
 
 import { H1 } from "../../styles/Typography";
 
-const initialFormState = {
+const initialFormState: CreateFeedbackFormValues = {
   title: "",
-  category: "feature",
   description: "",
-} as CreateFeedbackFormValues;
+  category: "feature",
+};
 
 function CreateFeedback(): React.JSX.Element {
   const dispatch = useAppDispatch();

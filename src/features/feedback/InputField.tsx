@@ -33,7 +33,6 @@ function InputField({
   describedById,
   validationError,
 }: InputFieldProps): React.JSX.Element {
-  console.log("err", validationError);
   return (
     <>
       <StyledInputField

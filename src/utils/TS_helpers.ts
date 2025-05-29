@@ -12,3 +12,10 @@ export default function assert(
     console.error(msg);
   }
 }
+
+export function isKeyOf<T extends object>(
+  obj: T,
+  key: string
+): key is Extract<keyof T, string> {
+  return key in obj;
+}

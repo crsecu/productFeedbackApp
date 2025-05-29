@@ -17,7 +17,6 @@ function renderRoadmapColumns(
   return (Object.keys(statusGroupedData) as Array<keyof RoadmapLoaderData>).map(
     (status) => {
       const feedbackList = statusGroupedData[status];
-      console.log("list by status", feedbackList);
 
       return (
         <Section key={`section-${status}`}>

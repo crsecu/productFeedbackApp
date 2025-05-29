@@ -152,9 +152,6 @@ const router = createBrowserRouter([
               if (actionResult?.submissionOutcome !== "success") {
                 return false; // prevent clearing `useActionData()`
               }
-
-              console.log("Hi CURRENT", currentUrl);
-              console.log("Hi NEXT", nextUrl);
             },
           },
           {

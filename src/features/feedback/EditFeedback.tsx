@@ -9,8 +9,12 @@ import {
   capitalizeFirstLetter,
   getFeedbackFormResponse,
 } from "../../utils/helpers";
-import { EditFeedbackFormValues } from "../../types/form.types";
-import { STATUS_OPTIONS } from "../../types/feedback.types";
+import {
+  EditFeedbackFormValues,
+  FeedbackFormErrors,
+  FeedbackFormKeys,
+} from "../../types/form.types";
+import { Status, STATUS_OPTIONS } from "../../types/feedback.types";
 import { CloseButton, DeleteButton, FormSection } from "../../styles/UIStyles";
 import editFeedbackIcon from "../../assets/images/editFeedback-icon.svg";
 import { H1 } from "../../styles/Typography";
@@ -19,6 +23,9 @@ import styled from "styled-components";
 import device from "../../styles/breakpoints";
 import { Option } from "../../types/customSelect";
 import SelectInput from "../../ui/SelectInput";
+import { useRef } from "react";
+import { CgKey } from "react-icons/cg";
+import { isKeyOf } from "../../utils/TS_helpers";
 
 const StyledEditFeedback = styled.div`
   position: absolute;
@@ -59,6 +66,7 @@ function EditFeedback({
   editableFeedback,
   setShowEditFeedback,
 }: EditFeedbackProps): React.JSX.Element {
+  const refTest = useRef(1);
   const dispatch = useAppDispatch();
 
   const { feedbackId } = useParams();
@@ -125,23 +133,32 @@ function EditFeedback({
             actionResult={fetcher.data}
             submitBtnText={"Save Changes"}
           >
-            <FormField
-              inputId="feedbackStatus"
-              label="Update Status"
-              description="Change feature state"
-              inputGuidanceId="feedbackStatusDesc"
-            >
-              <SelectInput
-                name="status"
-                instanceId="feedbackStatus"
-                options={statusOptions}
-                defaultValue={statusOptions.find(
-                  (option) => option.value === editableFeedback.status
-                )}
-                aria-labelledby="feedbackStatusDesc"
-                classNamePrefix="formSelect"
-              />
-            </FormField>
+            {(onFieldChange) => (
+              <FormField
+                inputId="feedbackStatus"
+                label="Update Status"
+                description="Change feature state"
+                inputGuidanceId="feedbackStatusDesc"
+              >
+                <SelectInput
+                  name="status"
+                  instanceId="feedbackStatus"
+                  options={statusOptions}
+                  defaultValue={statusOptions.find(
+                    (option) => option.value === editableFeedback.status
+                  )}
+                  aria-labelledby="feedbackStatusDesc"
+                  classNamePrefix="formSelect"
+                  onChange={(newVal, actionMeta) => {
+                    if (actionMeta.name === undefined || !newVal) return;
+                    onFieldChange(
+                      actionMeta.name as keyof EditFeedbackFormValues,
+                      newVal.value
+                    );
+                  }}
+                />
+              </FormField>
+            )}
           </FeedbackForm>
         </FormSection>
       )}

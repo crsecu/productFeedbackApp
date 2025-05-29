@@ -123,8 +123,6 @@ function BannerNotification({
     actionType
   );
 
-  console.log("not message", notificationMessage);
-
   if (!notificationMessage) return null;
 
   return (
