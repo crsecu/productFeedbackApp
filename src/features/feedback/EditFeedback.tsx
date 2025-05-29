@@ -1,6 +1,6 @@
 import FeedbackForm from "./FeedbackForm";
 import FormField from "./FormField";
-import SelectField from "./SelectField";
+
 import { useFetcher, useParams } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
 import { useAppDispatch } from "../../types/redux.hooks";
@@ -9,12 +9,8 @@ import {
   capitalizeFirstLetter,
   getFeedbackFormResponse,
 } from "../../utils/helpers";
-import {
-  EditFeedbackFormValues,
-  FeedbackFormErrors,
-  FeedbackFormKeys,
-} from "../../types/form.types";
-import { Status, STATUS_OPTIONS } from "../../types/feedback.types";
+import { EditFeedbackFormValues } from "../../types/form.types";
+import { STATUS_OPTIONS } from "../../types/feedback.types";
 import { CloseButton, DeleteButton, FormSection } from "../../styles/UIStyles";
 import editFeedbackIcon from "../../assets/images/editFeedback-icon.svg";
 import { H1 } from "../../styles/Typography";
@@ -23,9 +19,6 @@ import styled from "styled-components";
 import device from "../../styles/breakpoints";
 import { Option } from "../../types/customSelect";
 import SelectInput from "../../ui/SelectInput";
-import { useRef } from "react";
-import { CgKey } from "react-icons/cg";
-import { isKeyOf } from "../../utils/TS_helpers";
 
 const StyledEditFeedback = styled.div`
   position: absolute;
@@ -66,7 +59,6 @@ function EditFeedback({
   editableFeedback,
   setShowEditFeedback,
 }: EditFeedbackProps): React.JSX.Element {
-  const refTest = useRef(1);
   const dispatch = useAppDispatch();
 
   const { feedbackId } = useParams();
@@ -151,10 +143,7 @@ function EditFeedback({
                   classNamePrefix="formSelect"
                   onChange={(newVal, actionMeta) => {
                     if (actionMeta.name === undefined || !newVal) return;
-                    onFieldChange(
-                      actionMeta.name as keyof EditFeedbackFormValues,
-                      newVal.value
-                    );
+                    onFieldChange(actionMeta.name, newVal.value);
                   }}
                 />
               </FormField>

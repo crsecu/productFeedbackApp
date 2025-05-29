@@ -23,7 +23,7 @@ import {
   ActionType,
   SubmissionOutcome,
 } from "../types/action.types";
-import { FeedbackFormErrors } from "../types/form.types";
+import { FeedbackFormErrors, FieldValueTracker } from "../types/form.types";
 import { MutationResult } from "../types/mutation.types";
 
 /* Reusable Fetch Helper */
@@ -405,45 +405,18 @@ export function groupFeedbackByStatus(
   return result;
 }
 
-/* Set form dirty state */
-
-export function hasFormChanged<T>(
-  defaultFormValues: T,
-  currentFormValues: T,
-  stateSetter: React.Dispatch<React.SetStateAction<boolean>>
-): void {
-  for (const fieldName in currentFormValues) {
-    const defaultFieldValue = defaultFormValues[fieldName];
-    const currentFieldValue = currentFormValues[fieldName];
-
-    if (currentFieldValue !== defaultFieldValue) {
-      console.log("different value");
-
-      stateSetter(true);
-      return;
-    }
-  }
-
-  stateSetter(false);
-}
-
 ////////////////////////////////////////////////////////
-interface FieldValueTracker {
-  name: string;
-  initialValue: string;
-  currentValue: null | string;
-  isDirty: boolean;
-}
+//Form Dirty State
 
 function createFieldTrackers<Type>(
-  defaultFormValues: Type
+  initialFormValues: Type
 ): Record<keyof Type, FieldValueTracker> {
   const tracker = {} as Record<keyof Type, FieldValueTracker>;
 
-  for (const field in defaultFormValues) {
+  for (const field in initialFormValues) {
     tracker[field] = {
       name: field,
-      initialValue: defaultFormValues[field] as string,
+      initialValue: initialFormValues[field] as string,
       currentValue: null,
       isDirty: false,
     };
