@@ -14,7 +14,6 @@ import FeedbackBoardMainSection from "./FeedbackBoardMainSection";
 import FeedbackBoardLeftColumn from "./FeedbackBoardLeftColumn";
 import { PageStyles, PrimaryLinkButton } from "../../styles/UIStyles";
 import device from "../../styles/breakpoints";
-import DropdownIndicator from "../../ui/DropdownIndicator";
 
 const StyledFeedbackBoardPage = styled.div`
   ${PageStyles}

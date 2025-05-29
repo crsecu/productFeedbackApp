@@ -11,7 +11,7 @@ import {
 import { H1 } from "../../styles/Typography";
 import RoadmapStatusTabBar from "./RoadmapStatusTabBar";
 
-import { useIsMobile } from "../../utils/customHooks";
+import { useMatchMedia } from "../../utils/customHooks";
 import device from "../../styles/breakpoints";
 
 const StyledRoadmapPage = styled.div`
@@ -56,8 +56,7 @@ const StyledRoadmapPage = styled.div`
 
 function RoadmapPage(): React.JSX.Element {
   const dataFromLoader = useRouteLoaderData("roadmapData") as RoadmapLoaderData;
-
-  const isMobile = useIsMobile();
+  const isMobile = useMatchMedia("(max-width: 767px");
 
   return (
     <StyledRoadmapPage>

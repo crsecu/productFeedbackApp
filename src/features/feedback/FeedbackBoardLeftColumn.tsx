@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoCloseSharp } from "react-icons/io5";
 import PageHeader from "../../ui/PageHeader";
@@ -9,6 +9,7 @@ import FeedbackBoardSidebar from "./FeedbackBoardSidebar";
 import FilterByCategory from "./FilterByCategory";
 import device from "../../styles/breakpoints";
 import { Overlay } from "../../styles/UIStyles";
+import { useMatchMedia } from "../../utils/customHooks";
 
 const StyledFeedbackBoardLeftColumn = styled.div`
   @media ${device.sm} {
@@ -50,16 +51,13 @@ function FeedbackBoardLeftColumn({
   suggestionCount,
 }: FeedbackBoardLeftColumnProps): React.JSX.Element {
   const [showSidebar, setShowSidebar] = useState(false);
+  const isMobile = useMatchMedia("(max-width: 639px)");
 
-  const handleSidebarVisibility = useCallback(() => {
-    setShowSidebar((prevState) => !prevState);
-
-    if (showSidebar) {
-      document.body.classList.remove("no-scroll");
-    } else {
-      document.body.classList.add("no-scroll");
+  useEffect(() => {
+    if (!isMobile && showSidebar) {
+      setShowSidebar(false);
     }
-  }, [showSidebar]);
+  }, [isMobile, showSidebar]);
 
   return (
     <>
@@ -67,13 +65,19 @@ function FeedbackBoardLeftColumn({
       <StyledFeedbackBoardLeftColumn>
         <PageHeader>
           <TitleCard />
-          {showSidebar ? (
-            <IconButton onClick={handleSidebarVisibility}>
-              <IoCloseSharp size={"1.6rem"} strokeWidth={16} />
-            </IconButton>
-          ) : (
-            <IconButton onClick={handleSidebarVisibility}>
-              <GiHamburgerMenu size={"1.25rem"} />
+          {isMobile && (
+            <IconButton
+              onClick={() => setShowSidebar((prevState) => !prevState)}
+            >
+              {showSidebar ? (
+                <IoCloseSharp
+                  size={"1.6rem"}
+                  strokeWidth={16}
+                  className="no-scroll-menu"
+                />
+              ) : (
+                <GiHamburgerMenu size={"1.25rem"} />
+              )}
             </IconButton>
           )}
         </PageHeader>
@@ -84,7 +88,7 @@ function FeedbackBoardLeftColumn({
         >
           <FilterByCategory
             suggestionCount={suggestionCount}
-            onFilterSelect={handleSidebarVisibility}
+            onFilterSelect={() => setShowSidebar((prevState) => !prevState)}
           />
           {children}
         </FeedbackBoardSidebar>

@@ -1,29 +1,27 @@
-import debounce from "lodash.debounce";
-
 import { useEffect, useState } from "react";
 
-/* Hook that returns true if the viewport width is less than 768px (mobile + tablet breakpoint)  */
-export function useIsMobile(): boolean {
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+/* Hook that returns true if the current viewport matches the given media query  */
+export function useMatchMedia(mediaQuery: string): boolean {
+  const [isMatching, setIsMatching] = useState<boolean>(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia(mediaQuery).matches
+      : false
+  );
 
   useEffect(() => {
-    const handleResize = debounce(() => {
-      const viewportWidth = window.innerWidth;
-      if (
-        (isMobile && viewportWidth >= 768) ||
-        (!isMobile && viewportWidth < 768)
-      ) {
-        setIsMobile(viewportWidth < 768);
-      }
-    }, 150);
+    const mediaWatcher = window.matchMedia(mediaQuery);
+    setIsMatching(mediaWatcher.matches);
 
-    window.addEventListener("resize", handleResize);
+    function updateIsMatching(e: MediaQueryListEvent) {
+      setIsMatching(e.matches);
+    }
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      handleResize.cancel();
+    mediaWatcher.addEventListener("change", updateIsMatching);
+
+    return function cleanup() {
+      mediaWatcher.removeEventListener("change", updateIsMatching);
     };
-  }, [isMobile]);
+  }, [mediaQuery]);
 
-  return isMobile;
+  return isMatching;
 }

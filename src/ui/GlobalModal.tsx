@@ -101,7 +101,7 @@ function GlobalModal(): React.JSX.Element | null {
     <>
       {isOpen && <Overlay />}
       <StyledGlobalModal>
-        {isOpen && <span className="no-doc-scroll"></span>}
+        {isOpen && <span className="no-scroll-modal"></span>}
 
         <ModalTitle>{title}</ModalTitle>
         <p>{description}</p>

@@ -16,7 +16,6 @@ const StyledPageHeader = styled.header`
   );
 
   @media ${device.sm} {
-    /* flex-basis: 225px; */
     border-radius: var(--border-radius-sm);
     align-items: end;
     padding-bottom: 22px;

@@ -180,7 +180,11 @@ body {
   position: relative;
 }
 
-:root:has(.no-doc-scroll) {
+:root:has(.no-scroll-menu) {
+  overflow: hidden;
+}
+
+:root:has(.no-scroll-modal) {
   overflow: hidden;
 }
 
