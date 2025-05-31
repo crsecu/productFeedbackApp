@@ -177,11 +177,11 @@ export const labelBox = css`
 export const PageStyles = css`
   display: flex;
   flex-direction: column;
-  margin: auto;
   height: 100%;
+  margin: auto;
 
   @media ${device.sm} {
-    margin-top: 28px;
+    margin-top: 16px;
     width: 92vw;
   }
 

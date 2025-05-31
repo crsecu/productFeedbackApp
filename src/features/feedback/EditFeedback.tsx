@@ -28,6 +28,7 @@ const StyledEditFeedback = styled.div`
   left: 0;
   right: 0;
   margin: auto;
+  margin-top: 28px;
 
   & section {
     position: relative;

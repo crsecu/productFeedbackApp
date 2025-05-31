@@ -1,6 +1,6 @@
 import { Outlet, useNavigation } from "react-router-dom";
 import GlobalModal from "./GlobalModal";
-import ToastNotification from "./ToastNotification";
+import ToastNotification from "./notifications/ToastNotification";
 import GlobalSpinner from "./GlobalSpinner";
 import { createPortal } from "react-dom";
 

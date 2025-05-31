@@ -7,6 +7,7 @@ import { IoCloseSharp } from "react-icons/io5";
 
 import { buildNotificationMessage } from "./notificationMessages.tsx";
 import device from "../../styles/breakpoints.ts";
+
 interface StyledBannerProps {
   $notificationType: SubmissionOutcome;
   $themeColor: string;
@@ -150,7 +151,6 @@ function BannerNotification({
         >
           {notificationMessage.content.title}
         </Title>
-        {/* <p>{notificationMessage.content.title}</p> */}
 
         <p>{notificationMessage.content.message}</p>
       </div>

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import device from "./breakpoints";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -172,12 +173,34 @@ body {
   color: var(--color-text-dark);
   font-size: var(--font-size-body-1);
   background-color: var(--color-background);
-}
+
+  /* height: 100dvh;
+  height: 100vh;
+  position: relative;
+} */
 
 #root {
   height: 100dvh;
   height: 100vh;
   position: relative;
+
+    /* display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: 100%;
+  
+    @media ${device.sm} {
+    
+      width: 92vw;
+    }
+  
+    @media ${device.xl} {
+      width: 88vw;
+    }
+  
+    @media ${device.xxl} {
+      width: 85vw;
+    } */
 }
 
 :root:has(.no-scroll-menu) {
@@ -223,8 +246,32 @@ input:not([type=radio]):focus, textarea:focus, select:focus{
    0 0 10px 2px var(--color-secondary-hover);  
 } */
 
+@keyframes fadeToast {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
+.toastNotification.show {
+  opacity: 1;
+  transition: opacity 0.2s ease-out;
+  pointer-events: auto;
+}
 
+.toastNotification.hide {
+  opacity: 0;
+  transition: opacity 6.5s ease-in-out; /* slower fade-out */
+  pointer-events: none;
+}
 
 
 /* Scroll-locking */

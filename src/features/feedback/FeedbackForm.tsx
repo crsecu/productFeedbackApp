@@ -180,12 +180,7 @@ function FeedbackForm<Type extends CreateFeedbackFormValues>({
       </ButtonContainer>
     </FormComponent>
   );
-  return (
-    <>
-      <h2 style={{ color: "purple" }}>{isFormDirty ? "DIRTY" : "NOT dirty"}</h2>
-      {formOutput}
-    </>
-  );
+  return <>{formOutput}</>;
 }
 
 export default FeedbackForm;

@@ -5,7 +5,7 @@ import {
   untrackUserUpvote,
   getIsFeedbackUpvoted,
 } from "../../store/slices/userSlice";
-import { showNotification } from "../../store/slices/toastNotificationSlice";
+import { showToastNotification } from "../../store/slices/toastNotificationSlice";
 import { useState } from "react";
 import styled from "styled-components";
 import { IoChevronUpSharp } from "react-icons/io5";
@@ -86,7 +86,7 @@ function UpvoteButton({
         setUpvoteCount(nextUpvoteCount);
       })
       .catch(() => {
-        dispatch(showNotification({ type: "upvoteFeedback_error" }));
+        // dispatch(showToastNotification({ type: "upvoteFeedback_error" }));
       })
       .finally(() => {
         setIsLoading(false);

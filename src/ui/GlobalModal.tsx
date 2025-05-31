@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { deleteFeedback } from "../services/apiFeedback";
 import { hideModal } from "../store/slices/modalSlice";
-import { showNotification } from "../store/slices/toastNotificationSlice";
+import { showToastNotification } from "../store/slices/toastNotificationSlice";
 import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
 import assert from "../utils/TS_helpers";
 import styled from "styled-components";
@@ -75,13 +75,12 @@ function GlobalModal(): React.JSX.Element | null {
         console.log("Feedback entry deleted", confirmPayload);
         navigate(-1);
 
-        dispatch(showNotification({ type: "deleteFeedback_success" }));
+        dispatch(showToastNotification({ key: "deleteFeedback_success" }));
       } catch (err) {
         console.error("Failed to delete feedback:", err);
         dispatch(
-          showNotification({
-            type: "deleteFeedback_error",
-            message: "Failed to delete feedback",
+          showToastNotification({
+            key: "deleteFeedback_error",
           })
         );
       }
