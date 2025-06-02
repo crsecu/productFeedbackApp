@@ -2,14 +2,14 @@
   "userList": [
     {
       "id": "fcb5",
-      "image": "/assets/user-images/image-zena.jpg",
+      "image": "./assets/user-images/image-zena.jpg",
       "name": "Cristina",
       "username": "cs",
       "upvotedFeedbackIds": []
     },
     {
       "id": "7b27",
-      "image": "/assets/user-images/image-anne.jpg",
+      "image": "./assets/user-images/image-anne.jpg",
       "name": "Anne",
       "username": "ann",
       "upvotedFeedbackIds": []
@@ -18,36 +18,36 @@
   "productRequests": [
     {
       "id": "1",
-      "title": "Easier to search for solutions based on a specific stack. Add tags for solutions Add tags for solutionsAdd tags for solutionsAdd tags for solutionsAdd tags for solutionsAdd tags for solutions Easier to search for solutions based on a specific stack. Add tags for solutions Add tags for solutionsAdd tags for solutionsAdd tags for solutionsAdd tags for solutionsAdd tags for solutionsAdd tags for solutions Add tags for solutions Add tags for solutions Add tags for solutions ShiShi ShiShi ShiShi ShiShi ShiShi ShiShi ShiShi",
-      "category": "enhancement",
-      "upvotes": 126,
-      "status": "live",
-      "description": "Easier to search for solutions based onEasier to search for solutions based on a specific stack. \n a specific stack.\n ShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShiShi",
+      "title": "Add tags for solutions",
+      "category": "feature",
+      "upvotes": 125,
+      "status": "suggestion",
+      "description": "Easier to search for solutions based on a specific stack.",
       "commentCount": 2
     },
     {
       "id": "2",
-      "title": " c",
-      "category": "ux",
-      "upvotes": 103,
+      "title": "Add a dark theme option",
+      "category": "feature",
+      "upvotes": 100,
       "status": "suggestion",
-      "description": " c",
-      "commentCount": 5
+      "description": "It would help people with light sensitivities and who prefer dark mode.",
+      "commentCount": 4
     },
     {
       "id": "3",
-      "title": "2Q&A within the challenge hubs",
-      "category": "ui",
-      "upvotes": 72,
+      "title": "Q&A within the challenge hubs",
+      "category": "feature",
+      "upvotes": 65,
       "status": "suggestion",
-      "description": "Challenge-specific Q&A would make for easy reference.1",
+      "description": "Challenge-specific Q&A would make for easy reference.",
       "commentCount": 1
     },
     {
       "id": "4",
       "title": "Add image/video upload to feedback",
-      "category": "feature",
-      "upvotes": 55,
+      "category": "enhancement",
+      "upvotes": 51,
       "status": "suggestion",
       "description": "Images and screencasts can enhance comments on solutions.",
       "commentCount": 2
@@ -55,7 +55,7 @@
     {
       "id": "5",
       "title": "Ability to follow others",
-      "category": "bug",
+      "category": "feature",
       "upvotes": 42,
       "status": "suggestion",
       "description": "Stay updated on comments and solutions other people post.",
@@ -64,7 +64,7 @@
     {
       "id": "6",
       "title": "Preview images not loading",
-      "category": "bug",
+      "category": "ui",
       "upvotes": 3,
       "status": "suggestion",
       "description": "Challenge preview images are missing when you apply a filter.",
@@ -73,7 +73,7 @@
     {
       "id": "7",
       "title": "More comprehensive reports",
-      "category": "enhancement",
+      "category": "feature",
       "upvotes": 123,
       "status": "planned",
       "description": "It would be great to see a more detailed breakdown of solutions.",
@@ -91,18 +91,18 @@
     {
       "id": "9",
       "title": "One-click portfolio generation",
-      "category": "enhancement",
+      "category": "feature",
       "upvotes": 62,
-      "status": "in-Progress",
-      "description": "Add ability to create professional looking portfolio from profile.\nAdd ability to create professional looking portfolio from profile.Add ability to create professional looking portfolio from profile.Add ability to create professional looking portfol\n",
+      "status": "in-progress",
+      "description": "Add ability to create professional looking portfolio from profile.",
       "commentCount": 1
     },
     {
       "id": "10",
-      "title": "Bookmark challenges Bookmark challenges Bookmark challenges 1231111111111111111111111 ",
+      "title": "Bookmark challenges",
       "category": "feature",
       "upvotes": 31,
-      "status": "in-Progress",
+      "status": "in-progress",
       "description": "Be able to bookmark challenges to take later on.",
       "commentCount": 1
     },
@@ -111,7 +111,7 @@
       "title": "Animated solution screenshots",
       "category": "bug",
       "upvotes": 9,
-      "status": "in-Progress",
+      "status": "in-progress",
       "description": "Screenshots of solutions with animations don’t display correctly.",
       "commentCount": 0
     },
@@ -123,195 +123,6 @@
       "status": "live",
       "description": "Small animations at specific points can add delight.",
       "commentCount": 2
-    },
-    {
-      "id": "3b9d",
-      "title": "f",
-      "category": "feature",
-      "description": "f",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "f472",
-      "title": "d",
-      "category": "feature",
-      "description": "d",
-      "status": "suggestion",
-      "upvotes": 1,
-      "commentCount": 0
-    },
-    {
-      "id": "26e6",
-      "title": "dfd",
-      "category": "feature",
-      "description": "ff",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "214c",
-      "title": " 11",
-      "category": "feature",
-      "description": " 11",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "62ea",
-      "title": "1",
-      "category": "feature",
-      "description": "1",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "9785",
-      "title": "1",
-      "category": "feature",
-      "description": "1",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "5813",
-      "title": "1",
-      "category": "feature",
-      "description": "1",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "28f6",
-      "title": "11",
-      "category": "feature",
-      "description": " 11",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "bde8",
-      "title": "w",
-      "category": "feature",
-      "description": "`",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "b9b6",
-      "title": "fdfdf",
-      "category": "feature",
-      "description": " ff",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "c9d2",
-      "title": "fg",
-      "category": "feature",
-      "description": "fg",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "a766",
-      "title": "df",
-      "category": "feature",
-      "description": "fd",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "1308",
-      "title": "d",
-      "category": "feature",
-      "description": "d",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "e6cd",
-      "title": "c",
-      "category": "feature",
-      "description": "c",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "8b91",
-      "title": "d",
-      "category": "feature",
-      "description": "d",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "424c",
-      "title": "f",
-      "category": "feature",
-      "description": "f",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "5c64",
-      "title": "strawberry",
-      "category": "feature",
-      "description": "dsd",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "52f4",
-      "title": "www",
-      "category": "bug",
-      "description": "www",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "b90c",
-      "title": "wewe",
-      "category": "ux",
-      "description": "we",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "ce5b",
-      "title": "d1111",
-      "category": "ux",
-      "description": "d",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
-    },
-    {
-      "id": "3f16",
-      "title": "77777777777777",
-      "category": "ux",
-      "description": "7",
-      "status": "suggestion",
-      "upvotes": 0,
-      "commentCount": 0
     }
   ],
   "comments": [
@@ -323,7 +134,7 @@
       "parentType": null,
       "content": "Awesome idea! Trying to find framework-specific projects within the hubs can be tedious",
       "user": {
-        "image": "/assets/user-images/image-suzanne.jpg",
+        "image": "./assets/user-images/image-suzanne.jpg",
         "name": "Suzanne Chang",
         "username": "upbeat1811"
       }
@@ -336,7 +147,7 @@
       "parentType": null,
       "content": "Please use fun, color-coded labels to easily identify them at a glance",
       "user": {
-        "image": "/assets/user-images/image-thomas.jpg",
+        "image": "./assets/user-images/image-thomas.jpg",
         "name": "Thomas Hood",
         "username": "brawnybrave"
       }
@@ -349,7 +160,7 @@
       "parentType": null,
       "content": "Also, please allow styles to be applied based on system preferences. I would love to be able to browse Frontend Mentor in the evening after my device’s dark mode turns on without the bright background it currently has.",
       "user": {
-        "image": "/assets/user-images/image-elijah.jpg",
+        "image": "./assets/user-images/image-elijah.jpg",
         "name": "Elijah Moss",
         "username": "hexagon.bestagon"
       }
@@ -362,7 +173,7 @@
       "parentType": null,
       "content": "Second this! I do a lot of late night coding and reading. Adding a dark theme can be great for preventing eye strain and the headaches that result. It’s also quite a trend with modern apps and  apparently saves battery life.",
       "user": {
-        "image": "/assets/user-images/image-james.jpg",
+        "image": "./assets/user-images/image-james.jpg",
         "name": "James Skinner",
         "username": "hummingbird1"
       }
@@ -375,7 +186,7 @@
       "parentType": null,
       "content": "Much easier to get answers from devs who can relate, since they've either finished the challenge themselves or are in the middle of it.",
       "user": {
-        "image": "/assets/user-images/image-george.jpg",
+        "image": "./assets/user-images/image-george.jpg",
         "name": "George Partridge",
         "username": "soccerviewer8"
       }
@@ -388,7 +199,7 @@
       "parentType": null,
       "content": "Right now, there is no ability to add images while giving feedback which isn't ideal because I have to use another app to show what I mean",
       "user": {
-        "image": "/assets/user-images/image-javier.jpg",
+        "image": "./assets/user-images/image-javier.jpg",
         "name": "Javier Pollard",
         "username": "warlikeduke"
       }
@@ -401,7 +212,7 @@
       "parentType": null,
       "content": "Yes I'd like to see this as well. Sometimes I want to add a short video or gif to explain the site's behavior..",
       "user": {
-        "image": "/assets/user-images/image-roxanne.jpg",
+        "image": "./assets/user-images/image-roxanne.jpg",
         "name": "Roxanne Travis",
         "username": "peppersprime32"
       }
@@ -414,7 +225,7 @@
       "parentType": null,
       "content": "I also want to be notified when devs I follow submit projects on FEM. Is in-app notification also in the pipeline?",
       "user": {
-        "image": "/assets/user-images/image-victoria.jpg",
+        "image": "./assets/user-images/image-victoria.jpg",
         "name": "Victoria Mejia",
         "username": "arlen_the_marlin"
       }
@@ -427,7 +238,7 @@
       "parentType": null,
       "content": "I've been saving the profile URLs of a few people and I check what they’ve been doing from time to time. Being able to follow them solves that",
       "user": {
-        "image": "/assets/user-images/image-jackson.jpg",
+        "image": "./assets/user-images/image-jackson.jpg",
         "name": "Jackson Barker",
         "username": "countryspirit"
       }
@@ -440,7 +251,7 @@
       "parentType": null,
       "content": "This would be awesome! It would be so helpful to see an overview of my code in a way that makes it easy to spot where things could be improved.",
       "user": {
-        "image": "/assets/user-images/image-victoria.jpg",
+        "image": "./assets/user-images/image-victoria.jpg",
         "name": "Victoria Mejia",
         "username": "arlen_the_marlin"
       }
@@ -453,7 +264,7 @@
       "parentType": null,
       "content": "Yeah, this would be really good. I'd love to see deeper insights into my code!",
       "user": {
-        "image": "/assets/user-images/image-jackson.jpg",
+        "image": "./assets/user-images/image-jackson.jpg",
         "name": "Jackson Barker",
         "username": "countryspirit"
       }
@@ -466,7 +277,7 @@
       "parentType": null,
       "content": "Having a path through the challenges that I could follow would be brilliant! Sometimes I'm not sure which challenge would be the best next step to take. So this would help me navigate through them!",
       "user": {
-        "image": "/assets/user-images/image-george.jpg",
+        "image": "./assets/user-images/image-george.jpg",
         "name": "George Partridge",
         "username": "soccerviewer8"
       }
@@ -479,7 +290,7 @@
       "parentType": null,
       "content": "I haven't built a portfolio site yet, so this would be really helpful. Might it also be possible to choose layout and colour themes?!",
       "user": {
-        "image": "/assets/user-images/image-ryan.jpg",
+        "image": "./assets/user-images/image-ryan.jpg",
         "name": "Ryan Welles",
         "username": "voyager.344"
       }
@@ -492,7 +303,7 @@
       "parentType": null,
       "content": "This would be great! At the moment, I'm just starting challenges in order to save them. But this means the My Challenges section is overflowing with projects and is hard to manage. Being able to bookmark challenges would be really helpful.",
       "user": {
-        "image": "/assets/user-images/image-suzanne.jpg",
+        "image": "./assets/user-images/image-suzanne.jpg",
         "name": "Suzanne Chang",
         "username": "upbeat1811"
       }
@@ -505,7 +316,7 @@
       "parentType": null,
       "content": "I'd love to see this! It always makes me so happy to see little details like these on websites.",
       "user": {
-        "image": "/assets/user-images/image-victoria.jpg",
+        "image": "./assets/user-images/image-victoria.jpg",
         "name": "Victoria Mejia",
         "username": "arlen_the_marlin"
       }
@@ -519,7 +330,7 @@
       "content": "While waiting for dark mode, there are browser extensions that will also do the job. Search for 'dark theme' followed by your browser. There might be a need to turn off the extension for sites with naturally black backgrounds though.",
       "replyingTo": "hummingbird1",
       "user": {
-        "image": "/assets/user-images/image-anne.jpg",
+        "image": "./assets/user-images/image-anne.jpg",
         "name": "Anne Valentine",
         "username": "annev1990"
       }
@@ -533,7 +344,7 @@
       "content": "Good point! Using any kind of style extension is great and can be highly customizable, like the ability to change contrast and brightness. I'd prefer not to use one of such extensions, however, for security and privacy reasons.",
       "replyingTo": "annev1990",
       "user": {
-        "image": "/assets/user-images/image-ryan.jpg",
+        "image": "./assets/user-images/image-ryan.jpg",
         "name": "Ryan Welles",
         "username": "voyager.344"
       }
@@ -547,7 +358,7 @@
       "content": "Bumping this. It would be good to have a tab with a feed of people I follow so it's easy to see what challenges they’ve done lately. I learn a lot by reading good developers' code.",
       "replyingTo": "arlen_the_marlin",
       "user": {
-        "image": "/assets/user-images/image-zena.jpg",
+        "image": "./assets/user-images/image-zena.jpg",
         "name": "Zena Kelley",
         "username": "velvetround"
       }
@@ -561,24 +372,10 @@
       "content": "Me too! I'd also love to see celebrations at specific points as well. It would help people take a moment to celebrate their achievements!",
       "replyingTo": "arlen_the_marlin",
       "user": {
-        "image": "/assets/user-images/image-suzanne.jpg",
+        "image": "./assets/user-images/image-suzanne.jpg",
         "name": "Suzanne Chang",
         "username": "upbeat1811"
       }
-    },
-    {
-      "id": "550e",
-      "feedbackId": "2",
-      "type": "reply",
-      "parentId": "r_2",
-      "parentType": "reply",
-      "content": "ss",
-      "user": {
-        "name": "Cristina",
-        "username": "cs",
-        "image": "./assets/user-images/image-zena.jpg"
-      },
-      "replyingTo": "voyager.344"
     }
   ]
 }
