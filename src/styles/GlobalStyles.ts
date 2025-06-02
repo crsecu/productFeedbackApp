@@ -174,33 +174,12 @@ body {
   font-size: var(--font-size-body-1);
   background-color: var(--color-background);
 
-  /* height: 100dvh;
-  height: 100vh;
-  position: relative;
-} */
+}
 
 #root {
   height: 100dvh;
   height: 100vh;
   position: relative;
-
-    /* display: flex;
-    flex-direction: column;
-    margin: auto;
-    height: 100%;
-  
-    @media ${device.sm} {
-    
-      width: 92vw;
-    }
-  
-    @media ${device.xl} {
-      width: 88vw;
-    }
-  
-    @media ${device.xxl} {
-      width: 85vw;
-    } */
 }
 
 :root:has(.no-scroll-menu) {
@@ -219,32 +198,9 @@ button {
   cursor: not-allowed;
 }
 
-
-/* input:not([type=radio]):focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible  {
-  outline: none;
-  box-shadow:
-  0 0 8px 1px var(--color-primary-hover),
-  0 0 10px 2px var(--color-secondary-hover);  
-} */
-
 input:not([type=radio]):focus, textarea:focus, select:focus{
   outline: 1px solid var(--color-secondary);
 }
-/* button:focus, a:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 4px;
-} */
-
-
-
-
-//hightline focus
-/* *:focus-visible {
-  outline: none;
-  box-shadow:
-   0 0 8px 1px var(--color-primary-hover),
-   0 0 10px 2px var(--color-secondary-hover);  
-} */
 
 @keyframes fadeToast {
   0% {
