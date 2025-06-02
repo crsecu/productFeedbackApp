@@ -23,7 +23,7 @@
       "upvotes": 125,
       "status": "suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
-      "commentCount": 2
+      "commentCount": 3
     },
     {
       "id": "2",
@@ -375,6 +375,19 @@
         "image": "/assets/user-images/image-suzanne.jpg",
         "name": "Suzanne Chang",
         "username": "upbeat1811"
+      }
+    },
+    {
+      "id": "26e4",
+      "feedbackId": "1",
+      "type": "comment",
+      "parentId": null,
+      "parentType": null,
+      "content": "test",
+      "user": {
+        "name": "Cristina",
+        "username": "cs",
+        "image": "/assets/user-images/image-zena.jpg"
       }
     }
   ]

@@ -25,7 +25,7 @@ const initialState: UserState = {
   profileInfo: {
     id: "fcb5",
     name: "Cristina",
-    image: "./assets/user-images/image-zena.jpg",
+    image: "/assets/user-images/image-zena.jpg",
     username: "cs",
   },
   upvotedFeedbackIds: {},
