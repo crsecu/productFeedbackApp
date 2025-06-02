@@ -1,16 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { deleteFeedback } from "../services/apiFeedback";
-import { hideModal } from "../store/slices/modalSlice";
-import { showToastNotification } from "../store/slices/toastNotificationSlice";
-import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
-import assert from "../utils/TS_helpers";
+import { deleteFeedback } from "../../services/apiFeedback";
+import { hideModal } from "../../store/slices/modalSlice";
+import { showToastNotification } from "../../store/slices/toastNotificationSlice";
+import { useAppDispatch, useAppSelector } from "../../types/redux.hooks";
+import assert from "../../utils/TS_helpers";
 import styled from "styled-components";
 import {
   buttonStyles,
   Overlay,
   panelStyles,
   TertiaryButton,
-} from "../styles/UIStyles";
+} from "../../styles/UIStyles";
+import { modalMessages } from "./modalConfig";
 
 const StyledGlobalModal = styled.div`
   ${panelStyles}
@@ -59,13 +60,14 @@ const CancelButton = styled.button`
 function GlobalModal(): React.JSX.Element | null {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isOpen, modalType, content, confirmPayload } = useAppSelector(
+  const { isOpen, modalType, confirmPayload } = useAppSelector(
     (state) => state.modal
   );
 
-  const { title, description, decisionButton, wayoutButton } = content || {};
+  if (!isOpen || !modalType) return null;
 
-  if (!isOpen) return null;
+  const modalData = modalMessages[modalType];
+  const { title, description, decisionButton, wayoutButton } = modalData || {};
 
   const handleConfirm = async () => {
     if (modalType === "delete_feedback") {
@@ -85,6 +87,7 @@ function GlobalModal(): React.JSX.Element | null {
         );
       }
     }
+
     if (modalType === "cancel_addFeedback") {
       navigate(-1);
     }

@@ -2,7 +2,11 @@ import { useAppDispatch, useAppSelector } from "../../types/redux.hooks";
 import { hideNotification } from "../../store/slices/toastNotificationSlice";
 import { useEffect } from "react";
 import styled from "styled-components";
-import { toastTheme, ToastThemeType } from "./toastNotificationConfig";
+import {
+  toastMessages,
+  toastTheme,
+  ToastThemeType,
+} from "./toastNotificationConfig";
 import { IoMdClose } from "react-icons/io";
 import device from "../../styles/breakpoints";
 
@@ -61,7 +65,6 @@ const StyledToastNotification = styled.div<{ $theme: ToastThemeType }>`
 function ToastNotification(): React.JSX.Element | null {
   const dispatch = useAppDispatch();
   const { isVisible, key } = useAppSelector((state) => state.toastNotification);
-  console.log("key", key);
 
   useEffect(() => {
     if (!isVisible) return;
@@ -74,16 +77,19 @@ function ToastNotification(): React.JSX.Element | null {
   }, [dispatch, isVisible]);
 
   if (!isVisible || !key) return null;
-  const Icon = toastTheme[key.type].icon;
+
+  const toastData = toastMessages[key];
+  const theme = toastTheme[toastData.type];
+  const Icon = theme.icon;
 
   return (
     <StyledToastNotification
-      $theme={key.type}
+      $theme={toastData.type}
       className={`toastNotification ${isVisible ? "show" : "hide"}`}
     >
       <div>
         <Icon size={"24px"} />
-        <p>{key?.message}</p>
+        <p>{toastData.message}</p>
         <button onClick={() => dispatch(hideNotification())}>
           <IoMdClose />
         </button>

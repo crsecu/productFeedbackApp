@@ -13,7 +13,6 @@ import { IoChevronUpSharp } from "react-icons/io5";
 const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
   position: absolute;
   bottom: 20px;
-  /* left: 28px; */
   font-size: var(--text-xs);
 
   padding: 6px 14px;
@@ -66,6 +65,7 @@ function UpvoteButton({
 
   const [isLoading, setIsLoading] = useState(false);
   const [upvoteCount, setUpvoteCount] = useState(initialUpvoteCount);
+  console.log("upvote", upvoteCount);
 
   const isFeedbackUpvoted = useAppSelector(getIsFeedbackUpvoted(feedbackId));
 
@@ -86,7 +86,7 @@ function UpvoteButton({
         setUpvoteCount(nextUpvoteCount);
       })
       .catch(() => {
-        // dispatch(showToastNotification({ type: "upvoteFeedback_error" }));
+        dispatch(showToastNotification({ key: "upvoteFeedback_error" }));
       })
       .finally(() => {
         setIsLoading(false);
@@ -99,7 +99,6 @@ function UpvoteButton({
       className={className}
       disabled={isLoading}
       onClick={handleUpvote}
-      // className={isFeedbackUpvoted ? "upvoted" : ""}
     >
       <StyledChevronUp size="0.65rem" />{" "}
       <span>{isLoading ? "Upvoting..." : upvoteCount}</span>
