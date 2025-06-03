@@ -3,7 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../types/redux.hooks";
 import { setUserCredentials } from "../../store/slices/userSlice";
 import { validateUserCredentials } from "../../utils/helpers";
+import styled from "styled-components";
 
+const StyledLoginForm = styled.div`
+  padding: 10px;
+  & p:first-child {
+    margin-bottom: 10px;
+  }
+
+  & .error {
+    color: red;
+    padding-bottom: 4px;
+  }
+`;
 /* MVP phase of app doesn't support authenticatin
    This component mocks a login process
  */
@@ -24,22 +36,27 @@ function LoginForm(): React.JSX.Element {
       return;
     } //TO DO: handle input validation
 
-    const validatedUser = await validateUserCredentials(name, username);
-
-    if (validatedUser) {
-      dispatch(setUserCredentials(validatedUser));
-      navigate("/feedbackBoard");
-      setName("");
-      setUsername("");
-    } else {
-      setValidationError("Incorrect login information.");
+    try {
+      const validatedUser = await validateUserCredentials(name, username);
+      if (validatedUser) {
+        dispatch(setUserCredentials(validatedUser));
+        navigate("/feedbackBoard");
+        setName("");
+        setUsername("");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setValidationError(error.message);
+      } else {
+        setValidationError("Something went wrong. Please try again.");
+      }
     }
   }
 
   return (
-    <div>
-      <p>Please type in your credentials below</p>
-      {validationError && <p>{validationError}</p>}
+    <StyledLoginForm>
+      <p>Please type in your credentials below:</p>
+      {validationError && <p className="error">{validationError}</p>}
       <form>
         <label htmlFor="name">Name</label>
         <input
@@ -60,7 +77,7 @@ function LoginForm(): React.JSX.Element {
         ></input>
         <button onClick={(e) => handleUserLogin(e)}>Log in</button>
       </form>
-    </div>
+    </StyledLoginForm>
   );
 }
 

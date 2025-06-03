@@ -36,6 +36,7 @@ export async function fetchWrapper<T>(
 
     if (!res.ok) {
       const errorDetails = await res.text();
+      console.log("RES", res);
       throw new Error(errorDetails || `HTTP Error: ${res.status}`);
     }
 

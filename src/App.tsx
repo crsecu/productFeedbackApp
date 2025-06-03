@@ -43,7 +43,6 @@ const router = createBrowserRouter([
         element: <PageLayout />,
         loader: feedbackBoardLoader,
         id: "feedbackBoardData",
-        errorElement: <FeedbackBoardError />,
         shouldRevalidate: ({
           currentUrl,
           nextUrl,
@@ -72,6 +71,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
+
             element: <FeedbackBoardPage />,
           },
           {
