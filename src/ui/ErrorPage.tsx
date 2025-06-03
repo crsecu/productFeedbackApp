@@ -46,7 +46,7 @@ function ErrorPage(): React.JSX.Element {
   const routeError = useRouteError();
   const navigate = useNavigate();
   const error = errorMessage(routeError);
-  console.log(":( error", error);
+
   return (
     <StyledErrorPage>
       <div>

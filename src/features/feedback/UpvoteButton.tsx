@@ -65,7 +65,6 @@ function UpvoteButton({
 
   const [isLoading, setIsLoading] = useState(false);
   const [upvoteCount, setUpvoteCount] = useState(initialUpvoteCount);
-  console.log("upvote", upvoteCount);
 
   const isFeedbackUpvoted = useAppSelector(getIsFeedbackUpvoted(feedbackId));
 

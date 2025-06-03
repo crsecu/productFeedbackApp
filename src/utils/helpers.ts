@@ -36,7 +36,7 @@ export async function fetchWrapper<T>(
 
     if (!res.ok) {
       const errorDetails = await res.text();
-      console.log("RES", res);
+
       throw new Error(errorDetails || `HTTP Error: ${res.status}`);
     }
 
@@ -254,7 +254,6 @@ export function createActionResult<TPayload>(
 
 /* Utility function that narrows the unknown error from useRouteError() */
 export function errorMessage(error: unknown): string {
-  console.log("ATTENTION ERROR", error);
   if (isRouteErrorResponse(error)) {
     return `${error.status} ${error.statusText}`;
   } else if (error instanceof Error) {

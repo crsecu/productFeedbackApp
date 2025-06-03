@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import device from "../../styles/breakpoints";
+import device from "../styles/breakpoints";
 
 const StyledTitleCard = styled.div`
   display: flex;

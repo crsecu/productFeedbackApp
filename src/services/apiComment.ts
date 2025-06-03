@@ -34,7 +34,6 @@ export async function submitComment(
       createCommentPromise,
       updateCommentCountPromise,
     ]);
-    console.log("check promises returned", newComment, updatedCount);
 
     return { success: true, payload: newComment };
   } catch (err) {

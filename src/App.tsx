@@ -115,8 +115,6 @@ const router = createBrowserRouter([
           formMethod,
           actionResult,
         }) => {
-          // console.log("detail current", currentUrl, "detail next", nextUrl);
-          // console.log("2000", actionResult);
           //prevent revalidation when canceling edit feedback
           if (currentUrl.pathname === nextUrl.pathname && !actionResult) {
             console.log("I SHOULD PREVENT NOW");

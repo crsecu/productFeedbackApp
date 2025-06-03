@@ -74,7 +74,7 @@ function GlobalModal(): React.JSX.Element | null {
       try {
         assert(confirmPayload);
         await deleteFeedback(confirmPayload);
-        console.log("Feedback entry deleted", confirmPayload);
+
         navigate(-1);
 
         dispatch(showToastNotification({ key: "deleteFeedback_success" }));
