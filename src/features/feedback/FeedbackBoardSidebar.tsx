@@ -19,14 +19,16 @@ const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
   gap: 24px;
 
   @media ${device.sm} {
+    flex: 2;
     position: initial;
     height: initial;
     flex-direction: row;
-    flex-grow: 1;
+
     max-width: initial;
     gap: 10px;
 
     & section {
+      flex: 1;
       border-radius: var(--border-radius-sm);
 
       &:last-of-type {
@@ -35,20 +37,12 @@ const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
     }
   }
 
-  @media ${device.md} {
-    & section:first-child {
-      flex-grow: 1;
-    }
-    & section:last-child {
-      flex-grow: 10;
-    }
-  }
-
   @media ${device.lg} {
     flex-direction: column;
     flex-grow: initial;
+    flex: none;
     width: 240px;
-    gap: 24px;
+    gap: 20px;
   }
 `;
 

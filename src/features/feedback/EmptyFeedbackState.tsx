@@ -5,16 +5,17 @@ import { PrimaryLinkButton } from "../../styles/UIStyles";
 import device from "../../styles/breakpoints";
 
 const StyledEmptyFeedbackState = styled.div`
+  flex-basis: 100%;
+  align-content: center;
   background-color: var(--color-surface);
   border-radius: var(--border-radius);
-  flex-grow: 1;
 
   & div {
     width: 84%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: auto;
+    margin: 30px auto;
     gap: 10px;
   }
 
@@ -22,7 +23,7 @@ const StyledEmptyFeedbackState = styled.div`
     width: 102px;
     height: 108px;
 
-    margin: 70px auto 36px;
+    margin: 0 auto;
   }
 
   & p:last-of-type {
@@ -30,11 +31,11 @@ const StyledEmptyFeedbackState = styled.div`
     text-align: center;
     margin-bottom: 16px;
     max-width: 348px;
-
-    @media ${device.sm} {
-      max-width: 430px;
-    }
   }
+
+  /* @media ${device.sm} {
+    flex-basis: 92%;
+  } */
 `;
 
 const NoFeedbackText = styled.p`

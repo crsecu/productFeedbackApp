@@ -181,7 +181,6 @@ export const PageStyles = css`
   margin: auto;
 
   @media ${device.sm} {
-    margin-top: 16px;
     width: 92vw;
   }
 

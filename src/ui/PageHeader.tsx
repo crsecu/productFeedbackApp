@@ -16,8 +16,10 @@ const StyledPageHeader = styled.header`
   );
 
   @media ${device.sm} {
-    border-radius: var(--border-radius-sm);
     align-items: end;
+    flex-basis: 0;
+    flex-grow: 0.78;
+    border-radius: var(--border-radius-sm);
     padding-bottom: 22px;
 
     & button {
@@ -25,12 +27,9 @@ const StyledPageHeader = styled.header`
     }
   }
 
-  @media ${device.md} {
-    flex-basis: 225px;
-  }
-
   @media ${device.lg} {
-    flex-basis: 137px;
+    flex-basis: 120px;
+    flex-grow: 0;
   }
 `;
 

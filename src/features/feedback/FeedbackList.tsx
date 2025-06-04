@@ -15,19 +15,17 @@ const StyledFeedbackList = styled.section`
   flex-direction: column;
   flex-grow: 1;
 
-  padding: 28px 20px 46px;
-
   & ul {
     display: flex;
     flex-direction: column;
+    padding: 28px 20px;
     gap: 18px;
   }
 
   @media ${device.sm} {
-    padding: 0;
-
     & ul {
       gap: 14px;
+      padding: 0 0 28px;
     }
   }
 `;

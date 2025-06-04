@@ -8,7 +8,7 @@ import device from "../../styles/breakpoints";
 
 const StyledRoadmapPreviewTile = styled.section`
   ${panelStyles}
-  padding: 20px;
+  padding: 22px;
 
   display: initial;
 

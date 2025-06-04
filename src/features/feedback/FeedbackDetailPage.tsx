@@ -19,7 +19,7 @@ import { createPortal } from "react-dom";
 const StyledFeedbackDetailPage = styled.div`
   ${PageStyles}
   gap: 16px;
-  margin-top: 28px;
+  //margin-top: 28px;
   width: 92vw;
 
   & > section {

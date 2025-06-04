@@ -15,14 +15,18 @@ const StyledFeedbackBoardLeftColumn = styled.div`
   @media ${device.sm} {
     display: flex;
     gap: 10px;
-    margin-bottom: 34px;
+    margin-bottom: 30px;
+  }
+
+  @media ${device.md} {
   }
 
   @media ${device.lg} {
     flex-direction: column;
 
-    gap: 24px;
+    gap: 20px;
     flex-grow: initial;
+    margin-bottom: 0;
   }
 `;
 

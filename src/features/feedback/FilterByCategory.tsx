@@ -10,10 +10,10 @@ import { panelStyles } from "../../styles/UIStyles";
 
 const StyledFilterByCategory = styled.section`
   ${panelStyles}
-  padding: 20px;
+  //padding: 26px;
 
   @media ${device.sm} {
-    padding-right: 0;
+    //padding-right: 0;
   }
 `;
 
@@ -21,8 +21,8 @@ const CategoryList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 22px 8px;
-  padding-top: 6px;
-  padding-bottom: 14px;
+  /* padding-top: 6px;
+  padding-bottom: 14px; */
 
   max-width: 200px;
 
