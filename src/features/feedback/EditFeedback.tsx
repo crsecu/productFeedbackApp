@@ -23,7 +23,7 @@ import SelectInput from "../../ui/SelectInput";
 const StyledEditFeedback = styled.div`
   position: absolute;
 
-  max-width: 85%;
+  max-width: 92%;
   top: 10px;
   left: 0;
   right: 0;

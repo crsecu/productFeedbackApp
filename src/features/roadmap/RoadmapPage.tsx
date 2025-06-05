@@ -44,6 +44,7 @@ const StyledRoadmapPage = styled.div`
 
   @media ${device.md} {
     & main {
+      padding: 0 8px;
       flex-direction: row;
       gap: 10px;
     }
@@ -52,12 +53,18 @@ const StyledRoadmapPage = styled.div`
       padding: 28px 0 46px;
     }
   }
+
+  @media ${device.lg} {
+    & main {
+      gap: 16px;
+    }
+  }
 `;
 
 function RoadmapPage(): React.JSX.Element {
   const dataFromLoader = useRouteLoaderData("roadmapData") as RoadmapLoaderData;
   const isMobile = useMatchMedia("(max-width: 767px");
-
+  console.log("dd", dataFromLoader);
   return (
     <StyledRoadmapPage>
       <Outlet />

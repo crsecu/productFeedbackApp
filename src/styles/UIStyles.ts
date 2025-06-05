@@ -189,7 +189,7 @@ export const PageStyles = css`
   }
 
   @media ${device.xxl} {
-    width: 85vw;
+    width: 70vw;
   }
 `;
 

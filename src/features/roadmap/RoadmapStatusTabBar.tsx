@@ -1,12 +1,11 @@
 import { useState } from "react";
 import StatusTab from "./StatusTab";
 import { RoadmapLoaderData } from "../../types/loader.types";
-import RoadmapStatusHeader from "./RoadmapStatusHeader";
-
 import { RoadmapStatus } from "../../types/roadmap.types";
 import RoadmapStatusSection from "./RoadmapStatusSection";
 import styled from "styled-components";
 import device from "../../styles/breakpoints";
+import EmptyFeedbackState from "../feedback/EmptyFeedbackState";
 
 const TabButtons = styled.div`
   display: flex;
@@ -29,6 +28,7 @@ const TabPanel = styled.section`
     }
   }
 `;
+const tabPriority: RoadmapStatus[] = ["in-Progress", "planned", "live"];
 
 interface RoadmapStatusTabBarProps {
   dataFromLoader: RoadmapLoaderData;
@@ -37,12 +37,16 @@ interface RoadmapStatusTabBarProps {
 function RoadmapStatusTabBar({
   dataFromLoader,
 }: RoadmapStatusTabBarProps): React.JSX.Element {
-  const [activeTab, setActiveTab] = useState<RoadmapStatus>("in-Progress");
+  const [activeTab, setActiveTab] = useState<RoadmapStatus | null>(
+    () =>
+      tabPriority.find((status) => dataFromLoader[status].length > 0) ?? null
+  );
 
   const tabButtons = (
     Object.keys(dataFromLoader) as Array<keyof RoadmapLoaderData>
   ).map((status) => {
     const feedbackCount = dataFromLoader[status].length;
+    console.log("flower status", status, feedbackCount);
 
     return (
       <StatusTab
@@ -50,6 +54,7 @@ function RoadmapStatusTabBar({
         tabId={status}
         handleClick={setActiveTab}
         activeTab={activeTab}
+        isDisabled={feedbackCount < 1}
       >
         {feedbackCount}
       </StatusTab>
@@ -62,14 +67,11 @@ function RoadmapStatusTabBar({
         {tabButtons}
       </TabButtons>
 
-      <TabPanel role="tabpanel" id={`tabpanel-${activeTab}`}>
-        <RoadmapStatusSection feedbackList={dataFromLoader[activeTab]}>
-          <RoadmapStatusHeader
-            status={activeTab}
-            feedbackCount={dataFromLoader[activeTab].length}
-          />
-        </RoadmapStatusSection>
-      </TabPanel>
+      {activeTab && (
+        <TabPanel role="tabpanel" id={`tabpanel-${activeTab}`}>
+          <RoadmapStatusSection feedbackList={dataFromLoader[activeTab]} />
+        </TabPanel>
+      )}
     </div>
   );
 }

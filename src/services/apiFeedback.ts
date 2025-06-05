@@ -34,6 +34,7 @@ export async function fetchAndGroupFeedback(
   );
 
   const feedbackGroupedByStatus = groupFeedbackByStatus(feedbackList);
+  console.log("he", feedbackGroupedByStatus);
 
   if (pageContext === "developmentRoadmap") {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

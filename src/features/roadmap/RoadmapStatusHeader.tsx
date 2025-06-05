@@ -4,12 +4,14 @@ import { RoadmapStatus } from "../../types/roadmap.types";
 import { capitalizeFirstLetter } from "../../utils/helpers";
 import device from "../../styles/breakpoints";
 
-const StyledRoadmapStatusHeader = styled.div`
+const StyledRoadmapStatusHeader = styled.div<{ $feedbackCount: number }>`
+  color: ${(props) => props.$feedbackCount < 1 && "var(--color-text-disabled)"};
+
   & h2 {
     margin-bottom: 4px;
   }
 
-  margin-bottom: 24px;
+  margin-bottom: 2px;
 
   @media ${device.md} {
     min-height: 78px;
@@ -32,7 +34,7 @@ function RoadmapStatusHeader({
 }: RoadmapStatusHeader): React.JSX.Element {
   const statusTitle = capitalizeFirstLetter(status);
   return (
-    <StyledRoadmapStatusHeader>
+    <StyledRoadmapStatusHeader $feedbackCount={feedbackCount}>
       <H2>
         {statusTitle} <span>({feedbackCount})</span>
       </H2>

@@ -15,15 +15,20 @@ import {
 import styled from "styled-components";
 import { UpvoteButtonDynamic } from "../../styles/features/FeedbackStyles";
 import { createPortal } from "react-dom";
+import device from "../../styles/breakpoints";
 
 const StyledFeedbackDetailPage = styled.div`
   ${PageStyles}
   gap: 16px;
-  //margin-top: 28px;
+  padding-top: 24px;
   width: 92vw;
 
   & > section {
     min-height: 40px;
+  }
+
+  @media ${device.md} {
+    padding-top: 0;
   }
 `;
 

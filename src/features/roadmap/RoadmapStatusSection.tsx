@@ -8,17 +8,16 @@ import {
 import UpvoteButton from "../feedback/UpvoteButton";
 import FeedbackCardContent from "../feedback/FeedbackCardContent";
 
-import { ReactNode } from "react";
 import CommentCount from "../comments/CommentCount";
 import styled from "styled-components";
 import { RoadmapStatus } from "../../types/roadmap.types";
 import device from "../../styles/breakpoints";
 import { Card } from "../../styles/features/FeedbackStyles";
 
-const RoadmapFeedbackCard = styled(Card)<{
+export const RoadmapFeedbackCard = styled(Card)<{
   $status: RoadmapStatus;
 }>`
-  border-top: 6px solid ${({ $status }) => `var(--color-status-${$status})`};
+  border-top: 6px solid ${(props) => `var(--color-status-${props.$status})`};
   border-radius: 6px;
   height: 233px;
 
@@ -48,20 +47,16 @@ const RoadmapFeedbackCard = styled(Card)<{
   }
 `;
 
-const RoadmapFeedbackCardContent = styled(FeedbackCardContent)`
-  max-width: ;
-`;
-
 interface RoadmapStatusSectionProps {
-  children: ReactNode;
   feedbackList: PlannedFeedback[] | InProgressFeedback[] | LiveFeedback[];
 }
 
 /* This component renders a feedback card list based on status: planned, in-Progress, live */
 function RoadmapStatusSection({
-  children,
   feedbackList,
 }: RoadmapStatusSectionProps): React.JSX.Element {
+  console.log("attention", feedbackList);
+
   //TO DO: memoize
   const feedbackCards = feedbackList.map((feedbackItem) => {
     return (
@@ -72,20 +67,14 @@ function RoadmapStatusSection({
             initialUpvoteCount={feedbackItem.upvotes}
           />
           <Link to={`/feedbackDetail/${feedbackItem.id}`}>
-            <RoadmapFeedbackCardContent feedback={feedbackItem} />
+            <FeedbackCardContent feedback={feedbackItem} />
             <CommentCount count={feedbackItem.commentCount} />
           </Link>
         </RoadmapFeedbackCard>
       </li>
     );
   });
-
-  return (
-    <>
-      {children}
-      <ul>{feedbackCards}</ul>
-    </>
-  );
+  return <ul>{feedbackCards}</ul>;
 }
 
 export default RoadmapStatusSection;
