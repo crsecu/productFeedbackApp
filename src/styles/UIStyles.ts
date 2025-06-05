@@ -12,12 +12,22 @@ export const panelStyles = css`
   padding: 22px;
 `;
 
-export const StyledLink = styled(Link)`
+export const linkStyles = css`
+  color: var(--color-text-accent);
   font-size: 0.813rem;
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-accent);
   text-decoration: underline;
   align-self: center;
+`;
+
+export const LinkStyleDisabled = styled.p`
+  ${linkStyles}
+  opacity: 0.25;
+  cursor: not-allowed;
+`;
+
+export const StyledLink = styled(Link)`
+  ${linkStyles}
 `;
 
 export const StrongText = styled.span`

@@ -2,7 +2,11 @@ import RoadmapPreviewItem from "./RoadmapPreviewItem";
 import { RoadmapStats, RoadmapStatus } from "../../types/roadmap.types";
 import styled from "styled-components";
 
-import { panelStyles, StyledLink } from "../../styles/UIStyles";
+import {
+  LinkStyleDisabled,
+  panelStyles,
+  StyledLink,
+} from "../../styles/UIStyles";
 import { H2 } from "../../styles/Typography";
 import device from "../../styles/breakpoints";
 
@@ -60,19 +64,21 @@ function RoadmapPreviewTile({
       <div>
         <H2 id="roadmapPreview">Roadmap</H2>
 
-        {/* <button
-          onClick={() => navigate("/developmentRoadmap")}
-          aria-label="View full roadmap page with planned, in-progress, and live feedback"
-          disabled={!roadmapCount}
-        >
-          View
-        </button> */}
-        <StyledLink
-          to="/developmentRoadmap"
-          aria-label="View full roadmap page with planned, in-progress, and live feedback"
-        >
-          View
-        </StyledLink>
+        {roadmapCount ? (
+          <StyledLink
+            to={"/developmentRoadmap"}
+            aria-label="View full roadmap page with planned, in-progress, and live feedback"
+          >
+            View
+          </StyledLink>
+        ) : (
+          <LinkStyleDisabled
+            aria-disabled="true"
+            aria-label="View roadmap is disabled — no feedback items available"
+          >
+            View
+          </LinkStyleDisabled>
+        )}
       </div>
       <ul>{roadmapPreviewItems}</ul>
     </StyledRoadmapPreviewTile>
