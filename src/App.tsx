@@ -118,7 +118,7 @@ const router = createBrowserRouter([
           //prevent revalidation when canceling edit feedback
           if (currentUrl.pathname === nextUrl.pathname && !actionResult) {
             console.log("I SHOULD PREVENT NOW");
-            //return false;
+            return false;
           }
           if (formMethod === "post") return false;
 

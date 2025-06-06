@@ -125,6 +125,7 @@ function BannerNotification({
   );
 
   if (!notificationMessage) return null;
+  console.log("ac", actionType);
 
   return (
     <StyledBannerNotification

@@ -25,3 +25,22 @@ export function useMatchMedia(mediaQuery: string): boolean {
 
   return isMatching;
 }
+
+//Hook that detects key press and runs onKeyDoen if allowed (when shouldRespondToKey is true)
+export function useKeyDown(
+  key: string,
+  onKeyDown: () => void,
+  shouldRespondToKey: boolean = true
+): void {
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === key && shouldRespondToKey) onKeyDown();
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [key, onKeyDown, shouldRespondToKey]);
+}

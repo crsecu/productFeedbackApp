@@ -11,19 +11,26 @@ import {
 } from "../../utils/helpers";
 import { EditFeedbackFormValues } from "../../types/form.types";
 import { STATUS_OPTIONS } from "../../types/feedback.types";
-import { CloseButton, DeleteButton, FormSection } from "../../styles/UIStyles";
+import { DeleteButton, FormSection } from "../../styles/UIStyles";
 import editFeedbackIcon from "../../assets/images/editFeedback-icon.svg";
 import { H1 } from "../../styles/Typography";
-import { IoCloseCircleSharp } from "react-icons/io5";
+
 import styled from "styled-components";
 import device from "../../styles/breakpoints";
 import { Option } from "../../types/customSelect";
 import SelectInput from "../../ui/SelectInput";
 
 const StyledEditFeedback = styled.div`
-  position: absolute;
+  & section {
+    position: static;
+    padding-top: 0;
+  }
+  & h1 {
+    margin-top: 6px;
+  }
+  /* position: absolute;
 
-  max-width: 92%;
+  max-width: 90%;
   top: 10px;
   left: 0;
   right: 0;
@@ -43,7 +50,7 @@ const StyledEditFeedback = styled.div`
 
   @media ${device.xxl} {
     max-width: 45%;
-  }
+  } */
 `;
 
 const statusOptions: Option[] = STATUS_OPTIONS.map((status) => ({
@@ -53,24 +60,24 @@ const statusOptions: Option[] = STATUS_OPTIONS.map((status) => ({
 
 interface EditFeedbackProps {
   editableFeedback: EditFeedbackFormValues;
-  setShowEditFeedback: React.Dispatch<React.SetStateAction<boolean>>;
+  onCancel: () => void;
 }
 
 function EditFeedback({
   editableFeedback,
-  setShowEditFeedback,
+  onCancel,
 }: EditFeedbackProps): React.JSX.Element {
   const dispatch = useAppDispatch();
 
   const { feedbackId } = useParams();
   const fetcher = useFetcher();
 
-  const { actionType, submissionOutcome, isSubmissionSuccessful, showForm } =
+  const { actionType, submissionOutcome, showForm } =
     getFeedbackFormResponse<EditFeedbackFormValues>(fetcher?.data) || {};
 
   function handleCancel(hasFormChanged: boolean) {
     if (!hasFormChanged) {
-      setShowEditFeedback(false);
+      onCancel();
     } else {
       dispatch(
         showModal({
@@ -85,7 +92,6 @@ function EditFeedback({
     <BannerNotification
       actionType={actionType}
       notificationType={submissionOutcome}
-      onClose={() => setShowEditFeedback(false)}
     />
   );
   return (
@@ -93,9 +99,6 @@ function EditFeedback({
       {notification}
       {showForm && (
         <FormSection>
-          <CloseButton onClick={() => setShowEditFeedback(false)}>
-            <IoCloseCircleSharp />
-          </CloseButton>
           <img src={editFeedbackIcon} alt="" />
           <H1>Editing "{editableFeedback.title}"</H1>
 

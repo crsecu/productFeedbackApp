@@ -12,6 +12,8 @@ import {
   TertiaryButton,
 } from "../../styles/UIStyles";
 import { modalMessages } from "./modalConfig";
+import { FocusTrap } from "focus-trap-react";
+import { closeEditFeedback } from "../../store/slices/feedbackDetailSlice";
 
 const StyledGlobalModal = styled.div`
   ${panelStyles}
@@ -93,7 +95,7 @@ function GlobalModal(): React.JSX.Element | null {
     }
 
     if (modalType === "cancel_editFeedback") {
-      navigate(`/feedbackDetail/${confirmPayload}`, { replace: true });
+      dispatch(closeEditFeedback());
     }
 
     if (modalType) dispatch(hideModal());
@@ -102,20 +104,22 @@ function GlobalModal(): React.JSX.Element | null {
   return (
     <>
       {isOpen && <Overlay />}
-      <StyledGlobalModal>
-        {isOpen && <span className="no-scroll-modal"></span>}
+      <FocusTrap>
+        <StyledGlobalModal>
+          {isOpen && <span className="no-scroll-modal"></span>}
 
-        <ModalTitle>{title}</ModalTitle>
-        <p>{description}</p>
-        <div>
-          <TertiaryButton onClick={handleConfirm}>
-            {decisionButton}
-          </TertiaryButton>
-          <CancelButton onClick={() => dispatch(hideModal())}>
-            {wayoutButton}
-          </CancelButton>
-        </div>
-      </StyledGlobalModal>
+          <ModalTitle>{title}</ModalTitle>
+          <p>{description}</p>
+          <div>
+            <TertiaryButton onClick={handleConfirm}>
+              {decisionButton}
+            </TertiaryButton>
+            <CancelButton onClick={() => dispatch(hideModal())}>
+              {wayoutButton}
+            </CancelButton>
+          </div>
+        </StyledGlobalModal>
+      </FocusTrap>
     </>
   );
 }

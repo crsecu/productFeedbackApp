@@ -158,12 +158,12 @@ export const DeleteButton = styled(BaseButton).attrs(() => ({
 
 export const CloseButton = styled.button`
   position: absolute;
-  right: -6px;
-  top: -8px;
+  right: 22px;
+  top: 18px;
   border: none;
-  font-size: 28px;
+  font-size: 24px;
   background: none;
-  color: var(--color-tertiary);
+  color: #6b7280;
 
   &:hover svg path {
     fill: var(--color-tertiary-hover);
@@ -233,6 +233,7 @@ export const FormPage = styled.div`
 export const FormSection = styled.section`
   ${panelStyles}
   position: relative;
+
   flex: 1;
 
   & img {
@@ -277,8 +278,6 @@ export const Overlay = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  //background-color: rgba(0, 0, 0, 0.7);
-  background-color: black;
-  opacity: 0.8;
+  background-color: rgba(0, 0, 0, 0.6);
   cursor: pointer;
 `;

@@ -6,7 +6,7 @@ import FeedbackCardContent from "./FeedbackCardContent";
 
 import { Feedback } from "../../types/feedback.types";
 import EditFeedback from "./EditFeedback";
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import {
   GoBackButton,
   PageStyles,
@@ -16,6 +16,13 @@ import styled from "styled-components";
 import { UpvoteButtonDynamic } from "../../styles/features/FeedbackStyles";
 import { createPortal } from "react-dom";
 import device from "../../styles/breakpoints";
+
+import ClassicModal from "./FormModal";
+import { useAppDispatch, useAppSelector } from "../../types/redux.hooks";
+import {
+  closeEditFeedback,
+  openEditFeedback,
+} from "../../store/slices/feedbackDetailSlice";
 
 const StyledFeedbackDetailPage = styled.div`
   ${PageStyles}
@@ -44,9 +51,10 @@ const EditFeedbackButton = styled(SecondaryButton)`
 
 function FeedbackDetailPage(): React.JSX.Element {
   const navigate = useNavigate();
-  const feedback = useLoaderData() as Feedback;
+  const dispatch = useAppDispatch();
 
-  const [showEditFeedback, setShowEditFeedback] = useState(false);
+  const feedback = useLoaderData() as Feedback;
+  const { isEditing } = useAppSelector((state) => state.feedbackDetail);
 
   const { id, upvotes, title, description, category, status } = feedback;
 
@@ -63,41 +71,42 @@ function FeedbackDetailPage(): React.JSX.Element {
 
   return (
     <StyledFeedbackDetailPage>
-      {showEditFeedback ? (
+      {isEditing &&
         createPortal(
-          <EditFeedback
-            editableFeedback={editableFeedbackFields}
-            setShowEditFeedback={setShowEditFeedback}
-          />,
+          <ClassicModal onClose={() => dispatch(closeEditFeedback())}>
+            <EditFeedback
+              editableFeedback={editableFeedbackFields}
+              onCancel={() => dispatch(closeEditFeedback())}
+            />
+          </ClassicModal>,
           rootEl
-        )
-      ) : (
-        <>
-          <ActionBar isMinimal={true}>
-            <GoBackButton
-              onClick={() => {
-                /* TO DO: Find a way to reset unwanted search params that carry out from feedbackBoard */
-                navigate(-1);
-              }}
-            >
-              Go Back
-            </GoBackButton>
+        )}
 
-            <EditFeedbackButton onClick={() => setShowEditFeedback(true)}>
-              Edit Feedback
-            </EditFeedbackButton>
-          </ActionBar>
-          <FeedbackCard>
-            <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />
-            <div>
-              <FeedbackDetailCardContent feedback={feedback} />
-              <CommentCount />
-            </div>
-          </FeedbackCard>
+      <>
+        <ActionBar isMinimal={true}>
+          <GoBackButton
+            onClick={() => {
+              /* TO DO: Find a way to reset unwanted search params that carry out from feedbackBoard */
+              navigate(-1);
+            }}
+          >
+            Go Back
+          </GoBackButton>
 
-          <Outlet />
-        </>
-      )}
+          <EditFeedbackButton onClick={() => dispatch(openEditFeedback())}>
+            Edit Feedback
+          </EditFeedbackButton>
+        </ActionBar>
+        <FeedbackCard>
+          <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />
+          <div>
+            <FeedbackDetailCardContent feedback={feedback} />
+            <CommentCount />
+          </div>
+        </FeedbackCard>
+
+        <Outlet />
+      </>
     </StyledFeedbackDetailPage>
   );
 }
