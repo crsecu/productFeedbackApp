@@ -59,6 +59,10 @@ const CancelButton = styled.button`
   border: 2px solid;
 `;
 
+const OverlayDark = styled(Overlay)`
+  background-color: rgba(0, 0, 0, 0.9);
+`;
+
 function GlobalModal(): React.JSX.Element | null {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -103,7 +107,7 @@ function GlobalModal(): React.JSX.Element | null {
 
   return (
     <>
-      {isOpen && <Overlay />}
+      <OverlayDark />
       <FocusTrap>
         <StyledGlobalModal>
           {isOpen && <span className="no-scroll-modal"></span>}

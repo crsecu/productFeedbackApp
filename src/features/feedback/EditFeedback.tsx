@@ -16,41 +16,19 @@ import editFeedbackIcon from "../../assets/images/editFeedback-icon.svg";
 import { H1 } from "../../styles/Typography";
 
 import styled from "styled-components";
-import device from "../../styles/breakpoints";
 import { Option } from "../../types/customSelect";
 import SelectInput from "../../ui/SelectInput";
+import FormModal from "./FormModal";
 
 const StyledEditFeedback = styled.div`
-  & section {
+  & section:not(.banner-notification) {
     position: static;
-    padding-top: 0;
+    padding: 0;
   }
+
   & h1 {
     margin-top: 6px;
   }
-  /* position: absolute;
-
-  max-width: 90%;
-  top: 10px;
-  left: 0;
-  right: 0;
-  margin: auto;
-  margin-top: 28px;
-
-  & section {
-    position: relative;
-  }
-
-  @media ${device.sm} {
-  }
-
-  @media ${device.lg} {
-    max-width: 65%;
-  }
-
-  @media ${device.xxl} {
-    max-width: 45%;
-  } */
 `;
 
 const statusOptions: Option[] = STATUS_OPTIONS.map((status) => ({
@@ -95,66 +73,71 @@ function EditFeedback({
     />
   );
   return (
-    <StyledEditFeedback>
-      {notification}
-      {showForm && (
-        <FormSection>
-          <img src={editFeedbackIcon} alt="" />
-          <H1>Editing "{editableFeedback.title}"</H1>
+    <StyledEditFeedback className="editFeedback">
+      <FormModal
+        onClose={onCancel}
+        hasDynamicHeight={submissionOutcome === "success"}
+      >
+        {notification}
+        {showForm && (
+          <FormSection>
+            <img src={editFeedbackIcon} alt="" />
+            <H1>Editing "{editableFeedback.title}"</H1>
 
-          <FeedbackForm
-            method="patch"
-            defaultValues={editableFeedback}
-            buttons={
-              <>
-                <DeleteButton
-                  type="button"
-                  onClick={() => {
-                    dispatch(
-                      showModal({
-                        modalType: "delete_feedback",
-                        confirmPayload: feedbackId,
-                      })
-                    );
-                  }}
+            <FeedbackForm
+              method="patch"
+              defaultValues={editableFeedback}
+              buttons={
+                <>
+                  <DeleteButton
+                    type="button"
+                    onClick={() => {
+                      dispatch(
+                        showModal({
+                          modalType: "delete_feedback",
+                          confirmPayload: feedbackId,
+                        })
+                      );
+                    }}
+                  >
+                    Delete
+                  </DeleteButton>
+                </>
+              }
+              actionRoute="editFeedback"
+              onCancel={handleCancel}
+              FormComponent={fetcher.Form}
+              submissionStatus={fetcher.state}
+              actionResult={fetcher.data}
+              submitBtnText={"Save Changes"}
+            >
+              {(onFieldChange) => (
+                <FormField
+                  inputId="feedbackStatus"
+                  label="Update Status"
+                  description="Change feature state"
+                  inputGuidanceId="feedbackStatusDesc"
                 >
-                  Delete
-                </DeleteButton>
-              </>
-            }
-            actionRoute="editFeedback"
-            onCancel={handleCancel}
-            FormComponent={fetcher.Form}
-            submissionStatus={fetcher.state}
-            actionResult={fetcher.data}
-            submitBtnText={"Save Changes"}
-          >
-            {(onFieldChange) => (
-              <FormField
-                inputId="feedbackStatus"
-                label="Update Status"
-                description="Change feature state"
-                inputGuidanceId="feedbackStatusDesc"
-              >
-                <SelectInput
-                  name="status"
-                  instanceId="feedbackStatus"
-                  options={statusOptions}
-                  defaultValue={statusOptions.find(
-                    (option) => option.value === editableFeedback.status
-                  )}
-                  aria-labelledby="feedbackStatusDesc"
-                  classNamePrefix="formSelect"
-                  onChange={(newVal, actionMeta) => {
-                    if (actionMeta.name === undefined || !newVal) return;
-                    onFieldChange(actionMeta.name, newVal.value);
-                  }}
-                />
-              </FormField>
-            )}
-          </FeedbackForm>
-        </FormSection>
-      )}
+                  <SelectInput
+                    name="status"
+                    instanceId="feedbackStatus"
+                    options={statusOptions}
+                    defaultValue={statusOptions.find(
+                      (option) => option.value === editableFeedback.status
+                    )}
+                    aria-labelledby="feedbackStatusDesc"
+                    classNamePrefix="formSelect"
+                    onChange={(newVal, actionMeta) => {
+                      if (actionMeta.name === undefined || !newVal) return;
+                      onFieldChange(actionMeta.name, newVal.value);
+                    }}
+                  />
+                </FormField>
+              )}
+            </FeedbackForm>
+          </FormSection>
+        )}
+      </FormModal>
     </StyledEditFeedback>
   );
 }

@@ -180,9 +180,10 @@ body {
   height: 100dvh;
   height: 100vh;
   position: relative;
+  
 
   @media ${device.sm} {
-    padding: 20px 0 20px;
+    padding: 20px;
   }
 }
 

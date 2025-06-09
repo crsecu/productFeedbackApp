@@ -158,12 +158,13 @@ export const DeleteButton = styled(BaseButton).attrs(() => ({
 
 export const CloseButton = styled.button`
   position: absolute;
-  right: 22px;
+  right: 18px;
   top: 18px;
   border: none;
   font-size: 24px;
   background: none;
   color: #6b7280;
+  z-index: 99;
 
   &:hover svg path {
     fill: var(--color-tertiary-hover);

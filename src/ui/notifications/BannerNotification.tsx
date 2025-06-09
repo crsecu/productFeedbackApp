@@ -11,23 +11,14 @@ import device from "../../styles/breakpoints.ts";
 interface StyledBannerProps {
   $notificationType: SubmissionOutcome;
   $themeColor: string;
+  $backgroundColor?: string;
 }
 
 const StyledBannerNotification = styled.section<StyledBannerProps>`
   ${panelStyles}
   position: relative;
   z-index: 1;
-  margin-bottom: 35px;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: ${(props) => props.$themeColor};
-    border-radius: var(--border-radius-sm);
-    opacity: 0.2;
-    z-index: -1;
-  }
+  background-color: ${(props) => props.$backgroundColor};
 
   & svg {
     margin-bottom: 6px;
@@ -125,12 +116,13 @@ function BannerNotification({
   );
 
   if (!notificationMessage) return null;
-  console.log("ac", actionType);
 
   return (
     <StyledBannerNotification
+      className="banner-notification"
       $notificationType={notificationType}
       $themeColor={notificationMessage.iconColor}
+      $backgroundColor={notificationMessage.backgroundColor}
     >
       {onClose && notificationType === "success" && (
         <button onClick={onClose}>

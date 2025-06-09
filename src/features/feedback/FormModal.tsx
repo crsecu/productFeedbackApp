@@ -5,37 +5,80 @@ import { FocusTrap } from "focus-trap-react";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
 import { useAppSelector } from "../../types/redux.hooks";
+import device from "../../styles/breakpoints";
 
-const ModalContainer = styled.div`
-  position: relative;
+const ModalContainer = styled.div<{ $dynamicHeight: boolean }>`
+  position: fixed;
+  inset: 0;
+  width: fit-content;
   max-width: 90%;
-  max-height: calc(100dvh - 56px);
+  max-height: 88dvh;
   margin: auto;
-  top: 28px;
-  padding-top: 36px;
+  padding: 54px 0 30px;
   background-color: white;
   border-radius: var(--border-radius-sm);
+
+  & .banner-notification {
+    margin-bottom: 35px;
+  }
+
+  ${(props) =>
+    props.$dynamicHeight &&
+    `
+   max-height: fit-content;
+   padding: 0;
+
+   & .formModal-inner{
+    padding: 0;
+   }
+
+    & .banner-notification {
+    margin-bottom: 0;
+    }
+   `}
+
+  @media ${device.md} {
+    max-width: 80%;
+  }
+
+  @media ${device.lg} {
+    max-width: 65%;
+  }
+
+  @media ${device.xxl} {
+    max-width: 45%;
+  }
 `;
 
 const ModalInner = styled.div`
-  max-height: inherit;
+  max-height: 100%;
   overflow-y: auto;
   border-radius: var(--border-radius-sm);
+  padding: 0 30px 0 30px;
 `;
 
 interface FormModalProps {
   children: ReactNode;
+  hasDynamicHeight: boolean;
   onClose: () => void;
 }
 
-function FormModal({ children, onClose }: FormModalProps): React.JSX.Element {
+function FormModal({
+  children,
+  hasDynamicHeight,
+  onClose,
+}: FormModalProps): React.JSX.Element {
   const { isOpen: isGlobalModalOpen } = useAppSelector((state) => state.modal);
 
   useKeyDown("Escape", onClose, !isGlobalModalOpen);
 
   return (
     <Overlay onClick={onClose} className="no-scroll-modal">
-      <ModalContainer onClick={(e: React.MouseEvent) => e.stopPropagation()}>
+      <ModalContainer
+        $dynamicHeight={hasDynamicHeight}
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
+        className="ModalContainer"
+      >
         <FocusTrap
           focusTrapOptions={{
             initialFocus: false,
@@ -43,13 +86,11 @@ function FormModal({ children, onClose }: FormModalProps): React.JSX.Element {
             allowOutsideClick: true,
           }}
         >
-          <ModalInner>
-            <>
-              <CloseButton onClick={onClose}>
-                <IoMdClose />
-              </CloseButton>
-              {children}
-            </>
+          <ModalInner className="formModal-inner">
+            {children}
+            <CloseButton onClick={onClose}>
+              <IoMdClose />
+            </CloseButton>
           </ModalInner>
         </FocusTrap>
       </ModalContainer>

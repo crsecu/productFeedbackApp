@@ -15,6 +15,7 @@ interface NotificationMessage {
   content: NotificationText;
   icon: IconType;
   iconColor: string;
+  backgroundColor: string;
 }
 
 const validationErrorText: NotificationText = {
@@ -68,11 +69,14 @@ export function buildNotificationMessage(
       content: validationErrorText,
       icon: BiSolidErrorCircle,
       iconColor: "#a1670f",
+      backgroundColor: "rgba(161, 103, 15, 0.2)",
     };
 
   const icon = type === "success" ? BiSolidCheckCircle : BiSolidXCircle;
   const iconColor = type === "success" ? "#2e7d32" : "#a71818";
+  const backgroundColor =
+    type === "success" ? "rgba(46, 125, 50, 0.2)" : "rgba(167, 24, 24, 0.2)";
 
   const data = notificationTextByOutcome[type][action];
-  return { content: data, icon, iconColor };
+  return { content: data, icon, iconColor, backgroundColor };
 }

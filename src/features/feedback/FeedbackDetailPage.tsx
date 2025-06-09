@@ -16,8 +16,6 @@ import styled from "styled-components";
 import { UpvoteButtonDynamic } from "../../styles/features/FeedbackStyles";
 import { createPortal } from "react-dom";
 import device from "../../styles/breakpoints";
-
-import ClassicModal from "./FormModal";
 import { useAppDispatch, useAppSelector } from "../../types/redux.hooks";
 import {
   closeEditFeedback,
@@ -26,6 +24,7 @@ import {
 
 const StyledFeedbackDetailPage = styled.div`
   ${PageStyles}
+
   gap: 16px;
   padding-top: 24px;
   width: 92vw;
@@ -73,12 +72,10 @@ function FeedbackDetailPage(): React.JSX.Element {
     <StyledFeedbackDetailPage>
       {isEditing &&
         createPortal(
-          <ClassicModal onClose={() => dispatch(closeEditFeedback())}>
-            <EditFeedback
-              editableFeedback={editableFeedbackFields}
-              onCancel={() => dispatch(closeEditFeedback())}
-            />
-          </ClassicModal>,
+          <EditFeedback
+            editableFeedback={editableFeedbackFields}
+            onCancel={() => dispatch(closeEditFeedback())}
+          />,
           rootEl
         )}
 
