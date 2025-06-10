@@ -19,6 +19,7 @@ import styled from "styled-components";
 import { Option } from "../../types/customSelect";
 import SelectInput from "../../ui/SelectInput";
 import FormModal from "./FormModal";
+import device from "../../styles/breakpoints";
 
 const StyledEditFeedback = styled.div`
   & section:not(.banner-notification) {
@@ -28,6 +29,16 @@ const StyledEditFeedback = styled.div`
 
   & h1 {
     margin-top: 6px;
+  }
+
+  @media ${device.sm} {
+    & form div:nth-child(4) {
+      margin-bottom: 10px;
+    }
+
+    & .button-container {
+      min-height: 50px;
+    }
   }
 `;
 

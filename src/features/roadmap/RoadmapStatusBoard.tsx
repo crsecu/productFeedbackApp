@@ -19,6 +19,7 @@ const EmptyRoadmapCard = styled(RoadmapFeedbackCard)`
 
   & p {
     text-align: center;
+    padding-top: 2px;
   }
 
   & span {

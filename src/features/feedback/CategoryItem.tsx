@@ -17,8 +17,8 @@ const RadioInput = styled.input`
   }
 
   &:focus-visible + label {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 3px;
+    outline: 1px solid #5fbab0;
+    box-shadow: inset 0 0 2px 1px #00524b, 0 0 12px 1px #5fbab0;
   }
 `;
 

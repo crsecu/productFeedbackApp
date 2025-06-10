@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const StyledFormField = styled.div`
   margin-bottom: 20px;
+
   & label {
     display: block;
     font-weight: var(--font-weight-bold);

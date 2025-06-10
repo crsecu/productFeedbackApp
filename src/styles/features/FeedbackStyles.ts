@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { labelBox, panelStyles } from "../UIStyles";
+import { focusStyle, labelBox, panelStyles } from "../UIStyles";
 import device from "../breakpoints";
 import UpvoteButton from "../../features/feedback/UpvoteButton";
 
@@ -7,8 +7,7 @@ export const Card = styled.article`
   ${panelStyles}
 
   position: relative;
-  /* padding-bottom: 26px; */
-  padding: 0; //
+  padding: 0;
 
   & p {
     text-wrap: wrap;
@@ -20,10 +19,16 @@ export const Card = styled.article`
     flex-direction: column;
     flex-grow: 1;
     padding: 22px;
+    border-radius: inherit;
   }
 
   & button {
     left: 22px;
+  }
+
+  & a:focus-visible {
+    ${focusStyle}
+    outline: none !important;
   }
 `;
 

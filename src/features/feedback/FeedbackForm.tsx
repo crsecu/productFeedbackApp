@@ -21,9 +21,12 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
+  margin-bottom: 6px;
 
   @media ${device.sm} {
     flex-direction: row-reverse;
+    align-items: center;
+    margin-bottom: 0%;
 
     & button:nth-child(3) {
       margin-right: auto;
@@ -157,7 +160,7 @@ function FeedbackForm<Type extends CreateFeedbackFormValues>({
           <FormFieldError errorMessage={validationErrors.description} />
         )}
       </FormField>
-      <ButtonContainer>
+      <ButtonContainer className="button-container">
         {!isFormDirty || isSubmitting ? (
           <Tooltip text={tooltipText}>
             <PrimaryButton

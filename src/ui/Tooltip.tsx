@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
+
 const StyledToolTip = styled.div`
   position: relative;
   display: inline-block;
@@ -42,6 +43,15 @@ const StyledToolTip = styled.div`
     border-width: 5px;
     border-style: solid;
     border-color: black transparent transparent transparent;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    & button {
+      color: white;
+      background-color: var(--color-text-disabled);
+    }
   }
 `;
 

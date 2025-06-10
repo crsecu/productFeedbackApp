@@ -9,6 +9,7 @@ import { showToastNotification } from "../../store/slices/toastNotificationSlice
 import { useState } from "react";
 import styled from "styled-components";
 import { IoChevronUpSharp } from "react-icons/io5";
+import { focusStyle } from "../../styles/UIStyles";
 
 const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
   position: absolute;
@@ -43,6 +44,8 @@ const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
         ? "var(--color-secondary-hover)"
         : "var(--color-surface-accent-hover)"};
   }
+
+  ${focusStyle}
 `;
 
 const StyledChevronUp = styled(IoChevronUpSharp)`

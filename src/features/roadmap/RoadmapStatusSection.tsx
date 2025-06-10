@@ -17,12 +17,13 @@ import { Card } from "../../styles/features/FeedbackStyles";
 export const RoadmapFeedbackCard = styled(Card)<{
   $status: RoadmapStatus;
 }>`
-  border-top: 6px solid ${(props) => `var(--color-status-${props.$status})`};
   border-radius: 6px;
   height: 235px;
 
   & a {
     height: 100%;
+    border-top: 6px solid ${(props) => `var(--color-status-${props.$status})`};
+    border-radius: 6px;
   }
 
   & button,

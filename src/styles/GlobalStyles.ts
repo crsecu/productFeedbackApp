@@ -203,10 +203,19 @@ button {
   cursor: not-allowed;
 }
 
+//FOCUS STATES
 input:not([type=radio]):focus, textarea:focus, select:focus{
   outline: 1px solid var(--color-secondary);
 }
 
+
+& button:focus-visible, a:focus-visible {
+  outline: 2px solid #2cbeb2;
+  outline-offset: 4px;
+}
+
+
+  
 @keyframes fadeToast {
   0% {
     opacity: 0;

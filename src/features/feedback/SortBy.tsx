@@ -37,20 +37,6 @@ const StyledSortyBy = styled.div`
   & .sortBy__option:active {
     background-color: var(--color-text-soft-accent);
   }
-
-  /* & .sortBy__option:last-child {
-    border-bottom: none;
-  } */
-
-  /* & .sortBy__option--is-selected:after {
-    content: "";
-    display: inline-block;
-    width: 12px;
-    aspect-ratio: 13 / 10;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10' fill='none'%3E%3Cpath d='M0.968262 4.85894L4.49995 8.39062L11.9999 0.890625' stroke='%23AD1FEA' stroke-width='2'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-  } */
 `;
 
 function getOptionFromValue(

@@ -32,9 +32,8 @@ function SelectInput<
       backgroundColor: "var(--color-background)",
 
       border: "none",
-      outline: state.isFocused
-        ? "outline: 1px solid var(--color-secondary)"
-        : undefined,
+      boxShadow: "none",
+      outline: state.isFocused ? "1px solid #2cbeb2" : undefined,
       padding: "0 4px",
       cursor: "pointer",
       gap: "5px",

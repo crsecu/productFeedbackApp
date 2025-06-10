@@ -20,6 +20,14 @@ export const linkStyles = css`
   align-self: center;
 `;
 
+//FOCUS styles
+export const focusStyle = css`
+  &:focus-visible {
+    outline: 1px solid #5fbab0;
+    box-shadow: inset 0 0 2px 1px #00524b, 0 0 12px 1px #5fbab0;
+  }
+`;
+
 export const LinkStyleDisabled = styled.p`
   ${linkStyles}
   opacity: 0.25;
@@ -28,6 +36,8 @@ export const LinkStyleDisabled = styled.p`
 
 export const StyledLink = styled(Link)`
   ${linkStyles}
+
+  border-radius: 8px;
 `;
 
 export const StrongText = styled.span`
@@ -69,6 +79,8 @@ export const BaseButton = styled.button<ButtonStyleProps>`
     background-color: var(--color-background-disabled);
     color: var(--color-text-disabled);
   }
+
+  ${focusStyle}
 `;
 
 export const PrimaryButton = styled(BaseButton).attrs(() => ({
@@ -100,6 +112,8 @@ export const BaseLinkButton = styled(Link)<ButtonStyleProps>`
     transform: scale(0.98);
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
   }
+
+  ${focusStyle}
 `;
 
 export const PrimaryLinkButton = styled(BaseLinkButton).attrs(() => ({
@@ -161,6 +175,7 @@ export const CloseButton = styled.button`
   right: 18px;
   top: 18px;
   border: none;
+  border-radius: 8px;
   font-size: 24px;
   background: none;
   color: #6b7280;
