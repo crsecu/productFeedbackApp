@@ -62,15 +62,6 @@
       "commentCount": 3
     },
     {
-      "id": "6",
-      "title": "Preview images not loading",
-      "category": "bug",
-      "upvotes": 3,
-      "status": "suggestion",
-      "description": "Challenge preview images are missing when you apply a filter.",
-      "commentCount": 0
-    },
-    {
       "id": "7",
       "title": "More comprehensive reports",
       "category": "feature",

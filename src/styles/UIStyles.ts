@@ -281,8 +281,7 @@ export const Textarea = styled.textarea<{
     props.$validationErr ? "2px solid var(--color-danger)" : "none"};
   margin-bottom: ${(props) => props.$validationErr && "5px"};
 
-  &::placeholder {
-  }
+  resize: none;
 `;
 
 export const Overlay = styled.div`
