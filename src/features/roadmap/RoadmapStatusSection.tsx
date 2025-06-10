@@ -19,7 +19,7 @@ export const RoadmapFeedbackCard = styled(Card)<{
 }>`
   border-top: 6px solid ${(props) => `var(--color-status-${props.$status})`};
   border-radius: 6px;
-  height: 233px;
+  height: 235px;
 
   & a {
     height: 100%;
@@ -31,11 +31,11 @@ export const RoadmapFeedbackCard = styled(Card)<{
   }
 
   @media ${device.md} {
-    height: 260px;
+    height: 240px;
   }
 
   @media ${device.lg} {
-    height: 280px;
+    height: 260px;
   }
 
   @media (max-width: 1023px) {

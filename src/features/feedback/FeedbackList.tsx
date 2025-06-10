@@ -41,7 +41,6 @@ const SuggestionCard = styled(FeedbackCard)`
 
   @media ${device.md} {
     gap: 36px;
-    padding: 28px;
   }
 `;
 

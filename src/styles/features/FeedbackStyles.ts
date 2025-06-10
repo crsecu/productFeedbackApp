@@ -7,7 +7,8 @@ export const Card = styled.article`
   ${panelStyles}
 
   position: relative;
-  padding-bottom: 26px;
+  /* padding-bottom: 26px; */
+  padding: 0; //
 
   & p {
     text-wrap: wrap;
@@ -18,6 +19,11 @@ export const Card = styled.article`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    padding: 22px;
+  }
+
+  & button {
+    left: 22px;
   }
 `;
 
@@ -30,14 +36,13 @@ export const CategoryLabel = styled.label`
 
 export const UpvoteButtonDynamic = styled(UpvoteButton)`
   @media ${device.sm} {
-    position: initial;
     height: fit-content;
-    padding: 10px 8px 8px;
+    top: 14%;
 
     & svg {
       display: block;
       margin: auto;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
       height: 14px;
       width: 14px;
     }
@@ -45,12 +50,6 @@ export const UpvoteButtonDynamic = styled(UpvoteButton)`
 
   @media ${device.md} {
     padding: 12px 10px 8px;
-
-    & svg {
-      margin-bottom: 5px;
-      height: 14px;
-      width: 14px;
-    }
   }
 `;
 

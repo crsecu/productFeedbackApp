@@ -15,19 +15,22 @@ export const StyledFeedbackCard = styled(Card)`
   }
 
   @media ${device.sm} {
-    display: flex;
-    gap: 36px;
-    padding: 28px 22px;
-
     & a,
     > div {
       flex-direction: row;
       justify-content: space-between;
+      padding-left: 110px;
     }
 
     & a div,
     div div {
       max-width: 86%;
+    }
+
+    & button {
+      min-width: 40px;
+      height: 56px;
+      left: 30px;
     }
   }
 `;

@@ -13,9 +13,9 @@ import { IoChevronUpSharp } from "react-icons/io5";
 const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
   position: absolute;
   bottom: 20px;
+  min-width: 65px;
+  height: 34px;
   font-size: var(--text-xs);
-
-  padding: 6px 14px;
   border: none;
   border-radius: 10px;
   background-color: ${(props) =>
