@@ -9,21 +9,15 @@ import {
   createFeedbackAction,
   submitCommentAction,
 } from "./data_handlers/feedbackActions";
-
 import HomePage from "./ui/HomePage";
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
 import RoadmapPage from "./features/roadmap/RoadmapPage";
-
 import ErrorPage from "./ui/ErrorPage";
 import NotFoundPage from "./ui/NotFoundPage";
 import RootRoute from "./ui/RootRoute";
-
 import { editFeedbackAction } from "./data_handlers/feedbackActions";
-
 import CreateFeedback from "./features/feedback/CreateFeedback";
 import PageLayout from "./ui/PageLayout";
-import FeedbackBoardError from "./ui/FeedbackBoardError";
-
 import GlobalStyles from "./styles/GlobalStyles";
 import FeedbackDetailCommentThread from "./features/feedback/FeedbackDetailCommentThread";
 import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
@@ -56,8 +50,6 @@ const router = createBrowserRouter([
           if (currentUrl.search !== nextUrl.search) {
             console.log("Skipping revalidation: only search params changed");
             return false;
-          } else {
-            console.log("RELOAD");
           }
 
           /* Prevent revalidation if feedback submission fails or if there are any validation errors */
@@ -67,6 +59,8 @@ const router = createBrowserRouter([
           ) {
             return false;
           }
+
+          return true;
         },
         children: [
           {
@@ -90,6 +84,8 @@ const router = createBrowserRouter([
           if (actionResult?.submissionOutcome !== "success") {
             return false; // prevent clearing `useActionData()`
           }
+
+          return true;
         },
         children: [
           {
@@ -120,6 +116,7 @@ const router = createBrowserRouter([
             console.log("I SHOULD PREVENT NOW");
             return false;
           }
+
           if (formMethod === "post") return false;
 
           /* Prevent revalidation if "editFeedback" submission fails or if there are any validation errors */
@@ -130,6 +127,8 @@ const router = createBrowserRouter([
             console.log("Revalidation prevented: EDIT FEEDBACK FAILED");
             return false;
           }
+
+          return true;
         },
 
         children: [
@@ -139,17 +138,14 @@ const router = createBrowserRouter([
             id: "commentData", //might not need this id unless we need access to the comment data in a different route
             loader: commentDataLoader,
             action: submitCommentAction,
-            shouldRevalidate: ({
-              formMethod,
-              actionResult,
-              currentUrl,
-              nextUrl,
-            }) => {
+            shouldRevalidate: ({ formMethod, actionResult }) => {
               if (formMethod === "patch") return false;
 
               if (actionResult?.submissionOutcome !== "success") {
                 return false; // prevent clearing `useActionData()`
               }
+
+              return true;
             },
           },
           {
