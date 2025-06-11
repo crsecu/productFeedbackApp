@@ -10,7 +10,7 @@ import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 import { fetchWrapper, groupFeedbackByStatus } from "../utils/helpers";
 
 export const API_URL: string =
-  "https://product-feedback-backend-enweqrxni-cristina-ss-projects.vercel.app";
+  "https://product-feedback-backend-eight.vercel.app";
 
 /* ---------------------------- */
 /* Fetch feedback entries and groups them by status*/
