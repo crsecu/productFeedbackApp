@@ -1,8 +1,9 @@
 import { components, GroupBase, SingleValueProps } from "react-select";
+import { Option } from "../types/customSelect";
 
 function SingleValue(
   props: JSX.IntrinsicAttributes &
-    SingleValueProps<unknown, boolean, GroupBase<unknown>>
+    SingleValueProps<Option, boolean, GroupBase<Option>>
 ): React.JSX.Element {
   return (
     <components.SingleValue {...props}>

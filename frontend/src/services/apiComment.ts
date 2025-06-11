@@ -30,7 +30,7 @@ export async function submitComment(
       updateCommentCount(newComment.feedbackId, currentCount + 1)
     );
 
-    const [newComment, updatedCount] = await Promise.all([
+    const [newComment] = await Promise.all([
       createCommentPromise,
       updateCommentCountPromise,
     ]);
