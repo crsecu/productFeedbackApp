@@ -20,7 +20,7 @@
       "id": "1",
       "title": "Add tags for solutions",
       "category": "feature",
-      "upvotes": 126,
+      "upvotes": 125,
       "status": "suggestion",
       "description": "Easier to search for solutions based on a specific stack.",
       "commentCount": 2
@@ -29,7 +29,7 @@
       "id": "2",
       "title": "Add a dark theme option",
       "category": "feature",
-      "upvotes": 101,
+      "upvotes": 100,
       "status": "suggestion",
       "description": "It would help people with light sensitivities and who prefer dark mode.",
       "commentCount": 4
@@ -60,6 +60,15 @@
       "status": "suggestion",
       "description": "Stay updated on comments and solutions other people post.",
       "commentCount": 3
+    },
+    {
+      "id": "6",
+      "title": "Preview images not loading",
+      "category": "bug",
+      "upvotes": 3,
+      "status": "suggestion",
+      "description": "Challenge preview images are missing when you apply a filter.",
+      "commentCount": 0
     },
     {
       "id": "7",
