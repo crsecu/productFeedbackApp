@@ -8,9 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 .eslintcache
 
-
-/frontend/node_modules/
-/backend/node_modules/
+node_modules
 dist
 dist-ssr
 *.local
