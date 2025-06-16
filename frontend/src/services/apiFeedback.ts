@@ -9,8 +9,30 @@ import { MutationResult } from "../types/mutation.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 import { fetchWrapper, groupFeedbackByStatus } from "../utils/helpers";
 
+// export const API_URL: string =
+//   "https://product-feedback-backend-eight.vercel.app";
+
+export const API_URL1: string = "http://localhost:9000";
 export const API_URL: string =
-  "https://product-feedback-backend-eight.vercel.app";
+  "https://zjhxrwcjbqhwaudypgux.supabase.co/rest/v1";
+
+export const API_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqaHhyd2NqYnFod2F1ZHlwZ3V4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3Njc2NjQsImV4cCI6MjA2NTM0MzY2NH0.cTQuv4Kk_cvnF9p3ipTPuRlS5KuMaLT3QXDbf3Omp-A";
+
+export const HEADERS = {
+  read: { apikey: API_KEY },
+  write: {
+    apikey: API_KEY,
+    "Content-Type": "application/json",
+    Prefer: "return=representation",
+  },
+  writeObject: {
+    apikey: API_KEY,
+    "Content-Type": "application/json",
+    Prefer: "return=representation",
+    Accept: "application/vnd.pgrst.object+json",
+  },
+};
 
 /* ---------------------------- */
 /* Fetch feedback entries and groups them by status*/
@@ -28,14 +50,16 @@ export async function fetchAndGroupFeedback(
   pageContext: "feedbackBoard" | "developmentRoadmap"
 ): Promise<FeedbackGroupedByStatus | RoadmapFeedbackGroupedByStatus> {
   const queryCondition =
-    pageContext === "feedbackBoard" ? "" : "?status_ne=suggestion";
+    pageContext === "feedbackBoard" ? "" : "?status=not.eq.suggestion";
 
   const feedbackList = await fetchWrapper<Feedback[]>(
-    `${API_URL}/productRequests${queryCondition}`
+    `${API_URL}/productRequests${queryCondition}`,
+    {
+      headers: HEADERS.read,
+    }
   );
 
   const feedbackGroupedByStatus = groupFeedbackByStatus(feedbackList);
-  console.log("he", feedbackGroupedByStatus);
 
   if (pageContext === "developmentRoadmap") {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -49,7 +73,15 @@ export async function fetchAndGroupFeedback(
 
 /* Fetch feedback by id */
 export async function fetchFeedbackById(feedbackId: string): Promise<Feedback> {
-  return fetchWrapper<Feedback>(`${API_URL}/productRequests/${feedbackId}`);
+  return fetchWrapper<Feedback>(
+    `${API_URL}/productRequests?id=eq.${feedbackId}`,
+    {
+      headers: {
+        ...HEADERS.read,
+        Accept: "application / vnd.pgrst.object + json",
+      },
+    }
+  );
 }
 
 /* Submit new feedback */
@@ -62,9 +94,7 @@ export async function submitFeedback(
       {
         method: "POST",
         body: JSON.stringify(feedback),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: HEADERS.writeObject,
       }
     );
     return { success: true, payload: data };
@@ -81,13 +111,11 @@ export async function editFeedback(
 ): Promise<MutationResult<EditFeedbackFormValues>> {
   try {
     const data = await fetchWrapper<Feedback>(
-      `${API_URL}/productRequests/${feedbackId}`,
+      `${API_URL}/productRequests?id=eq.${feedbackId}`,
       {
         method: "PATCH",
         body: JSON.stringify(editedFeedback),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: HEADERS.write,
       }
     );
 
@@ -102,9 +130,13 @@ export async function editFeedback(
 
 /* Delete feedback entry */
 export async function deleteFeedback(feedbackId: string): Promise<Feedback> {
-  return fetchWrapper<Feedback>(`${API_URL}/productRequests/${feedbackId}`, {
-    method: "DELETE",
-  });
+  return fetchWrapper<Feedback>(
+    `${API_URL}/productRequests?id=eq.${feedbackId}`,
+    {
+      method: "DELETE",
+      headers: { ...HEADERS.read, Prefer: "return=representation" },
+    }
+  );
 }
 
 /* Update backend with current vote count after user's upvote/unvote actions */
@@ -114,13 +146,11 @@ export async function persistFeedbackVote(
 ): Promise<number> {
   try {
     const data = await fetchWrapper<Feedback>(
-      `${API_URL}/productRequests/${feedbackId}`,
+      `${API_URL}/productRequests?id=eq.${feedbackId}`,
       {
         method: "PATCH",
         body: JSON.stringify({ upvotes: voteCount }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: HEADERS.write,
       }
     );
 
@@ -144,13 +174,11 @@ export async function updateCommentCount(
   updatedCommentCount: number
 ): Promise<number> {
   const data = await fetchWrapper<Feedback>(
-    `${API_URL}/productRequests/${feedbackId}`,
+    `${API_URL}/productRequests?id=eq.${feedbackId}`,
     {
       method: "PATCH",
       body: JSON.stringify({ commentCount: updatedCommentCount }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: HEADERS.write,
     }
   );
 

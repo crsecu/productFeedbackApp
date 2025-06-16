@@ -1,7 +1,7 @@
 import { isRouteErrorResponse, SetURLSearchParams } from "react-router-dom";
 import { User } from "../features/user/user.types";
 import { submitComment } from "../services/apiComment";
-import { API_URL } from "../services/apiFeedback";
+import { API_URL, HEADERS } from "../services/apiFeedback";
 import {
   NewCommentOrReply,
   CommentListType,
@@ -60,20 +60,25 @@ export async function validateUserCredentials(
   name: string,
   username: string
 ): Promise<User> {
-  const userRes = await fetchWrapper<User[]>(
-    `${API_URL}/userList?username=${username}`
+  const userRes = await fetchWrapper<User>(
+    `${API_URL}/userList?username=eq.${username}`,
+    {
+      headers: {
+        ...HEADERS.read,
+        Accept: "application/vnd.pgrst.object+json",
+      },
+    }
   );
-  const user = userRes[0];
 
-  if (!user) {
+  if (!userRes) {
     throw new Error("User not found");
   }
 
-  if (user.name !== name) {
+  if (userRes.name !== name) {
     throw new Error("Incorrect name");
   }
 
-  return user;
+  return userRes;
 }
 //Capitalize first letter
 export function capitalizeFirstLetter(word: string): string {

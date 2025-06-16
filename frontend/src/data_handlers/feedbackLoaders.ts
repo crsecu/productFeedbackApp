@@ -1,6 +1,7 @@
 import {
   fetchAndGroupFeedback,
   fetchFeedbackById,
+  HEADERS,
 } from "../services/apiFeedback";
 import { LoaderFunctionArgs } from "react-router-dom";
 import assert from "../utils/TS_helpers";
@@ -43,7 +44,6 @@ export async function roadmapDevLoader(): Promise<RoadmapFeedbackGroupedByStatus
 export async function feedbackDetailLoader({
   params,
 }: LoaderFunctionArgs): Promise<Feedback> {
-  //to do: type the return type
   const feedbackId = params.feedbackId;
   assert(feedbackId, "feedbackId is invalid");
 
@@ -57,7 +57,10 @@ export async function commentDataLoader({ params }: LoaderFunctionArgs) {
 
   try {
     const comments = await fetchWrapper<CommentListType>(
-      `${API_URL}/comments?feedbackId=${feedbackId}`
+      `${API_URL}/comments?feedbackId=eq.${feedbackId}`,
+      {
+        headers: HEADERS.read,
+      }
     );
 
     const commentHierarchy = buildCommentHierarchy(comments);

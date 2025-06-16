@@ -1,7 +1,7 @@
 import { NewCommentOrReply } from "../types/comment.types";
 import { MutationResult } from "../types/mutation.types";
 import { fetchWrapper } from "../utils/helpers";
-import { updateCommentCount } from "./apiFeedback";
+import { API_KEY, updateCommentCount } from "./apiFeedback";
 import { API_URL } from "./apiFeedback";
 
 /* Fetch Comments for Detail Page */
@@ -21,7 +21,10 @@ export async function submitComment(
         method: "POST",
         body: JSON.stringify(commentData),
         headers: {
+          apikey: API_KEY,
           "Content-Type": "application/json",
+          Prefer: "return=representation",
+          Accept: "application / vnd.pgrst.object + json",
         },
       }
     );
