@@ -9,15 +9,8 @@ import { MutationResult } from "../types/mutation.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 import { fetchWrapper, groupFeedbackByStatus } from "../utils/helpers";
 
-// export const API_URL: string =
-//   "https://product-feedback-backend-eight.vercel.app";
-
-export const API_URL1: string = "http://localhost:9000";
-export const API_URL: string =
-  "https://zjhxrwcjbqhwaudypgux.supabase.co/rest/v1";
-
-export const API_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpqaHhyd2NqYnFod2F1ZHlwZ3V4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3Njc2NjQsImV4cCI6MjA2NTM0MzY2NH0.cTQuv4Kk_cvnF9p3ipTPuRlS5KuMaLT3QXDbf3Omp-A";
+export const API_URL: string = import.meta.env.VITE_SUPABASE_URL;
+export const API_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const HEADERS = {
   read: { apikey: API_KEY },
