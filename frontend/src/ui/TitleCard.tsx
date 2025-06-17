@@ -38,7 +38,9 @@ function TitleCard(): React.JSX.Element {
   return (
     <StyledTitleCard>
       <MainHeading>Feedback Board RE</MainHeading>
-      <BrandingText onClick={() => navigate("/")}>Frontend Mentor</BrandingText>
+      <BrandingText onClick={() => navigate("/")}>
+        Frontend Mentor RE
+      </BrandingText>
     </StyledTitleCard>
   );
 }
