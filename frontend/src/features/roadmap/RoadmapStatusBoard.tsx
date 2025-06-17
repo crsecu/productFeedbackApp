@@ -64,7 +64,6 @@ function RoadmapStatusBoard({
   //TO DO: Assess if memoizing renderRoadmapColumn is worth the cost given its low complexity
 
   const roadmapSections = renderRoadmapColumns(dataFromLoader);
-  console.log("roadmap sections", dataFromLoader);
 
   return <>{roadmapSections}</>;
 }

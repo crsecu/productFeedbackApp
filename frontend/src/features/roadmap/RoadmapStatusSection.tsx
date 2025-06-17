@@ -56,8 +56,6 @@ interface RoadmapStatusSectionProps {
 function RoadmapStatusSection({
   feedbackList,
 }: RoadmapStatusSectionProps): React.JSX.Element {
-  console.log("attention", feedbackList);
-
   //TO DO: memoize
   const feedbackCards = feedbackList.map((feedbackItem) => {
     return (

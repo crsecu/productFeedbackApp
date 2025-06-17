@@ -45,7 +45,6 @@ function RoadmapStatusTabBar({
     Object.keys(dataFromLoader) as Array<keyof RoadmapLoaderData>
   ).map((status) => {
     const feedbackCount = dataFromLoader[status].length;
-    console.log("flower status", status, feedbackCount);
 
     return (
       <StatusTab
