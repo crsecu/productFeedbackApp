@@ -1,10 +1,14 @@
-import { Outlet, useNavigation } from "react-router-dom";
+import { useNavigation } from "react-router-dom";
 import GlobalModal from "./modal/GlobalModal";
 import ToastNotification from "./notifications/ToastNotification";
 import GlobalSpinner from "./GlobalSpinner";
 import { createPortal } from "react-dom";
+import { ReactNode } from "react";
+interface AppLayoutProps {
+  children: ReactNode;
+}
 
-function RootRoute(): React.JSX.Element {
+function AppLayout({ children }: AppLayoutProps): React.JSX.Element {
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
 
@@ -18,11 +22,11 @@ function RootRoute(): React.JSX.Element {
         <>
           {globalModal}
           <ToastNotification />
-          <Outlet />
+          {children}
         </>
       )}
     </>
   );
 }
 
-export default RootRoute;
+export default AppLayout;

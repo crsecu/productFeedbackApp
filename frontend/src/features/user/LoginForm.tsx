@@ -1,9 +1,7 @@
 import { MouseEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../types/redux.hooks";
-import { setUserCredentials } from "../../store/slices/userSlice";
-import { validateUserCredentials } from "../../utils/helpers";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { authenticateUser } from "../../services/apiAuth";
 
 const StyledLoginForm = styled.div`
   padding: 10px;
@@ -20,11 +18,11 @@ const StyledLoginForm = styled.div`
    This component mocks a login process
  */
 function LoginForm(): React.JSX.Element {
-  const [name, setName] = useState("Cristina");
-  const [username, setUsername] = useState("cs");
+  const [name, setName] = useState("secu.cristina@yahoo.com");
+  const [username, setUsername] = useState("SolisHills2025!");
   const [validationError, setValidationError] = useState("");
+
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   async function handleUserLogin(
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
@@ -37,19 +35,16 @@ function LoginForm(): React.JSX.Element {
     } //TO DO: handle input validation
 
     try {
-      const validatedUser = await validateUserCredentials(name, username);
-      if (validatedUser) {
-        dispatch(setUserCredentials(validatedUser));
-        navigate("/feedbackBoard");
-        setName("");
-        setUsername("");
-      }
+      const isUserAuthenticated = await authenticateUser({
+        email: name,
+        password: username,
+      });
+
+      console.log("I AM VALIDATED", isUserAuthenticated);
+
+      if (isUserAuthenticated) navigate("/", { replace: true });
     } catch (error) {
-      if (error instanceof Error) {
-        setValidationError(error.message);
-      } else {
-        setValidationError("Something went wrong. Please try again.");
-      }
+      if (typeof error === "string") setValidationError(error);
     }
   }
 
@@ -77,6 +72,9 @@ function LoginForm(): React.JSX.Element {
         ></input>
         <button onClick={(e) => handleUserLogin(e)}>Log in</button>
       </form>
+      <br></br>
+      <p>Don't have an account?</p>
+      <Link to="/signup">Sign up here</Link>
     </StyledLoginForm>
   );
 }

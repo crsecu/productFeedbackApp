@@ -4,17 +4,17 @@ import {
   roadmapDevLoader,
   feedbackDetailLoader,
   commentDataLoader,
+  rootLoader,
 } from "./data_handlers/feedbackLoaders";
 import {
   createFeedbackAction,
   submitCommentAction,
 } from "./data_handlers/feedbackActions";
-import HomePage from "./ui/HomePage";
+import ProtectedRoutes from "./ui/ProtectedRoutes";
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
 import RoadmapPage from "./features/roadmap/RoadmapPage";
 import ErrorPage from "./ui/ErrorPage";
 import NotFoundPage from "./ui/NotFoundPage";
-import RootRoute from "./ui/RootRoute";
 import { editFeedbackAction } from "./data_handlers/feedbackActions";
 import CreateFeedback from "./features/feedback/CreateFeedback";
 import PageLayout from "./ui/PageLayout";
@@ -22,19 +22,18 @@ import GlobalStyles from "./styles/GlobalStyles";
 import FeedbackDetailCommentThread from "./features/feedback/FeedbackDetailCommentThread";
 import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import TypographyTokens from "./styles/TypographyTokens";
+import LoginForm from "./features/user/LoginForm";
 
 const router = createBrowserRouter([
+  { path: "/login", element: <LoginForm /> },
   {
-    element: <RootRoute />,
+    element: <ProtectedRoutes />,
+    loader: rootLoader,
     errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/feedbackBoard",
-        element: <PageLayout />,
+        element: <FeedbackBoardPage />,
         loader: feedbackBoardLoader,
         id: "feedbackBoardData",
         shouldRevalidate: ({
@@ -63,11 +62,6 @@ const router = createBrowserRouter([
           return true;
         },
         children: [
-          {
-            index: true,
-
-            element: <FeedbackBoardPage />,
-          },
           {
             path: "createFeedback",
             element: <CreateFeedback />,

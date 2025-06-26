@@ -14,6 +14,7 @@ import {
 import { modalMessages } from "./modalConfig";
 import { FocusTrap } from "focus-trap-react";
 import { closeEditFeedback } from "../../store/slices/feedbackDetailSlice";
+import { ensureValidSession } from "../../services/apiAuth";
 
 const StyledGlobalModal = styled.div`
   ${panelStyles}
@@ -77,11 +78,14 @@ function GlobalModal(): React.JSX.Element | null {
 
   const handleConfirm = async () => {
     if (modalType === "delete_feedback") {
+      const accessToken = await ensureValidSession();
+      if (!accessToken) return navigate("/");
+
       try {
         assert(confirmPayload);
-        await deleteFeedback(confirmPayload);
+        await deleteFeedback(accessToken, confirmPayload);
 
-        navigate(-1);
+        navigate("/", { replace: true }); //this must go to previous page which could be roadmap as well
 
         dispatch(showToastNotification({ key: "deleteFeedback_success" }));
       } catch (err) {

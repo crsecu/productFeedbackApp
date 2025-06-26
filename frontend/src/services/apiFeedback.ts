@@ -31,15 +31,18 @@ export const HEADERS = {
 /* Fetch feedback entries and groups them by status*/
 export async function fetchAndGroupFeedback(
   // eslint-disable-next-line no-unused-vars
+  access_token: string,
   pageContext: "feedbackBoard"
 ): Promise<FeedbackGroupedByStatus>;
 
 export async function fetchAndGroupFeedback(
   // eslint-disable-next-line no-unused-vars
+  access_token: string,
   pageContext: "developmentRoadmap"
 ): Promise<RoadmapFeedbackGroupedByStatus>;
 
 export async function fetchAndGroupFeedback(
+  access_token: string,
   pageContext: "feedbackBoard" | "developmentRoadmap"
 ): Promise<FeedbackGroupedByStatus | RoadmapFeedbackGroupedByStatus> {
   const queryCondition =
@@ -48,7 +51,10 @@ export async function fetchAndGroupFeedback(
   const feedbackList = await fetchWrapper<Feedback[]>(
     `${API_URL}/productRequests${queryCondition}`,
     {
-      headers: HEADERS.read,
+      headers: {
+        ...HEADERS.read,
+        Authorization: `Bearer ${access_token}`,
+      },
     }
   );
 
@@ -65,13 +71,17 @@ export async function fetchAndGroupFeedback(
 }
 
 /* Fetch feedback by id */
-export async function fetchFeedbackById(feedbackId: string): Promise<Feedback> {
+export async function fetchFeedbackById(
+  access_token: string,
+  feedbackId: string
+): Promise<Feedback> {
   return fetchWrapper<Feedback>(
     `${API_URL}/productRequests?id=eq.${feedbackId}`,
     {
       headers: {
         ...HEADERS.read,
         Accept: "application / vnd.pgrst.object + json",
+        Authorization: `Bearer ${access_token}`,
       },
     }
   );
@@ -79,6 +89,7 @@ export async function fetchFeedbackById(feedbackId: string): Promise<Feedback> {
 
 /* Submit new feedback */
 export async function submitFeedback(
+  accessToken: string,
   feedback: NewFeedback
 ): Promise<MutationResult<SuggestionFeedback>> {
   try {
@@ -87,7 +98,10 @@ export async function submitFeedback(
       {
         method: "POST",
         body: JSON.stringify(feedback),
-        headers: HEADERS.writeObject,
+        headers: {
+          ...HEADERS.writeObject,
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
     );
     return { success: true, payload: data };
@@ -99,6 +113,7 @@ export async function submitFeedback(
 
 /* Edit feedback entry */
 export async function editFeedback(
+  accessToken: string,
   feedbackId: string,
   editedFeedback: EditFeedbackFormValues
 ): Promise<MutationResult<EditFeedbackFormValues>> {
@@ -108,7 +123,7 @@ export async function editFeedback(
       {
         method: "PATCH",
         body: JSON.stringify(editedFeedback),
-        headers: HEADERS.write,
+        headers: { ...HEADERS.write, Authorization: `Bearer ${accessToken}` },
       }
     );
 
@@ -122,12 +137,19 @@ export async function editFeedback(
 }
 
 /* Delete feedback entry */
-export async function deleteFeedback(feedbackId: string): Promise<Feedback> {
+export async function deleteFeedback(
+  accessToken: string,
+  feedbackId: string
+): Promise<Feedback> {
   return fetchWrapper<Feedback>(
     `${API_URL}/productRequests?id=eq.${feedbackId}`,
     {
       method: "DELETE",
-      headers: { ...HEADERS.read, Prefer: "return=representation" },
+      headers: {
+        ...HEADERS.read,
+        Prefer: "return=representation",
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
   );
 }

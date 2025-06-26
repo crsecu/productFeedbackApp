@@ -137,6 +137,7 @@ export function sortFeedbackList(
 of comments/replies for a specific feedback entry. It updates the backend by creating 
 a new comment or reply based on the mode ("comment" or "reply") and increments the comment count. */
 export async function postCommentOrReply(
+  accessToken: string,
   content: string,
   submissionData: SubmissionDataType,
   actionType: "addComment"
@@ -165,15 +166,11 @@ export async function postCommentOrReply(
     comment.parentType = type;
   }
 
-  //Closure function that captures commentCount and passes it to submitComment func
-  const submitNewComment = (data: NewCommentOrReply) =>
-    submitComment(data, commentCount);
-
   //Submit new comment and return a standardized result: success(if submission succeeds), or failure (if it fails)
-  const result = await performActionSubmission<
-    NewCommentOrReply,
-    NewCommentOrReply
-  >(actionType, comment, submitNewComment);
+  const result = await performActionSubmission<NewCommentOrReply>(
+    actionType,
+    () => submitComment(accessToken, comment, commentCount)
+  );
 
   return result;
 }
@@ -348,13 +345,11 @@ export function handleValidationErrors<FormValuesType>(
 
 /* This function handles form validation and submission - it returns a standardized action result: success, failure, validationError */
 //Submits some form data and return a standardized result
-export async function performActionSubmission<TSubmissionData, TPayload>(
+export async function performActionSubmission<TPayload>(
   actionType: ActionType,
-  submissionData: TSubmissionData,
-  // eslint-disable-next-line no-unused-vars
-  submitForm: (_data: TSubmissionData) => Promise<MutationResult<TPayload>>
+  submitForm: () => Promise<MutationResult<TPayload>>
 ): Promise<ActionResult | ActionResult<TPayload>> {
-  const submissionResult = await submitForm(submissionData);
+  const submissionResult = await submitForm();
 
   // action submission failed
   if (!submissionResult.success) {

@@ -52,6 +52,7 @@ function CreateFeedback(): React.JSX.Element {
     if (!hasFormChanged) {
       navigate(-1);
     } else {
+      console.log("cancel modal should be visible ");
       dispatch(
         showModal({
           modalType: "cancel_addFeedback",

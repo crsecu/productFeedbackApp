@@ -1,4 +1,4 @@
-import { useLocation, useRouteLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
@@ -27,10 +27,10 @@ const StyledFeedbackBoardPage = styled.div`
 
 function FeedbackBoardPage(): React.JSX.Element {
   const location = useLocation();
+  //const dataFromLoader = useRouteLoaderData("root") as FeedbackBoardLoaderData;
+  const dataFromLoader = useLoaderData() as FeedbackBoardLoaderData;
 
-  const dataFromLoader = useRouteLoaderData(
-    "feedbackBoardData"
-  ) as FeedbackBoardLoaderData;
+  if (location.pathname === "/createFeedback") return <Outlet />;
 
   const { suggestions, roadmapFeedbackCount, roadmapStatusCounts } =
     dataFromLoader;

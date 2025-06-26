@@ -3,6 +3,7 @@ import { AppState } from "../store";
 import { User } from "../../features/user/user.types";
 
 interface UserState {
+  isUserLoggedIn: boolean;
   profileInfo: {
     id: string;
     name: string;
@@ -13,20 +14,12 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  // profileInfo: {
-  //   id: "",
-  //   name: "",
-  //   image: "",
-  //   username: "",
-  // },
-  // upvotedFeedbackIds: {},
-
-  /* Remove later */
+  isUserLoggedIn: false,
   profileInfo: {
-    id: "fcb5",
-    name: "Cristina",
-    image: "/assets/user-images/image-zena.jpg",
-    username: "cs",
+    id: "",
+    name: "",
+    image: "",
+    username: "",
   },
   upvotedFeedbackIds: {},
 };
@@ -37,6 +30,7 @@ const userSlice = createSlice({
   reducers: {
     setUserCredentials(state, action: PayloadAction<User>) {
       //payload = user account information (see initalState object for data structure)
+      state.isUserLoggedIn = true;
       state.profileInfo = action.payload;
     },
     trackUserUpvote(state, action: PayloadAction<string>) {
@@ -61,4 +55,4 @@ export const getIsFeedbackUpvoted =
     return !!state.user.upvotedFeedbackIds[feedbackId];
   };
 
-export const getLoggedInUser = (state: AppState) => state.user.profileInfo;
+export const getLoggedInUser = (state: AppState) => state.user.isUserLoggedIn;
