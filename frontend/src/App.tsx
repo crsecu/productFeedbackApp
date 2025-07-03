@@ -22,10 +22,13 @@ import GlobalStyles from "./styles/GlobalStyles";
 import FeedbackDetailCommentThread from "./features/feedback/FeedbackDetailCommentThread";
 import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import TypographyTokens from "./styles/TypographyTokens";
-import LoginForm from "./features/user/LoginForm";
+
+import { signUpUserAction } from "./data_handlers/userActions";
+import LoginPage from "./features/user/LoginPage";
 
 const router = createBrowserRouter([
-  { path: "/login", element: <LoginForm /> },
+  { path: "/login", element: <LoginPage /> },
+  { path: "/signup", action: signUpUserAction },
   {
     element: <ProtectedRoutes />,
     loader: rootLoader,
@@ -41,6 +44,7 @@ const router = createBrowserRouter([
           nextUrl,
           actionResult,
           formMethod,
+          defaultShouldRevalidate,
         }) => {
           console.log("current", currentUrl);
           console.log("next", nextUrl);
@@ -48,6 +52,15 @@ const router = createBrowserRouter([
           /*  Prevent revalidation if only search params change in the URL */
           if (currentUrl.search !== nextUrl.search) {
             console.log("Skipping revalidation: only search params changed");
+            return false;
+          }
+
+          /* Prevent revalidation when navigation to /createFeedback*/
+          if (nextUrl.pathname === "/createFeedback") {
+            console.log(
+              'Preventing revalidation when navigation to "/createFeedback"'
+            );
+
             return false;
           }
 
@@ -59,7 +72,7 @@ const router = createBrowserRouter([
             return false;
           }
 
-          return true;
+          return defaultShouldRevalidate;
         },
         children: [
           {
@@ -74,12 +87,12 @@ const router = createBrowserRouter([
         element: <PageLayout />,
         loader: roadmapDevLoader,
         id: "roadmapData",
-        shouldRevalidate: ({ actionResult }) => {
+        shouldRevalidate: ({ actionResult, defaultShouldRevalidate }) => {
           if (actionResult?.submissionOutcome !== "success") {
             return false; // prevent clearing `useActionData()`
           }
 
-          return true;
+          return defaultShouldRevalidate;
         },
         children: [
           {
@@ -104,6 +117,7 @@ const router = createBrowserRouter([
           nextUrl,
           formMethod,
           actionResult,
+          defaultShouldRevalidate,
         }) => {
           //prevent revalidation when canceling edit feedback
           if (currentUrl.pathname === nextUrl.pathname && !actionResult) {
@@ -122,7 +136,7 @@ const router = createBrowserRouter([
             return false;
           }
 
-          return true;
+          return defaultShouldRevalidate;
         },
 
         children: [
@@ -132,14 +146,18 @@ const router = createBrowserRouter([
             id: "commentData", //might not need this id unless we need access to the comment data in a different route
             loader: commentDataLoader,
             action: submitCommentAction,
-            shouldRevalidate: ({ formMethod, actionResult }) => {
+            shouldRevalidate: ({
+              formMethod,
+              actionResult,
+              defaultShouldRevalidate,
+            }) => {
               if (formMethod === "patch") return false;
 
               if (actionResult?.submissionOutcome !== "success") {
                 return false; // prevent clearing `useActionData()`
               }
 
-              return true;
+              return defaultShouldRevalidate;
             },
           },
           {

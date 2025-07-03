@@ -41,6 +41,10 @@ const notificationTextByOutcome: Record<
       title: "Something went wrong!",
       message: "Comment submission failed.",
     },
+    createUser: {
+      title: "User Creation Failed",
+      message: "There was an issue creating the user. Please try again.",
+    },
   },
 
   success: {
@@ -56,6 +60,10 @@ const notificationTextByOutcome: Record<
     addComment: {
       title: "Something went wrong!",
       message: "Comment submission failed.",
+    },
+    createUser: {
+      title: "Thanks for signing up!",
+      message: "Please check your email to confirm your account.",
     },
   },
 };

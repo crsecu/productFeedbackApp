@@ -148,6 +148,7 @@ export const GoBackButton = styled.button`
 
 export const GoBackLinkButton = styled(Link)`
   ${GoBackBtnStyles}
+  color: var(--color-text-muted);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' viewBox='0 0 7 10' fill='none'%3E%3Cpath d='M6 9L2 5L6 1' stroke='%23CDD2EE' stroke-width='2'/%3E%3C/svg%3E");
 `;
 

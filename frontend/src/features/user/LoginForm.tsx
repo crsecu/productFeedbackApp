@@ -1,7 +1,8 @@
 import { MouseEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { authenticateUser } from "../../services/apiAuth";
+import { authenticateUser, authorizeUser } from "../../services/apiAuth";
+import { getLoggedInUser } from "../../store/slices/userSlice";
 
 const StyledLoginForm = styled.div`
   padding: 10px;
@@ -18,8 +19,8 @@ const StyledLoginForm = styled.div`
    This component mocks a login process
  */
 function LoginForm(): React.JSX.Element {
-  const [name, setName] = useState("secu.cristina@yahoo.com");
-  const [username, setUsername] = useState("SolisHills2025!");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
 
   const navigate = useNavigate();
@@ -29,20 +30,26 @@ function LoginForm(): React.JSX.Element {
   ) {
     e.preventDefault();
 
-    if (name === "" && username === "") {
+    if (email === "" && password === "") {
       setValidationError("Empty input fields");
       return;
     } //TO DO: handle input validation
 
     try {
       const isUserAuthenticated = await authenticateUser({
-        email: name,
-        password: username,
+        email,
+        password,
       });
 
       console.log("I AM VALIDATED", isUserAuthenticated);
 
-      if (isUserAuthenticated) navigate("/", { replace: true });
+      if (isUserAuthenticated) {
+        const loggedInUser = await authorizeUser(
+          isUserAuthenticated.accessToken
+        );
+
+        navigate("/");
+      }
     } catch (error) {
       if (typeof error === "string") setValidationError(error);
     }
@@ -53,28 +60,25 @@ function LoginForm(): React.JSX.Element {
       <p>Please type in your credentials below:</p>
       {validationError && <p className="error">{validationError}</p>}
       <form>
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Email</label>
         <input
-          name="name"
-          id="name"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          name="email"
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         ></input>
 
-        <label htmlFor="userName">Username</label>
+        <label htmlFor="password">Password</label>
         <input
-          name="userName"
-          id="userName"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="password"
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         ></input>
         <button onClick={(e) => handleUserLogin(e)}>Log in</button>
       </form>
-      <br></br>
-      <p>Don't have an account?</p>
-      <Link to="/signup">Sign up here</Link>
     </StyledLoginForm>
   );
 }

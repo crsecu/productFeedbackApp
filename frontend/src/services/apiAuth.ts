@@ -14,7 +14,7 @@ interface loginUserCredentials {
   password: string;
 }
 
-const AUTH_API_URL: string = import.meta.env.VITE_SUPABASE_AUTH_URL;
+export const AUTH_API_URL: string = import.meta.env.VITE_SUPABASE_AUTH_URL;
 
 //API Auth fetch wrapper
 export async function fetchWrapperSBAuth<T>(
@@ -38,6 +38,7 @@ export async function fetchWrapperSBAuth<T>(
       console.log("RES.OK is false", res.status);
       //if(res.status === 400 | 401 etc) set cachedSession to null,
       const error = await res.json();
+
       const errorMsg = `Something went wrong: ${error.msg}`;
       throw new Error(errorMsg);
     }
@@ -76,7 +77,12 @@ export async function getStoredAuthTokens(): Promise<AuthTokens | null> {
 //Authenticate user
 export async function authenticateUser(
   credentials: loginUserCredentials
-): Promise<boolean> {
+): Promise<
+  | false
+  | {
+      accessToken: string;
+    }
+> {
   const userCredentialsJSON = JSON.stringify(credentials);
 
   const authenticatedUser = await fetchWrapperSBAuth<SessionSB>(
@@ -91,9 +97,12 @@ export async function authenticateUser(
     userCredentialsJSON
   );
 
-  await saveUserLocalStorage(authenticatedUser);
+  saveUserLocalStorage(authenticatedUser);
+  console.log("small test", authenticatedUser);
 
-  return authenticatedUser.user.role === "authenticated" ? true : false;
+  return authenticatedUser.user.role === "authenticated"
+    ? { accessToken: authenticatedUser.access_token }
+    : false;
 }
 
 //refresh session

@@ -22,6 +22,7 @@ interface InputFieldProps {
   initialValue?: string;
   describedById?: string;
   validationError?: string;
+  minLength?: number;
 }
 
 function InputField({
@@ -32,6 +33,7 @@ function InputField({
   initialValue,
   describedById,
   validationError,
+  minLength,
 }: InputFieldProps): React.JSX.Element {
   return (
     <>
@@ -43,6 +45,7 @@ function InputField({
         aria-describedby={describedById}
         defaultValue={initialValue}
         required={isRequired}
+        minLength={minLength}
       ></StyledInputField>
 
       {validationError && <FormFieldError errorMessage={validationError} />}

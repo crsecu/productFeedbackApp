@@ -33,7 +33,7 @@ const StyledFeedbackDetailPage = styled.div`
     min-height: 40px;
   }
 
-  @media ${device.md} {
+  @media ${device.sm} {
     padding-top: 0;
   }
 `;

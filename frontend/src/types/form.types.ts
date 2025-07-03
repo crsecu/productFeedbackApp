@@ -1,5 +1,12 @@
 import { Category, Status } from "./feedback.types";
 
+//user sign up
+export interface CreateUserFormValues {
+  fullName: string;
+  email: string;
+  password: string;
+}
+
 // Add/Edit Feedback Form Types
 export type FeedbackFormKeys = "title" | "category" | "description" | "status";
 

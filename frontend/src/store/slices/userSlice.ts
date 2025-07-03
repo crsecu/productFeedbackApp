@@ -6,6 +6,7 @@ interface UserState {
   isUserLoggedIn: boolean;
   profileInfo: {
     id: string;
+    email: string;
     name: string;
     username: string;
     image: string;
@@ -17,6 +18,7 @@ const initialState: UserState = {
   isUserLoggedIn: false,
   profileInfo: {
     id: "",
+    email: "",
     name: "",
     image: "",
     username: "",

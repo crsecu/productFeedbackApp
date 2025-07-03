@@ -299,7 +299,7 @@ export function getFeedbackFormResponse<T>(actionData: ActionResult<T>): {
   const { actionType, submissionOutcome, payload } = actionData || {};
 
   const isSubmissionSuccessful = submissionOutcome === "success";
-  const showForm = !actionData || !isSubmissionSuccessful;
+  const showForm = !isSubmissionSuccessful;
 
   return {
     actionType,
@@ -350,6 +350,7 @@ export async function performActionSubmission<TPayload>(
   submitForm: () => Promise<MutationResult<TPayload>>
 ): Promise<ActionResult | ActionResult<TPayload>> {
   const submissionResult = await submitForm();
+  console.log("submission result", submissionResult);
 
   // action submission failed
   if (!submissionResult.success) {
