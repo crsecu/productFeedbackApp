@@ -350,7 +350,6 @@ export async function performActionSubmission<TPayload>(
   submitForm: () => Promise<MutationResult<TPayload>>
 ): Promise<ActionResult | ActionResult<TPayload>> {
   const submissionResult = await submitForm();
-  console.log("submission result", submissionResult);
 
   // action submission failed
   if (!submissionResult.success) {

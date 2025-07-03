@@ -37,16 +37,16 @@ async function createNewUser(
 export async function signUpUserAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const formValues = Object.fromEntries(formData) as {
-    fullName: string;
+    name: string;
     email: string;
     password: string;
   };
 
-  const { fullName, ...userCredentials } = formValues;
+  const { name, ...userCredentials } = formValues;
 
   const requestBody = JSON.stringify({
     ...userCredentials,
-    data: { fullName },
+    data: { name },
   });
 
   const validationErrors = handleValidationErrors<CreateUserFormValues>(

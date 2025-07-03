@@ -35,7 +35,6 @@ export async function fetchWrapperSBAuth<T>(
 
     //If HTTP errors
     if (!res.ok) {
-      console.log("RES.OK is false", res.status);
       //if(res.status === 400 | 401 etc) set cachedSession to null,
       const error = await res.json();
 
@@ -98,7 +97,6 @@ export async function authenticateUser(
   );
 
   saveUserLocalStorage(authenticatedUser);
-  console.log("small test", authenticatedUser);
 
   return authenticatedUser.user.role === "authenticated"
     ? { accessToken: authenticatedUser.access_token }
@@ -128,7 +126,6 @@ export async function refreshSession(
 
 //save logged in user in Local Storage
 export function saveUserLocalStorage(userData: SessionSB) {
-  console.log("u data save local storage", userData);
   const {
     access_token,
     refresh_token,

@@ -1,8 +1,9 @@
 import { MouseEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { authenticateUser, authorizeUser } from "../../services/apiAuth";
-import { getLoggedInUser } from "../../store/slices/userSlice";
+import { setUserCredentials } from "../../store/slices/userSlice";
+import { useAppDispatch } from "../../types/redux.hooks";
 
 const StyledLoginForm = styled.div`
   padding: 10px;
@@ -23,6 +24,7 @@ function LoginForm(): React.JSX.Element {
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   async function handleUserLogin(
@@ -46,6 +48,18 @@ function LoginForm(): React.JSX.Element {
       if (isUserAuthenticated) {
         const loggedInUser = await authorizeUser(
           isUserAuthenticated.accessToken
+        );
+        console.log("log", loggedInUser);
+        const { id, email, user_metadata: userMeta } = loggedInUser;
+
+        //save user in Redux - TEST
+        dispatch(
+          setUserCredentials({
+            id,
+            email,
+            name: userMeta.name,
+            username: email,
+          })
         );
 
         navigate("/");

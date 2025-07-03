@@ -15,7 +15,6 @@ import { ensureValidSession } from "../services/apiAuth";
 //Homepage loader
 export async function rootLoader(): Promise<boolean> {
   const accessToken = await ensureValidSession();
-  console.log("root LOADER", accessToken);
 
   return !!accessToken;
 }

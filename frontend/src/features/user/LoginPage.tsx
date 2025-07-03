@@ -28,8 +28,6 @@ function LoginPage(): React.JSX.Element {
     ? getFeedbackFormResponse<UserSB>(fetcher.data)
     : {};
 
-  console.log("f in parent", fetcher);
-
   const notification =
     submissionOutcome && actionType ? (
       <BannerNotification

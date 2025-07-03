@@ -4,13 +4,7 @@ import { User } from "../../features/user/user.types";
 
 interface UserState {
   isUserLoggedIn: boolean;
-  profileInfo: {
-    id: string;
-    email: string;
-    name: string;
-    username: string;
-    image: string;
-  };
+  profileInfo: User;
   upvotedFeedbackIds: Record<string, boolean>;
 }
 
@@ -57,4 +51,4 @@ export const getIsFeedbackUpvoted =
     return !!state.user.upvotedFeedbackIds[feedbackId];
   };
 
-export const getLoggedInUser = (state: AppState) => state.user.isUserLoggedIn;
+export const getLoggedInUser = (state: AppState) => state.user;

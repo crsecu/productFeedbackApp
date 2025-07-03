@@ -2,7 +2,7 @@ import { Category, Status } from "./feedback.types";
 
 //user sign up
 export interface CreateUserFormValues {
-  fullName: string;
+  name: string;
   email: string;
   password: string;
 }
