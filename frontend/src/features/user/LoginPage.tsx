@@ -1,16 +1,11 @@
-import { useState } from "react";
 import LoginForm from "./LoginForm";
-import Signup from "./Signup";
-import { GoBackButton } from "../../styles/UIStyles";
+import { GoBackLinkButton } from "../../styles/UIStyles";
 import styled from "styled-components";
-import { useFetcher } from "react-router-dom";
-import { ActionResult } from "../../types/action.types";
-import { UserSB } from "../../types/supabaseAuth.types";
-import { getFeedbackFormResponse } from "../../utils/helpers";
-import ActionBar from "../../ui/ActionBar";
-import BannerNotification from "../../ui/notifications/BannerNotification";
+import { useLocation } from "react-router-dom";
 
-const ButtonCTA = styled(GoBackButton)`
+import Signup from "./Signup";
+
+export const AuthLinkButton = styled(GoBackLinkButton)`
   background: none;
   color: var(--color-primary);
   padding: 0;
@@ -20,48 +15,31 @@ const ButtonCTA = styled(GoBackButton)`
     color: var(--color-primary-hover);
   }
 `;
+
 function LoginPage(): React.JSX.Element {
-  const [mode, setMode] = useState<"signup" | "login">("login");
-  const fetcher = useFetcher<ActionResult<UserSB>>();
-
-  const { actionType, submissionOutcome, isSubmissionSuccessful } = fetcher.data
-    ? getFeedbackFormResponse<UserSB>(fetcher.data)
-    : {};
-
-  const notification =
-    submissionOutcome && actionType ? (
-      <BannerNotification
-        notificationType={submissionOutcome}
-        actionType={actionType}
-      ></BannerNotification>
-    ) : null;
+  const location = useLocation();
 
   return (
     <>
-      {mode === "login" || isSubmissionSuccessful ? (
-        <>
-          {isSubmissionSuccessful && notification}
+      {location.pathname === "/login/signup" ? (
+        <Signup>
           <LoginForm />
-          <br />
-          {!isSubmissionSuccessful && (
-            <>
-              <p>Don't have an account?</p>
-              <ButtonCTA onClick={() => setMode("signup")}>Sign up</ButtonCTA>
-            </>
-          )}
-        </>
+        </Signup>
       ) : (
         <>
-          <ActionBar isMinimal={true}>
-            <GoBackButton onClick={() => setMode("login")}>
-              Go Back
-            </GoBackButton>
-          </ActionBar>
-
-          <Signup fetcher={fetcher}>{notification}</Signup>
+          <LoginForm />
+          <p>Don't have an account?</p>
+          <AuthLinkButton to="signup" replace>
+            Sign up
+          </AuthLinkButton>
         </>
       )}
     </>
   );
 }
+
+{
+  /* <ButtonCTA onClick={() => setMode("signup")}>Sign up</ButtonCTA> */
+}
+
 export default LoginPage;

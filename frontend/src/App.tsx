@@ -25,10 +25,16 @@ import TypographyTokens from "./styles/TypographyTokens";
 
 import { signUpUserAction } from "./data_handlers/userActions";
 import LoginPage from "./features/user/LoginPage";
+import Signup from "./features/user/Signup";
 
 const router = createBrowserRouter([
-  { path: "/login", element: <LoginPage /> },
-  { path: "/signup", action: signUpUserAction },
+  {
+    path: "/login",
+    element: <LoginPage />,
+    children: [
+      { path: "signup", action: signUpUserAction, element: <Signup /> },
+    ],
+  },
   {
     element: <ProtectedRoutes />,
     loader: rootLoader,

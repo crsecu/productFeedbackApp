@@ -182,6 +182,7 @@ export async function ensureValidSession(): Promise<string | null> {
   //2. if not, check localStorage
   const tokens = await getStoredAuthTokens();
   //3. if localStorage, empty, return null
+
   if (!tokens) return null;
 
   const { accessToken, refreshToken, expiresAt } = tokens;

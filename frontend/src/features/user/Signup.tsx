@@ -1,13 +1,21 @@
-import { FetcherWithComponents } from "react-router-dom";
+import { useFetcher } from "react-router-dom";
 import InputField from "../feedback/InputField";
 import FormField from "../feedback/FormField";
-import { FormPage, FormSection, PrimaryButton } from "../../styles/UIStyles";
+import {
+  FormPage,
+  FormSection,
+  GoBackLinkButton,
+  PrimaryButton,
+} from "../../styles/UIStyles";
 import { UserSB } from "../../types/supabaseAuth.types";
 import styled from "styled-components";
 import device from "../../styles/breakpoints";
 import Logo from "../../ui/Logo";
 import { ReactNode } from "react";
 import { ActionResult } from "../../types/action.types";
+import { getFeedbackFormResponse } from "../../utils/helpers";
+import BannerNotification from "../../ui/notifications/BannerNotification";
+import { AuthLinkButton } from "./LoginPage";
 
 const PageWrapper = styled(FormPage)`
   width: unset;
@@ -60,21 +68,47 @@ const RightColumn = styled.div`
 
 interface SignupProps {
   children?: ReactNode;
-  fetcher: FetcherWithComponents<ActionResult<UserSB>>;
 }
-function Signup({ children, fetcher }: SignupProps): React.JSX.Element {
+
+function Signup({ children }: SignupProps): React.JSX.Element {
+  const fetcher = useFetcher<ActionResult<UserSB>>();
+  const actionData = fetcher?.data;
+
+  const { actionType, submissionOutcome, isSubmissionSuccessful } = actionData
+    ? getFeedbackFormResponse<UserSB>(actionData)
+    : {};
+
+  const notification =
+    submissionOutcome && actionType ? (
+      <BannerNotification
+        notificationType={submissionOutcome}
+        actionType={actionType}
+      ></BannerNotification>
+    ) : null;
+
+  console.log("props from parent through outlet", fetcher);
+
+  if (isSubmissionSuccessful) {
+    return (
+      <>
+        {notification} {children}
+      </>
+    );
+  }
+
   return (
     <PageWrapper>
+      <GoBackLinkButton to="..">Go back</GoBackLinkButton>
       <StyledSignupPage>
         <LeftColumn>
           <Logo />
         </LeftColumn>
 
         <RightColumn>
-          {children}
-          <br />
           <FormSection>
-            <fetcher.Form method="post" action="/signup">
+            {notification}
+            <br />
+            <fetcher.Form method="post" action="/login/signup">
               <FormField
                 inputId={"fullNameSignup"}
                 label={"Full Name"}
@@ -85,7 +119,7 @@ function Signup({ children, fetcher }: SignupProps): React.JSX.Element {
                   name={"name"}
                   id={"nameSignup"}
                   type={"text"}
-                  // validationError={actionData?.validationErrors?.name}
+                  validationError={actionData?.validationErrors?.name}
                 />
               </FormField>
               <FormField
@@ -98,7 +132,7 @@ function Signup({ children, fetcher }: SignupProps): React.JSX.Element {
                   name={"email"}
                   id={"emailSignup"}
                   type={"email"}
-                  // validationError={actionData?.validationErrors?.email}
+                  validationError={actionData?.validationErrors?.email}
                 />
               </FormField>
               <FormField
@@ -111,14 +145,19 @@ function Signup({ children, fetcher }: SignupProps): React.JSX.Element {
                   name={"password"}
                   id={"passwordSignup"}
                   type={"password"}
-                  // validationError={actionData?.validationErrors?.password}
+                  validationError={actionData?.validationErrors?.password}
                   isRequired={true}
                   minLength={6}
                 />
               </FormField>
               <PrimaryButton type="submit">Create account</PrimaryButton>
             </fetcher.Form>
-            <LoginCTA>Already have an account?</LoginCTA>
+            <LoginCTA>
+              Already have an account?{" "}
+              <AuthLinkButton to=".." replace>
+                Log in
+              </AuthLinkButton>
+            </LoginCTA>
           </FormSection>
         </RightColumn>
       </StyledSignupPage>
