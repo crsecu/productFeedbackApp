@@ -1,17 +1,13 @@
 import { API_KEY } from "./apiFeedback";
 import { errorMessage } from "../utils/helpers";
 import { AuthSession, SessionSB, UserSB } from "../types/supabaseAuth.types";
+import { LoginUserCredentials } from "../types/user.types";
 
 interface AuthTokens {
   accessToken: string;
   refreshToken: string;
   expiresAt: number;
   isSessionActive: boolean;
-}
-
-interface loginUserCredentials {
-  email: string;
-  password: string;
 }
 
 export const AUTH_API_URL: string = import.meta.env.VITE_SUPABASE_AUTH_URL;
@@ -75,11 +71,12 @@ export async function getStoredAuthTokens(): Promise<AuthTokens | null> {
 }
 //Authenticate user
 export async function authenticateUser(
-  credentials: loginUserCredentials
+  credentials: LoginUserCredentials
 ): Promise<
   | false
   | {
       accessToken: string;
+      id: string;
     }
 > {
   const userCredentialsJSON = JSON.stringify(credentials);
@@ -99,7 +96,10 @@ export async function authenticateUser(
   saveUserLocalStorage(authenticatedUser);
 
   return authenticatedUser.user.role === "authenticated"
-    ? { accessToken: authenticatedUser.access_token }
+    ? {
+        accessToken: authenticatedUser.access_token,
+        id: authenticatedUser.user.id,
+      }
     : false;
 }
 

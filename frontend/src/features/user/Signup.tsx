@@ -16,6 +16,7 @@ import { ActionResult } from "../../types/action.types";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import BannerNotification from "../../ui/notifications/BannerNotification";
 import { AuthLinkButton } from "./LoginPage";
+import { FeedbackFormErrors } from "../../types/form.types";
 
 const PageWrapper = styled(FormPage)`
   width: unset;
@@ -78,6 +79,10 @@ function Signup({ children }: SignupProps): React.JSX.Element {
     ? getFeedbackFormResponse<UserSB>(actionData)
     : {};
 
+  const errors =
+    actionData?.validationErrors ||
+    (actionData?.submitError as FeedbackFormErrors);
+
   const notification =
     submissionOutcome && actionType ? (
       <BannerNotification
@@ -110,7 +115,7 @@ function Signup({ children }: SignupProps): React.JSX.Element {
             <br />
             <fetcher.Form method="post" action="/login/signup">
               <FormField
-                inputId={"fullNameSignup"}
+                inputId={"nameSignup"}
                 label={"Full Name"}
                 description={"Your first and last name"}
                 inputGuidanceId={""}
@@ -119,7 +124,20 @@ function Signup({ children }: SignupProps): React.JSX.Element {
                   name={"name"}
                   id={"nameSignup"}
                   type={"text"}
-                  validationError={actionData?.validationErrors?.name}
+                  validationError={errors}
+                />
+              </FormField>
+              <FormField
+                inputId={"usernameSignup"}
+                label={"Username"}
+                description={"Your username"}
+                inputGuidanceId={""}
+              >
+                <InputField
+                  name={"username"}
+                  id={"usernameSignup"}
+                  type={"text"}
+                  validationError={errors}
                 />
               </FormField>
               <FormField
@@ -132,7 +150,7 @@ function Signup({ children }: SignupProps): React.JSX.Element {
                   name={"email"}
                   id={"emailSignup"}
                   type={"email"}
-                  validationError={actionData?.validationErrors?.email}
+                  validationError={errors}
                 />
               </FormField>
               <FormField
@@ -145,7 +163,7 @@ function Signup({ children }: SignupProps): React.JSX.Element {
                   name={"password"}
                   id={"passwordSignup"}
                   type={"password"}
-                  validationError={actionData?.validationErrors?.password}
+                  validationError={errors}
                   isRequired={true}
                   minLength={6}
                 />

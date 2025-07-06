@@ -1,7 +1,7 @@
 import LoginForm from "./LoginForm";
 import { GoBackLinkButton } from "../../styles/UIStyles";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Signup from "./Signup";
 
@@ -21,6 +21,7 @@ function LoginPage(): React.JSX.Element {
 
   return (
     <>
+      <Link to="..">Go back</Link>
       {location.pathname === "/login/signup" ? (
         <Signup>
           <LoginForm />
@@ -36,10 +37,6 @@ function LoginPage(): React.JSX.Element {
       )}
     </>
   );
-}
-
-{
-  /* <ButtonCTA onClick={() => setMode("signup")}>Sign up</ButtonCTA> */
 }
 
 export default LoginPage;

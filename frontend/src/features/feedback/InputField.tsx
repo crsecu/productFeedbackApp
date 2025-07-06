@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import FormFieldError from "./FormFieldError";
+import { FeedbackFormErrors } from "../../types/form.types";
 
 export const StyledInputField = styled.input<{ $validationErr?: boolean }>`
   border: none;
@@ -21,7 +22,7 @@ interface InputFieldProps {
   isRequired?: boolean;
   initialValue?: string;
   describedById?: string;
-  validationError?: string;
+  validationError?: FeedbackFormErrors;
   minLength?: number;
 }
 
@@ -35,10 +36,12 @@ function InputField({
   validationError,
   minLength,
 }: InputFieldProps): React.JSX.Element {
+  const errorMessage = validationError ? validationError[name] : null;
+
   return (
     <>
       <StyledInputField
-        $validationErr={!!validationError}
+        $validationErr={!!errorMessage}
         type={type}
         name={name}
         id={id}
@@ -48,7 +51,7 @@ function InputField({
         minLength={minLength}
       ></StyledInputField>
 
-      {validationError && <FormFieldError errorMessage={validationError} />}
+      {errorMessage && <FormFieldError errorMessage={errorMessage} />}
     </>
   );
 }
