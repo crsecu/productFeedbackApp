@@ -2,9 +2,14 @@ import { Category, Status } from "./feedback.types";
 
 //user sign up
 export interface CreateUserFormValues {
-  name: string;
   email: string;
   password: string;
+}
+
+//user profile
+export interface UserProfileFormValues {
+  name: string;
+  username: string;
 }
 
 // Add/Edit Feedback Form Types

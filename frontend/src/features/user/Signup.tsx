@@ -114,7 +114,7 @@ function Signup({ children }: SignupProps): React.JSX.Element {
             {notification}
             <br />
             <fetcher.Form method="post" action="/login/signup">
-              <FormField
+              {/* <FormField
                 inputId={"nameSignup"}
                 label={"Full Name"}
                 description={"Your first and last name"}
@@ -126,8 +126,8 @@ function Signup({ children }: SignupProps): React.JSX.Element {
                   type={"text"}
                   validationError={errors}
                 />
-              </FormField>
-              <FormField
+              </FormField> */}
+              {/* <FormField
                 inputId={"usernameSignup"}
                 label={"Username"}
                 description={"Your username"}
@@ -139,7 +139,7 @@ function Signup({ children }: SignupProps): React.JSX.Element {
                   type={"text"}
                   validationError={errors}
                 />
-              </FormField>
+              </FormField> */}
               <FormField
                 inputId={"emailSignup"}
                 label={"Email"}

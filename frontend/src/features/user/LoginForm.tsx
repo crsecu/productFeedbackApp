@@ -1,9 +1,7 @@
 import { MouseEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { authenticateUser, authorizeUser } from "../../services/apiAuth";
-import { setUserCredentials } from "../../store/slices/userSlice";
-import { useAppDispatch } from "../../types/redux.hooks";
+import { authenticateUser } from "../../services/apiAuth";
 
 const StyledLoginForm = styled.div`
   padding: 10px;
@@ -24,13 +22,16 @@ function LoginForm(): React.JSX.Element {
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const location = useLocation();
 
   async function handleUserLogin(
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) {
     e.preventDefault();
+
+    console.log("LOCATION HASH ", location);
 
     if (email === "" && password === "") {
       setValidationError("Empty input fields");
@@ -46,22 +47,10 @@ function LoginForm(): React.JSX.Element {
       console.log("I AM VALIDATED", isUserAuthenticated);
 
       if (isUserAuthenticated) {
-        const loggedInUser = await authorizeUser(
-          isUserAuthenticated.accessToken
-        );
-        console.log("log", loggedInUser);
-        const { id, email, user_metadata: userMeta } = loggedInUser;
-
-        //save user in Redux - TEST
-        dispatch(
-          setUserCredentials({
-            id,
-            email,
-            name: userMeta.name,
-            username: email,
-          })
-        );
-
+        if (location.pathname === "/newUser") {
+          navigate("welcome");
+          return;
+        }
         navigate("/");
       }
     } catch (error) {

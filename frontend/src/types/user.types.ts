@@ -5,13 +5,13 @@ export interface LoginUserCredentials {
 
 export interface UserProfileInput {
   name: string;
-  username: string;
+  username?: string;
   authId: string;
 }
 
 export interface UserProfile extends UserProfileInput {
   id: number;
-  image: string | null;
+  image?: string;
   upvotedFeedbackIds: number[] | null;
 }
 
@@ -23,4 +23,11 @@ export interface UserIdentifierAvailability {
 export interface SignupConflictError {
   email: string | null;
   username: string | null;
+}
+
+export interface LoggedinUserProfile {
+  name: string;
+  image?: string;
+  username: string;
+  //upvotedFeedbackIds: Record<string, boolean> | null;
 }

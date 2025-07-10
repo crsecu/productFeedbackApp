@@ -1,7 +1,7 @@
-import { API_KEY } from "./apiFeedback";
+import { API_KEY, API_URL } from "./apiFeedback";
 import { errorMessage } from "../utils/helpers";
 import { AuthSession, SessionSB, UserSB } from "../types/supabaseAuth.types";
-import { LoginUserCredentials } from "../types/user.types";
+import { LoginUserCredentials, UserProfile } from "../types/user.types";
 
 interface AuthTokens {
   accessToken: string;
@@ -69,6 +69,7 @@ export async function getStoredAuthTokens(): Promise<AuthTokens | null> {
     return null;
   }
 }
+
 //Authenticate user
 export async function authenticateUser(
   credentials: LoginUserCredentials
@@ -156,6 +157,21 @@ export async function fetchUser(access_token: string) {
   return currentUser;
 }
 
+//get user profile info
+export async function getUserProfileInfo(access_token: string) {
+  const userProfile = await fetchWrapperSBAuth<UserProfile>(
+    API_URL,
+    "/userProfiles",
+    "GET",
+    {
+      apikey: API_KEY,
+      Authorization: `Bearer ${access_token}`,
+      Accept: "application/vnd.pgrst.object+json",
+    }
+  );
+
+  return userProfile;
+}
 //authorize authenticated user
 export async function authorizeUser(access_token: string): Promise<UserSB> {
   const fetchedUser = await fetchUser(access_token);

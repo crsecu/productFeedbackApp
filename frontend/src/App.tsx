@@ -10,7 +10,7 @@ import {
   createFeedbackAction,
   submitCommentAction,
 } from "./data_handlers/feedbackActions";
-import ProtectedRoutes from "./ui/ProtectedRoutes";
+
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
 import RoadmapPage from "./features/roadmap/RoadmapPage";
 import ErrorPage from "./ui/ErrorPage";
@@ -23,16 +23,34 @@ import FeedbackDetailCommentThread from "./features/feedback/FeedbackDetailComme
 import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import TypographyTokens from "./styles/TypographyTokens";
 
-import { signUpUserAction } from "./data_handlers/userActions";
+import {
+  createUserProfileAction,
+  signUpUserAction,
+} from "./data_handlers/userActions";
 import LoginPage from "./features/user/LoginPage";
 import Signup from "./features/user/Signup";
+import ProtectedRoutes from "./ui/ProtectedRoutes";
+import WelcomeUser from "./features/user/WelcomeUser";
+import NewUser from "./features/user/NewUser";
 
 const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
     children: [
-      { path: "signup", action: signUpUserAction, element: <Signup /> },
+      { path: "signup", element: <Signup />, action: signUpUserAction },
+    ],
+  },
+  {
+    path: "/newUser",
+    element: <NewUser />,
+
+    children: [
+      {
+        path: "welcome",
+        element: <WelcomeUser />,
+        action: createUserProfileAction,
+      },
     ],
   },
   {
@@ -44,12 +62,12 @@ const router = createBrowserRouter([
         path: "/",
         element: <FeedbackBoardPage />,
         loader: feedbackBoardLoader,
+
         id: "feedbackBoardData",
         shouldRevalidate: ({
           currentUrl,
           nextUrl,
           actionResult,
-          formMethod,
           defaultShouldRevalidate,
         }) => {
           console.log("current", currentUrl);
@@ -62,7 +80,10 @@ const router = createBrowserRouter([
           }
 
           /* Prevent revalidation when navigation to /createFeedback*/
-          if (nextUrl.pathname === "/createFeedback") {
+          if (
+            currentUrl.pathname === "/" &&
+            nextUrl.pathname === "/createFeedback"
+          ) {
             console.log(
               'Preventing revalidation when navigation to "/createFeedback"'
             );
@@ -71,10 +92,7 @@ const router = createBrowserRouter([
           }
 
           /* Prevent revalidation if feedback submission fails or if there are any validation errors */
-          if (
-            formMethod === "post" &&
-            actionResult?.submissionOutcome !== "success"
-          ) {
+          if (actionResult?.submissionOutcome !== "success") {
             return false;
           }
 

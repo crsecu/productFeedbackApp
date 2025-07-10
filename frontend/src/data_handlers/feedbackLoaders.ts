@@ -13,10 +13,28 @@ import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 import { Feedback } from "../types/feedback.types";
 import { ensureValidSession } from "../services/apiAuth";
 //Homepage loader
-export async function rootLoader(): Promise<boolean> {
+export async function rootLoader() {
+  //check if url contains #hash with access_token, refresh_token etc
+  const hashString = window.location.hash;
+  const searchParamsHash = new URLSearchParams(hashString.substring(1));
+  // console.log(2005, searchParamsHash.get("access_token"));
+
+  if (searchParamsHash.has("access_token")) {
+    const accessToken = searchParamsHash.get("access_token");
+    const refreshToken = searchParamsHash.get("refresh_token");
+    const expiresAt = searchParamsHash.get("expires_at");
+    const expiresIn = searchParamsHash.get("expires_in");
+
+    //parse the hash and get: accessToken, refreshToken, expiresAt, isSessionActive
+    console.log("all", accessToken, refreshToken, expiresAt, expiresIn);
+
+    //redirect to "/welcome"
+    return redirect("/newUser");
+  }
+
   const accessToken = await ensureValidSession();
 
-  return !!accessToken;
+  return accessToken;
 }
 
 // Loader for Feedback Board Page
