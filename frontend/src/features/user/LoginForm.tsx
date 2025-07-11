@@ -51,7 +51,7 @@ function LoginForm(): React.JSX.Element {
           navigate("welcome");
           return;
         }
-        navigate("/");
+        navigate("/", { replace: true });
       }
     } catch (error) {
       if (typeof error === "string") setValidationError(error);

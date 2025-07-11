@@ -186,6 +186,11 @@ interface CachedSession {
 }
 let cachedSession: CachedSession | null = null;
 
+export function clearCachedSession() {
+  localStorage.removeItem("auth_session");
+  cachedSession = null;
+}
+
 export async function ensureValidSession(): Promise<string | null> {
   //1. check if data is available in cachedAcessToken, return it if available
   const now = Date.now(); //in ms

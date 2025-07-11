@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, redirect } from "react-router-dom";
+import { ActionFunctionArgs } from "react-router-dom";
 import { API_KEY } from "../services/apiFeedback";
 import {
   handleValidationErrors,
@@ -20,13 +20,11 @@ import { UserProfile } from "../types/user.types";
 export async function signUpUserAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const formValues = Object.fromEntries(formData) as {
-    name: string;
-    username: string;
     email: string;
     password: string;
   };
 
-  const { name, username, email, password } = formValues;
+  const { email, password } = formValues;
 
   const validationErrors = handleValidationErrors<CreateUserFormValues>(
     "createUser",
@@ -50,13 +48,6 @@ export async function signUpUserAction({ request }: ActionFunctionArgs) {
   console.log("user signup result", result);
 
   if (result.submissionOutcome === "success" && result.payload) {
-    //create new user profile
-    // await createUserProfile({
-    //   authId: result.payload.id,
-    //   name,
-    //   username,
-    // });
-
     return result;
   }
 

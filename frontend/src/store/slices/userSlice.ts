@@ -36,11 +36,25 @@ const userSlice = createSlice({
       //payload = feedback id
       delete state.upvotedFeedbackIds[action.payload];
     },
+    logUserOut(state) {
+      state.isUserLoggedIn = false;
+      state.profileInfo = {
+        name: "",
+        image: "",
+        username: "",
+      };
+
+      state.upvotedFeedbackIds = {};
+    },
   },
 });
 
-export const { setUserCredentials, trackUserUpvote, untrackUserUpvote } =
-  userSlice.actions;
+export const {
+  setUserCredentials,
+  trackUserUpvote,
+  untrackUserUpvote,
+  logUserOut,
+} = userSlice.actions;
 
 export default userSlice.reducer;
 

@@ -5,6 +5,7 @@ import AppLayout from "./AppLayout";
 import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
 import { getLoggedInUser, setUserCredentials } from "../store/slices/userSlice";
 import { getUserProfileInfo } from "../services/apiAuth";
+import Logout from "../features/user/Logout";
 
 function ProtectedRoutes(): React.JSX.Element {
   const navigate = useNavigate();
@@ -46,7 +47,10 @@ function ProtectedRoutes(): React.JSX.Element {
 
   return (
     <AppLayout>
-      <p>Logged in: {user.isUserLoggedIn ? user.profileInfo.name : "none"}</p>
+      <p>
+        Logged in: {user.isUserLoggedIn ? user.profileInfo.name : "none"}{" "}
+        <Logout />
+      </p>
       <Outlet />
     </AppLayout>
   );
