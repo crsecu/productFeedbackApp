@@ -3,11 +3,7 @@ import RoadmapStatusBoard from "./RoadmapStatusBoard";
 import ActionBar from "../../ui/ActionBar";
 import { RoadmapLoaderData } from "../../types/loader.types";
 import styled from "styled-components";
-import {
-  GoBackLinkButton,
-  PageStyles,
-  PrimaryLinkButton,
-} from "../../styles/UIStyles";
+import { GoBackLinkButton, PrimaryLinkButton } from "../../styles/UIStyles";
 import { H1 } from "../../styles/Typography";
 import RoadmapStatusTabBar from "./RoadmapStatusTabBar";
 
@@ -15,7 +11,6 @@ import { useMatchMedia } from "../../utils/customHooks";
 import device from "../../styles/breakpoints";
 
 const StyledRoadmapPage = styled.div`
-  ${PageStyles}
   padding: 0;
 
   & > section:first-child {

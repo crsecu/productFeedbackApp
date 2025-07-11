@@ -12,15 +12,14 @@ import { FeedbackBoardLoaderData } from "../../types/loader.types";
 import FeedbackBoardMainSection from "./FeedbackBoardMainSection";
 
 import FeedbackBoardLeftColumn from "./FeedbackBoardLeftColumn";
-import { PageStyles, PrimaryLinkButton } from "../../styles/UIStyles";
+import { PrimaryLinkButton } from "../../styles/UIStyles";
 import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardPage = styled.div`
-  ${PageStyles}
   width: initial;
 
   @media ${device.lg} {
-    flex-direction: row;
+    display: flex;
     gap: 30px;
   }
 `;

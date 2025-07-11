@@ -1,11 +1,17 @@
 import { Navigate, Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import AppLayout from "./AppLayout";
-
 import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
 import { getLoggedInUser, setUserCredentials } from "../store/slices/userSlice";
 import { getUserProfileInfo } from "../services/apiAuth";
 import Logout from "../features/user/Logout";
+import User from "../features/user/User";
+import UserAvatar from "../features/user/UserAvatar";
+import UserInfo from "../features/user/UserInfo";
+import styled from "styled-components";
+import device from "../styles/breakpoints";
+
+export const UserProfileHeader = styled.div``;
 
 function ProtectedRoutes(): React.JSX.Element {
   const navigate = useNavigate();
@@ -47,10 +53,19 @@ function ProtectedRoutes(): React.JSX.Element {
 
   return (
     <AppLayout>
-      <p>
-        Logged in: {user.isUserLoggedIn ? user.profileInfo.name : "none"}{" "}
-        <Logout />
-      </p>
+      {/* authenticated user profile */}
+      <UserProfileHeader>
+        <User>
+          <UserAvatar imageUrl={"/assets/user-images/image-roxanne.jpg"} />
+          <UserInfo
+            name={user.profileInfo.name}
+            username={user.profileInfo.username}
+          />
+        </User>
+      </UserProfileHeader>
+
+      {/* <Logout /> */}
+
       <Outlet />
     </AppLayout>
   );

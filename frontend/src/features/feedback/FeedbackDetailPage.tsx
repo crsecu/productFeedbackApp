@@ -7,11 +7,7 @@ import FeedbackCardContent from "./FeedbackCardContent";
 import { Feedback } from "../../types/feedback.types";
 import EditFeedback from "./EditFeedback";
 import { useMemo } from "react";
-import {
-  GoBackButton,
-  PageStyles,
-  SecondaryButton,
-} from "../../styles/UIStyles";
+import { GoBackButton, SecondaryButton } from "../../styles/UIStyles";
 import styled from "styled-components";
 import { UpvoteButtonDynamic } from "../../styles/features/FeedbackStyles";
 import { createPortal } from "react-dom";
@@ -23,11 +19,10 @@ import {
 } from "../../store/slices/feedbackDetailSlice";
 
 const StyledFeedbackDetailPage = styled.div`
-  ${PageStyles}
-
+  display: flex;
+  flex-direction: column;
   gap: 16px;
   padding-top: 24px;
-  width: 92vw;
 
   & > section {
     min-height: 40px;
