@@ -17,7 +17,6 @@ import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardPage = styled.div`
   width: initial;
-
   @media ${device.lg} {
     display: flex;
     gap: 30px;

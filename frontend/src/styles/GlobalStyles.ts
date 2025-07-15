@@ -183,7 +183,7 @@ body {
   
 
   @media ${device.sm} {
-    padding: 20px;
+    //padding: 20px;
   }
 }
 

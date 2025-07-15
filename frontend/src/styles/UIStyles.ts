@@ -148,7 +148,7 @@ export const GoBackButton = styled.button`
 
 export const GoBackLinkButton = styled(Link)`
   ${GoBackBtnStyles}
-  color: var(--color-text-muted);
+  //color: var(--color-text-muted);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' viewBox='0 0 7 10' fill='none'%3E%3Cpath d='M6 9L2 5L6 1' stroke='%23CDD2EE' stroke-width='2'/%3E%3C/svg%3E");
 `;
 
@@ -205,27 +205,15 @@ export const PageStyles = css`
   display: flex;
   flex-direction: column;
   height: 100%;
-  margin: auto;
-
-  @media ${device.sm} {
-    width: 92vw;
-  }
-
-  @media ${device.xl} {
-    width: 88vw;
-  }
-
-  @media ${device.xxl} {
-    width: 70vw;
-  }
 `;
 
 export const FormPage = styled.div`
   ${PageStyles}
-  padding-top: 28px;
+  padding-top: 16px;
   gap: 44px;
   height: initial;
   width: 90vw;
+  margin: 0 auto;
 
   @media ${device.sm} {
     width: 85vw;

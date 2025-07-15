@@ -6,9 +6,26 @@ import { createPortal } from "react-dom";
 import { ReactNode } from "react";
 import styled from "styled-components";
 import { PageStyles } from "../styles/UIStyles";
+import device from "../styles/breakpoints";
 const AppLayoutWrapper = styled.div`
   ${PageStyles}
+
+  & > div:not(.userProfileHeader) {
+    @media ${device.sm} {
+      width: 92vw;
+      margin: 0 auto;
+    }
+
+    @media ${device.xl} {
+      width: 88vw;
+    }
+
+    @media ${device.xxl} {
+      width: 70vw;
+    }
+  }
 `;
+
 interface AppLayoutProps {
   children: ReactNode;
 }

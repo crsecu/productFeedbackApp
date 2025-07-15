@@ -23,13 +23,15 @@ const StyledFeedbackDetailPage = styled.div`
   flex-direction: column;
   gap: 16px;
   padding-top: 24px;
+  width: 92vw;
+  margin: 0 auto;
 
   & > section {
     min-height: 40px;
   }
 
   @media ${device.sm} {
-    padding-top: 0;
+    padding-top: 8px;
   }
 `;
 

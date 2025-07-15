@@ -10,6 +10,12 @@ import FilterByCategory from "./FilterByCategory";
 import device from "../../styles/breakpoints";
 import { Overlay } from "../../styles/UIStyles";
 import { useMatchMedia } from "../../utils/customHooks";
+import { useAppSelector } from "../../types/redux.hooks";
+import { getLoggedInUser } from "../../store/slices/userSlice";
+import Logout from "../user/Logout";
+import User from "../user/User";
+import UserAvatar from "../user/UserAvatar";
+import UserInfo from "../user/UserInfo";
 
 const StyledFeedbackBoardLeftColumn = styled.div`
   @media ${device.sm} {
@@ -45,6 +51,18 @@ const IconButton = styled.button`
   align-items: center;
   color: var(--color-text-light);
 `;
+const UserProfileWrapper = styled.div`
+  display: flex;
+
+  justify-content: space-between;
+
+  border-radius: inherit;
+  padding: 0 4px;
+
+  & > div {
+    margin-bottom: 0;
+  }
+`;
 
 interface FeedbackBoardLeftColumnProps {
   children: ReactNode;
@@ -56,6 +74,7 @@ function FeedbackBoardLeftColumn({
 }: FeedbackBoardLeftColumnProps): React.JSX.Element {
   const [showSidebar, setShowSidebar] = useState(false);
   const isMobile = useMatchMedia("(max-width: 639px)");
+  const user = useAppSelector(getLoggedInUser);
 
   useEffect(() => {
     if (!isMobile && showSidebar) {
@@ -90,6 +109,20 @@ function FeedbackBoardLeftColumn({
           isOpen={showSidebar}
           ariaLabel="Feedback filters and roadmap"
         >
+          {isMobile && (
+            <UserProfileWrapper>
+              <User>
+                <UserAvatar
+                  imageUrl={"/assets/user-images/image-roxanne.jpg"}
+                />
+                <UserInfo
+                  name={user.profileInfo.name}
+                  username={user.profileInfo.username}
+                />
+              </User>
+              <Logout />
+            </UserProfileWrapper>
+          )}
           <FilterByCategory
             suggestionCount={suggestionCount}
             onFilterSelect={() => setShowSidebar((prevState) => !prevState)}
