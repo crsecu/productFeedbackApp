@@ -25,6 +25,7 @@ import TypographyTokens from "./styles/TypographyTokens";
 
 import {
   createUserProfileAction,
+  loginUserAction,
   signUpUserAction,
 } from "./data_handlers/userActions";
 import LoginPage from "./features/user/LoginPage";
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+    action: loginUserAction,
     children: [
       { path: "signup", element: <Signup />, action: signUpUserAction },
     ],
@@ -44,11 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/newUser",
     element: <NewUser />,
-
+    action: loginUserAction,
     children: [
       {
         path: "welcome",
-        element: <WelcomeUser />,
         action: createUserProfileAction,
       },
     ],

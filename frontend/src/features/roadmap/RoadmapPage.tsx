@@ -65,7 +65,9 @@ function RoadmapPage(): React.JSX.Element {
       <Outlet />
       <ActionBar>
         <div>
-          <GoBackLinkButton to="/">Go Back</GoBackLinkButton>
+          <GoBackLinkButton to="/" $textColor="#FFFFFF">
+            Go Back
+          </GoBackLinkButton>
           <H1>Roadmap</H1>
         </div>
 

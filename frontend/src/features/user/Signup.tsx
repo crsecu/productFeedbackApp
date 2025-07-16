@@ -1,70 +1,29 @@
 import { useFetcher } from "react-router-dom";
 import InputField from "../feedback/InputField";
 import FormField from "../feedback/FormField";
-import {
-  FormPage,
-  FormSection,
-  GoBackLinkButton,
-  PrimaryButton,
-} from "../../styles/UIStyles";
+import { PrimaryButton } from "../../styles/UIStyles";
 import { UserSB } from "../../types/supabaseAuth.types";
 import styled from "styled-components";
 import device from "../../styles/breakpoints";
-import Logo from "../../ui/Logo";
+
 import { ReactNode } from "react";
 import { ActionResult } from "../../types/action.types";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import BannerNotification from "../../ui/notifications/BannerNotification";
-import { AuthLinkButton } from "./LoginPage";
+import { AuthLinkButton, UserCTA } from "./LoginPage";
 import { FeedbackFormErrors } from "../../types/form.types";
+import { StyledLoginForm } from "./LoginForm";
+import { H1 } from "../../styles/Typography";
 
-const PageWrapper = styled(FormPage)`
-  width: unset;
-
-  gap: 20px;
-
-  & a {
-    width: 90vw;
-    margin: 0 auto;
-  }
-
-  & form {
-    display: flex;
-    flex-direction: column;
-
-    & div:last-of-type {
-      margin-bottom: 34px;
-    }
-  }
-`;
-
-const LoginCTA = styled.p`
-  font-size: var(--text-sm);
-  text-align: center;
-  margin-top: 16px;
-
-  & a {
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-primary);
-  }
-`;
-const StyledSignupPage = styled.div`
+const StyledSignupPage = styled(StyledLoginForm)`
   & > section:first-of-type {
     border-radius: 16px 16px 0 0;
     box-shadow: rgba(173, 31, 234, 0.212) 0px 2px 4px 0px inset;
   }
 
-  @media ${device.sm} {
+  /* @media ${device.sm} {
     display: flex;
-  }
-`;
-
-const LeftColumn = styled.div`
-  flex: 1;
-`;
-
-const RightColumn = styled.div`
-  flex: 1;
+  } */
 `;
 
 interface SignupProps {
@@ -102,19 +61,13 @@ function Signup({ children }: SignupProps): React.JSX.Element {
   }
 
   return (
-    <PageWrapper>
-      <GoBackLinkButton to="..">Go back</GoBackLinkButton>
-      <StyledSignupPage>
-        <LeftColumn>
-          <Logo />
-        </LeftColumn>
-
-        <RightColumn>
-          <FormSection>
-            {notification}
-            <br />
-            <fetcher.Form method="post" action="/login/signup">
-              {/* <FormField
+    <StyledSignupPage>
+      <H1>Create your account</H1>
+      <p>Start sharing feedback and supporting great ideas.</p>
+      {notification}
+      <br />
+      <fetcher.Form method="post" action="/login/signup">
+        {/* <FormField
                 inputId={"nameSignup"}
                 label={"Full Name"}
                 description={"Your first and last name"}
@@ -127,7 +80,7 @@ function Signup({ children }: SignupProps): React.JSX.Element {
                   validationError={errors}
                 />
               </FormField> */}
-              {/* <FormField
+        {/* <FormField
                 inputId={"usernameSignup"}
                 label={"Username"}
                 description={"Your username"}
@@ -140,46 +93,43 @@ function Signup({ children }: SignupProps): React.JSX.Element {
                   validationError={errors}
                 />
               </FormField> */}
-              <FormField
-                inputId={"emailSignup"}
-                label={"Email"}
-                description={"Your email address"}
-                inputGuidanceId={""}
-              >
-                <InputField
-                  name={"email"}
-                  id={"emailSignup"}
-                  type={"email"}
-                  validationError={errors}
-                />
-              </FormField>
-              <FormField
-                inputId={"passwordSignup"}
-                label={"Password"}
-                description={"Your password"}
-                inputGuidanceId={""}
-              >
-                <InputField
-                  name={"password"}
-                  id={"passwordSignup"}
-                  type={"password"}
-                  validationError={errors}
-                  isRequired={true}
-                  minLength={6}
-                />
-              </FormField>
-              <PrimaryButton type="submit">Create account</PrimaryButton>
-            </fetcher.Form>
-            <LoginCTA>
-              Already have an account?{" "}
-              <AuthLinkButton to=".." replace>
-                Log in
-              </AuthLinkButton>
-            </LoginCTA>
-          </FormSection>
-        </RightColumn>
-      </StyledSignupPage>
-    </PageWrapper>
+        <FormField
+          inputId={"emailSignup"}
+          label={"Email"}
+          description={"Your email address"}
+          inputGuidanceId={""}
+        >
+          <InputField
+            name={"email"}
+            id={"emailSignup"}
+            type={"email"}
+            validationError={errors}
+          />
+        </FormField>
+        <FormField
+          inputId={"passwordSignup"}
+          label={"Password"}
+          description={"Your password"}
+          inputGuidanceId={""}
+        >
+          <InputField
+            name={"password"}
+            id={"passwordSignup"}
+            type={"password"}
+            validationError={errors}
+            isRequired={true}
+            minLength={6}
+          />
+        </FormField>
+        <PrimaryButton type="submit">Create account</PrimaryButton>
+      </fetcher.Form>
+      <UserCTA>
+        Already have an account?{" "}
+        <AuthLinkButton to=".." replace>
+          Log in
+        </AuthLinkButton>
+      </UserCTA>
+    </StyledSignupPage>
   );
 }
 

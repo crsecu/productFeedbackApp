@@ -6,7 +6,8 @@ export type ActionType =
   | "createFeedback"
   | "editFeedback"
   | "addComment"
-  | "createUser";
+  | "createUser"
+  | "authenticateUser";
 
 export type SubmissionOutcome = "success" | "failure" | "validationError";
 

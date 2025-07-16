@@ -135,19 +135,19 @@ export async function submitCommentAction({ request }: ActionFunctionArgs) {
   return null;
 }
 
-//login user action
-export async function loginUserAction({ request }: ActionFunctionArgs) {
-  const accessToken = await ensureValidSession();
-  if (!accessToken) return null;
+// //login user action
+// export async function loginUserAction({ request }: ActionFunctionArgs) {
+//   const accessToken = await ensureValidSession();
+//   if (!accessToken) return null;
 
-  //Extract and parse form data from the request
-  const formData = await request.formData();
-  const formValues = Object.fromEntries(formData) as {
-    email: string;
-    password: string;
-  };
+//   //Extract and parse form data from the request
+//   const formData = await request.formData();
+//   const formValues = Object.fromEntries(formData) as {
+//     email: string;
+//     password: string;
+//   };
 
-  const res = authenticateUser(formValues);
-  if (!res) return null;
-  return redirect("app");
-}
+//   const res = authenticateUser(formValues);
+//   if (!res) return null;
+//   return redirect("app");
+// }

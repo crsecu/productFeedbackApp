@@ -7,7 +7,7 @@ const StyledLogo = styled.div`
 function Logo(): React.JSX.Element {
   return (
     <StyledLogo>
-      <p>Logo</p>
+      <p>LOGO</p>
     </StyledLogo>
   );
 }

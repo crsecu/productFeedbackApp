@@ -5,10 +5,11 @@ import {
   BiSolidErrorCircle,
   BiSolidXCircle,
 } from "react-icons/bi";
+import styled from "styled-components";
 
 interface NotificationText {
   title: string;
-  message: string;
+  message?: string;
 }
 
 interface NotificationMessage {
@@ -44,6 +45,9 @@ const notificationTextByOutcome: Record<
     createUser: {
       title: "User Creation Failed",
       message: "There was an issue creating the user. Please try again.",
+    },
+    authenticateUser: {
+      title: "User Authentication Failed",
     },
   },
 

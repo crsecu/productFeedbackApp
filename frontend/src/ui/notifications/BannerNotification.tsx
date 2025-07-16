@@ -59,6 +59,7 @@ const StyledBannerNotification = styled.section<StyledBannerProps>`
         margin-bottom: 0;
         margin-left: 4px;
       }
+
       & div {
         flex: 1;
         position: relative;
@@ -77,6 +78,12 @@ const StyledBannerNotification = styled.section<StyledBannerProps>`
     `}
 `;
 
+//temporary styled banner notification for login/signup forms
+const SmallBannerNotification = styled(StyledBannerNotification)`
+  padding: 4px;
+  margin-bottom: 16px;
+  gap: 8px;
+`;
 const Title = styled(H1)<StyledBannerProps>`
   margin-bottom: 4px;
 
@@ -99,6 +106,7 @@ interface BannerNotificationProps {
   notificationType: SubmissionOutcome;
   actionType: ActionType;
   onClose?: () => void;
+  notificationMsgCustom?: boolean;
 }
 
 /* The Banner Notification is currently used to display success or error messages when adding or editing feedback. */
@@ -107,14 +115,31 @@ function BannerNotification({
   actionType,
   notificationType,
   onClose,
-}: BannerNotificationProps): React.JSX.Element | null {
+  notificationMsgCustom = false,
+}: BannerNotificationProps): ReactNode | null {
   if (!actionType && !notificationType) return null;
 
   const notificationMessage = buildNotificationMessage(
     notificationType,
     actionType
   );
-
+  if (notificationMsgCustom)
+    return (
+      <SmallBannerNotification
+        className="banner-notification"
+        $notificationType={notificationType}
+        $themeColor={notificationMessage.iconColor}
+        $backgroundColor={notificationMessage.backgroundColor}
+      >
+        {
+          <notificationMessage.icon
+            size={24}
+            color={notificationMessage.iconColor}
+          />
+        }
+        {children}
+      </SmallBannerNotification>
+    );
   if (!notificationMessage) return null;
 
   return (
@@ -131,7 +156,7 @@ function BannerNotification({
       )}
       {
         <notificationMessage.icon
-          size={45}
+          size={notificationMsgCustom ? 24 : 45}
           color={notificationMessage.iconColor}
         />
       }

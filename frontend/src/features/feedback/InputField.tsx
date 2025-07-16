@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import FormFieldError from "./FormFieldError";
 import { FeedbackFormErrors } from "../../types/form.types";
+import { ChangeEvent } from "react";
 
 export const StyledInputField = styled.input<{ $validationErr?: boolean }>`
   border: none;
@@ -24,6 +25,8 @@ interface InputFieldProps {
   describedById?: string;
   validationError?: FeedbackFormErrors;
   minLength?: number;
+  // eslint-disable-next-line no-unused-vars
+  onOptionChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function InputField({
@@ -35,6 +38,7 @@ function InputField({
   describedById,
   validationError,
   minLength,
+  onOptionChange,
 }: InputFieldProps): React.JSX.Element {
   const errorMessage = validationError ? validationError[name] : null;
 
@@ -49,6 +53,7 @@ function InputField({
         defaultValue={initialValue}
         required={isRequired}
         minLength={minLength}
+        onChange={onOptionChange}
       ></StyledInputField>
 
       {errorMessage && <FormFieldError errorMessage={errorMessage} />}

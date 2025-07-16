@@ -2,6 +2,7 @@ import { API_KEY, API_URL } from "./apiFeedback";
 import { errorMessage } from "../utils/helpers";
 import { AuthSession, SessionSB, UserSB } from "../types/supabaseAuth.types";
 import { LoginUserCredentials, UserProfile } from "../types/user.types";
+import { MutationResult } from "../types/mutation.types";
 
 interface AuthTokens {
   accessToken: string;
@@ -34,7 +35,7 @@ export async function fetchWrapperSBAuth<T>(
       //if(res.status === 400 | 401 etc) set cachedSession to null,
       const error = await res.json();
 
-      const errorMsg = `Something went wrong: ${error.msg}`;
+      const errorMsg = error.msg;
       throw new Error(errorMsg);
     }
 
@@ -72,36 +73,40 @@ export async function getStoredAuthTokens(): Promise<AuthTokens | null> {
 
 //Authenticate user
 export async function authenticateUser(
+  accessToken: string,
   credentials: LoginUserCredentials
 ): Promise<
-  | false
-  | {
-      accessToken: string;
-      id: string;
-    }
+  MutationResult<{
+    accessToken: string;
+    id: string;
+  }>
 > {
   const userCredentialsJSON = JSON.stringify(credentials);
+  try {
+    const authenticatedUser = await fetchWrapperSBAuth<SessionSB>(
+      AUTH_API_URL,
+      "/token?grant_type=password",
+      "POST",
+      {
+        apikey: accessToken,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      userCredentialsJSON
+    );
 
-  const authenticatedUser = await fetchWrapperSBAuth<SessionSB>(
-    AUTH_API_URL,
-    "/token?grant_type=password",
-    "POST",
-    {
-      apikey: API_KEY,
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    userCredentialsJSON
-  );
+    saveUserLocalStorage(authenticatedUser);
 
-  saveUserLocalStorage(authenticatedUser);
-
-  return authenticatedUser.user.role === "authenticated"
-    ? {
+    return {
+      success: true,
+      payload: {
         accessToken: authenticatedUser.access_token,
         id: authenticatedUser.user.id,
-      }
-    : false;
+      },
+    };
+  } catch (err) {
+    return { success: false, error: err };
+  }
 }
 
 //refresh session

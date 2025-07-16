@@ -1,33 +1,41 @@
-import { Form, useActionData, useNavigate } from "react-router-dom";
+import { Form, useFetcher, useNavigate } from "react-router-dom";
 import FormField from "../feedback/FormField";
 import InputField from "../feedback/InputField";
 import { FormSection, PrimaryButton } from "../../styles/UIStyles";
-import { act, useEffect } from "react";
+import { useEffect } from "react";
 import { useAppDispatch } from "../../types/redux.hooks";
 import { UserProfile } from "../../types/user.types";
-import { ActionResult } from "../../types/action.types";
+
 import { setUserCredentials } from "../../store/slices/userSlice";
 
 function WelcomeUser(): React.JSX.Element {
-  const actionData = useActionData() as ActionResult<UserProfile>;
+  const fetcher = useFetcher({ key: "welcome-fetcher" });
+  const fetcherData = fetcher.data?.payload as UserProfile;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  console.log("act", actionData);
-  const { name, image, username } = actionData?.payload ?? {};
+
+  console.log("fetcher", fetcher);
+  const { name, image, username } = fetcherData ?? {};
 
   useEffect(() => {
-    if (!actionData || !actionData.payload) return;
-    if (typeof name === "string" && typeof username === "string")
+    if (!fetcherData) return;
+    if (typeof name === "string" && typeof username === "string") {
       dispatch(setUserCredentials({ name, image, username }));
-    navigate("/", { replace: true });
-  }, [actionData, dispatch, image, name, navigate, username]);
+      navigate("/", { replace: true });
+    }
+  }, [dispatch, fetcherData, image, name, navigate, username]);
 
   return (
     <div>
       <p>Please provide the following information</p>
 
       <FormSection>
-        <Form method="post">
+        <Form
+          method="post"
+          action="welcome"
+          navigate={false}
+          fetcherKey="welcome-fetcher"
+        >
           <FormField
             inputId={"nameSignup"}
             label={"Full Name"}

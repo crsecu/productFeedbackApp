@@ -15,9 +15,10 @@ import { ensureValidSession } from "../services/apiAuth";
 //Homepage loader
 export async function rootLoader() {
   //check if url contains #hash with access_token, refresh_token etc
+
   const hashString = window.location.hash;
+
   const searchParamsHash = new URLSearchParams(hashString.substring(1));
-  // console.log(2005, searchParamsHash.get("access_token"));
 
   if (searchParamsHash.has("access_token")) {
     const accessToken = searchParamsHash.get("access_token");
@@ -28,7 +29,12 @@ export async function rootLoader() {
     //parse the hash and get: accessToken, refreshToken, expiresAt, isSessionActive
     console.log("all", accessToken, refreshToken, expiresAt, expiresIn);
 
-    //redirect to "/welcome"
+    const cleanUrl = window.location.pathname + window.location.search;
+    window.history.replaceState(null, "", cleanUrl);
+    console.log("clean url", cleanUrl);
+
+    //redirect to "/newUser"
+
     return redirect("/newUser");
   }
 

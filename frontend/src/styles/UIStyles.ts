@@ -52,13 +52,17 @@ type ButtonStyleProps = {
 
 /* Regular Button */
 export const buttonStyles = css`
-  font-size: var(--font-size-body-3);
+  font-size: var(--text-xs);
   font-weight: var(--font-weight-bold);
   background-color: #cdd2ee;
   color: var(--color-text-soft-accent);
   border: none;
   padding: 10px 16px 10px 14px;
   border-radius: 10px;
+
+  @media ${device.sm} {
+    font-size: var(--text-sm);
+  }
 `;
 
 export const BaseButton = styled.button<ButtonStyleProps>`
@@ -146,10 +150,11 @@ export const GoBackButton = styled.button`
   color: var(--color-text-muted);
 `;
 
-export const GoBackLinkButton = styled(Link)`
+export const GoBackLinkButton = styled(Link)<{ $textColor?: string }>`
   ${GoBackBtnStyles}
-  //color: var(--color-text-muted);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='10' viewBox='0 0 7 10' fill='none'%3E%3Cpath d='M6 9L2 5L6 1' stroke='%23CDD2EE' stroke-width='2'/%3E%3C/svg%3E");
+  color: ${(props) =>
+    props.$textColor ? props.$textColor : `var(--color-muted)`};
 `;
 
 export const ReplyButton = styled.button`
