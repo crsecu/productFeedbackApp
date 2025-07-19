@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, redirect } from "react-router-dom";
+import { ActionFunctionArgs } from "react-router-dom";
 import { API_KEY } from "../services/apiFeedback";
 import {
   handleValidationErrors,
@@ -46,7 +46,6 @@ export async function signUpUserAction({ request }: ActionFunctionArgs) {
   const result = await performActionSubmission<UserSB>("createUser", () =>
     signupUser(API_KEY, { email, password })
   );
-  console.log("user signup result", result);
 
   if (result.submissionOutcome === "success" && result.payload) {
     return result;
@@ -82,7 +81,6 @@ export async function createUserProfileAction({ request }: ActionFunctionArgs) {
   const result = await performActionSubmission<UserProfile>("createUser", () =>
     createUserProfile(accessToken, { name, username, authId })
   );
-  console.log("user signup result", result);
 
   if (result.submissionOutcome === "success") {
     return result;
@@ -99,7 +97,6 @@ export async function loginUserAction({ request }: ActionFunctionArgs) {
     password: string;
   };
 
-  const url = new URL(request.url);
   const { email, password } = formValues;
 
   const validationErrors = handleValidationErrors<CreateUserFormValues>(
@@ -111,20 +108,12 @@ export async function loginUserAction({ request }: ActionFunctionArgs) {
   if (validationErrors) return validationErrors;
 
   //send user login info to supabase
-
   const result = await performActionSubmission<{
     accessToken: string;
     id: string;
   }>("authenticateUser", () => authenticateUser(API_KEY, { email, password }));
 
-  console.log("user authenticate result", result);
-
-  if (result.submissionOutcome === "success" && result.payload) {
-    console.log("page URL !!!", url);
-    if (url.pathname === "/newUser") return "createUserProfile";
-
-    return redirect("/");
-  }
+  console.log("login action result", result);
 
   return result;
 }

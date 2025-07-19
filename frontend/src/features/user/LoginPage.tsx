@@ -1,10 +1,11 @@
-import LoginForm from "./LoginForm";
+import LoginForm, { AuthFormHeader } from "./LoginForm";
 import { FormPage, GoBackLinkButton, panelStyles } from "../../styles/UIStyles";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { Outlet, useLoaderData, useLocation } from "react-router-dom";
 
-import Signup from "./Signup";
 import Logo from "../../ui/Logo";
+import NewUser from "./NewUser";
+import { H1 } from "../../styles/Typography";
 const PageWrapper = styled(FormPage)`
   ${panelStyles}
   width: 80%;
@@ -27,7 +28,7 @@ const PageWrapper = styled(FormPage)`
 
 const LeftColumn = styled.div`
   width: 55%;
-  padding: 80px 30px;
+  padding: 80px 40px;
 `;
 
 const RightColumn = styled.div`
@@ -57,17 +58,23 @@ export const AuthLinkButton = styled(GoBackLinkButton)`
 `;
 
 function LoginPage(): React.JSX.Element {
+  const loaderData = useLoaderData();
   const location = useLocation();
 
   return (
     <PageWrapper>
       <LeftColumn>
-        {location.pathname === "/login/signup" ? (
-          <Signup>
-            <LoginForm />
-          </Signup>
-        ) : (
+        {location.pathname === "/login" ? (
           <>
+            {loaderData === "newUser" ? (
+              <NewUser />
+            ) : (
+              <AuthFormHeader>
+                <H1>Welcome Back</H1>
+                <p>Enter your credentials to access your account</p>
+              </AuthFormHeader>
+            )}
+
             <LoginForm />
             <UserCTA>
               Don't have an account?{" "}
@@ -76,6 +83,8 @@ function LoginPage(): React.JSX.Element {
               </AuthLinkButton>
             </UserCTA>
           </>
+        ) : (
+          <Outlet />
         )}
       </LeftColumn>
       <RightColumn>

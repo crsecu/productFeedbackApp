@@ -45,7 +45,7 @@ export async function signupUser(
 export async function checkUserSignupConflicts(email: string) {
   try {
     const userIdentifierData = await fetchWrapper<UserIdentifierAvailability>(
-      `${API_URL}/rpc/check_user_conflicts`,
+      `${API_URL}/rpc/check_user_conflicts_email`,
       {
         method: "POST",
         headers: {
@@ -57,19 +57,14 @@ export async function checkUserSignupConflicts(email: string) {
       }
     );
 
-    console.log("RPC returned data", userIdentifierData);
-    const { emailTaken } = userIdentifierData || {};
-
-    //return userIdentifierData;
     if (userIdentifierData.emailTaken) {
       const signupError = createActionResult("failure", {
         actionType: "createUser",
         submitError: {
-          email: emailTaken ? "Email taken." : null,
+          email: userIdentifierData.emailTaken ? "Email taken." : null,
         },
       });
 
-      console.log("signup error ", signupError);
       return signupError;
     }
 
@@ -99,7 +94,7 @@ export async function createUserProfile(
         body: jsonProfileData,
       }
     );
-    console.log("user profile here", userProfile);
+
     return { success: true, payload: userProfile };
   } catch (err) {
     console.log("ooopsy", err);

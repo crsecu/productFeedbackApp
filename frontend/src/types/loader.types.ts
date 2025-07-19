@@ -8,6 +8,7 @@ import {
   SuggestionFeedback,
 } from "./feedback.types";
 import { RoadmapStats } from "./roadmap.types";
+import { UserProfile } from "./user.types";
 
 export interface FeedbackBoardLoaderData {
   suggestions: SuggestionFeedback[];
@@ -25,3 +26,9 @@ export type LoaderDataType =
   | FeedbackBoardLoaderData
   | RoadmapLoaderData
   | Feedback;
+
+//root loader return type
+export interface RootLoaderdata {
+  accessToken: string;
+  userProfile: UserProfile | null;
+}

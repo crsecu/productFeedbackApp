@@ -1,12 +1,14 @@
 import { Form, useFetcher, useNavigate } from "react-router-dom";
 import FormField from "../feedback/FormField";
 import InputField from "../feedback/InputField";
-import { FormSection, PrimaryButton } from "../../styles/UIStyles";
+import { FormPage, FormSection, PrimaryButton } from "../../styles/UIStyles";
 import { useEffect } from "react";
 import { useAppDispatch } from "../../types/redux.hooks";
 import { UserProfile } from "../../types/user.types";
 
 import { setUserCredentials } from "../../store/slices/userSlice";
+import { AuthFormHeader } from "./LoginForm";
+import { H1 } from "../../styles/Typography";
 
 function WelcomeUser(): React.JSX.Element {
   const fetcher = useFetcher({ key: "welcome-fetcher" });
@@ -14,7 +16,6 @@ function WelcomeUser(): React.JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  console.log("fetcher", fetcher);
   const { name, image, username } = fetcherData ?? {};
 
   useEffect(() => {
@@ -26,13 +27,15 @@ function WelcomeUser(): React.JSX.Element {
   }, [dispatch, fetcherData, image, name, navigate, username]);
 
   return (
-    <div>
-      <p>Please provide the following information</p>
-
+    <FormPage>
       <FormSection>
+        <AuthFormHeader>
+          <H1>Just a few details to complete your setup</H1>
+          <p>This will only take a moment</p>
+        </AuthFormHeader>
         <Form
           method="post"
-          action="welcome"
+          action="."
           navigate={false}
           fetcherKey="welcome-fetcher"
         >
@@ -65,7 +68,7 @@ function WelcomeUser(): React.JSX.Element {
           <PrimaryButton type="submit">Save profile</PrimaryButton>
         </Form>
       </FormSection>
-    </div>
+    </FormPage>
   );
 }
 

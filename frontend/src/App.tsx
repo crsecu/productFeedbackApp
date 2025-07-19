@@ -31,29 +31,39 @@ import {
 import LoginPage from "./features/user/LoginPage";
 import Signup from "./features/user/Signup";
 import ProtectedRoutes from "./ui/ProtectedRoutes";
-import WelcomeUser from "./features/user/WelcomeUser";
 import NewUser from "./features/user/NewUser";
+
+import WelcomeUser from "./features/user/WelcomeUser";
+import { loginLoader } from "./data_handlers/userLoader";
 
 const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+    loader: loginLoader,
     action: loginUserAction,
+    shouldRevalidate: ({ currentUrl, nextUrl, defaultShouldRevalidate }) => {
+      console.log(
+        defaultShouldRevalidate,
+        "current route",
+        currentUrl,
+        "next route",
+        nextUrl
+      );
+      return defaultShouldRevalidate;
+    },
+
     children: [
       { path: "signup", element: <Signup />, action: signUpUserAction },
-    ],
-  },
-  {
-    path: "/newUser",
-    element: <NewUser />,
-    action: loginUserAction,
-    children: [
+      { path: "newUser", element: <NewUser /> },
       {
         path: "welcome",
+        element: <WelcomeUser />,
         action: createUserProfileAction,
       },
     ],
   },
+
   {
     element: <ProtectedRoutes />,
     loader: rootLoader,

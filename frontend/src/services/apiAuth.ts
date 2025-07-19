@@ -34,8 +34,8 @@ export async function fetchWrapperSBAuth<T>(
     if (!res.ok) {
       //if(res.status === 400 | 401 etc) set cachedSession to null,
       const error = await res.json();
+      const errorMsg = error.details || error.message || error.msg;
 
-      const errorMsg = error.msg;
       throw new Error(errorMsg);
     }
 
@@ -43,8 +43,8 @@ export async function fetchWrapperSBAuth<T>(
 
     return data;
   } catch (error) {
-    console.log(error);
     const errorMsg = errorMessage(error);
+    console.log("api call error", errorMsg);
     throw errorMsg;
   }
 }
@@ -194,6 +194,7 @@ let cachedSession: CachedSession | null = null;
 export function clearCachedSession() {
   localStorage.removeItem("auth_session");
   cachedSession = null;
+  console.log("cached session", cachedSession);
 }
 
 export async function ensureValidSession(): Promise<string | null> {

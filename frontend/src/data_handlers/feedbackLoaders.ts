@@ -8,39 +8,30 @@ import assert from "../utils/TS_helpers";
 import { buildCommentHierarchy, fetchWrapper } from "../utils/helpers";
 import { API_URL } from "../services/apiFeedback";
 import { CommentListType } from "../types/comment.types";
-import { FeedbackBoardLoaderData } from "../types/loader.types";
+import { FeedbackBoardLoaderData, RootLoaderdata } from "../types/loader.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 import { Feedback } from "../types/feedback.types";
-import { ensureValidSession } from "../services/apiAuth";
+import { ensureValidSession, getUserProfileInfo } from "../services/apiAuth";
 //Homepage loader
-export async function rootLoader() {
-  //check if url contains #hash with access_token, refresh_token etc
-
-  const hashString = window.location.hash;
-
-  const searchParamsHash = new URLSearchParams(hashString.substring(1));
-
-  if (searchParamsHash.has("access_token")) {
-    const accessToken = searchParamsHash.get("access_token");
-    const refreshToken = searchParamsHash.get("refresh_token");
-    const expiresAt = searchParamsHash.get("expires_at");
-    const expiresIn = searchParamsHash.get("expires_in");
-
-    //parse the hash and get: accessToken, refreshToken, expiresAt, isSessionActive
-    console.log("all", accessToken, refreshToken, expiresAt, expiresIn);
-
-    const cleanUrl = window.location.pathname + window.location.search;
-    window.history.replaceState(null, "", cleanUrl);
-    console.log("clean url", cleanUrl);
-
-    //redirect to "/newUser"
-
-    return redirect("/newUser");
-  }
-
+export async function rootLoader(): Promise<Response | RootLoaderdata | null> {
   const accessToken = await ensureValidSession();
 
-  return accessToken;
+  if (accessToken === null) return redirect("/login");
+
+  try {
+    const userProfile = await getUserProfileInfo(accessToken);
+    console.log("check uprofile", userProfile);
+    return { accessToken: accessToken, userProfile };
+  } catch (err) {
+    console.log("OOOPS ...", err);
+
+    //if user profile doesn't exist (yet)
+    if (err === "The result contains 0 rows") {
+      return { accessToken: accessToken, userProfile: null };
+    }
+  }
+
+  return null;
 }
 
 // Loader for Feedback Board Page

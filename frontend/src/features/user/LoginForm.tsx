@@ -1,19 +1,18 @@
-import { MouseEvent, useState } from "react";
-import { useFetcher, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useFetcher } from "react-router-dom";
 import styled from "styled-components";
-import { authenticateUser } from "../../services/apiAuth";
 
 import device from "../../styles/breakpoints";
 import { PrimaryButton } from "../../styles/UIStyles";
 import FormField from "../feedback/FormField";
 import InputField from "../feedback/InputField";
-import { H1 } from "../../styles/Typography";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import { FeedbackFormErrors } from "../../types/form.types";
 import BannerNotification from "../../ui/notifications/BannerNotification";
 
 export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
-  padding: 10px;
+  & > div:first-child {
+    ${(props) => props.$hasError && `padding-bottom: 20px`};
+  }
 
   & p:first-child {
     margin-bottom: 10px;
@@ -24,20 +23,8 @@ export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
     padding-bottom: 4px;
   }
 
-  & h1 {
-    text-align: center;
-    font-size: 2rem;
-    padding-bottom: 6px;
-  }
-
-  & p {
-    color: var(--color-text-muted);
-    text-align: center;
-  }
-
-  & .formWrapper {
-    padding: 34px 20px 40px;
-    ${(props) => props.$hasError && `padding-top: 20px`};
+  & form {
+    padding: 0 40px;
   }
 
   & form button {
@@ -59,27 +46,37 @@ export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
   @media ${device.sm} {
   }
 `;
-/* MVP phase of app doesn't support authenticatin
-   This component mocks a login process
- */
+
+export const AuthFormHeader = styled.div<{ $paddingBottom?: string }>`
+  padding-bottom: ${(props) =>
+    props.$paddingBottom ? props.$paddingBottom : `40px`};
+
+  & h1 {
+    text-align: center;
+    font-size: 2rem;
+    padding-bottom: 6px;
+    margin: 0;
+  }
+
+  & p {
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+`;
+
 function LoginForm(): React.JSX.Element {
   const fetcher = useFetcher({ key: "my-key" });
-  const navigate = useNavigate();
-  const location = useLocation();
   const actionData = fetcher?.data;
+  console.log("login form fetcher", actionData);
 
-  //delete these
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [validationError, setValidationError] = useState("");
-  //
-  console.log("checking login fetcher", fetcher);
   const { actionType, submissionOutcome } = actionData
     ? getFeedbackFormResponse<{
         accessToken: string;
         id: string;
       }>(actionData)
     : {};
+
+  if (submissionOutcome === "success") return <Navigate to="/" replace />;
 
   const errors =
     actionData?.validationErrors ||
@@ -96,76 +93,34 @@ function LoginForm(): React.JSX.Element {
       </BannerNotification>
     ) : null;
 
-  async function handleUserLogin(
-    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  ) {
-    e.preventDefault();
-
-    console.log("LOCATION HASH ", location);
-
-    if (email === "" && password === "") {
-      setValidationError("Empty input fields");
-      return;
-    } //TO DO: handle input validation
-
-    try {
-      const isUserAuthenticated = await authenticateUser({
-        email,
-        password,
-      });
-
-      console.log("I AM VALIDATED", isUserAuthenticated);
-
-      if (isUserAuthenticated) {
-        if (location.pathname === "/newUser") {
-          navigate("welcome");
-          return;
-        }
-        navigate("/", { replace: true });
-      }
-    } catch (error) {
-      if (typeof error === "string") setValidationError(error);
-    }
-  }
-
   return (
     <StyledLoginForm $hasError={!!errors}>
-      <H1>Welcome Back</H1>
-      <p>Enter your credentials to access your account.</p>
-      <div className="formWrapper">
-        {notification}
-        <fetcher.Form method="post" action=".">
-          <FormField
-            inputId={"emailSignup"}
-            label={"Email"}
-            description={""}
-            inputGuidanceId={""}
-          >
-            <InputField
-              name={"email"}
-              id={"emailSignup"}
-              type={"email"}
-              onOptionChange={(e) => setEmail(e.target.value)}
-            />
-          </FormField>
-          <FormField
-            inputId={"passwordSignup"}
-            label={"Password"}
-            description={""}
-            inputGuidanceId={""}
-          >
-            <InputField
-              name={"password"}
-              id={"passwordSignup"}
-              type={"password"}
-              isRequired={true}
-              minLength={6}
-              onOptionChange={(e) => setPassword(e.target.value)}
-            />
-          </FormField>
-          <PrimaryButton>Log in</PrimaryButton>
-        </fetcher.Form>
-      </div>
+      {notification}
+      <fetcher.Form method="post" action=".">
+        <FormField
+          inputId={"emailSignup"}
+          label={"Email"}
+          description={""}
+          inputGuidanceId={""}
+        >
+          <InputField name={"email"} id={"emailSignup"} type={"email"} />
+        </FormField>
+        <FormField
+          inputId={"passwordSignup"}
+          label={"Password"}
+          description={""}
+          inputGuidanceId={""}
+        >
+          <InputField
+            name={"password"}
+            id={"passwordSignup"}
+            type={"password"}
+            isRequired={true}
+            minLength={6}
+          />
+        </FormField>
+        <PrimaryButton>Log in</PrimaryButton>
+      </fetcher.Form>
     </StyledLoginForm>
   );
 }

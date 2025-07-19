@@ -1,9 +1,9 @@
-import { Navigate, Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useLoaderData } from "react-router-dom";
 import { useEffect } from "react";
 import AppLayout from "./AppLayout";
 import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
 import { getLoggedInUser, setUserCredentials } from "../store/slices/userSlice";
-import { getUserProfileInfo } from "../services/apiAuth";
+
 import Logout from "../features/user/Logout";
 import User from "../features/user/User";
 import UserAvatar from "../features/user/UserAvatar";
@@ -11,6 +11,8 @@ import UserInfo from "../features/user/UserInfo";
 import styled from "styled-components";
 import device from "../styles/breakpoints";
 import { useMatchMedia } from "../utils/customHooks";
+import { RootLoaderdata } from "../types/loader.types";
+import { ensureValidSession } from "../services/apiAuth";
 
 export const UserProfileHeader = styled.div`
   @media ${device.sm} {
@@ -41,8 +43,9 @@ export const UserProfileHeader = styled.div`
 `;
 
 function ProtectedRoutes(): React.JSX.Element {
-  const navigate = useNavigate();
-  const userAuthData = useLoaderData() as string | null;
+  const userAuthData = useLoaderData() as RootLoaderdata;
+  const { accessToken, userProfile } = userAuthData;
+
   const dispatch = useAppDispatch();
 
   const isMobile = useMatchMedia("(max-width: 639px");
@@ -50,14 +53,20 @@ function ProtectedRoutes(): React.JSX.Element {
 
   useEffect(() => {
     console.log("effect running running running");
-    if (userAuthData === null) return;
+    if (accessToken === null) {
+      console.log("ac", accessToken);
+      return;
+    }
     if (user.isUserLoggedIn) return;
-    const authToken = userAuthData;
+    if (!userProfile) return;
 
     async function handleUserAuth() {
       console.log("handleUserAuth running....");
-      const loggedInUser = await getUserProfileInfo(authToken);
-      const { name, username, image } = loggedInUser;
+      const accessTokenNew = await ensureValidSession();
+      if (!accessTokenNew) return;
+      if (!userProfile) return; //this early return is helping TS infer that userProfile is not null
+      const { name, username, image } = userProfile;
+
       if (typeof name === "string" && typeof username === "string") {
         dispatch(
           setUserCredentials({
@@ -72,11 +81,10 @@ function ProtectedRoutes(): React.JSX.Element {
     }
 
     handleUserAuth();
-  }, [dispatch, navigate, user.isUserLoggedIn, userAuthData]);
+  }, [accessToken, dispatch, user.isUserLoggedIn, userProfile]);
 
-  if (!userAuthData) {
-    console.log("I should navigate to login now");
-    return <Navigate to="/login" replace />;
+  if (userProfile === null) {
+    return <Navigate to="/login/welcome" replace />;
   }
 
   return (

@@ -1,24 +1,19 @@
-import { Outlet, useFetcher, useLocation } from "react-router-dom";
-import LoginForm from "./LoginForm";
-import WelcomeUser from "./WelcomeUser";
+import { AuthFormHeader } from "./LoginForm";
+
+import { H1 } from "../../styles/Typography";
+import { FormPage } from "../../styles/UIStyles";
 
 function NewUser(): React.JSX.Element {
-  const location = useLocation();
-  const fetcher = useFetcher({ key: "my-key" });
-  console.log("try", fetcher);
-
-  //if (location.pathname === "/newUser/welcome") return <Outlet />;
-  if (fetcher.data === "createUserProfile") {
-    return <WelcomeUser />;
-  }
   return (
-    <div>
-      <p>Thank you for confirming your e-mail address.</p>
-      <p>
-        Please enter you login credentials to continue setting up your account
-      </p>
-      <LoginForm />
-    </div>
+    <FormPage>
+      <AuthFormHeader $paddingBottom="0">
+        <H1>Thank you for confirming your email address.</H1>
+        <p>
+          Please enter you login credentials to continue setting up your
+          account.
+        </p>
+      </AuthFormHeader>
+    </FormPage>
   );
 }
 

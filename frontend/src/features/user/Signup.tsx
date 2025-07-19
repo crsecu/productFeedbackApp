@@ -12,7 +12,7 @@ import { getFeedbackFormResponse } from "../../utils/helpers";
 import BannerNotification from "../../ui/notifications/BannerNotification";
 import { AuthLinkButton, UserCTA } from "./LoginPage";
 import { FeedbackFormErrors } from "../../types/form.types";
-import { StyledLoginForm } from "./LoginForm";
+import { AuthFormHeader, StyledLoginForm } from "./LoginForm";
 import { H1 } from "../../styles/Typography";
 
 const StyledSignupPage = styled(StyledLoginForm)`
@@ -50,20 +50,17 @@ function Signup({ children }: SignupProps): React.JSX.Element {
       ></BannerNotification>
     ) : null;
 
-  console.log("props from parent through outlet", fetcher);
-
   if (isSubmissionSuccessful) {
-    return (
-      <>
-        {notification} {children}
-      </>
-    );
+    return <>{notification}</>;
   }
 
   return (
     <StyledSignupPage>
-      <H1>Create your account</H1>
-      <p>Start sharing feedback and supporting great ideas.</p>
+      <AuthFormHeader>
+        <H1>Create your account</H1>
+        <p>Start sharing feedback and supporting great ideas</p>
+      </AuthFormHeader>
+
       {notification}
       <br />
       <fetcher.Form method="post" action="/login/signup">
