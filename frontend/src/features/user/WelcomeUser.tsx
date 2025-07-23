@@ -10,18 +10,8 @@ import { H1 } from "../../styles/Typography";
 function WelcomeUser(): React.JSX.Element {
   const fetcher = useFetcher({ key: "welcome-fetcher" });
   const fetcherData = fetcher.data?.payload as UserProfile;
-  console.log("ggg", fetcherData);
 
   if (fetcherData) return <Navigate to="/" replace />;
-
-  // useEffect(() => {
-  //   if (!fetcherData) return;
-
-  //   if (typeof name === "string" && typeof username === "string") {
-  //     dispatch(setUserCredentials({ name, image, username }));
-  //     navigate("/", { replace: true });
-  //   }
-  // }, [dispatch, fetcherData, image, name, navigate, username]);
 
   return (
     <FormPage>

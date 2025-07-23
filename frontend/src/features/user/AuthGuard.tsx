@@ -13,7 +13,6 @@ function AuthGuard(): null {
   const accessToken = useLoaderData() as string;
 
   const userProfileRedux = useAppSelector(getLoggedInUser);
-  console.log("userProfileRedux render logic", userProfileRedux);
 
   //effect
   useEffect(() => {

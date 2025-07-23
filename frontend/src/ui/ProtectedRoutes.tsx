@@ -48,37 +48,6 @@ function ProtectedRoutes(): React.JSX.Element | null {
 
   const userProfile = userProfileRedux.profileInfo;
 
-  // useEffect(() => {
-  //   console.log("effect running running running");
-
-  //   if (user.isUserLoggedIn) {
-  //     return;
-  //   }
-
-  //   async function handleUserAuth() {
-  //     const userProfile = await getUserProfileInfo(accessToken);
-  //     console.log("check uprofile", userProfile);
-
-  //     if (!userProfile) {
-  //       navigate("/login/welcome", { replace: true });
-  //       return;
-  //     }
-
-  //     const { name, username, image } = userProfile || {};
-
-  //     if (typeof name === "string" && typeof username === "string") {
-  //       dispatch(
-  //         setUserCredentials({
-  //           name,
-  //           image,
-  //           username,
-  //         })
-  //       );
-  //     }
-  //   }
-  //   handleUserAuth();
-  // }, [accessToken, dispatch, navigate, user.isUserLoggedIn]);
-
   return (
     <AppLayout>
       {/* authenticated user profile ui component*/}
