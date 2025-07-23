@@ -21,25 +21,6 @@ export async function authGuardLoader(): Promise<Response | string> {
   return accessToken;
 }
 
-//Homepage loader
-export async function rootLoader() {
-  const accessToken = await ensureValidSession();
-
-  if (accessToken === null) return redirect("/login");
-
-  // const userProfile = await getUserProfileInfo(accessToken);
-  // console.log("check uprofile", userProfile);
-
-  // // if (!userProfile) return redirect("/login/welcome");
-  // if (!userProfile) {
-  //   throw new Response("Unauthorized", { status: 401 });
-  //   return null;
-  // }
-  // return { accessToken: accessToken, userProfile };
-
-  return { accessToken: accessToken, userProfile: null };
-}
-
 // Loader for Feedback Board Page
 // returns grouped suggestions and roadmap-related feedback counts
 export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData | null> {

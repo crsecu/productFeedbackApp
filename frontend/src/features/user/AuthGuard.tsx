@@ -1,7 +1,6 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../types/redux.hooks";
 import { useEffect } from "react";
-import { AuthGuardLoaderData } from "../../types/loader.types";
 import {
   getLoggedInUser,
   setUserCredentials,
@@ -11,8 +10,7 @@ import { getUserProfileInfo } from "../../services/apiAuth";
 function AuthGuard(): null {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const loaderData = useLoaderData() as AuthGuardLoaderData;
-  const { accessToken } = loaderData || {};
+  const accessToken = useLoaderData() as string;
 
   const userProfileRedux = useAppSelector(getLoggedInUser);
   console.log("userProfileRedux render logic", userProfileRedux);
