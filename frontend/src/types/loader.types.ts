@@ -28,7 +28,7 @@ export type LoaderDataType =
   | Feedback;
 
 //root loader return type
-export interface RootLoaderdata {
+export interface AuthGuardLoaderData {
   accessToken: string;
-  userProfile: UserProfile | null;
+  userProfile?: UserProfile; //optional key for now, might get rid of userProfile key
 }

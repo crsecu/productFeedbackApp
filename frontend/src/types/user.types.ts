@@ -5,7 +5,7 @@ export interface LoginUserCredentials {
 
 export interface UserProfileInput {
   name: string;
-  username?: string;
+  username: string;
   authId: string;
 }
 

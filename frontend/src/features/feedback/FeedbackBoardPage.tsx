@@ -27,8 +27,9 @@ function FeedbackBoardPage(): React.JSX.Element {
   const location = useLocation();
   //const dataFromLoader = useRouteLoaderData("root") as FeedbackBoardLoaderData;
   const dataFromLoader = useLoaderData() as FeedbackBoardLoaderData;
-
-  if (location.pathname === "/createFeedback") return <Outlet />;
+  console.log("location name", location);
+  if (location.pathname === "/app/feedbackBoard/createFeedback")
+    return <Outlet />;
 
   const { suggestions, roadmapFeedbackCount, roadmapStatusCounts } =
     dataFromLoader;

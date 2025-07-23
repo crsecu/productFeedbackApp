@@ -4,7 +4,7 @@ import {
   roadmapDevLoader,
   feedbackDetailLoader,
   commentDataLoader,
-  rootLoader,
+  authGuardLoader,
 } from "./data_handlers/feedbackLoaders";
 import {
   createFeedbackAction,
@@ -31,10 +31,10 @@ import {
 import LoginPage from "./features/user/LoginPage";
 import Signup from "./features/user/Signup";
 import ProtectedRoutes from "./ui/ProtectedRoutes";
-import NewUser from "./features/user/NewUser";
 
 import WelcomeUser from "./features/user/WelcomeUser";
 import { loginLoader } from "./data_handlers/userLoader";
+import AuthGuard from "./features/user/AuthGuard";
 
 const router = createBrowserRouter([
   {
@@ -44,18 +44,18 @@ const router = createBrowserRouter([
     action: loginUserAction,
     shouldRevalidate: ({ currentUrl, nextUrl, defaultShouldRevalidate }) => {
       console.log(
-        defaultShouldRevalidate,
-        "current route",
+        "LOGIN, current route",
         currentUrl,
-        "next route",
-        nextUrl
+        "LOGIN, next route",
+        nextUrl,
+        "LOGIN, default revalidator",
+        defaultShouldRevalidate
       );
       return defaultShouldRevalidate;
     },
 
     children: [
       { path: "signup", element: <Signup />, action: signUpUserAction },
-      { path: "newUser", element: <NewUser /> },
       {
         path: "welcome",
         element: <WelcomeUser />,
@@ -65,15 +65,31 @@ const router = createBrowserRouter([
   },
 
   {
+    path: "/",
+    element: <AuthGuard />,
+    loader: authGuardLoader,
+    shouldRevalidate: ({ currentUrl, nextUrl, defaultShouldRevalidate }) => {
+      console.log(
+        "AUTHGUARD, current route",
+        currentUrl,
+        "AUTHGUARD, next route",
+        nextUrl,
+        "AUTHGUARD, default revalidator",
+        defaultShouldRevalidate
+      );
+      return defaultShouldRevalidate;
+    },
+  },
+
+  {
+    path: "/app",
     element: <ProtectedRoutes />,
-    loader: rootLoader,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: "feedbackBoard",
         element: <FeedbackBoardPage />,
         loader: feedbackBoardLoader,
-
         id: "feedbackBoardData",
         shouldRevalidate: ({
           currentUrl,
@@ -106,7 +122,10 @@ const router = createBrowserRouter([
           if (actionResult?.submissionOutcome !== "success") {
             return false;
           }
-
+          console.log(
+            "this is default loader revalidation",
+            defaultShouldRevalidate
+          );
           return defaultShouldRevalidate;
         },
         children: [
@@ -118,7 +137,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/developmentRoadmap",
+        path: "developmentRoadmap",
         element: <PageLayout />,
         loader: roadmapDevLoader,
         id: "roadmapData",
@@ -142,7 +161,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/feedbackDetail/:feedbackId",
+        path: "feedbackDetail/:feedbackId",
         element: <FeedbackDetailPage />,
         id: "feedbackDetailData",
 
@@ -201,10 +220,9 @@ const router = createBrowserRouter([
           },
         ],
       },
-
-      { path: "*", element: <NotFoundPage /> },
     ],
   },
+  { path: "*", element: <NotFoundPage /> },
 ]);
 
 function App(): React.JSX.Element {

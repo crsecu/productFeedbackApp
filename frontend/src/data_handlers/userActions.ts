@@ -39,6 +39,7 @@ export async function signUpUserAction({ request }: ActionFunctionArgs) {
   const userProfileConflicts = await checkUserSignupConflicts(email);
 
   if (userProfileConflicts) {
+    console.log("userProfileConflicts", userProfileConflicts);
     return userProfileConflicts;
   }
 
@@ -47,11 +48,9 @@ export async function signUpUserAction({ request }: ActionFunctionArgs) {
     signupUser(API_KEY, { email, password })
   );
 
-  if (result.submissionOutcome === "success" && result.payload) {
-    return result;
-  }
+  console.log("signup result", result);
 
-  return null;
+  return result;
 }
 
 //create user profile action
@@ -72,8 +71,11 @@ export async function createUserProfileAction({ request }: ActionFunctionArgs) {
   //this is not the ideal way to get the authID - refactor later
   const authSessionRaw = localStorage.getItem("auth_session");
   const authSession = JSON.parse(authSessionRaw as string);
+  if (!authSession) return null;
+
   const authId = authSession.user.id;
   const accessToken = authSession.access_token;
+
   //Return early if there are validation errors
   if (validationErrors) return validationErrors;
 
@@ -111,9 +113,10 @@ export async function loginUserAction({ request }: ActionFunctionArgs) {
   const result = await performActionSubmission<{
     accessToken: string;
     id: string;
+    userData: { accessToken: string; userProfile: UserProfile | null } | null;
   }>("authenticateUser", () => authenticateUser(API_KEY, { email, password }));
 
-  console.log("login action result", result);
+  console.log("login user action RESULT", result);
 
   return result;
 }

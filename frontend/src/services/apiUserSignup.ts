@@ -37,6 +37,7 @@ export async function signupUser(
 
     return { success: true, payload: data };
   } catch (err) {
+    console.log("SIGNUP form error", err);
     return { success: false, error: err };
   }
 }
@@ -58,10 +59,11 @@ export async function checkUserSignupConflicts(email: string) {
     );
 
     if (userIdentifierData.emailTaken) {
-      const signupError = createActionResult("failure", {
+      const signupError = createActionResult("validationError", {
         actionType: "createUser",
-        submitError: {
-          email: userIdentifierData.emailTaken ? "Email taken." : null,
+        validationErrors: {
+          email:
+            "Looks like this email is already registered. Try signing in or use a different one.",
         },
       });
 

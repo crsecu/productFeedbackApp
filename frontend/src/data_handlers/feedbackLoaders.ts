@@ -8,30 +8,36 @@ import assert from "../utils/TS_helpers";
 import { buildCommentHierarchy, fetchWrapper } from "../utils/helpers";
 import { API_URL } from "../services/apiFeedback";
 import { CommentListType } from "../types/comment.types";
-import { FeedbackBoardLoaderData, RootLoaderdata } from "../types/loader.types";
+import { FeedbackBoardLoaderData } from "../types/loader.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 import { Feedback } from "../types/feedback.types";
-import { ensureValidSession, getUserProfileInfo } from "../services/apiAuth";
-//Homepage loader
-export async function rootLoader(): Promise<Response | RootLoaderdata | null> {
+import { ensureValidSession } from "../services/apiAuth";
+//authGuardLoader
+export async function authGuardLoader(): Promise<Response | string> {
   const accessToken = await ensureValidSession();
 
   if (accessToken === null) return redirect("/login");
 
-  try {
-    const userProfile = await getUserProfileInfo(accessToken);
-    console.log("check uprofile", userProfile);
-    return { accessToken: accessToken, userProfile };
-  } catch (err) {
-    console.log("OOOPS ...", err);
+  return accessToken;
+}
 
-    //if user profile doesn't exist (yet)
-    if (err === "The result contains 0 rows") {
-      return { accessToken: accessToken, userProfile: null };
-    }
-  }
+//Homepage loader
+export async function rootLoader() {
+  const accessToken = await ensureValidSession();
 
-  return null;
+  if (accessToken === null) return redirect("/login");
+
+  // const userProfile = await getUserProfileInfo(accessToken);
+  // console.log("check uprofile", userProfile);
+
+  // // if (!userProfile) return redirect("/login/welcome");
+  // if (!userProfile) {
+  //   throw new Response("Unauthorized", { status: 401 });
+  //   return null;
+  // }
+  // return { accessToken: accessToken, userProfile };
+
+  return { accessToken: accessToken, userProfile: null };
 }
 
 // Loader for Feedback Board Page
@@ -39,6 +45,7 @@ export async function rootLoader(): Promise<Response | RootLoaderdata | null> {
 export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData | null> {
   const accessToken = await ensureValidSession();
   if (!accessToken) return null;
+  console.log("is FEEDBACK LOADER running");
 
   //data needed by FeedbackBoardPage
   const data = await fetchAndGroupFeedback(accessToken, "feedbackBoard");

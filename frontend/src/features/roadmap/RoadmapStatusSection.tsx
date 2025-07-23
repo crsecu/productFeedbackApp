@@ -65,7 +65,7 @@ function RoadmapStatusSection({
             feedbackId={feedbackItem.id}
             initialUpvoteCount={feedbackItem.upvotes}
           />
-          <Link to={`/feedbackDetail/${feedbackItem.id}`}>
+          <Link to={`/app/feedbackDetail/${feedbackItem.id}`}>
             <FeedbackCardContent feedback={feedbackItem} />
             <CommentCount count={feedbackItem.commentCount} />
           </Link>

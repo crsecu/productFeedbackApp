@@ -1,8 +1,7 @@
-import { Navigate, Outlet, useLoaderData } from "react-router-dom";
-import { useEffect } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import AppLayout from "./AppLayout";
-import { useAppDispatch, useAppSelector } from "../types/redux.hooks";
-import { getLoggedInUser, setUserCredentials } from "../store/slices/userSlice";
+import { useAppSelector } from "../types/redux.hooks";
+import { getLoggedInUser } from "../store/slices/userSlice";
 
 import Logout from "../features/user/Logout";
 import User from "../features/user/User";
@@ -11,8 +10,6 @@ import UserInfo from "../features/user/UserInfo";
 import styled from "styled-components";
 import device from "../styles/breakpoints";
 import { useMatchMedia } from "../utils/customHooks";
-import { RootLoaderdata } from "../types/loader.types";
-import { ensureValidSession } from "../services/apiAuth";
 
 export const UserProfileHeader = styled.div`
   @media ${device.sm} {
@@ -42,50 +39,45 @@ export const UserProfileHeader = styled.div`
   }
 `;
 
-function ProtectedRoutes(): React.JSX.Element {
-  const userAuthData = useLoaderData() as RootLoaderdata;
-  const { accessToken, userProfile } = userAuthData;
-
-  const dispatch = useAppDispatch();
+function ProtectedRoutes(): React.JSX.Element | null {
+  const userProfileRedux = useAppSelector(getLoggedInUser);
 
   const isMobile = useMatchMedia("(max-width: 639px");
-  const user = useAppSelector(getLoggedInUser);
 
-  useEffect(() => {
-    console.log("effect running running running");
-    if (accessToken === null) {
-      console.log("ac", accessToken);
-      return;
-    }
-    if (user.isUserLoggedIn) return;
-    if (!userProfile) return;
+  if (!userProfileRedux.isUserLoggedIn) return <Navigate to="/" replace />;
 
-    async function handleUserAuth() {
-      console.log("handleUserAuth running....");
-      const accessTokenNew = await ensureValidSession();
-      if (!accessTokenNew) return;
-      if (!userProfile) return; //this early return is helping TS infer that userProfile is not null
-      const { name, username, image } = userProfile;
+  const userProfile = userProfileRedux.profileInfo;
 
-      if (typeof name === "string" && typeof username === "string") {
-        dispatch(
-          setUserCredentials({
-            name,
-            image,
-            username,
-          })
-        );
+  // useEffect(() => {
+  //   console.log("effect running running running");
 
-        return;
-      }
-    }
+  //   if (user.isUserLoggedIn) {
+  //     return;
+  //   }
 
-    handleUserAuth();
-  }, [accessToken, dispatch, user.isUserLoggedIn, userProfile]);
+  //   async function handleUserAuth() {
+  //     const userProfile = await getUserProfileInfo(accessToken);
+  //     console.log("check uprofile", userProfile);
 
-  if (userProfile === null) {
-    return <Navigate to="/login/welcome" replace />;
-  }
+  //     if (!userProfile) {
+  //       navigate("/login/welcome", { replace: true });
+  //       return;
+  //     }
+
+  //     const { name, username, image } = userProfile || {};
+
+  //     if (typeof name === "string" && typeof username === "string") {
+  //       dispatch(
+  //         setUserCredentials({
+  //           name,
+  //           image,
+  //           username,
+  //         })
+  //       );
+  //     }
+  //   }
+  //   handleUserAuth();
+  // }, [accessToken, dispatch, navigate, user.isUserLoggedIn]);
 
   return (
     <AppLayout>
@@ -96,15 +88,14 @@ function ProtectedRoutes(): React.JSX.Element {
             <User>
               <UserAvatar imageUrl={"/assets/user-images/image-roxanne.jpg"} />
               <UserInfo
-                name={user.profileInfo.name}
-                username={user.profileInfo.username}
+                name={userProfile.name}
+                username={userProfile.username}
               />
             </User>
             <Logout />
           </div>
         </UserProfileHeader>
       )}
-
       <Outlet />
     </AppLayout>
   );

@@ -6,33 +6,39 @@ import { Outlet, useLoaderData, useLocation } from "react-router-dom";
 import Logo from "../../ui/Logo";
 import NewUser from "./NewUser";
 import { H1 } from "../../styles/Typography";
+import device from "../../styles/breakpoints";
 const PageWrapper = styled(FormPage)`
   ${panelStyles}
-  width: 80%;
-  gap: 0;
-  flex-direction: row;
+
   height: 100%;
   margin: auto;
-
-  & a {
-    width: 90vw;
-    margin: auto;
-  }
+  width: 100vw;
+  flex-direction: column-reverse;
 
   & form {
     & div:last-of-type {
       margin-bottom: 34px;
     }
   }
+
+  @media ${device.md} {
+    flex-direction: row;
+    width: 90%;
+  }
 `;
 
 const LeftColumn = styled.div`
-  width: 55%;
-  padding: 80px 40px;
+  @media ${device.md} {
+    width: 55%;
+    padding: 20px;
+    /* padding: 80px 40px; */
+  }
 `;
 
 const RightColumn = styled.div`
-  width: 45%;
+  @media ${device.md} {
+    width: 45%;
+  }
 `;
 
 export const UserCTA = styled.p`

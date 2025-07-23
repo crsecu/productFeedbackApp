@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, redirect } from "react-router-dom";
+import { ActionFunctionArgs } from "react-router-dom";
 
 import { editFeedback, submitFeedback } from "../services/apiFeedback";
 import {
@@ -19,7 +19,7 @@ import {
   CreateFeedbackFormValues,
   EditFeedbackFormValues,
 } from "../types/form.types";
-import { authenticateUser, ensureValidSession } from "../services/apiAuth";
+import { ensureValidSession } from "../services/apiAuth";
 
 /* Submit New Feedback Action*/
 export async function createFeedbackAction({

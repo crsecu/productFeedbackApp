@@ -1,5 +1,5 @@
 import { isRouteErrorResponse, SetURLSearchParams } from "react-router-dom";
-import { User } from "../features/user/user.types";
+
 import { submitComment } from "../services/apiComment";
 import { API_URL, HEADERS } from "../services/apiFeedback";
 import {
@@ -42,13 +42,9 @@ export async function fetchWrapper<T>(
 
     return await res.json();
   } catch (error) {
-    if (error instanceof Error) {
-      console.error(`Fetch error: ${error.message}`);
-    } else {
-      console.error("Unknown error occurred");
-    }
-
-    throw error;
+    const errorMsg = errorMessage(error);
+    console.log("api call error fetchWrapper", errorMsg);
+    throw errorMsg;
   }
 }
 
@@ -259,7 +255,10 @@ export function errorMessage(error: unknown): string {
   if (isRouteErrorResponse(error)) {
     return `${error.status} ${error.statusText}`;
   } else if (error instanceof Error) {
-    return error.message;
+    console.log("checking error msg ", error);
+    return error.message.includes("Failed to fetch")
+      ? "Network error. Please check your internet connection."
+      : error.message;
   } else if (typeof error === "string") {
     return error;
   } else {
@@ -295,8 +294,16 @@ export function getFeedbackFormResponse<T>(actionData: ActionResult<T>): {
   isSubmissionSuccessful: boolean;
   showForm: boolean;
   payload: T | null;
+  validationErrors: FeedbackFormErrors | null;
+  submitError: unknown | null;
 } {
-  const { actionType, submissionOutcome, payload } = actionData || {};
+  const {
+    actionType,
+    submissionOutcome,
+    payload,
+    validationErrors,
+    submitError,
+  } = actionData || {};
 
   const isSubmissionSuccessful = submissionOutcome === "success";
   const showForm = !isSubmissionSuccessful;
@@ -307,6 +314,8 @@ export function getFeedbackFormResponse<T>(actionData: ActionResult<T>): {
     isSubmissionSuccessful,
     showForm,
     payload,
+    validationErrors,
+    submitError,
   };
 }
 

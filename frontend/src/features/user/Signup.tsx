@@ -11,7 +11,6 @@ import { ActionResult } from "../../types/action.types";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import BannerNotification from "../../ui/notifications/BannerNotification";
 import { AuthLinkButton, UserCTA } from "./LoginPage";
-import { FeedbackFormErrors } from "../../types/form.types";
 import { AuthFormHeader, StyledLoginForm } from "./LoginForm";
 import { H1 } from "../../styles/Typography";
 
@@ -34,20 +33,27 @@ function Signup({ children }: SignupProps): React.JSX.Element {
   const fetcher = useFetcher<ActionResult<UserSB>>();
   const actionData = fetcher?.data;
 
-  const { actionType, submissionOutcome, isSubmissionSuccessful } = actionData
-    ? getFeedbackFormResponse<UserSB>(actionData)
-    : {};
+  const {
+    actionType,
+    submissionOutcome,
+    isSubmissionSuccessful,
+    validationErrors,
+    submitError,
+  } = actionData ? getFeedbackFormResponse<UserSB>(actionData) : {};
 
-  const errors =
-    actionData?.validationErrors ||
-    (actionData?.submitError as FeedbackFormErrors);
+  console.log("ac", actionData);
+
+  const errors = validationErrors || undefined;
 
   const notification =
     submissionOutcome && actionType ? (
       <BannerNotification
         notificationType={submissionOutcome}
         actionType={actionType}
-      ></BannerNotification>
+        notificationMsgCustom={true}
+      >
+        {submitError && <p>{submitError}.</p>}
+      </BannerNotification>
     ) : null;
 
   if (isSubmissionSuccessful) {
@@ -100,7 +106,7 @@ function Signup({ children }: SignupProps): React.JSX.Element {
             name={"email"}
             id={"emailSignup"}
             type={"email"}
-            validationError={errors}
+            validationError={validationErrors ? validationErrors : undefined}
           />
         </FormField>
         <FormField
@@ -113,7 +119,7 @@ function Signup({ children }: SignupProps): React.JSX.Element {
             name={"password"}
             id={"passwordSignup"}
             type={"password"}
-            validationError={errors}
+            validationError={validationErrors ? validationErrors : undefined}
             isRequired={true}
             minLength={6}
           />

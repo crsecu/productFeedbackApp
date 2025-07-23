@@ -44,7 +44,7 @@ export async function fetchWrapperSBAuth<T>(
     return data;
   } catch (error) {
     const errorMsg = errorMessage(error);
-    console.log("api call error", errorMsg);
+    console.log("api call error fetchWrapperSBAuth", errorMsg);
     throw errorMsg;
   }
 }
@@ -79,9 +79,11 @@ export async function authenticateUser(
   MutationResult<{
     accessToken: string;
     id: string;
+    userData: { accessToken: string; userProfile: UserProfile | null } | null;
   }>
 > {
   const userCredentialsJSON = JSON.stringify(credentials);
+
   try {
     const authenticatedUser = await fetchWrapperSBAuth<SessionSB>(
       AUTH_API_URL,
@@ -102,9 +104,11 @@ export async function authenticateUser(
       payload: {
         accessToken: authenticatedUser.access_token,
         id: authenticatedUser.user.id,
+        userData: null,
       },
     };
   } catch (err) {
+    console.log("MILLENIAL error", err);
     return { success: false, error: err };
   }
 }
@@ -164,18 +168,28 @@ export async function fetchUser(access_token: string) {
 
 //get user profile info
 export async function getUserProfileInfo(access_token: string) {
-  const userProfile = await fetchWrapperSBAuth<UserProfile>(
-    API_URL,
-    "/userProfiles",
-    "GET",
-    {
-      apikey: API_KEY,
-      Authorization: `Bearer ${access_token}`,
-      Accept: "application/vnd.pgrst.object+json",
-    }
-  );
+  try {
+    const userProfile = await fetchWrapperSBAuth<UserProfile>(
+      API_URL,
+      "/userProfiles",
+      "GET",
+      {
+        apikey: API_KEY,
+        Authorization: `Bearer ${access_token}`,
+        Accept: "application/vnd.pgrst.object+json",
+      }
+    );
 
-  return userProfile;
+    return userProfile;
+  } catch (err) {
+    if (err === "The result contains 0 rows") {
+      return null;
+    } else {
+      console.error("User profile error ", err);
+    }
+  }
+
+  return null;
 }
 //authorize authenticated user
 export async function authorizeUser(access_token: string): Promise<UserSB> {

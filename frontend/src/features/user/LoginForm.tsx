@@ -1,13 +1,12 @@
 import { Navigate, useFetcher } from "react-router-dom";
 import styled from "styled-components";
-
-import device from "../../styles/breakpoints";
 import { PrimaryButton } from "../../styles/UIStyles";
 import FormField from "../feedback/FormField";
 import InputField from "../feedback/InputField";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import { FeedbackFormErrors } from "../../types/form.types";
 import BannerNotification from "../../ui/notifications/BannerNotification";
+import { UserProfile } from "../../types/user.types";
 
 export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
   & > div:first-child {
@@ -24,7 +23,7 @@ export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
   }
 
   & form {
-    padding: 0 40px;
+    padding: 0 30px;
   }
 
   & form button {
@@ -41,9 +40,6 @@ export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
   & form input[type="password"] {
     font-size: 1.5rem;
     font-family: monospace;
-  }
-
-  @media ${device.sm} {
   }
 `;
 
@@ -66,17 +62,22 @@ export const AuthFormHeader = styled.div<{ $paddingBottom?: string }>`
 
 function LoginForm(): React.JSX.Element {
   const fetcher = useFetcher({ key: "my-key" });
-  const actionData = fetcher?.data;
-  console.log("login form fetcher", actionData);
+  const actionData = fetcher.data;
 
   const { actionType, submissionOutcome } = actionData
     ? getFeedbackFormResponse<{
         accessToken: string;
         id: string;
+        userData: {
+          accessToken: string;
+          userProfile: UserProfile | null;
+        } | null;
       }>(actionData)
     : {};
 
-  if (submissionOutcome === "success") return <Navigate to="/" replace />;
+  if (submissionOutcome === "success") {
+    return <Navigate to="/" replace />;
+  }
 
   const errors =
     actionData?.validationErrors ||
