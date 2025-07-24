@@ -4,9 +4,6 @@ import FormField from "../feedback/FormField";
 import { PrimaryButton } from "../../styles/UIStyles";
 import { UserSB } from "../../types/supabaseAuth.types";
 import styled from "styled-components";
-import device from "../../styles/breakpoints";
-
-import { ReactNode } from "react";
 import { ActionResult } from "../../types/action.types";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import BannerNotification from "../../ui/notifications/BannerNotification";
@@ -19,17 +16,9 @@ const StyledSignupPage = styled(StyledLoginForm)`
     border-radius: 16px 16px 0 0;
     box-shadow: rgba(173, 31, 234, 0.212) 0px 2px 4px 0px inset;
   }
-
-  /* @media ${device.sm} {
-    display: flex;
-  } */
 `;
 
-interface SignupProps {
-  children?: ReactNode;
-}
-
-function Signup({ children }: SignupProps): React.JSX.Element {
+function Signup(): React.JSX.Element {
   const fetcher = useFetcher<ActionResult<UserSB>>();
   const actionData = fetcher?.data;
 
@@ -43,8 +32,6 @@ function Signup({ children }: SignupProps): React.JSX.Element {
 
   console.log("ac", actionData);
 
-  const errors = validationErrors || undefined;
-
   const notification =
     submissionOutcome && actionType ? (
       <BannerNotification
@@ -52,7 +39,7 @@ function Signup({ children }: SignupProps): React.JSX.Element {
         actionType={actionType}
         notificationMsgCustom={true}
       >
-        {submitError && <p>{submitError}.</p>}
+        <p>{submitError as string}</p>
       </BannerNotification>
     ) : null;
 

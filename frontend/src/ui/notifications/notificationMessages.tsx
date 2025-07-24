@@ -5,7 +5,6 @@ import {
   BiSolidErrorCircle,
   BiSolidXCircle,
 } from "react-icons/bi";
-import styled from "styled-components";
 
 interface NotificationText {
   title: string;
@@ -68,6 +67,10 @@ const notificationTextByOutcome: Record<
     createUser: {
       title: "Thanks for signing up!",
       message: "Please check your email to confirm your account.",
+    },
+    authenticateUser: {
+      //delete later;
+      title: "",
     },
   },
 };

@@ -124,12 +124,7 @@ export async function submitCommentAction({ request }: ActionFunctionArgs) {
     const content = formData.get("content") as string;
     const submissionDataJSON = formData.get("submissionData") as string;
     const submissionData: SubmissionDataType = JSON.parse(submissionDataJSON);
-    return await postCommentOrReply(
-      accessToken,
-      content,
-      submissionData,
-      intent
-    );
+    return await postCommentOrReply(content, submissionData, intent);
   }
 
   return null;

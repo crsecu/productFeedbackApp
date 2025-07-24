@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import device from "../styles/breakpoints";
 
@@ -34,7 +34,7 @@ const BrandingText = styled.span`
 `;
 
 function TitleCard(): React.JSX.Element {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
     <StyledTitleCard>
       <MainHeading>Feedback Board RE</MainHeading>

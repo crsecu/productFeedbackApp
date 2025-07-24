@@ -1,7 +1,5 @@
 import { isRouteErrorResponse, SetURLSearchParams } from "react-router-dom";
-
 import { submitComment } from "../services/apiComment";
-import { API_URL, HEADERS } from "../services/apiFeedback";
 import {
   NewCommentOrReply,
   CommentListType,
@@ -48,34 +46,6 @@ export async function fetchWrapper<T>(
   }
 }
 
-/*
- The validateUserCredentials func fetches a user from the mock API and validates the provided credentials
- Throws an error if the user is not found or the name does not match
- */
-export async function validateUserCredentials(
-  name: string,
-  username: string
-): Promise<User> {
-  const userRes = await fetchWrapper<User>(
-    `${API_URL}/userList?username=eq.${username}`,
-    {
-      headers: {
-        ...HEADERS.read,
-        Accept: "application/vnd.pgrst.object+json",
-      },
-    }
-  );
-
-  if (!userRes) {
-    throw new Error("User not found");
-  }
-
-  if (userRes.name !== name) {
-    throw new Error("Incorrect name");
-  }
-
-  return userRes;
-}
 //Capitalize first letter
 export function capitalizeFirstLetter(word: string): string {
   if (word === "")
@@ -133,7 +103,7 @@ export function sortFeedbackList(
 of comments/replies for a specific feedback entry. It updates the backend by creating 
 a new comment or reply based on the mode ("comment" or "reply") and increments the comment count. */
 export async function postCommentOrReply(
-  accessToken: string,
+  // accessToken: string,
   content: string,
   submissionData: SubmissionDataType,
   actionType: "addComment"
