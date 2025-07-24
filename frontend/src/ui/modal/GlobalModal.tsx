@@ -85,7 +85,7 @@ function GlobalModal(): React.JSX.Element | null {
         assert(confirmPayload);
         await deleteFeedback(accessToken, confirmPayload);
 
-        navigate("/", { replace: true }); //this must go to previous page which could be roadmap as well
+        navigate("/app/feedbackBoard", { replace: true }); //this must go to previous page which could be roadmap as well
 
         dispatch(showToastNotification({ key: "deleteFeedback_success" }));
       } catch (err) {

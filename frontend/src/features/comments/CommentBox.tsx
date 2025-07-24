@@ -45,6 +45,7 @@ function CommentBox({
 }: CommentBoxProps): React.JSX.Element {
   const [content, setContent] = useState("");
   const modeCapitalized = capitalizeFirstLetter(mode);
+
   useEffect(() => {
     if (submissionStatus === "idle" && submissionOutcome === "success") {
       setContent("");

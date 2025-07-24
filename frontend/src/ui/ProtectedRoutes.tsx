@@ -13,11 +13,12 @@ import { useMatchMedia } from "../utils/customHooks";
 
 export const UserProfileHeader = styled.div`
   @media ${device.sm} {
+    position: sticky;
+    top: 0;
     display: block;
-    background-color: var(--color-surface);
     padding: 4px 20px;
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
-    margin-bottom: 4px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+      rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 
     & > div {
       display: flex;
@@ -55,7 +56,7 @@ function ProtectedRoutes(): React.JSX.Element | null {
         <UserProfileHeader className="userProfileHeader">
           <div>
             <User>
-              <UserAvatar imageUrl={"/assets/user-images/image-roxanne.jpg"} />
+              <UserAvatar imageUrl={userProfile.image} />
               <UserInfo
                 name={userProfile.name}
                 username={userProfile.username}

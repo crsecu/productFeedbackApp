@@ -165,7 +165,7 @@ export async function postCommentOrReply(
   //Submit new comment and return a standardized result: success(if submission succeeds), or failure (if it fails)
   const result = await performActionSubmission<NewCommentOrReply>(
     actionType,
-    () => submitComment(accessToken, comment, commentCount)
+    () => submitComment(comment, commentCount)
   );
 
   return result;

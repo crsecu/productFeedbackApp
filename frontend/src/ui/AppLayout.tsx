@@ -5,10 +5,14 @@ import GlobalSpinner from "./GlobalSpinner";
 import { createPortal } from "react-dom";
 import { ReactNode } from "react";
 import styled from "styled-components";
-import { PageStyles } from "../styles/UIStyles";
 import device from "../styles/breakpoints";
+
 const AppLayoutWrapper = styled.div`
-  ${PageStyles}
+  height: inherit;
+  & > span {
+    display: block;
+    height: 16px;
+  }
 
   & > div:not(.userProfileHeader) {
     @media ${device.sm} {
@@ -47,6 +51,7 @@ function AppLayout({ children }: AppLayoutProps): React.JSX.Element {
           {children}
         </>
       )}
+      <span></span>
     </AppLayoutWrapper>
   );
 }

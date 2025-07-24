@@ -30,7 +30,8 @@ type CommentComposerProps = {
 function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const fetcher = useFetcher();
 
-  const { name, username, image } = useAppSelector(getLoggedInUser);
+  const user = useAppSelector(getLoggedInUser);
+  const { name, username, image } = user.profileInfo;
 
   const { children, mode, payload } = props;
   const { actionType, submissionOutcome } = fetcher?.data || {};

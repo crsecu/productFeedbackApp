@@ -69,7 +69,7 @@ function CreateFeedback(): React.JSX.Element {
         <>
           <TertiaryButton
             as={Link}
-            to={`/feedbackDetail/${payload?.id}`}
+            to={`/app/feedbackDetail/${payload?.id}`}
             replace
           >
             View Details

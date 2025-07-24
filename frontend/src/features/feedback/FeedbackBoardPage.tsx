@@ -17,6 +17,7 @@ import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardPage = styled.div`
   width: initial;
+
   @media ${device.lg} {
     display: flex;
     gap: 30px;
@@ -34,7 +35,7 @@ function FeedbackBoardPage(): React.JSX.Element {
     dataFromLoader;
 
   return (
-    <StyledFeedbackBoardPage>
+    <StyledFeedbackBoardPage className="1">
       <FeedbackBoardLeftColumn suggestionCount={suggestions.length}>
         <RoadmapPreviewTile
           roadmapStats={roadmapStatusCounts}

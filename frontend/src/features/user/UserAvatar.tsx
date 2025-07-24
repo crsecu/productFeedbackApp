@@ -10,7 +10,7 @@ const StyledUserAvatar = styled.div`
 `;
 
 interface UserAvatarProps {
-  imageUrl: string;
+  imageUrl?: string;
 }
 function UserAvatar({ imageUrl }: UserAvatarProps): React.JSX.Element {
   return (

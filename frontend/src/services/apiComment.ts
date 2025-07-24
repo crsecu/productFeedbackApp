@@ -11,7 +11,7 @@ export async function fetchComments(feedbackId: string) {
 
 //Submit comment
 export async function submitComment(
-  accessToken: string,
+  // accessToken?: string,
   commentData: NewCommentOrReply,
   currentCount: number
 ): Promise<MutationResult<NewCommentOrReply>> {
@@ -26,7 +26,7 @@ export async function submitComment(
           "Content-Type": "application/json",
           Prefer: "return=representation",
           Accept: "application / vnd.pgrst.object + json",
-          Authorization: `Bearer ${accessToken}`,
+          // Authorization: `Bearer ${accessToken}`,
         },
       }
     );
