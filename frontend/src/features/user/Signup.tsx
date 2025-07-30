@@ -37,7 +37,7 @@ function Signup(): React.JSX.Element {
       <BannerNotification
         notificationType={submissionOutcome}
         actionType={actionType}
-        notificationMsgCustom={true}
+        notificationMsgCustom={submissionOutcome !== "success" ? true : false}
       >
         <p>{submitError as string}</p>
       </BannerNotification>
