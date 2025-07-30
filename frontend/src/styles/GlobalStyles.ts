@@ -116,6 +116,11 @@ margin: 0;
 padding: 0;
 }
 
+html {
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   html {
     interpolate-size: allow-keywords;
