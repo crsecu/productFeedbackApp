@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         currentUrl,
         "LOGIN, next route",
         nextUrl,
-        "LOGIN, default revalidator",
+        "LOGIN, default revalidator:",
         defaultShouldRevalidate
       );
       return defaultShouldRevalidate;
