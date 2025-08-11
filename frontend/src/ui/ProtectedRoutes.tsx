@@ -18,7 +18,7 @@ export const UserProfileHeader = styled.div`
     display: block;
     background-color: rgba(247, 248, 253, 0.9);
     margin-bottom: 2px;
-    z-index: 999;
+    z-index: 3;
     padding: 4px 20px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
       rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;

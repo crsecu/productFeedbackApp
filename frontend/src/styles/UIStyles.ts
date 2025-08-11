@@ -286,7 +286,7 @@ export const Textarea = styled.textarea<{
 
 export const Overlay = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   width: 100%;
   height: 100%;
   top: 0;

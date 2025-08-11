@@ -27,7 +27,7 @@ const StyledGlobalModal = styled.div`
   height: fit-content;
   margin: auto;
   padding: 20px;
-  z-index: 1;
+  z-index: 4;
 
   & p {
     padding: 0 10px;
