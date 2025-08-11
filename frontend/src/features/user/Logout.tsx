@@ -21,6 +21,10 @@ const StyledLogoutButton = styled.button`
     }
   }
 
+  &:focus-visible {
+    outline-offset: 0;
+  }
+
   & svg {
     width: 1.4rem;
     height: 1.4rem;

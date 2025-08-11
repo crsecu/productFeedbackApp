@@ -33,7 +33,7 @@ function SelectInput<
 
       border: "none",
       boxShadow: "none",
-      outline: state.isFocused ? "1px solid #2cbeb2" : undefined,
+      outline: state.isFocused ? "1px solid #4661E6" : undefined,
       padding: "0 4px",
       cursor: "pointer",
       gap: "5px",
