@@ -116,10 +116,10 @@ margin: 0;
 padding: 0;
 }
 
-html {
+/* html {
   text-size-adjust: none;
   -webkit-text-size-adjust: none;
-}
+} */
 
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -270,6 +270,16 @@ input:not([type=radio]):focus, textarea:focus, select:focus{
   width: 1px;
 }
 
+/* Increase form related text size to 16px to prevent Safari's zoom in behavior on mobile */
+@media (max-width: 639px) {
+  form {
+    font-size: var(--text-base);
+
+    & label, & span {
+      font-size: 0.938rem;
+    }
+  }
+}
 
 
 `;

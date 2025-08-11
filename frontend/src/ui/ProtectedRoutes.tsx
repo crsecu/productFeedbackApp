@@ -43,7 +43,7 @@ export const UserProfileHeader = styled.div`
 function ProtectedRoutes(): React.JSX.Element | null {
   const userProfileRedux = useAppSelector(getLoggedInUser);
 
-  const isMobile = useMatchMedia("(max-width: 639px");
+  const isTabletUp = useMatchMedia(device.sm);
 
   if (!userProfileRedux.isUserLoggedIn) return <Navigate to="/" replace />;
 
@@ -52,7 +52,7 @@ function ProtectedRoutes(): React.JSX.Element | null {
   return (
     <AppLayout>
       {/* authenticated user profile ui component*/}
-      {!isMobile && (
+      {isTabletUp && (
         <UserProfileHeader className="userProfileHeader">
           <div>
             <User>

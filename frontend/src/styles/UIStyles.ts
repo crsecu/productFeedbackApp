@@ -255,6 +255,12 @@ export const FormSection = styled.section`
     margin: 18px 0;
   }
 
+  @media (max-width: 639px) {
+    & h1 {
+      font-size: 1.375rem;
+    }
+  }
+
   @media ${device.sm} {
     padding: 36px;
   }

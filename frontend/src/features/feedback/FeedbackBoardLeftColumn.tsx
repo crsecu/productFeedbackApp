@@ -73,14 +73,14 @@ function FeedbackBoardLeftColumn({
   suggestionCount,
 }: FeedbackBoardLeftColumnProps): React.JSX.Element {
   const [showSidebar, setShowSidebar] = useState(false);
-  const isMobile = useMatchMedia("(max-width: 639px)");
+  const isTabletUp = useMatchMedia(device.sm);
   const user = useAppSelector(getLoggedInUser);
 
   useEffect(() => {
-    if (!isMobile && showSidebar) {
+    if (isTabletUp && showSidebar) {
       setShowSidebar(false);
     }
-  }, [isMobile, showSidebar]);
+  }, [isTabletUp, showSidebar]);
 
   return (
     <>
@@ -88,7 +88,7 @@ function FeedbackBoardLeftColumn({
       <StyledFeedbackBoardLeftColumn>
         <PageHeader>
           <TitleCard />
-          {isMobile && (
+          {!isTabletUp && (
             <IconButton
               onClick={() => setShowSidebar((prevState) => !prevState)}
             >
@@ -109,7 +109,7 @@ function FeedbackBoardLeftColumn({
           isOpen={showSidebar}
           ariaLabel="Feedback filters and roadmap"
         >
-          {isMobile && (
+          {user.isUserLoggedIn && !isTabletUp && (
             <UserProfileWrapper>
               <User>
                 <UserAvatar
