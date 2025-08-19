@@ -5,7 +5,7 @@ import device from "../../styles/breakpoints";
 const StyledFeedbackBoardSidebar = styled.aside<{ $show: boolean }>`
   background-color: var(--color-background);
   position: absolute;
-  z-index: 2;
+  z-index: 4;
   right: 0;
 
   width: ${(props) => (props.$show ? "75%" : 0)};

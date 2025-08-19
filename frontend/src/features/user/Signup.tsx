@@ -55,7 +55,7 @@ function Signup(): React.JSX.Element {
       </AuthFormHeader>
 
       {notification}
-      <br />
+
       <fetcher.Form method="post" action="/login/signup">
         {/* <FormField
                 inputId={"nameSignup"}
@@ -83,23 +83,18 @@ function Signup(): React.JSX.Element {
                   validationError={errors}
                 />
               </FormField> */}
-        <FormField
-          inputId={"emailSignup"}
-          label={"Email"}
-          description={"Your email address"}
-          inputGuidanceId={""}
-        >
+        <FormField inputId={"emailSignup"} label={"Email"} inputGuidanceId={""}>
           <InputField
             name={"email"}
             id={"emailSignup"}
             type={"email"}
             validationError={validationErrors ? validationErrors : undefined}
+            placeHolderText={"Your email address"}
           />
         </FormField>
         <FormField
           inputId={"passwordSignup"}
           label={"Password"}
-          description={"Your password"}
           inputGuidanceId={""}
         >
           <InputField
@@ -109,6 +104,7 @@ function Signup(): React.JSX.Element {
             validationError={validationErrors ? validationErrors : undefined}
             isRequired={true}
             minLength={6}
+            placeHolderText={"Your password"}
           />
         </FormField>
         <PrimaryButton type="submit">Create account</PrimaryButton>

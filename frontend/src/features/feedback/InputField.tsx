@@ -27,6 +27,7 @@ interface InputFieldProps {
   minLength?: number;
   // eslint-disable-next-line no-unused-vars
   onOptionChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  placeHolderText?: string;
 }
 
 function InputField({
@@ -39,6 +40,7 @@ function InputField({
   validationError,
   minLength,
   onOptionChange,
+  placeHolderText,
 }: InputFieldProps): React.JSX.Element {
   const errorMessage = validationError ? validationError[name] : null;
 
@@ -54,6 +56,7 @@ function InputField({
         required={isRequired}
         minLength={minLength}
         onChange={onOptionChange}
+        placeholder={placeHolderText}
       ></StyledInputField>
 
       {errorMessage && <FormFieldError errorMessage={errorMessage} />}

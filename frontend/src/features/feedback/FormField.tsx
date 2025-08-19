@@ -39,7 +39,7 @@ interface FormField {
   children: ReactNode;
   inputId: string;
   label: string;
-  description: string; // "Add a short, descriptive headline"
+  description?: string; // "Add a short, descriptive headline"
   inputGuidanceId: string;
 }
 
@@ -53,7 +53,7 @@ function FormField({
   return (
     <StyledFormField>
       <label htmlFor={inputId}>{label}</label>
-      <span id={inputGuidanceId}>{description}</span>
+      {description && <span id={inputGuidanceId}>{description}</span>}
       {children}
     </StyledFormField>
   );

@@ -22,10 +22,6 @@ export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
     padding-bottom: 4px;
   }
 
-  & form {
-    padding: 0 30px;
-  }
-
   & form button {
     width: 100%;
   }
@@ -34,12 +30,17 @@ export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
     margin-top: 4px;
     background-color: var(--color-text-light);
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
-      rgba(209, 213, 219, 0.736) 0px 0px 0px 1px inset;
+      rgba(209, 213, 219, 0.436) 0px 0px 0px 1px inset;
   }
 
   & form input[type="password"] {
-    font-size: 1.5rem;
-    font-family: monospace;
+    //font-size: 1.5rem;
+    //font-family: monospace;
+  }
+
+  & form ::placeholder {
+    opacity: 0.6;
+    font-size: 0.938rem;
   }
 `;
 
@@ -48,15 +49,14 @@ export const AuthFormHeader = styled.div<{ $paddingBottom?: string }>`
     props.$paddingBottom ? props.$paddingBottom : `40px`};
 
   & h1 {
-    text-align: center;
-    font-size: 2rem;
+    font-size: var(--text-xl);
     padding-bottom: 6px;
     margin: 0;
   }
 
   & p {
     color: var(--color-text-muted);
-    text-align: center;
+    font-size: 0.938rem;
   }
 `;
 

@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 const StyledLogo = styled.div`
-  height: 80px;
   text-align: center;
+  width: 250px;
+  //margin-top: 80px;
 `;
+
 function Logo(): React.JSX.Element {
   return (
     <StyledLogo>
-      <p>LOGO</p>
+      <img src="assets/logoLight.svg" />
     </StyledLogo>
   );
 }

@@ -9,7 +9,8 @@ import { H1 } from "../../styles/Typography";
 import device from "../../styles/breakpoints";
 const PageWrapper = styled(FormPage)`
   ${panelStyles}
-
+  gap: 40px;
+  justify-content: center;
   height: 100%;
   margin: auto;
   width: 100vw;
@@ -36,6 +37,9 @@ const LeftColumn = styled.div`
 `;
 
 const RightColumn = styled.div`
+  display: flex;
+  justify-content: space-around;
+
   @media ${device.md} {
     width: 45%;
   }
