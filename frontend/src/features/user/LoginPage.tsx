@@ -8,13 +8,10 @@ import NewUser from "./NewUser";
 import { H1 } from "../../styles/Typography";
 import device from "../../styles/breakpoints";
 const PageWrapper = styled(FormPage)`
-  ${panelStyles}
-  gap: 40px;
-  justify-content: center;
-  height: 100%;
+  gap: 0;
+  padding: 0;
   margin: auto;
   width: 100vw;
-  flex-direction: column-reverse;
 
   & form {
     & div:last-of-type {
@@ -23,25 +20,58 @@ const PageWrapper = styled(FormPage)`
   }
 
   @media ${device.md} {
-    flex-direction: row;
-    width: 90%;
+    ${panelStyles}
+    padding: 0 0 0 42px;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    height: 80dvh;
+    position: fixed;
+    inset: 0px;
+    min-width: 600px;
+    max-width: 700px;
+    margin: auto;
   }
-`;
 
-const LeftColumn = styled.div`
-  @media ${device.md} {
-    width: 55%;
-    padding: 20px;
-    /* padding: 80px 40px; */
+  @media ${device.xxl} {
+    max-width: 800px;
+    height: 65dvh;
   }
 `;
 
 const RightColumn = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+  height: 240px;
+  background-image: url("assets/blobMobile.svg");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  border-radius: inherit;
 
   @media ${device.md} {
-    width: 45%;
+    width: 50%;
+    height: 100%;
+    background-image: url("assets/blob.svg");
+    background-position: 4% center;
+
+    & > div {
+      width: 70px;
+      align-self: flex-start;
+    }
+  }
+`;
+
+const LeftColumn = styled.div`
+  padding: 16px 36px;
+
+  @media ${device.md} {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: fit-content;
   }
 `;
 
@@ -73,6 +103,8 @@ function LoginPage(): React.JSX.Element {
 
   return (
     <PageWrapper>
+      <RightColumn>{/* <Logo /> */}</RightColumn>
+
       <LeftColumn>
         {location.pathname === "/login" ? (
           <>
@@ -97,9 +129,6 @@ function LoginPage(): React.JSX.Element {
           <Outlet />
         )}
       </LeftColumn>
-      <RightColumn>
-        <Logo />
-      </RightColumn>
     </PageWrapper>
   );
 }
