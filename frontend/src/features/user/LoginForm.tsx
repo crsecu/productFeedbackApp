@@ -45,13 +45,23 @@ export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
 `;
 
 export const AuthFormHeader = styled.div<{ $paddingBottom?: string }>`
+  width: 100%;
+
   padding-bottom: ${(props) =>
-    props.$paddingBottom ? props.$paddingBottom : `40px`};
+    props.$paddingBottom ? props.$paddingBottom : `50px`};
 
   & h1 {
+    color: var(--color-primary);
+    display: inline-block;
     font-size: var(--text-xl);
     padding-bottom: 6px;
     margin: 0;
+  }
+
+  & svg {
+    display: inline-block;
+    vertical-align: -4px;
+    color: #319836;
   }
 
   & p {

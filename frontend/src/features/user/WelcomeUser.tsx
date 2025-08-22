@@ -1,10 +1,10 @@
 import { Form, Navigate, useFetcher } from "react-router-dom";
 import FormField from "../feedback/FormField";
 import InputField from "../feedback/InputField";
-import { FormPage, FormSection, PrimaryButton } from "../../styles/UIStyles";
+import { PrimaryButton } from "../../styles/UIStyles";
 
 import { UserProfile } from "../../types/user.types";
-import { AuthFormHeader } from "./LoginForm";
+import { AuthFormHeader, StyledLoginForm } from "./LoginForm";
 import { H1 } from "../../styles/Typography";
 
 function WelcomeUser(): React.JSX.Element {
@@ -14,12 +14,12 @@ function WelcomeUser(): React.JSX.Element {
   if (fetcherData) return <Navigate to="/" replace />;
 
   return (
-    <FormPage>
-      <FormSection>
-        <AuthFormHeader>
-          <H1>Just a few details to complete your setup</H1>
-          <p>This will only take a moment</p>
-        </AuthFormHeader>
+    <>
+      <AuthFormHeader>
+        <H1>Just a few details to complete your setup</H1>
+        <p>This will only take a moment</p>
+      </AuthFormHeader>
+      <StyledLoginForm>
         <Form
           method="post"
           action="."
@@ -54,8 +54,8 @@ function WelcomeUser(): React.JSX.Element {
           </FormField>
           <PrimaryButton type="submit">Save profile</PrimaryButton>
         </Form>
-      </FormSection>
-    </FormPage>
+      </StyledLoginForm>
+    </>
   );
 }
 

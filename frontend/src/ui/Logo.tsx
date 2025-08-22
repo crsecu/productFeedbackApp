@@ -10,7 +10,7 @@ const StyledLogo = styled.div`
 function Logo(): React.JSX.Element {
   return (
     <StyledLogo>
-      <img src="assets/suggestly.svg" />
+      <img src="/assets/suggestly.svg" />
     </StyledLogo>
   );
 }

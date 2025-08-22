@@ -1,19 +1,14 @@
 import { AuthFormHeader } from "./LoginForm";
 
 import { H1 } from "../../styles/Typography";
-import { FormPage } from "../../styles/UIStyles";
+import { BiSolidCheckCircle } from "react-icons/bi";
 
 function NewUser(): React.JSX.Element {
   return (
-    <FormPage>
-      <AuthFormHeader $paddingBottom="0">
-        <H1>Thank you for confirming your email address.</H1>
-        <p>
-          Please enter you login credentials to continue setting up your
-          account.
-        </p>
-      </AuthFormHeader>
-    </FormPage>
+    <AuthFormHeader>
+      <H1>Email confirmed!</H1> <BiSolidCheckCircle size={24} />
+      <p>Log in to continue setting up your account.</p>
+    </AuthFormHeader>
   );
 }
 

@@ -43,7 +43,7 @@ const PageWrapper = styled(FormPage)`
 const RightColumn = styled.div`
   display: flex;
   align-items: center;
-  height: 240px;
+  height: 200px;
   background-image: url("/assets/blobMobile.svg");
   background-repeat: no-repeat;
   background-position: bottom;
@@ -54,7 +54,7 @@ const RightColumn = styled.div`
     position: absolute;
     opacity: 70%;
     width: 140px;
-    top: 110px;
+    top: 80px;
     left: 10px;
   }
 
