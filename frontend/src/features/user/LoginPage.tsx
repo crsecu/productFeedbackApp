@@ -8,6 +8,7 @@ import NewUser from "./NewUser";
 import { H1 } from "../../styles/Typography";
 import device from "../../styles/breakpoints";
 const PageWrapper = styled(FormPage)`
+  position: relative;
   gap: 0;
   padding: 0;
   margin: auto;
@@ -25,7 +26,7 @@ const PageWrapper = styled(FormPage)`
     box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
     flex-direction: row-reverse;
     justify-content: space-between;
-    height: 80dvh;
+    height: 90dvh;
     position: fixed;
     inset: 0px;
     min-width: 600px;
@@ -35,30 +36,38 @@ const PageWrapper = styled(FormPage)`
 
   @media ${device.xxl} {
     max-width: 800px;
-    height: 65dvh;
+    height: 85dvh;
   }
 `;
 
 const RightColumn = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
   height: 240px;
-  background-image: url("assets/blobMobile.svg");
+  background-image: url("/assets/blobMobile.svg");
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
   border-radius: inherit;
 
+  & > div {
+    position: absolute;
+    opacity: 70%;
+    width: 140px;
+    top: 110px;
+    left: 10px;
+  }
+
   @media ${device.md} {
     width: 50%;
     height: 100%;
-    background-image: url("assets/blob.svg");
+    background-image: url("/assets/blob.svg");
     background-position: 4% center;
 
     & > div {
-      width: 70px;
-      align-self: flex-start;
+      opacity: inherit;
+      top: 12px;
+      left: 12px;
     }
   }
 `;
@@ -103,7 +112,9 @@ function LoginPage(): React.JSX.Element {
 
   return (
     <PageWrapper>
-      <RightColumn>{/* <Logo /> */}</RightColumn>
+      <RightColumn>
+        <Logo />
+      </RightColumn>
 
       <LeftColumn>
         {location.pathname === "/login" ? (
