@@ -13,9 +13,11 @@ interface UserAvatarProps {
   imageUrl?: string;
 }
 function UserAvatar({ imageUrl }: UserAvatarProps): React.JSX.Element {
+  const userImage = imageUrl || "/assets/user-images/avatar.png";
+
   return (
     <StyledUserAvatar>
-      <img src={imageUrl} alt="" />
+      <img src={userImage} alt="" />
     </StyledUserAvatar>
   );
 }

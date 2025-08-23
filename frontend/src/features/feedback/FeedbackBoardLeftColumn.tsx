@@ -112,9 +112,7 @@ function FeedbackBoardLeftColumn({
           {user.isUserLoggedIn && !isTabletUp && (
             <UserProfileWrapper>
               <User>
-                <UserAvatar
-                  imageUrl={"/assets/user-images/image-roxanne.jpg"}
-                />
+                <UserAvatar imageUrl={user.profileInfo.image} />
                 <UserInfo
                   name={user.profileInfo.name}
                   username={user.profileInfo.username}

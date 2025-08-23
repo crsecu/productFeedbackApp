@@ -5,12 +5,13 @@ const StyledLogo = styled.div`
   gap: 2px;
   width: 120px;
   align-items: center;
+  display: block;
 `;
 
 function Logo(): React.JSX.Element {
   return (
     <StyledLogo>
-      <img src="/assets/suggestly.svg" />
+      <img src="/assets/suggestly-logo.svg" />
     </StyledLogo>
   );
 }

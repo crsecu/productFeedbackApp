@@ -44,7 +44,7 @@ const RightColumn = styled.div`
   display: flex;
   align-items: center;
   height: 200px;
-  background-image: url("/assets/blobMobile.svg");
+  background-image: url("/assets/blobMobile.png");
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
@@ -52,7 +52,7 @@ const RightColumn = styled.div`
 
   & > div {
     position: absolute;
-    opacity: 70%;
+
     width: 140px;
     top: 80px;
     left: 10px;
@@ -61,7 +61,7 @@ const RightColumn = styled.div`
   @media ${device.md} {
     width: 50%;
     height: 100%;
-    background-image: url("/assets/blob.svg");
+    background-image: url("/assets/blob.png");
     background-position: 4% center;
 
     & > div {

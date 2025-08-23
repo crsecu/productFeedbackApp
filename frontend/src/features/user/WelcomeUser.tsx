@@ -1,6 +1,6 @@
 import { Form, Navigate, useFetcher } from "react-router-dom";
-import FormField from "../feedback/FormField";
-import InputField from "../feedback/InputField";
+import FormField from "../../ui/form/FormField";
+import InputField from "../../ui/form/InputField";
 import { PrimaryButton } from "../../styles/UIStyles";
 
 import { UserProfile } from "../../types/user.types";

@@ -4,7 +4,6 @@ export function loginLoader() {
   const accessTokenHash = searchParamsHash.get("access_token");
 
   if (accessTokenHash) {
-    console.log("Hash is present in URL");
     window.history.replaceState(null, "", "/login");
     return "newUser";
   }

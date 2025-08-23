@@ -1,8 +1,8 @@
 import { Navigate, useFetcher } from "react-router-dom";
 import styled from "styled-components";
 import { PrimaryButton } from "../../styles/UIStyles";
-import FormField from "../feedback/FormField";
-import InputField from "../feedback/InputField";
+import FormField from "../../ui/form/FormField";
+import InputField from "../../ui/form/InputField";
 import { getFeedbackFormResponse } from "../../utils/helpers";
 import { FeedbackFormErrors } from "../../types/form.types";
 import BannerNotification from "../../ui/notifications/BannerNotification";

@@ -116,7 +116,5 @@ export async function loginUserAction({ request }: ActionFunctionArgs) {
     userData: { accessToken: string; userProfile: UserProfile | null } | null;
   }>("authenticateUser", () => authenticateUser(API_KEY, { email, password }));
 
-  console.log("login user action RESULT", result);
-
   return result;
 }

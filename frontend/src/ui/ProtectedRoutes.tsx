@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import AppLayout from "./AppLayout";
 import { useAppSelector } from "../types/redux.hooks";
 import { getLoggedInUser } from "../store/slices/userSlice";
@@ -11,11 +11,24 @@ import styled from "styled-components";
 import device from "../styles/breakpoints";
 import { useMatchMedia } from "../utils/customHooks";
 
-export const UserProfileHeader = styled.div`
+export const UserProfileHeader = styled.div<{ $disableDashboardNav?: boolean }>`
+  display: flex;
+  align-items: center;
+  /* & a {
+    ${(props) =>
+    props.$disableDashboardNav &&
+    `pointer-events: none;
+    `}
+  } */
+
+  & > img {
+    width: 32px;
+  }
+
   @media ${device.sm} {
     position: sticky;
     top: 0;
-    display: block;
+    //display: block;
     background-color: rgba(247, 248, 253, 0.9);
     margin-bottom: 2px;
     z-index: 3;
@@ -45,6 +58,10 @@ export const UserProfileHeader = styled.div`
 
 function ProtectedRoutes(): React.JSX.Element | null {
   const userProfileRedux = useAppSelector(getLoggedInUser);
+  const location = useLocation();
+
+  const isDashboard = location.pathname === "/app/feedbackBoard" ? true : false;
+  console.log("loc", location, isDashboard);
 
   const isTabletUp = useMatchMedia(device.sm);
 
@@ -56,7 +73,22 @@ function ProtectedRoutes(): React.JSX.Element | null {
     <AppLayout>
       {/* authenticated user profile ui component*/}
       {isTabletUp && (
-        <UserProfileHeader className="userProfileHeader">
+        <UserProfileHeader
+          className="userProfileHeader"
+          $disableDashboardNav={isDashboard}
+        >
+          <Link
+            to="/app/feedbackBoard"
+            onClick={(e) => {
+              if (isDashboard) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+          >
+            <img src="/assets/suggestly-icon.svg" />
+          </Link>
+
           <div>
             <User>
               <UserAvatar imageUrl={userProfile.image} />

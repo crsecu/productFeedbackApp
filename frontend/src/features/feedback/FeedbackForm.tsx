@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 import { FetcherFormProps, FormProps } from "react-router-dom";
 
-import FormField from "./FormField";
-import InputField from "./InputField";
-import FormFieldError from "./FormFieldError";
+import FormField from "../../ui/form/FormField";
+import InputField from "../../ui/form/InputField";
+import FormFieldError from "../../ui/form/FormFieldError";
 
 import { ActionResult } from "../../types/action.types";
 import { CreateFeedbackFormValues } from "../../types/form.types";

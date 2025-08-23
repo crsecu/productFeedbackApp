@@ -5,6 +5,10 @@ import device from "../styles/breakpoints";
 const StyledTitleCard = styled.div`
   display: flex;
   flex-direction: column-reverse;
+
+  & > img {
+    width: 30px;
+  }
 `;
 const MainHeading = styled.h1`
   font-size: var(--text-xs);
@@ -34,12 +38,10 @@ const BrandingText = styled.span`
 `;
 
 function TitleCard(): React.JSX.Element {
-  // const navigate = useNavigate();
   return (
     <StyledTitleCard>
-      <MainHeading>Feedback Board RE</MainHeading>
-      {/* onClick={() => navigate("/app")} */}
-      <BrandingText>Frontend Mentor RE</BrandingText>
+      <MainHeading>Feedback Board </MainHeading>
+      <BrandingText>Frontend Mentor</BrandingText>
     </StyledTitleCard>
   );
 }

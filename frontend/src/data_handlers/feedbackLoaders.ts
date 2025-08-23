@@ -12,6 +12,7 @@ import { FeedbackBoardLoaderData } from "../types/loader.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 import { Feedback } from "../types/feedback.types";
 import { ensureValidSession } from "../services/apiAuth";
+
 //authGuardLoader
 export async function authGuardLoader(): Promise<Response | string> {
   const accessToken = await ensureValidSession();
@@ -26,7 +27,6 @@ export async function authGuardLoader(): Promise<Response | string> {
 export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData | null> {
   const accessToken = await ensureValidSession();
   if (!accessToken) return null;
-  console.log("is FEEDBACK LOADER running");
 
   //data needed by FeedbackBoardPage
   const data = await fetchAndGroupFeedback(accessToken, "feedbackBoard");
