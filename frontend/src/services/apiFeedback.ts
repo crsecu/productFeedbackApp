@@ -8,6 +8,7 @@ import { EditFeedbackFormValues } from "../types/form.types";
 import { MutationResult } from "../types/mutation.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 import { fetchWrapper, groupFeedbackByStatus } from "../utils/helpers";
+import { ensureValidSession } from "./apiAuth";
 
 export const API_URL: string = import.meta.env.VITE_SUPABASE_URL;
 export const API_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -157,7 +158,8 @@ export async function deleteFeedback(
 /* Update backend with current vote count after user's upvote/unvote actions */
 export async function persistFeedbackVote(
   feedbackId: string,
-  voteCount: number
+  voteCount: number,
+  accessToken: string
 ): Promise<number> {
   try {
     const data = await fetchWrapper<Feedback>(
@@ -165,7 +167,7 @@ export async function persistFeedbackVote(
       {
         method: "PATCH",
         body: JSON.stringify({ upvotes: voteCount }),
-        headers: HEADERS.write,
+        headers: { ...HEADERS.write, Authorization: `Bearer ${accessToken}` },
       }
     );
 

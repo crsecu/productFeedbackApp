@@ -9,6 +9,7 @@ import {
 } from "../../utils/helpers";
 
 import { RoadmapStatusDot } from "../../styles/features/RoadmapStyles";
+import { ReactNode } from "react";
 
 export const StyledFeedbackCardContent = styled.div`
   display: flex;
@@ -42,11 +43,13 @@ const FeedbackTitle = styled(H3)`
 interface FeedbackCardContentProps {
   feedback: RoadmapFeedback | SuggestionFeedback;
   className?: string;
+  children?: ReactNode;
 }
 
 function FeedbackCardContent({
   feedback,
   className,
+  children,
 }: FeedbackCardContentProps): React.JSX.Element {
   if (!feedback) return <article>No matching value found</article>;
 
@@ -55,13 +58,12 @@ function FeedbackCardContent({
   const statusLabel = capitalizeFirstLetter(status);
   return (
     <StyledFeedbackCardContent className={className}>
-      {/* TO DO: change to h1 for FeedbackDetail */}
-
       {status !== "suggestion" && (
         <RoadmapStatusDot $status={status}>{statusLabel}</RoadmapStatusDot>
       )}
 
-      <FeedbackTitle>{title}</FeedbackTitle>
+      <FeedbackTitle as={children ? "h1" : "h3"}>{title}</FeedbackTitle>
+
       <p>{description}</p>
 
       <CategoryLabel>{categoryLabel}</CategoryLabel>

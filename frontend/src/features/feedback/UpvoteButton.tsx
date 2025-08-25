@@ -10,6 +10,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { IoChevronUpSharp } from "react-icons/io5";
 import { focusStyle } from "../../styles/UIStyles";
+import { ensureValidSession } from "../../services/apiAuth";
 
 const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
   position: absolute;
@@ -79,20 +80,38 @@ function UpvoteButton({
   const nextUpvoteCount =
     upvoteCount === 0 || !isFeedbackUpvoted ? upvoteCount + 1 : upvoteCount - 1;
 
-  function handleUpvote() {
+  async function handleUpvote() {
     setIsLoading(true);
 
-    persistFeedbackVote(feedbackId, nextUpvoteCount)
-      .then(() => {
-        dispatch(userUpvoteTrackingAction(feedbackId));
-        setUpvoteCount(nextUpvoteCount);
-      })
-      .catch(() => {
-        dispatch(showToastNotification({ key: "upvoteFeedback_error" }));
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      const accessToken = await ensureValidSession();
+      if (!accessToken) {
+        //here return to "/"
+        throw new Error("No access token available");
+      }
+
+      await persistFeedbackVote(feedbackId, nextUpvoteCount, accessToken);
+      dispatch(userUpvoteTrackingAction(feedbackId));
+      setUpvoteCount(nextUpvoteCount);
+    } catch (err) {
+      console.error("Failed to upvote:", err);
+      dispatch(showToastNotification({ key: "upvoteFeedback_error" }));
+    } finally {
+      setIsLoading(false);
+    }
+
+    // setIsLoading(true);
+    // persistFeedbackVote(feedbackId, nextUpvoteCount)
+    //   .then(() => {
+    //     dispatch(userUpvoteTrackingAction(feedbackId));
+    //     setUpvoteCount(nextUpvoteCount);
+    //   })
+    //   .catch(() => {
+    //     dispatch(showToastNotification({ key: "upvoteFeedback_error" }));
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   }
 
   return (

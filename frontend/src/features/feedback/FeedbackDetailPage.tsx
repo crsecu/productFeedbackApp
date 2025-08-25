@@ -94,7 +94,9 @@ function FeedbackDetailPage(): React.JSX.Element {
         <FeedbackCard>
           <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />
           <div>
-            <FeedbackDetailCardContent feedback={feedback} />
+            <FeedbackDetailCardContent
+              feedback={feedback}
+            ></FeedbackDetailCardContent>
             <CommentCount />
           </div>
         </FeedbackCard>
