@@ -57,6 +57,7 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
     const suggestionsSorted = sortFeedbackList(suggestions, category, sortBy);
 
     return suggestionsSorted.map((item) => {
+      const commentCount = item.comments[0].count;
       return (
         <li key={item.id}>
           <SuggestionCard>
@@ -67,7 +68,7 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
 
             <Link to={`/app/feedbackDetail/${item.id}`}>
               <FeedbackCardContent feedback={item} />
-              <CommentCount count={item.commentCount} />
+              <CommentCount count={commentCount} />
             </Link>
           </SuggestionCard>
         </li>

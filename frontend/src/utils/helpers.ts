@@ -83,15 +83,18 @@ export function sortFeedbackList(
     category === "all" ? list : filterFeedbackByCategory(list, category);
 
   return [...feedbackList].sort((a, b) => {
+    const commentCountA = a.comments[0].count;
+    const commentCountB = b.comments[0].count;
+
     switch (sortByOption) {
       case "mostUpvotes":
         return b.upvotes - a.upvotes;
       case "leastUpvotes":
         return a.upvotes - b.upvotes;
       case "mostComments":
-        return b.commentCount - a.commentCount;
+        return commentCountB - commentCountA;
       case "leastComments":
-        return a.commentCount - b.commentCount;
+        return commentCountA - commentCountB;
       default:
         console.warn(`Unexpected sortByOption: "${sortByOption}"`);
         return b.upvotes - a.upvotes; //safe fallback

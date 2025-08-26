@@ -53,7 +53,6 @@ export async function createFeedbackAction({
     ...formValues,
     status: "suggestion",
     upvotes: 0,
-    commentCount: 0,
   };
 
   //Submit new feedback and return a standardized result: success(if submission succeeds), or failure (if it fails)

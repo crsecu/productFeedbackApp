@@ -8,7 +8,6 @@ import { EditFeedbackFormValues } from "../types/form.types";
 import { MutationResult } from "../types/mutation.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
 import { fetchWrapper, groupFeedbackByStatus } from "../utils/helpers";
-import { ensureValidSession } from "./apiAuth";
 
 export const API_URL: string = import.meta.env.VITE_SUPABASE_URL;
 export const API_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -47,7 +46,9 @@ export async function fetchAndGroupFeedback(
   pageContext: "feedbackBoard" | "developmentRoadmap"
 ): Promise<FeedbackGroupedByStatus | RoadmapFeedbackGroupedByStatus> {
   const queryCondition =
-    pageContext === "feedbackBoard" ? "" : "?status=not.eq.suggestion";
+    pageContext === "feedbackBoard"
+      ? "?select=*, comments(count)"
+      : "?status=not.eq.suggestion";
 
   const feedbackList = await fetchWrapper<Feedback[]>(
     `${API_URL}/productRequests${queryCondition}`,

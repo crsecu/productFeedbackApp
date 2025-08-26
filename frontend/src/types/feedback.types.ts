@@ -18,13 +18,16 @@ export const STATUS_OPTIONS = [
 
 export type Status = (typeof STATUS_OPTIONS)[number];
 
+interface CommentCountRow {
+  count: number;
+}
 // Shared feedback fields
 export interface BaseFeedbackFields {
   title: string;
   category: Category;
   upvotes: number;
   description: string;
-  commentCount: number;
+  comments: CommentCountRow[];
 }
 
 // Generic helper to create types based on status (suggestion, planned, in-Progress, live)
@@ -41,7 +44,7 @@ export type LiveFeedback = FeedbackWithStatus<"live">;
 
 /* "NewFeedback" represents the data model for a feedback entry before it is sent to the server
    JSON Server automatically assigns a unique id to each feedback entry upon creation */
-export type NewFeedback = Omit<SuggestionFeedback, "id">;
+export type NewFeedback = Omit<SuggestionFeedback, "id" | "comments">;
 
 export type Feedback =
   | SuggestionFeedback
