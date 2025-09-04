@@ -78,12 +78,12 @@ function GlobalModal(): React.JSX.Element | null {
 
   const handleConfirm = async () => {
     if (modalType === "delete_feedback") {
-      const accessToken = await ensureValidSession();
-      if (!accessToken) return navigate("/");
+      const authSession = await ensureValidSession();
+      if (!authSession) return navigate("/");
 
       try {
         assert(confirmPayload);
-        await deleteFeedback(accessToken, confirmPayload);
+        await deleteFeedback(authSession.accessToken, confirmPayload);
 
         navigate("/app/feedbackBoard", { replace: true }); //this must go to previous page which could be roadmap as well
 

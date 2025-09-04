@@ -22,10 +22,11 @@ function AuthGuard(): null {
       const userProfile = await getUserProfileInfo(accessToken);
       if (!userProfile) return navigate("/login/welcome", { replace: true });
 
-      const { name, username, image } = userProfile;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, ...userData } = userProfile;
 
       //to do: check if referencing entire userProfile object creates unnecessary reruns of useEffect; might need to use individual properties
-      dispatch(setUserCredentials({ name, image, username }));
+      dispatch(setUserCredentials(userData));
       navigate("/app/feedbackBoard", { replace: true });
       return;
     }

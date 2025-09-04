@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { isRouteErrorResponse, SetURLSearchParams } from "react-router-dom";
 import { submitComment } from "../services/apiComment";
 import {
@@ -10,6 +11,7 @@ import {
 import {
   Feedback,
   FeedbackGroupedByStatus,
+  FeedbackWithStatusRaw,
   SuggestionFeedback,
 } from "../types/feedback.types";
 import { useRef, useState } from "react";
@@ -41,6 +43,7 @@ export async function fetchWrapper<T>(
     return await res.json();
   } catch (error) {
     const errorMsg = errorMessage(error);
+
     console.log("api call error fetchWrapper", errorMsg);
     throw errorMsg;
   }
@@ -83,21 +86,24 @@ export function sortFeedbackList(
     category === "all" ? list : filterFeedbackByCategory(list, category);
 
   return [...feedbackList].sort((a, b) => {
-    const commentCountA = a.comments[0].count;
-    const commentCountB = b.comments[0].count;
+    const upvoteCountA = a.upvotes;
+    const upvoteCountB = b.upvotes;
+
+    const commentCountA = a.comments;
+    const commentCountB = b.comments;
 
     switch (sortByOption) {
       case "mostUpvotes":
-        return b.upvotes - a.upvotes;
+        return upvoteCountB - upvoteCountA;
       case "leastUpvotes":
-        return a.upvotes - b.upvotes;
+        return upvoteCountA - upvoteCountB;
       case "mostComments":
         return commentCountB - commentCountA;
       case "leastComments":
         return commentCountA - commentCountB;
       default:
         console.warn(`Unexpected sortByOption: "${sortByOption}"`);
-        return b.upvotes - a.upvotes; //safe fallback
+        return upvoteCountB - upvoteCountA; //safe fallback
     }
   });
 }
@@ -138,7 +144,7 @@ export async function postCommentOrReply(
   //Submit new comment and return a standardized result: success(if submission succeeds), or failure (if it fails)
   const result = await performActionSubmission<NewCommentOrReply>(
     actionType,
-    () => submitComment(comment, commentCount)
+    () => submitComment(comment)
   );
 
   return result;
@@ -228,7 +234,6 @@ export function errorMessage(error: unknown): string {
   if (isRouteErrorResponse(error)) {
     return `${error.status} ${error.statusText}`;
   } else if (error instanceof Error) {
-    console.log("checking error msg ", error);
     return error.message.includes("Failed to fetch")
       ? "Network error. Please check your internet connection."
       : error.message;
@@ -444,4 +449,25 @@ export function useFormChangeTracker<Type extends Record<string, string>>(
   }
 
   return [isFormDirty, handleFieldChange] as const;
+}
+
+//function transforms raw feedback list into UI-ready feedback list with upvote info, comment count and info about current user
+// upvotes
+
+export function formatFeedbackForUI(
+  feedbackList: FeedbackWithStatusRaw[]
+): Feedback[] {
+  return feedbackList.map((feedback) => {
+    const upvoteCountCurrentUser = feedback.upvotesByCurrentUser[0].count ?? 0;
+
+    // eslint-disable-next-line no-unused-vars
+    const { upvotesByCurrentUser, ...newFeedback } = feedback;
+
+    return {
+      ...newFeedback,
+      upvotes: newFeedback.upvotes[0].count ?? 0,
+      comments: newFeedback.comments?.[0].count ?? 0,
+      isUpvotedByCurrentUser: upvoteCountCurrentUser > 0,
+    };
+  });
 }

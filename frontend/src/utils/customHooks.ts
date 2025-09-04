@@ -13,7 +13,6 @@ export function useMatchMedia(mediaQuery: string): boolean {
     setIsMatching(mediaWatcher.matches);
 
     function updateIsMatching(e: MediaQueryListEvent) {
-      console.log("match media???", e);
       setIsMatching(e.matches);
     }
 

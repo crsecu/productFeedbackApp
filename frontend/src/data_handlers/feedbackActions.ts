@@ -27,8 +27,8 @@ export async function createFeedbackAction({
 }: ActionFunctionArgs): Promise<
   ActionResult | ActionResult<SuggestionFeedback> | null
 > {
-  const accessToken = await ensureValidSession();
-  if (!accessToken) return null;
+  const authSession = await ensureValidSession();
+  if (!authSession) return null;
 
   const actionType = "createFeedback";
 
@@ -52,13 +52,12 @@ export async function createFeedbackAction({
   const newFeedback: NewFeedback = {
     ...formValues,
     status: "suggestion",
-    upvotes: 0,
   };
 
   //Submit new feedback and return a standardized result: success(if submission succeeds), or failure (if it fails)
   const result = await performActionSubmission<SuggestionFeedback>(
     actionType,
-    () => submitFeedback(accessToken, newFeedback)
+    () => submitFeedback(authSession.accessToken, newFeedback)
   );
 
   return result;
@@ -73,8 +72,8 @@ export async function editFeedbackAction({
 }: ActionFunctionArgs): Promise<
   ActionResult | ActionResult<EditFeedbackFormValues> | null
 > {
-  const accessToken = await ensureValidSession();
-  if (!accessToken) return null;
+  const authSession = await ensureValidSession();
+  if (!authSession) return null;
 
   const actionType = "editFeedback";
   const feedbackId = params.feedbackId as string;
@@ -102,7 +101,7 @@ export async function editFeedbackAction({
   //Submit edited feedback and return a standardized result: success(if submission succeeds), or failure (if it fails)
   const result = await performActionSubmission<EditFeedbackFormValues>(
     actionType,
-    () => editFeedback(accessToken, feedbackId, formValues)
+    () => editFeedback(authSession.accessToken, feedbackId, formValues)
   );
 
   return result;

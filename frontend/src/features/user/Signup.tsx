@@ -31,7 +31,6 @@ function Signup(): React.JSX.Element {
     submitError,
   } = actionData ? getFeedbackFormResponse<UserSB>(actionData) : {};
 
-  console.log("ac", actionData);
   const showBanner =
     (submissionOutcome === "success" || submissionOutcome === "failure") &&
     !!actionType;

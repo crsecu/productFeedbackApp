@@ -1,16 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppState } from "../store";
 
-import { LoggedinUserProfile } from "../../types/user.types";
+import { CurrentUser, UserProfile } from "../../types/user.types";
 
 interface UserState {
   isUserLoggedIn: boolean;
-  profileInfo: LoggedinUserProfile;
+  authId: string;
+  profileInfo: CurrentUser;
   upvotedFeedbackIds: Record<string, boolean>;
 }
 
 const initialState: UserState = {
   isUserLoggedIn: false,
+  authId: "",
   profileInfo: {
     name: "",
     image: "",
@@ -23,10 +25,12 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserCredentials(state, action: PayloadAction<LoggedinUserProfile>) {
+    setUserCredentials(state, action: PayloadAction<Omit<UserProfile, "id">>) {
       //payload = user account information (see initalState object for data structure)
       state.isUserLoggedIn = true;
-      state.profileInfo = action.payload;
+      const { authId, ...userProfileData } = action.payload;
+      state.authId = authId;
+      state.profileInfo = userProfileData;
     },
     trackUserUpvote(state, action: PayloadAction<string>) {
       //payload = feedback id

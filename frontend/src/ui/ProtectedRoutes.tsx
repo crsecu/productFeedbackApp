@@ -61,7 +61,6 @@ function ProtectedRoutes(): React.JSX.Element | null {
   const location = useLocation();
 
   const isDashboard = location.pathname === "/app/feedbackBoard" ? true : false;
-  console.log("loc", location, isDashboard);
 
   const isTabletUp = useMatchMedia(device.sm);
 

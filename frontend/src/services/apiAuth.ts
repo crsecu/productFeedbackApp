@@ -9,6 +9,7 @@ interface AuthTokens {
   refreshToken: string;
   expiresAt: number;
   isSessionActive: boolean;
+  userId: string;
 }
 
 export const AUTH_API_URL: string = import.meta.env.VITE_SUPABASE_AUTH_URL;
@@ -50,13 +51,14 @@ export async function fetchWrapperSBAuth<T>(
 }
 
 //Get store auth token from localStorage
-export async function getStoredAuthTokens(): Promise<AuthTokens | null> {
+export function getStoredAuthTokens(): AuthTokens | null {
   const tokensRaw = localStorage.getItem("auth_session");
 
   if (!tokensRaw) return null;
 
   try {
-    const { access_token, refresh_token, expires_at } = JSON.parse(tokensRaw);
+    const { access_token, refresh_token, expires_at, user } =
+      JSON.parse(tokensRaw);
     const currentTime = Date.now();
     const isSessionActive = currentTime < expires_at * 1000;
 
@@ -65,6 +67,7 @@ export async function getStoredAuthTokens(): Promise<AuthTokens | null> {
       refreshToken: refresh_token,
       isSessionActive,
       expiresAt: expires_at,
+      userId: user.id,
     };
   } catch {
     return null;
@@ -108,7 +111,6 @@ export async function authenticateUser(
       },
     };
   } catch (err) {
-    console.log("MILLENIAL error", err);
     return { success: false, error: err };
   }
 }
@@ -191,6 +193,7 @@ export async function getUserProfileInfo(access_token: string) {
 
   return null;
 }
+
 //authorize authenticated user
 export async function authorizeUser(access_token: string): Promise<UserSB> {
   const fetchedUser = await fetchUser(access_token);
@@ -202,39 +205,40 @@ export async function authorizeUser(access_token: string): Promise<UserSB> {
 interface CachedSession {
   accessToken: string;
   expiresAtMs: number; //store val in ms
+  userId: string;
 }
+
 let cachedSession: CachedSession | null = null;
 
 export function clearCachedSession() {
   localStorage.removeItem("auth_session");
   cachedSession = null;
-  console.log("cached session", cachedSession);
 }
 
-export async function ensureValidSession(): Promise<string | null> {
+export async function ensureValidSession(): Promise<CachedSession | null> {
   //1. check if data is available in cachedAcessToken, return it if available
   const now = Date.now(); //in ms
   const timeBuffer = 60000; //ms
 
   if (cachedSession && now < cachedSession.expiresAtMs - timeBuffer) {
-    return cachedSession.accessToken;
+    return cachedSession;
   }
 
   //2. if not, check localStorage
-  const tokens = await getStoredAuthTokens();
-  //3. if localStorage, empty, return null
+  const tokens = getStoredAuthTokens();
 
+  //3. if localStorage, empty, return null
   if (!tokens) return null;
 
-  const { accessToken, refreshToken, expiresAt } = tokens;
+  const { accessToken, refreshToken, expiresAt, userId } = tokens;
   const expiresAtMs = expiresAt * 1000;
 
   const isExpired = now > expiresAtMs - timeBuffer;
 
-  //4. if localStorage has access_token, and if not expired, store in cachedAccessToken and return accessToken
+  //4. if localStorage has access_token, and if not expired, store in cachedSession and return cachedSession
   if (!isExpired) {
-    cachedSession = { accessToken, expiresAtMs };
-    return accessToken;
+    cachedSession = { accessToken, expiresAtMs, userId };
+    return cachedSession;
   }
 
   //5. if session expired, refresh session, update cache
@@ -245,9 +249,10 @@ export async function ensureValidSession(): Promise<string | null> {
     cachedSession = {
       accessToken: session.access_token,
       expiresAtMs: session.expires_at ?? 0,
+      userId: session.user.id,
     };
 
-    return session.access_token;
+    return cachedSession;
   } catch (err) {
     console.error("Session refresh failed:", err);
     cachedSession = null;

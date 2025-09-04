@@ -39,7 +39,6 @@ export async function signUpUserAction({ request }: ActionFunctionArgs) {
   const userProfileConflicts = await checkUserSignupConflicts(email);
 
   if (userProfileConflicts) {
-    console.log("userProfileConflicts", userProfileConflicts);
     return userProfileConflicts;
   }
 
@@ -47,8 +46,6 @@ export async function signUpUserAction({ request }: ActionFunctionArgs) {
   const result = await performActionSubmission<UserSB>("createUser", () =>
     signupUser(API_KEY, { email, password })
   );
-
-  console.log("signup result", result);
 
   return result;
 }

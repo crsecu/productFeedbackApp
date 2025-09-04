@@ -46,7 +46,7 @@ export const UpvoteButtonDynamic = styled(UpvoteButton)`
 
     & svg {
       display: block;
-      margin: auto;
+      margin: 0 auto;
       margin-bottom: 6px;
       height: 14px;
       width: 14px;
@@ -54,26 +54,8 @@ export const UpvoteButtonDynamic = styled(UpvoteButton)`
   }
 
   @media ${device.md} {
-    padding: 12px 10px 8px;
+    padding: 10px 10px 8px;
   }
 `;
 
-/* SAVE BACKUP */
-export const StyledFeedbackCard1 = styled.article`
-  ${panelStyles}
-
-  position: relative;
-  padding-bottom: 26px;
-
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
-
-  & p {
-    text-wrap: wrap;
-  }
-
-  & a {
-    display: flex;
-    justify-content: space-between;
-  }
-`;
 export { panelStyles };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   fetchAndGroupFeedback,
   fetchFeedbackById,
@@ -10,26 +11,31 @@ import { API_URL } from "../services/apiFeedback";
 import { CommentListType } from "../types/comment.types";
 import { FeedbackBoardLoaderData } from "../types/loader.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
-import { Feedback } from "../types/feedback.types";
 import { ensureValidSession } from "../services/apiAuth";
 
 //authGuardLoader
 export async function authGuardLoader(): Promise<Response | string> {
-  const accessToken = await ensureValidSession();
+  const authSession = await ensureValidSession();
 
-  if (accessToken === null) return redirect("/login");
+  if (!authSession) return redirect("/login");
 
-  return accessToken;
+  return authSession.accessToken;
 }
 
 // Loader for Feedback Board Page
 // returns grouped suggestions and roadmap-related feedback counts
 export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData | null> {
-  const accessToken = await ensureValidSession();
-  if (!accessToken) return null;
+  const authSession = await ensureValidSession();
+  if (!authSession) return null;
+
+  const { accessToken, userId } = authSession;
 
   //data needed by FeedbackBoardPage
-  const data = await fetchAndGroupFeedback(accessToken, "feedbackBoard");
+  const data = await fetchAndGroupFeedback(
+    accessToken,
+    userId,
+    "feedbackBoard"
+  );
 
   const { suggestion, planned, "in-Progress": inProgress, live } = data;
 
@@ -51,11 +57,14 @@ export async function feedbackBoardLoader(): Promise<FeedbackBoardLoaderData | n
 export async function roadmapDevLoader(): Promise<
   Response | RoadmapFeedbackGroupedByStatus
 > {
-  const accessToken = await ensureValidSession();
-  if (!accessToken) return redirect("/");
+  const authSession = await ensureValidSession();
+  if (!authSession) return redirect("/");
+
+  const { accessToken, userId } = authSession;
 
   const roadmapData = await fetchAndGroupFeedback(
     accessToken,
+    userId,
     "developmentRoadmap"
   );
 
@@ -63,16 +72,26 @@ export async function roadmapDevLoader(): Promise<
 }
 
 // Fetch Feedback based on id
-export async function feedbackDetailLoader({
-  params,
-}: LoaderFunctionArgs): Promise<Feedback | Response> {
+export async function feedbackDetailLoader({ params }: LoaderFunctionArgs) {
   const feedbackId = params.feedbackId;
   assert(feedbackId, "feedbackId is invalid");
 
-  const accessToken = await ensureValidSession();
-  if (!accessToken) return redirect("/");
+  const authSession = await ensureValidSession();
+  if (!authSession) return redirect("/");
 
-  return await fetchFeedbackById(accessToken, feedbackId);
+  const { accessToken, userId } = authSession;
+
+  const feedbackRaw = await fetchFeedbackById(accessToken, userId, feedbackId);
+
+  // eslint-disable-next-line no-unused-vars
+  const { upvotesByCurrentUser, ...newFeedback } = feedbackRaw;
+  const upvoteCountCurrentUser = feedbackRaw.upvotesByCurrentUser[0].count ?? 0;
+
+  return {
+    ...newFeedback,
+    upvotes: newFeedback.upvotes[0].count ?? 0,
+    isUpvotedByCurrentUser: upvoteCountCurrentUser > 0,
+  };
 }
 
 // Fetch Comment List for Detail Page
@@ -80,8 +99,10 @@ export async function commentDataLoader({ params }: LoaderFunctionArgs) {
   const feedbackId = params.feedbackId;
   assert(feedbackId, "feedbackId is invalid");
 
-  const accessToken = await ensureValidSession();
-  if (!accessToken) return redirect("/");
+  const authSession = await ensureValidSession();
+  if (!authSession) return redirect("/");
+
+  const { accessToken, userId } = authSession;
 
   try {
     const comments = await fetchWrapper<CommentListType>(

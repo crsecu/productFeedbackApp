@@ -52,7 +52,15 @@ function FeedbackDetailPage(): React.JSX.Element {
   const feedback = useLoaderData() as Feedback;
   const { isEditing } = useAppSelector((state) => state.feedbackDetail);
 
-  const { id, upvotes, title, description, category, status } = feedback;
+  const {
+    id,
+    title,
+    description,
+    category,
+    status,
+    upvotes,
+    isUpvotedByCurrentUser,
+  } = feedback;
 
   const editableFeedbackFields = useMemo(() => {
     return {
@@ -92,7 +100,11 @@ function FeedbackDetailPage(): React.JSX.Element {
           </EditFeedbackButton>
         </ActionBar>
         <FeedbackCard>
-          <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />
+          <UpvoteButtonDynamic
+            feedbackId={id}
+            initialUpvoteCount={upvotes}
+            isUpvotedByCurrentUser={isUpvotedByCurrentUser}
+          />
           <div>
             <FeedbackDetailCardContent
               feedback={feedback}

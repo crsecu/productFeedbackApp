@@ -64,10 +64,11 @@ function RoadmapStatusSection({
           <UpvoteButton
             feedbackId={feedbackItem.id}
             initialUpvoteCount={feedbackItem.upvotes}
+            isUpvotedByCurrentUser={feedbackItem.isUpvotedByCurrentUser}
           />
           <Link to={`/app/feedbackDetail/${feedbackItem.id}`}>
             <FeedbackCardContent feedback={feedbackItem} />
-            <CommentCount count={feedbackItem.commentCount} />
+            <CommentCount count={feedbackItem.comments} />
           </Link>
         </RoadmapFeedbackCard>
       </li>

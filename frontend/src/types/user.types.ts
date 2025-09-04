@@ -3,16 +3,21 @@ export interface LoginUserCredentials {
   password: string;
 }
 
-export interface UserProfileInput {
+export interface NewUserProfile {
   name: string;
   username: string;
   authId: string;
 }
 
-export interface UserProfile extends UserProfileInput {
+export interface UserProfile extends NewUserProfile {
   id: number;
   image?: string;
-  upvotedFeedbackIds: number[] | null;
+}
+
+export interface CurrentUser {
+  name: string;
+  image?: string;
+  username: string;
 }
 
 export interface UserIdentifierAvailability {
@@ -23,11 +28,4 @@ export interface UserIdentifierAvailability {
 export interface SignupConflictError {
   email: string | null;
   username: string | null;
-}
-
-export interface LoggedinUserProfile {
-  name: string;
-  image?: string;
-  username: string;
-  //upvotedFeedbackIds: Record<string, boolean> | null;
 }

@@ -3,7 +3,7 @@ import { UserSB } from "../types/supabaseAuth.types";
 import {
   LoginUserCredentials,
   UserIdentifierAvailability,
-  UserProfileInput,
+  NewUserProfile,
   UserProfile,
 } from "../types/user.types";
 import { fetchWrapper, createActionResult } from "../utils/helpers";
@@ -79,7 +79,7 @@ export async function checkUserSignupConflicts(email: string) {
 //create new user profile
 export async function createUserProfile(
   accessToken: string,
-  profileData: UserProfileInput
+  profileData: NewUserProfile
 ): Promise<MutationResult<UserProfile>> {
   const jsonProfileData = JSON.stringify(profileData);
 
@@ -99,7 +99,6 @@ export async function createUserProfile(
 
     return { success: true, payload: userProfile };
   } catch (err) {
-    console.log("ooopsy", err);
     return { success: false, error: err };
   }
 }
