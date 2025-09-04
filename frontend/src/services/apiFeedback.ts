@@ -180,10 +180,7 @@ export async function persistFeedbackVote(
     });
 
     if (res.status === 409) {
-      // Already upvoted → toggle it off
-      //await unvote(feedbackId, userId, accessToken);
-
-      const res = await fetch(
+      await fetch(
         `${API_URL}/feedbackUpvotes?feedbackId=eq.${feedbackId}&userId=eq.${userAuthId}`,
         {
           method: "DELETE",
@@ -199,7 +196,7 @@ export async function persistFeedbackVote(
       throw new Error(errorText || `HTTP Error: ${res.status}`);
     }
 
-    const data = await res.json();
+    await res.json();
 
     return "upvoted"; //decide what to return
   } catch (err) {

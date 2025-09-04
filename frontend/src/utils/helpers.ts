@@ -120,7 +120,7 @@ export async function postCommentOrReply(
   const {
     author,
     mode,
-    payload: { commentCount, feedbackId },
+    payload: { feedbackId },
   } = submissionData;
 
   /* Common fields between comment and reply */

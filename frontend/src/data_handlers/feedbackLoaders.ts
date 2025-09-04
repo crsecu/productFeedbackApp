@@ -102,7 +102,7 @@ export async function commentDataLoader({ params }: LoaderFunctionArgs) {
   const authSession = await ensureValidSession();
   if (!authSession) return redirect("/");
 
-  const { accessToken, userId } = authSession;
+  const { accessToken } = authSession;
 
   try {
     const comments = await fetchWrapper<CommentListType>(
