@@ -70,7 +70,6 @@ function ProtectedRoutes(): React.JSX.Element | null {
 
   return (
     <AppLayout>
-      {/* authenticated user profile ui component*/}
       {isTabletUp && (
         <UserProfileHeader
           className="userProfileHeader"

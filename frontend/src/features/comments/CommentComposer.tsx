@@ -14,6 +14,10 @@ const StyledCommentComposer = styled.div`
   & h2 {
     padding-bottom: 4px;
   }
+
+  & > section {
+    margin-bottom: 10px;
+  }
 `;
 
 type CommentComposerProps = {

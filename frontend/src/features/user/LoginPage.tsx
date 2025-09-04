@@ -130,7 +130,7 @@ function LoginPage(): React.JSX.Element {
 
             <LoginForm />
             <UserCTA>
-              Don't have an account?{" "}
+              Don't have an account?
               <AuthLinkButton to="signup" replace>
                 Sign up
               </AuthLinkButton>

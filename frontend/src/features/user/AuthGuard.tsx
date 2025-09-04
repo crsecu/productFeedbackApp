@@ -14,7 +14,6 @@ function AuthGuard(): null {
 
   const userProfileRedux = useAppSelector(getLoggedInUser);
 
-  //effect
   useEffect(() => {
     if (userProfileRedux.isUserLoggedIn) return;
 

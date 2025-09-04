@@ -8,7 +8,6 @@ import { IoChevronUpSharp } from "react-icons/io5";
 import { focusStyle } from "../../styles/UIStyles";
 import { ensureValidSession } from "../../services/apiAuth";
 import SpinnerMini from "../../ui/SpinnerMini";
-import device from "../../styles/breakpoints";
 
 const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
   position: absolute;
@@ -45,12 +44,6 @@ const StyledUpvoteButton = styled.button<{ $isUpvoted: boolean }>`
   }
 
   ${focusStyle}
-
-  @media ${device.sm} {
-    & svg {
-      margin-right: 5px;
-    }
-  }
 `;
 
 const StyledChevronUp = styled(IoChevronUpSharp)`
