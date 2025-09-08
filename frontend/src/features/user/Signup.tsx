@@ -13,7 +13,6 @@ import { H1 } from "../../styles/Typography";
 
 const StyledSignupPage = styled(StyledLoginForm)`
   & > section:first-of-type {
-    /* border-radius: 16px 16px 0 0; */
     border-radius: 16px;
     box-shadow: rgba(173, 31, 234, 0.212) 0px 2px 4px 0px inset;
   }

@@ -84,7 +84,7 @@ function ProtectedRoutes(): React.JSX.Element | null {
               }
             }}
           >
-            <img src="/assets/suggestly-icon.svg" />
+            <img src="/assets/logomark.svg" />
           </Link>
 
           <div>

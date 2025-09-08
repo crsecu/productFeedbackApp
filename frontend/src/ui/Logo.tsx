@@ -1,17 +1,14 @@
 import styled from "styled-components";
 
 const StyledLogo = styled.div`
-  display: flex;
-  gap: 2px;
   width: 120px;
-  align-items: center;
   display: block;
 `;
 
 function Logo(): React.JSX.Element {
   return (
     <StyledLogo>
-      <img src="/assets/suggestly-logo.svg" />
+      <img src="/assets/logo.svg" />
     </StyledLogo>
   );
 }

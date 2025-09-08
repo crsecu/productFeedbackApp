@@ -26,11 +26,15 @@ export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
     width: 100%;
   }
 
+  & form label {
+    font-weight: var(--font-weight-semibold);
+  }
+
   & form input {
     margin-top: 4px;
     background-color: var(--color-text-light);
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
-      rgba(209, 213, 219, 0.436) 0px 0px 0px 1px inset;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 2px 0px,
+      rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   }
 
   & form input[type="password"] {
@@ -51,7 +55,6 @@ export const AuthFormHeader = styled.div<{ $paddingBottom?: string }>`
     props.$paddingBottom ? props.$paddingBottom : `50px`};
 
   & h1 {
-    color: var(--color-primary);
     display: inline-block;
     font-size: var(--text-xl);
     padding-bottom: 6px;

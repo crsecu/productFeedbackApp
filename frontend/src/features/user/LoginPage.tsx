@@ -9,10 +9,17 @@ import { H1 } from "../../styles/Typography";
 import device from "../../styles/breakpoints";
 const PageWrapper = styled(FormPage)`
   position: relative;
+
+  display: flex;
   gap: 0;
   padding: 0;
   margin: auto;
   width: 100vw;
+  height: 100dvh;
+
+  & > div:first-child {
+    margin: 60px auto 80px auto;
+  }
 
   & form {
     & div:last-of-type {
@@ -26,67 +33,80 @@ const PageWrapper = styled(FormPage)`
     box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
     flex-direction: row-reverse;
     justify-content: space-between;
-    height: 90dvh;
+    height: fit-content;
     position: fixed;
     inset: 0px;
     min-width: 600px;
     max-width: 700px;
     margin: auto;
+
+    & > div:first-child {
+      position: absolute;
+      margin: 0;
+      bottom: 12px;
+      right: 12px;
+    }
   }
 
   @media ${device.xxl} {
     max-width: 800px;
-    height: 85dvh;
+    height: 65dvh;
   }
 `;
 
 const RightColumn = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
-  height: 200px;
-  background-image: url("/assets/blobMobile.png");
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: cover;
+  height: auto;
+
   border-radius: inherit;
 
-  & > div {
-    position: absolute;
-
-    width: 140px;
-    top: 80px;
-    left: 10px;
+  @media ${device.sm} {
+    background-image: url("/assets/blobMobile.png");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
   }
 
   @media ${device.md} {
     width: 50%;
-    height: 100%;
-    background-image: url("/assets/blob.png");
-    background-position: 4% center;
 
-    & > div {
-      opacity: inherit;
-      top: 12px;
-      left: 12px;
-    }
+    background-image: url("/assets/blob.png");
+    background-position: 4% 50%;
   }
 `;
 
 const LeftColumn = styled.div`
   padding: 16px 36px;
 
+  @media (max-width: 768px) {
+    flex-grow: 1;
+    background-color: var(--color-surface);
+    border-radius: 30px 30px 0 0;
+    margin-top: -14px;
+    z-index: -1;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  }
+
   @media ${device.md} {
-    padding: 0;
+    padding: 30px 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     min-width: fit-content;
+  }
+
+  @media ${device.xxl} {
+    padding: 70px 0;
   }
 `;
 
 export const UserCTA = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
   font-size: var(--text-sm);
-  text-align: center;
   margin-top: 16px;
 
   & a {
@@ -112,10 +132,9 @@ function LoginPage(): React.JSX.Element {
 
   return (
     <PageWrapper>
-      <RightColumn>
-        <Logo />
-      </RightColumn>
+      <Logo />
 
+      <RightColumn />
       <LeftColumn>
         {location.pathname === "/login" ? (
           <>
