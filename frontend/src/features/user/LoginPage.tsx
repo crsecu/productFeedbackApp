@@ -80,12 +80,12 @@ const RightColumn = styled.div`
 const LeftColumn = styled.div`
   padding: 16px 36px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     flex-grow: 1;
     background-color: var(--color-surface);
     border-radius: 30px 30px 0 0;
     margin-top: -14px;
-    z-index: -1;
+
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   }
 
@@ -131,7 +131,7 @@ function LoginPage(): React.JSX.Element {
   const location = useLocation();
 
   return (
-    <PageWrapper>
+    <PageWrapper className="PageWrapper">
       <Logo />
 
       <RightColumn />
