@@ -5,7 +5,6 @@ import { RoadmapStatus } from "../../types/roadmap.types";
 import RoadmapStatusSection from "./RoadmapStatusSection";
 import styled from "styled-components";
 import device from "../../styles/breakpoints";
-import EmptyFeedbackState from "../feedback/EmptyFeedbackState";
 
 const TabButtons = styled.div`
   display: flex;
@@ -46,7 +45,6 @@ function RoadmapStatusTabBar({
     Object.keys(dataFromLoader) as Array<keyof RoadmapLoaderData>
   ).map((status) => {
     const feedbackCount = dataFromLoader[status].length;
-    console.log("flower status", status, feedbackCount);
 
     return (
       <StatusTab

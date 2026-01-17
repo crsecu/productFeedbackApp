@@ -64,7 +64,7 @@ const StyledRoadmapPage = styled.div`
 function RoadmapPage(): React.JSX.Element {
   const dataFromLoader = useRouteLoaderData("roadmapData") as RoadmapLoaderData;
   const isMobile = useMatchMedia("(max-width: 767px");
-  console.log("dd", dataFromLoader);
+
   return (
     <StyledRoadmapPage>
       <Outlet />
