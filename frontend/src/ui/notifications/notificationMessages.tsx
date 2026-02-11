@@ -8,7 +8,7 @@ import {
 
 interface NotificationText {
   title: string;
-  message: string;
+  message?: string;
 }
 
 interface NotificationMessage {
@@ -41,6 +41,13 @@ const notificationTextByOutcome: Record<
       title: "Something went wrong!",
       message: "Comment submission failed.",
     },
+    createUser: {
+      title: "User Creation Failed",
+      message: "There was an issue creating the user. Please try again.",
+    },
+    authenticateUser: {
+      title: "User Authentication Failed",
+    },
   },
 
   success: {
@@ -56,6 +63,14 @@ const notificationTextByOutcome: Record<
     addComment: {
       title: "Something went wrong!",
       message: "Comment submission failed.",
+    },
+    createUser: {
+      title: "Thanks for signing up!",
+      message: "Please check your email to confirm your account.",
+    },
+    authenticateUser: {
+      //delete later;
+      title: "",
     },
   },
 };

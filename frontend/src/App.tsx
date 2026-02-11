@@ -4,17 +4,17 @@ import {
   roadmapDevLoader,
   feedbackDetailLoader,
   commentDataLoader,
+  authGuardLoader,
 } from "./data_handlers/feedbackLoaders";
 import {
   createFeedbackAction,
   submitCommentAction,
 } from "./data_handlers/feedbackActions";
-import HomePage from "./ui/HomePage";
+
 import FeedbackBoardPage from "./features/feedback/FeedbackBoardPage";
 import RoadmapPage from "./features/roadmap/RoadmapPage";
 import ErrorPage from "./ui/ErrorPage";
 import NotFoundPage from "./ui/NotFoundPage";
-import RootRoute from "./ui/RootRoute";
 import { editFeedbackAction } from "./data_handlers/feedbackActions";
 import CreateFeedback from "./features/feedback/CreateFeedback";
 import PageLayout from "./ui/PageLayout";
@@ -23,25 +23,79 @@ import FeedbackDetailCommentThread from "./features/feedback/FeedbackDetailComme
 import FeedbackDetailPage from "./features/feedback/FeedbackDetailPage";
 import TypographyTokens from "./styles/TypographyTokens";
 
+import {
+  createUserProfileAction,
+  loginUserAction,
+  signUpUserAction,
+} from "./data_handlers/userActions";
+import LoginPage from "./features/user/LoginPage";
+import Signup from "./features/user/Signup";
+import ProtectedRoutes from "./ui/ProtectedRoutes";
+
+import WelcomeUser from "./features/user/WelcomeUser";
+import { loginLoader } from "./data_handlers/userLoader";
+import AuthGuard from "./features/user/AuthGuard";
+
 const router = createBrowserRouter([
   {
-    element: <RootRoute />,
+    path: "/login",
+    element: <LoginPage />,
+    loader: loginLoader,
+    action: loginUserAction,
+    shouldRevalidate: ({ currentUrl, nextUrl, defaultShouldRevalidate }) => {
+      console.log(
+        "LOGIN, current route",
+        currentUrl,
+        "LOGIN, next route",
+        nextUrl,
+        "LOGIN, default revalidator:",
+        defaultShouldRevalidate
+      );
+      return defaultShouldRevalidate;
+    },
+
+    children: [
+      { path: "signup", element: <Signup />, action: signUpUserAction },
+      {
+        path: "welcome",
+        element: <WelcomeUser />,
+        action: createUserProfileAction,
+      },
+    ],
+  },
+
+  {
+    path: "/",
+    element: <AuthGuard />,
+    loader: authGuardLoader,
+    shouldRevalidate: ({ currentUrl, nextUrl, defaultShouldRevalidate }) => {
+      console.log(
+        "AUTHGUARD, current route",
+        currentUrl,
+        "AUTHGUARD, next route",
+        nextUrl,
+        "AUTHGUARD, default revalidator",
+        defaultShouldRevalidate
+      );
+      return defaultShouldRevalidate;
+    },
+  },
+
+  {
+    path: "/app",
+    element: <ProtectedRoutes />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
-        path: "/feedbackBoard",
-        element: <PageLayout />,
+        path: "feedbackBoard",
+        element: <FeedbackBoardPage />,
         loader: feedbackBoardLoader,
         id: "feedbackBoardData",
         shouldRevalidate: ({
           currentUrl,
           nextUrl,
           actionResult,
-          formMethod,
+          defaultShouldRevalidate,
         }) => {
           console.log("current", currentUrl);
           console.log("next", nextUrl);
@@ -52,22 +106,29 @@ const router = createBrowserRouter([
             return false;
           }
 
-          /* Prevent revalidation if feedback submission fails or if there are any validation errors */
+          /* Prevent revalidation when navigation to /createFeedback*/
           if (
-            formMethod === "post" &&
-            actionResult?.submissionOutcome !== "success"
+            currentUrl.pathname === "/" &&
+            nextUrl.pathname === "/createFeedback"
           ) {
+            console.log(
+              'Preventing revalidation when navigation to "/createFeedback"'
+            );
+
             return false;
           }
 
-          return true;
+          /* Prevent revalidation if feedback submission fails or if there are any validation errors */
+          if (actionResult?.submissionOutcome !== "success") {
+            return false;
+          }
+          console.log(
+            "this is default loader revalidation",
+            defaultShouldRevalidate
+          );
+          return defaultShouldRevalidate;
         },
         children: [
-          {
-            index: true,
-
-            element: <FeedbackBoardPage />,
-          },
           {
             path: "createFeedback",
             element: <CreateFeedback />,
@@ -76,16 +137,16 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/developmentRoadmap",
+        path: "developmentRoadmap",
         element: <PageLayout />,
         loader: roadmapDevLoader,
         id: "roadmapData",
-        shouldRevalidate: ({ actionResult }) => {
+        shouldRevalidate: ({ actionResult, defaultShouldRevalidate }) => {
           if (actionResult?.submissionOutcome !== "success") {
             return false; // prevent clearing `useActionData()`
           }
 
-          return true;
+          return defaultShouldRevalidate;
         },
         children: [
           {
@@ -100,7 +161,7 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/feedbackDetail/:feedbackId",
+        path: "feedbackDetail/:feedbackId",
         element: <FeedbackDetailPage />,
         id: "feedbackDetailData",
 
@@ -110,6 +171,7 @@ const router = createBrowserRouter([
           nextUrl,
           formMethod,
           actionResult,
+          defaultShouldRevalidate,
         }) => {
           //prevent revalidation when canceling edit feedback
           if (currentUrl.pathname === nextUrl.pathname && !actionResult) {
@@ -128,7 +190,7 @@ const router = createBrowserRouter([
             return false;
           }
 
-          return true;
+          return defaultShouldRevalidate;
         },
 
         children: [
@@ -138,14 +200,18 @@ const router = createBrowserRouter([
             id: "commentData", //might not need this id unless we need access to the comment data in a different route
             loader: commentDataLoader,
             action: submitCommentAction,
-            shouldRevalidate: ({ formMethod, actionResult }) => {
+            shouldRevalidate: ({
+              formMethod,
+              actionResult,
+              defaultShouldRevalidate,
+            }) => {
               if (formMethod === "patch") return false;
 
               if (actionResult?.submissionOutcome !== "success") {
                 return false; // prevent clearing `useActionData()`
               }
 
-              return true;
+              return defaultShouldRevalidate;
             },
           },
           {
@@ -154,10 +220,9 @@ const router = createBrowserRouter([
           },
         ],
       },
-
-      { path: "*", element: <NotFoundPage /> },
     ],
   },
+  { path: "*", element: <NotFoundPage /> },
 ]);
 
 function App(): React.JSX.Element {

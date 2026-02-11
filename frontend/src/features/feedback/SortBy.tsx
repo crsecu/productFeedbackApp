@@ -19,6 +19,13 @@ const StyledSortyBy = styled.div`
 
   & .sortBy__control {
     background-color: var(--color-action-bar);
+    border-radius: 10px;
+  }
+
+  & .sortBy__control--is-focused {
+    outline: 1px solid #2cbeb2;
+    outline-offset: 4px;
+    box-shadow: inset 0 0 2px 1px #00524b, 0 0 12px 1px #5fbab0;
   }
 
   & .sortBy__single-value {

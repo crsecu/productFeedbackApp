@@ -1,5 +1,5 @@
 import FeedbackForm from "./FeedbackForm";
-import FormField from "./FormField";
+import FormField from "../../ui/form/FormField";
 
 import { useFetcher, useParams } from "react-router-dom";
 import { showModal } from "../../store/slices/modalSlice";
@@ -18,7 +18,7 @@ import { H1 } from "../../styles/Typography";
 import styled from "styled-components";
 import { Option } from "../../types/customSelect";
 import SelectInput from "../../ui/SelectInput";
-import FormModal from "./FormModal";
+import FormModal from "../../ui/form/FormModal";
 import device from "../../styles/breakpoints";
 
 const StyledEditFeedback = styled.div`

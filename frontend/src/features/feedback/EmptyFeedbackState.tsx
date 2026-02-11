@@ -7,8 +7,9 @@ import device from "../../styles/breakpoints";
 const StyledEmptyFeedbackState = styled.div`
   flex-basis: 100%;
   align-content: center;
-  background-color: var(--color-surface);
+
   border-radius: var(--border-radius);
+  padding: 100px 0;
 
   & div {
     width: 84%;
@@ -33,9 +34,10 @@ const StyledEmptyFeedbackState = styled.div`
     max-width: 348px;
   }
 
-  /* @media ${device.sm} {
-    flex-basis: 92%;
-  } */
+  @media ${device.sm} {
+    background-color: var(--color-surface);
+    padding: 30px 0 0 0;
+  }
 `;
 
 const NoFeedbackText = styled.p`
@@ -69,7 +71,7 @@ function EmptyFeedbackState({
       </>
     );
   return (
-    <StyledEmptyFeedbackState>
+    <StyledEmptyFeedbackState className="empty">
       <img src={detectiveImage} alt="No feedback" />
 
       <div>

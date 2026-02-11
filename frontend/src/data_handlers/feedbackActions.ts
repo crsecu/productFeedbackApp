@@ -19,13 +19,17 @@ import {
   CreateFeedbackFormValues,
   EditFeedbackFormValues,
 } from "../types/form.types";
+import { ensureValidSession } from "../services/apiAuth";
 
 /* Submit New Feedback Action*/
 export async function createFeedbackAction({
   request,
 }: ActionFunctionArgs): Promise<
-  ActionResult | ActionResult<SuggestionFeedback>
+  ActionResult | ActionResult<SuggestionFeedback> | null
 > {
+  const authSession = await ensureValidSession();
+  if (!authSession) return null;
+
   const actionType = "createFeedback";
 
   //Extract and parse form data from the request
@@ -48,15 +52,12 @@ export async function createFeedbackAction({
   const newFeedback: NewFeedback = {
     ...formValues,
     status: "suggestion",
-    upvotes: 0,
-    commentCount: 0,
   };
 
   //Submit new feedback and return a standardized result: success(if submission succeeds), or failure (if it fails)
-  const result = await performActionSubmission<NewFeedback, SuggestionFeedback>(
+  const result = await performActionSubmission<SuggestionFeedback>(
     actionType,
-    newFeedback,
-    submitFeedback
+    () => submitFeedback(authSession.accessToken, newFeedback)
   );
 
   return result;
@@ -69,8 +70,11 @@ export async function editFeedbackAction({
   request,
   params,
 }: ActionFunctionArgs): Promise<
-  ActionResult | ActionResult<EditFeedbackFormValues>
+  ActionResult | ActionResult<EditFeedbackFormValues> | null
 > {
+  const authSession = await ensureValidSession();
+  if (!authSession) return null;
+
   const actionType = "editFeedback";
   const feedbackId = params.feedbackId as string;
   const formData = await request.formData();
@@ -93,14 +97,12 @@ export async function editFeedbackAction({
 
   //Closure function that captures feedbackId and passes it to editFeedback func
   assert(feedbackId);
-  const submitEditedFeedback = (data: EditFeedbackFormValues) =>
-    editFeedback(feedbackId, data);
 
   //Submit edited feedback and return a standardized result: success(if submission succeeds), or failure (if it fails)
-  const result = await performActionSubmission<
-    EditFeedbackFormValues,
-    EditFeedbackFormValues
-  >(actionType, formValues, submitEditedFeedback);
+  const result = await performActionSubmission<EditFeedbackFormValues>(
+    actionType,
+    () => editFeedback(authSession.accessToken, feedbackId, formValues)
+  );
 
   return result;
 }
@@ -109,6 +111,9 @@ export async function editFeedbackAction({
 /* ------------------------------------------------------------ */
 /* FeedbackDetailPage action - handles adding a comment/reply */
 export async function submitCommentAction({ request }: ActionFunctionArgs) {
+  const accessToken = await ensureValidSession();
+  if (!accessToken) return null;
+
   const formData = await request.formData();
   const intent = formData.get("intent") as "addComment";
 

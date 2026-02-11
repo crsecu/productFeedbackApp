@@ -14,6 +14,10 @@ const StyledCommentComposer = styled.div`
   & h2 {
     padding-bottom: 4px;
   }
+
+  & > section {
+    margin-bottom: 10px;
+  }
 `;
 
 type CommentComposerProps = {
@@ -30,7 +34,8 @@ type CommentComposerProps = {
 function CommentComposer(props: CommentComposerProps): React.JSX.Element {
   const fetcher = useFetcher();
 
-  const { name, username, image } = useAppSelector(getLoggedInUser);
+  const user = useAppSelector(getLoggedInUser);
+  const { name, username, image } = user.profileInfo;
 
   const { children, mode, payload } = props;
   const { actionType, submissionOutcome } = fetcher?.data || {};

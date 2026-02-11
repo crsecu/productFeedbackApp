@@ -1,4 +1,4 @@
-import { useLocation, useRouteLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import RoadmapPreviewTile from "../roadmap/RoadmapPreviewTile";
@@ -12,31 +12,30 @@ import { FeedbackBoardLoaderData } from "../../types/loader.types";
 import FeedbackBoardMainSection from "./FeedbackBoardMainSection";
 
 import FeedbackBoardLeftColumn from "./FeedbackBoardLeftColumn";
-import { PageStyles, PrimaryLinkButton } from "../../styles/UIStyles";
+import { PrimaryLinkButton } from "../../styles/UIStyles";
 import device from "../../styles/breakpoints";
 
 const StyledFeedbackBoardPage = styled.div`
-  ${PageStyles}
   width: initial;
 
   @media ${device.lg} {
-    flex-direction: row;
+    display: flex;
     gap: 30px;
   }
 `;
 
 function FeedbackBoardPage(): React.JSX.Element {
   const location = useLocation();
+  const dataFromLoader = useLoaderData() as FeedbackBoardLoaderData;
 
-  const dataFromLoader = useRouteLoaderData(
-    "feedbackBoardData"
-  ) as FeedbackBoardLoaderData;
+  if (location.pathname === "/app/feedbackBoard/createFeedback")
+    return <Outlet />;
 
   const { suggestions, roadmapFeedbackCount, roadmapStatusCounts } =
     dataFromLoader;
 
   return (
-    <StyledFeedbackBoardPage>
+    <StyledFeedbackBoardPage className="1">
       <FeedbackBoardLeftColumn suggestionCount={suggestions.length}>
         <RoadmapPreviewTile
           roadmapStats={roadmapStatusCounts}

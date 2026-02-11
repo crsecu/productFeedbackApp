@@ -66,7 +66,7 @@ function RoadmapPreviewTile({
 
         {roadmapCount ? (
           <StyledLink
-            to={"/developmentRoadmap"}
+            to={"/app/developmentRoadmap"}
             aria-label="View full roadmap page with planned, in-progress, and live feedback"
           >
             View

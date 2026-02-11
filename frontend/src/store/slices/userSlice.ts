@@ -1,32 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppState } from "../store";
-import { User } from "../../features/user/user.types";
+
+import { CurrentUser, UserProfile } from "../../types/user.types";
 
 interface UserState {
-  profileInfo: {
-    id: string;
-    name: string;
-    username: string;
-    image: string;
-  };
+  isUserLoggedIn: boolean;
+  authId: string;
+  profileInfo: CurrentUser;
   upvotedFeedbackIds: Record<string, boolean>;
 }
 
 const initialState: UserState = {
-  // profileInfo: {
-  //   id: "",
-  //   name: "",
-  //   image: "",
-  //   username: "",
-  // },
-  // upvotedFeedbackIds: {},
-
-  /* Remove later */
+  isUserLoggedIn: false,
+  authId: "",
   profileInfo: {
-    id: "fcb5",
-    name: "Cristina",
-    image: "/assets/user-images/image-zena.jpg",
-    username: "cs",
+    name: "",
+    image: "",
+    username: "",
   },
   upvotedFeedbackIds: {},
 };
@@ -35,9 +25,12 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserCredentials(state, action: PayloadAction<User>) {
+    setUserCredentials(state, action: PayloadAction<Omit<UserProfile, "id">>) {
       //payload = user account information (see initalState object for data structure)
-      state.profileInfo = action.payload;
+      state.isUserLoggedIn = true;
+      const { authId, ...userProfileData } = action.payload;
+      state.authId = authId;
+      state.profileInfo = userProfileData;
     },
     trackUserUpvote(state, action: PayloadAction<string>) {
       //payload = feedback id
@@ -47,11 +40,25 @@ const userSlice = createSlice({
       //payload = feedback id
       delete state.upvotedFeedbackIds[action.payload];
     },
+    logUserOut(state) {
+      state.isUserLoggedIn = false;
+      state.profileInfo = {
+        name: "",
+        image: "",
+        username: "",
+      };
+
+      state.upvotedFeedbackIds = {};
+    },
   },
 });
 
-export const { setUserCredentials, trackUserUpvote, untrackUserUpvote } =
-  userSlice.actions;
+export const {
+  setUserCredentials,
+  trackUserUpvote,
+  untrackUserUpvote,
+  logUserOut,
+} = userSlice.actions;
 
 export default userSlice.reducer;
 
@@ -61,4 +68,4 @@ export const getIsFeedbackUpvoted =
     return !!state.user.upvotedFeedbackIds[feedbackId];
   };
 
-export const getLoggedInUser = (state: AppState) => state.user.profileInfo;
+export const getLoggedInUser = (state: AppState) => state.user;

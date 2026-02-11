@@ -3,11 +3,16 @@ import {
   Feedback,
   SuggestionFeedback,
   FeedbackGroupedByStatus,
+  FeedbackWithStatusRaw,
 } from "../types/feedback.types";
 import { EditFeedbackFormValues } from "../types/form.types";
 import { MutationResult } from "../types/mutation.types";
 import { RoadmapFeedbackGroupedByStatus } from "../types/roadmap.types";
-import { fetchWrapper, groupFeedbackByStatus } from "../utils/helpers";
+import {
+  fetchWrapper,
+  formatFeedbackForUI,
+  groupFeedbackByStatus,
+} from "../utils/helpers";
 
 export const API_URL: string = import.meta.env.VITE_SUPABASE_URL;
 export const API_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -31,26 +36,38 @@ export const HEADERS = {
 /* Fetch feedback entries and groups them by status*/
 export async function fetchAndGroupFeedback(
   // eslint-disable-next-line no-unused-vars
+  access_token: string,
+  userId: string,
   pageContext: "feedbackBoard"
 ): Promise<FeedbackGroupedByStatus>;
 
 export async function fetchAndGroupFeedback(
   // eslint-disable-next-line no-unused-vars
+  access_token: string,
+  userId: string,
   pageContext: "developmentRoadmap"
 ): Promise<RoadmapFeedbackGroupedByStatus>;
 
 export async function fetchAndGroupFeedback(
+  access_token: string,
+  userId: string,
   pageContext: "feedbackBoard" | "developmentRoadmap"
 ): Promise<FeedbackGroupedByStatus | RoadmapFeedbackGroupedByStatus> {
   const queryCondition =
-    pageContext === "feedbackBoard" ? "" : "?status=not.eq.suggestion";
+    pageContext === "feedbackBoard"
+      ? `?select=*,comments(count),upvotes:feedbackUpvotes(count),upvotesByCurrentUser:feedbackUpvotes(count)&upvotesByCurrentUser.userId=eq.${userId}`
+      : `?status=not.eq.suggestion&select=*,comments(count),upvotes:feedbackUpvotes(count),upvotesByCurrentUser:feedbackUpvotes(count)&upvotesByCurrentUser.userId=eq.${userId}`;
 
-  const feedbackList = await fetchWrapper<Feedback[]>(
+  const feedbackListRaw = await fetchWrapper<FeedbackWithStatusRaw[]>(
     `${API_URL}/productRequests${queryCondition}`,
     {
-      headers: HEADERS.read,
+      headers: {
+        ...HEADERS.read,
+        Authorization: `Bearer ${access_token}`,
+      },
     }
   );
+  const feedbackList = formatFeedbackForUI(feedbackListRaw);
 
   const feedbackGroupedByStatus = groupFeedbackByStatus(feedbackList);
 
@@ -65,13 +82,18 @@ export async function fetchAndGroupFeedback(
 }
 
 /* Fetch feedback by id */
-export async function fetchFeedbackById(feedbackId: string): Promise<Feedback> {
-  return fetchWrapper<Feedback>(
-    `${API_URL}/productRequests?id=eq.${feedbackId}`,
+export async function fetchFeedbackById(
+  access_token: string,
+  userId: string,
+  feedbackId: string
+): Promise<FeedbackWithStatusRaw> {
+  return fetchWrapper<FeedbackWithStatusRaw>(
+    `${API_URL}/productRequests?id=eq.${feedbackId}&select=*,upvotes:feedbackUpvotes(count),upvotesByCurrentUser:feedbackUpvotes(count)&upvotesByCurrentUser.userId=eq.${userId}`,
     {
       headers: {
         ...HEADERS.read,
         Accept: "application / vnd.pgrst.object + json",
+        Authorization: `Bearer ${access_token}`,
       },
     }
   );
@@ -79,6 +101,7 @@ export async function fetchFeedbackById(feedbackId: string): Promise<Feedback> {
 
 /* Submit new feedback */
 export async function submitFeedback(
+  accessToken: string,
   feedback: NewFeedback
 ): Promise<MutationResult<SuggestionFeedback>> {
   try {
@@ -87,7 +110,10 @@ export async function submitFeedback(
       {
         method: "POST",
         body: JSON.stringify(feedback),
-        headers: HEADERS.writeObject,
+        headers: {
+          ...HEADERS.writeObject,
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
     );
     return { success: true, payload: data };
@@ -99,6 +125,7 @@ export async function submitFeedback(
 
 /* Edit feedback entry */
 export async function editFeedback(
+  accessToken: string,
   feedbackId: string,
   editedFeedback: EditFeedbackFormValues
 ): Promise<MutationResult<EditFeedbackFormValues>> {
@@ -108,7 +135,7 @@ export async function editFeedback(
       {
         method: "PATCH",
         body: JSON.stringify(editedFeedback),
-        headers: HEADERS.write,
+        headers: { ...HEADERS.write, Authorization: `Bearer ${accessToken}` },
       }
     );
 
@@ -122,12 +149,19 @@ export async function editFeedback(
 }
 
 /* Delete feedback entry */
-export async function deleteFeedback(feedbackId: string): Promise<Feedback> {
+export async function deleteFeedback(
+  accessToken: string,
+  feedbackId: string
+): Promise<Feedback> {
   return fetchWrapper<Feedback>(
     `${API_URL}/productRequests?id=eq.${feedbackId}`,
     {
       method: "DELETE",
-      headers: { ...HEADERS.read, Prefer: "return=representation" },
+      headers: {
+        ...HEADERS.read,
+        Prefer: "return=representation",
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
   );
 }
@@ -135,45 +169,38 @@ export async function deleteFeedback(feedbackId: string): Promise<Feedback> {
 /* Update backend with current vote count after user's upvote/unvote actions */
 export async function persistFeedbackVote(
   feedbackId: string,
-  voteCount: number
-): Promise<number> {
+  accessToken: string,
+  userAuthId: string
+) {
   try {
-    const data = await fetchWrapper<Feedback>(
-      `${API_URL}/productRequests?id=eq.${feedbackId}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify({ upvotes: voteCount }),
-        headers: HEADERS.write,
-      }
-    );
+    const res = await fetch(`${API_URL}/feedbackUpvotes`, {
+      method: "POST",
+      body: JSON.stringify({ feedbackId, userId: userAuthId }),
+      headers: { ...HEADERS.write, Authorization: `Bearer ${accessToken}` },
+    });
 
-    return data.upvotes;
+    if (res.status === 409) {
+      await fetch(
+        `${API_URL}/feedbackUpvotes?feedbackId=eq.${feedbackId}&userId=eq.${userAuthId}`,
+        {
+          method: "DELETE",
+          headers: { ...HEADERS.write, Authorization: `Bearer ${accessToken}` },
+        }
+      );
+
+      return "unvoted";
+    }
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText || `HTTP Error: ${res.status}`);
+    }
+
+    await res.json();
+
+    return "upvoted"; //decide what to return
   } catch (err) {
     console.error("Something went wrong while upvoting feedback", err);
     throw err;
   }
-}
-
-/* Fetch user list */
-export async function fetchUserList() {
-  //return fetchWrapper(`${API_URL}/userList?username=${username}`);
-}
-
-/* Update commentCount when a new comment/reply is added - currently working only incrementing commentCount
-   TO DO: use the same function to decrement commentCount when a comment/reply is deleted
-*/
-export async function updateCommentCount(
-  feedbackId: string,
-  updatedCommentCount: number
-): Promise<number> {
-  const data = await fetchWrapper<Feedback>(
-    `${API_URL}/productRequests?id=eq.${feedbackId}`,
-    {
-      method: "PATCH",
-      body: JSON.stringify({ commentCount: updatedCommentCount }),
-      headers: HEADERS.write,
-    }
-  );
-
-  return data.upvotes;
 }

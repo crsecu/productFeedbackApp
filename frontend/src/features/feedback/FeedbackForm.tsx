@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 import { FetcherFormProps, FormProps } from "react-router-dom";
 
-import FormField from "./FormField";
-import InputField from "./InputField";
-import FormFieldError from "./FormFieldError";
+import FormField from "../../ui/form/FormField";
+import InputField from "../../ui/form/InputField";
+import FormFieldError from "../../ui/form/FormFieldError";
 
 import { ActionResult } from "../../types/action.types";
 import { CreateFeedbackFormValues } from "../../types/form.types";
@@ -76,7 +76,7 @@ function FeedbackForm<Type extends CreateFeedbackFormValues>({
   /* Track Dirty State */
   const [isFormDirty, handleFieldChange] = useFormChangeTracker(defaultValues);
 
-  const validationErrors = actionResult?.validationErrors ?? null;
+  const validationErrors = actionResult?.validationErrors ?? undefined;
 
   const isSubmitting = submissionStatus === "submitting";
 
@@ -109,7 +109,7 @@ function FeedbackForm<Type extends CreateFeedbackFormValues>({
           type="text"
           describedById="feedbackTitleDesc"
           initialValue={defaultValues?.title}
-          validationError={validationErrors?.title}
+          validationError={validationErrors}
         />
       </FormField>
       <FormField
@@ -157,7 +157,7 @@ function FeedbackForm<Type extends CreateFeedbackFormValues>({
           required
         />
         {validationErrors?.description && (
-          <FormFieldError errorMessage={validationErrors.description} />
+          <FormFieldError errorMessage={validationErrors?.description} />
         )}
       </FormField>
       <ButtonContainer className="button-container">

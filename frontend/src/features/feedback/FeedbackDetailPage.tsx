@@ -7,11 +7,7 @@ import FeedbackCardContent from "./FeedbackCardContent";
 import { Feedback } from "../../types/feedback.types";
 import EditFeedback from "./EditFeedback";
 import { useMemo } from "react";
-import {
-  GoBackButton,
-  PageStyles,
-  SecondaryButton,
-} from "../../styles/UIStyles";
+import { GoBackButton, SecondaryButton } from "../../styles/UIStyles";
 import styled from "styled-components";
 import { UpvoteButtonDynamic } from "../../styles/features/FeedbackStyles";
 import { createPortal } from "react-dom";
@@ -23,18 +19,19 @@ import {
 } from "../../store/slices/feedbackDetailSlice";
 
 const StyledFeedbackDetailPage = styled.div`
-  ${PageStyles}
-
+  display: flex;
+  flex-direction: column;
   gap: 16px;
   padding-top: 24px;
   width: 92vw;
+  margin: 0 auto;
 
   & > section {
     min-height: 40px;
   }
 
-  @media ${device.md} {
-    padding-top: 0;
+  @media ${device.sm} {
+    padding-top: 8px;
   }
 `;
 
@@ -55,7 +52,15 @@ function FeedbackDetailPage(): React.JSX.Element {
   const feedback = useLoaderData() as Feedback;
   const { isEditing } = useAppSelector((state) => state.feedbackDetail);
 
-  const { id, upvotes, title, description, category, status } = feedback;
+  const {
+    id,
+    title,
+    description,
+    category,
+    status,
+    upvotes,
+    isUpvotedByCurrentUser,
+  } = feedback;
 
   const editableFeedbackFields = useMemo(() => {
     return {
@@ -95,9 +100,15 @@ function FeedbackDetailPage(): React.JSX.Element {
           </EditFeedbackButton>
         </ActionBar>
         <FeedbackCard>
-          <UpvoteButtonDynamic feedbackId={id} initialUpvoteCount={upvotes} />
+          <UpvoteButtonDynamic
+            feedbackId={id}
+            initialUpvoteCount={upvotes}
+            isUpvotedByCurrentUser={isUpvotedByCurrentUser}
+          />
           <div>
-            <FeedbackDetailCardContent feedback={feedback} />
+            <FeedbackDetailCardContent
+              feedback={feedback}
+            ></FeedbackDetailCardContent>
             <CommentCount />
           </div>
         </FeedbackCard>

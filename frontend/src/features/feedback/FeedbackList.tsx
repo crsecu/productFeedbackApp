@@ -57,17 +57,20 @@ function FeedbackList({ suggestions }: FeedbackListProps): React.JSX.Element {
     const suggestionsSorted = sortFeedbackList(suggestions, category, sortBy);
 
     return suggestionsSorted.map((item) => {
+     
+
       return (
         <li key={item.id}>
           <SuggestionCard>
             <UpvoteButtonDynamic
               feedbackId={item.id}
               initialUpvoteCount={item.upvotes}
+              isUpvotedByCurrentUser={item.isUpvotedByCurrentUser}
             />
 
-            <Link to={`/feedbackDetail/${item.id}`}>
+            <Link to={`/app/feedbackDetail/${item.id}`}>
               <FeedbackCardContent feedback={item} />
-              <CommentCount count={item.commentCount} />
+              <CommentCount count={item.comments} />
             </Link>
           </SuggestionCard>
         </li>

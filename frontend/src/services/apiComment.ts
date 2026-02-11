@@ -1,8 +1,7 @@
 import { NewCommentOrReply } from "../types/comment.types";
 import { MutationResult } from "../types/mutation.types";
 import { fetchWrapper } from "../utils/helpers";
-import { API_KEY, updateCommentCount } from "./apiFeedback";
-import { API_URL } from "./apiFeedback";
+import { API_KEY, API_URL } from "./apiFeedback";
 
 /* Fetch Comments for Detail Page */
 export async function fetchComments(feedbackId: string) {
@@ -11,11 +10,11 @@ export async function fetchComments(feedbackId: string) {
 
 //Submit comment
 export async function submitComment(
-  commentData: NewCommentOrReply,
-  currentCount: number
+  // accessToken?: string,
+  commentData: NewCommentOrReply
 ): Promise<MutationResult<NewCommentOrReply>> {
   try {
-    const createCommentPromise = fetchWrapper<NewCommentOrReply>(
+    const newComment = await fetchWrapper<NewCommentOrReply>(
       `${API_URL}/comments`,
       {
         method: "POST",
@@ -25,18 +24,10 @@ export async function submitComment(
           "Content-Type": "application/json",
           Prefer: "return=representation",
           Accept: "application / vnd.pgrst.object + json",
+          // Authorization: `Bearer ${accessToken}`,
         },
       }
     );
-
-    const updateCommentCountPromise = createCommentPromise.then((newComment) =>
-      updateCommentCount(newComment.feedbackId, currentCount + 1)
-    );
-
-    const [newComment] = await Promise.all([
-      createCommentPromise,
-      updateCommentCountPromise,
-    ]);
 
     return { success: true, payload: newComment };
   } catch (err) {

@@ -1,7 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { isRouteErrorResponse, SetURLSearchParams } from "react-router-dom";
-import { User } from "../features/user/user.types";
 import { submitComment } from "../services/apiComment";
-import { API_URL, HEADERS } from "../services/apiFeedback";
 import {
   NewCommentOrReply,
   CommentListType,
@@ -12,6 +11,7 @@ import {
 import {
   Feedback,
   FeedbackGroupedByStatus,
+  FeedbackWithStatusRaw,
   SuggestionFeedback,
 } from "../types/feedback.types";
 import { useRef, useState } from "react";
@@ -42,44 +42,13 @@ export async function fetchWrapper<T>(
 
     return await res.json();
   } catch (error) {
-    if (error instanceof Error) {
-      console.error(`Fetch error: ${error.message}`);
-    } else {
-      console.error("Unknown error occurred");
-    }
+    const errorMsg = errorMessage(error);
 
-    throw error;
+    console.log("api call error fetchWrapper", errorMsg);
+    throw errorMsg;
   }
 }
 
-/*
- The validateUserCredentials func fetches a user from the mock API and validates the provided credentials
- Throws an error if the user is not found or the name does not match
- */
-export async function validateUserCredentials(
-  name: string,
-  username: string
-): Promise<User> {
-  const userRes = await fetchWrapper<User>(
-    `${API_URL}/userList?username=eq.${username}`,
-    {
-      headers: {
-        ...HEADERS.read,
-        Accept: "application/vnd.pgrst.object+json",
-      },
-    }
-  );
-
-  if (!userRes) {
-    throw new Error("User not found");
-  }
-
-  if (userRes.name !== name) {
-    throw new Error("Incorrect name");
-  }
-
-  return userRes;
-}
 //Capitalize first letter
 export function capitalizeFirstLetter(word: string): string {
   if (word === "")
@@ -117,18 +86,24 @@ export function sortFeedbackList(
     category === "all" ? list : filterFeedbackByCategory(list, category);
 
   return [...feedbackList].sort((a, b) => {
+    const upvoteCountA = a.upvotes;
+    const upvoteCountB = b.upvotes;
+
+    const commentCountA = a.comments;
+    const commentCountB = b.comments;
+
     switch (sortByOption) {
       case "mostUpvotes":
-        return b.upvotes - a.upvotes;
+        return upvoteCountB - upvoteCountA;
       case "leastUpvotes":
-        return a.upvotes - b.upvotes;
+        return upvoteCountA - upvoteCountB;
       case "mostComments":
-        return b.commentCount - a.commentCount;
+        return commentCountB - commentCountA;
       case "leastComments":
-        return a.commentCount - b.commentCount;
+        return commentCountA - commentCountB;
       default:
         console.warn(`Unexpected sortByOption: "${sortByOption}"`);
-        return b.upvotes - a.upvotes; //safe fallback
+        return upvoteCountB - upvoteCountA; //safe fallback
     }
   });
 }
@@ -137,6 +112,7 @@ export function sortFeedbackList(
 of comments/replies for a specific feedback entry. It updates the backend by creating 
 a new comment or reply based on the mode ("comment" or "reply") and increments the comment count. */
 export async function postCommentOrReply(
+  // accessToken: string,
   content: string,
   submissionData: SubmissionDataType,
   actionType: "addComment"
@@ -144,7 +120,7 @@ export async function postCommentOrReply(
   const {
     author,
     mode,
-    payload: { commentCount, feedbackId },
+    payload: { feedbackId },
   } = submissionData;
 
   /* Common fields between comment and reply */
@@ -165,15 +141,11 @@ export async function postCommentOrReply(
     comment.parentType = type;
   }
 
-  //Closure function that captures commentCount and passes it to submitComment func
-  const submitNewComment = (data: NewCommentOrReply) =>
-    submitComment(data, commentCount);
-
   //Submit new comment and return a standardized result: success(if submission succeeds), or failure (if it fails)
-  const result = await performActionSubmission<
-    NewCommentOrReply,
-    NewCommentOrReply
-  >(actionType, comment, submitNewComment);
+  const result = await performActionSubmission<NewCommentOrReply>(
+    actionType,
+    () => submitComment(comment)
+  );
 
   return result;
 }
@@ -262,7 +234,9 @@ export function errorMessage(error: unknown): string {
   if (isRouteErrorResponse(error)) {
     return `${error.status} ${error.statusText}`;
   } else if (error instanceof Error) {
-    return error.message;
+    return error.message.includes("Failed to fetch")
+      ? "Network error. Please check your internet connection."
+      : error.message;
   } else if (typeof error === "string") {
     return error;
   } else {
@@ -298,11 +272,19 @@ export function getFeedbackFormResponse<T>(actionData: ActionResult<T>): {
   isSubmissionSuccessful: boolean;
   showForm: boolean;
   payload: T | null;
+  validationErrors: FeedbackFormErrors | null;
+  submitError: unknown | null;
 } {
-  const { actionType, submissionOutcome, payload } = actionData || {};
+  const {
+    actionType,
+    submissionOutcome,
+    payload,
+    validationErrors,
+    submitError,
+  } = actionData || {};
 
   const isSubmissionSuccessful = submissionOutcome === "success";
-  const showForm = !actionData || !isSubmissionSuccessful;
+  const showForm = !isSubmissionSuccessful;
 
   return {
     actionType,
@@ -310,6 +292,8 @@ export function getFeedbackFormResponse<T>(actionData: ActionResult<T>): {
     isSubmissionSuccessful,
     showForm,
     payload,
+    validationErrors,
+    submitError,
   };
 }
 
@@ -348,13 +332,11 @@ export function handleValidationErrors<FormValuesType>(
 
 /* This function handles form validation and submission - it returns a standardized action result: success, failure, validationError */
 //Submits some form data and return a standardized result
-export async function performActionSubmission<TSubmissionData, TPayload>(
+export async function performActionSubmission<TPayload>(
   actionType: ActionType,
-  submissionData: TSubmissionData,
-  // eslint-disable-next-line no-unused-vars
-  submitForm: (_data: TSubmissionData) => Promise<MutationResult<TPayload>>
+  submitForm: () => Promise<MutationResult<TPayload>>
 ): Promise<ActionResult | ActionResult<TPayload>> {
-  const submissionResult = await submitForm(submissionData);
+  const submissionResult = await submitForm();
 
   // action submission failed
   if (!submissionResult.success) {
@@ -467,4 +449,25 @@ export function useFormChangeTracker<Type extends Record<string, string>>(
   }
 
   return [isFormDirty, handleFieldChange] as const;
+}
+
+//function transforms raw feedback list into UI-ready feedback list with upvote info, comment count and info about current user
+// upvotes
+
+export function formatFeedbackForUI(
+  feedbackList: FeedbackWithStatusRaw[]
+): Feedback[] {
+  return feedbackList.map((feedback) => {
+    const upvoteCountCurrentUser = feedback.upvotesByCurrentUser[0].count ?? 0;
+
+    // eslint-disable-next-line no-unused-vars
+    const { upvotesByCurrentUser, ...newFeedback } = feedback;
+
+    return {
+      ...newFeedback,
+      upvotes: newFeedback.upvotes[0].count ?? 0,
+      comments: newFeedback.comments?.[0].count ?? 0,
+      isUpvotedByCurrentUser: upvoteCountCurrentUser > 0,
+    };
+  });
 }

@@ -1,12 +1,18 @@
-import { MouseEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../types/redux.hooks";
-import { setUserCredentials } from "../../store/slices/userSlice";
-import { validateUserCredentials } from "../../utils/helpers";
+import { Navigate, useFetcher } from "react-router-dom";
 import styled from "styled-components";
+import { PrimaryButton } from "../../styles/UIStyles";
+import FormField from "../../ui/form/FormField";
+import InputField from "../../ui/form/InputField";
+import { getFeedbackFormResponse } from "../../utils/helpers";
+import { FeedbackFormErrors } from "../../types/form.types";
+import BannerNotification from "../../ui/notifications/BannerNotification";
+import { UserProfile } from "../../types/user.types";
 
-const StyledLoginForm = styled.div`
-  padding: 10px;
+export const StyledLoginForm = styled.div<{ $hasError?: boolean }>`
+  & > div:first-child {
+    ${(props) => props.$hasError && `padding-bottom: 20px`};
+  }
+
   & p:first-child {
     margin-bottom: 10px;
   }
@@ -15,68 +21,120 @@ const StyledLoginForm = styled.div`
     color: red;
     padding-bottom: 4px;
   }
-`;
-/* MVP phase of app doesn't support authenticatin
-   This component mocks a login process
- */
-function LoginForm(): React.JSX.Element {
-  const [name, setName] = useState("Cristina");
-  const [username, setUsername] = useState("cs");
-  const [validationError, setValidationError] = useState("");
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
-  async function handleUserLogin(
-    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  ) {
-    e.preventDefault();
-
-    if (name === "" && username === "") {
-      setValidationError("Empty input fields");
-      return;
-    } //TO DO: handle input validation
-
-    try {
-      const validatedUser = await validateUserCredentials(name, username);
-      if (validatedUser) {
-        dispatch(setUserCredentials(validatedUser));
-        navigate("/feedbackBoard");
-        setName("");
-        setUsername("");
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        setValidationError(error.message);
-      } else {
-        setValidationError("Something went wrong. Please try again.");
-      }
-    }
+  & form button {
+    width: 100%;
   }
 
-  return (
-    <StyledLoginForm>
-      <p>Please type in your credentials below:</p>
-      {validationError && <p className="error">{validationError}</p>}
-      <form>
-        <label htmlFor="name">Name</label>
-        <input
-          name="name"
-          id="name"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        ></input>
+  & form label {
+    font-weight: var(--font-weight-semibold);
+  }
 
-        <label htmlFor="userName">Username</label>
-        <input
-          name="userName"
-          id="userName"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        ></input>
-        <button onClick={(e) => handleUserLogin(e)}>Log in</button>
-      </form>
+  & form input {
+    margin-top: 4px;
+    background-color: var(--color-text-light);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 2px 0px,
+      rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  }
+
+  & form input[type="password"] {
+    //font-size: 1.5rem;
+    //font-family: monospace;
+  }
+
+  & form ::placeholder {
+    opacity: 0.6;
+    font-size: 0.938rem;
+  }
+`;
+
+export const AuthFormHeader = styled.div<{ $paddingBottom?: string }>`
+  width: 100%;
+
+  padding-bottom: ${(props) =>
+    props.$paddingBottom ? props.$paddingBottom : `50px`};
+
+  & h1 {
+    display: inline-block;
+    font-size: var(--text-xl);
+    padding-bottom: 6px;
+    margin: 0;
+  }
+
+  & svg {
+    display: inline-block;
+    vertical-align: -4px;
+    color: #319836;
+  }
+
+  & p {
+    color: var(--color-text-muted);
+    font-size: 0.938rem;
+  }
+`;
+
+function LoginForm(): React.JSX.Element {
+  const fetcher = useFetcher({ key: "my-key" });
+  const actionData = fetcher.data;
+
+  const { actionType, submissionOutcome } = actionData
+    ? getFeedbackFormResponse<{
+        accessToken: string;
+        id: string;
+        userData: {
+          accessToken: string;
+          userProfile: UserProfile | null;
+        } | null;
+      }>(actionData)
+    : {};
+
+  if (submissionOutcome === "success") {
+    return <Navigate to="/" replace />;
+  }
+
+  const errors =
+    actionData?.validationErrors ||
+    (actionData?.submitError as FeedbackFormErrors);
+
+  const notification =
+    submissionOutcome && actionType ? (
+      <BannerNotification
+        notificationType={submissionOutcome}
+        actionType={actionType}
+        notificationMsgCustom={true}
+      >
+        {errors && <p>{errors}.</p>}
+      </BannerNotification>
+    ) : null;
+
+  return (
+    <StyledLoginForm $hasError={!!errors}>
+      {notification}
+      <fetcher.Form method="post" action=".">
+        <FormField
+          inputId={"emailSignup"}
+          label={"Email"}
+          description={""}
+          inputGuidanceId={""}
+        >
+          <InputField name={"email"} id={"emailSignup"} type={"email"} />
+        </FormField>
+        <FormField
+          inputId={"passwordSignup"}
+          label={"Password"}
+          description={""}
+          inputGuidanceId={""}
+        >
+          <InputField
+            name={"password"}
+            id={"passwordSignup"}
+            type={"password"}
+            isRequired={true}
+            minLength={6}
+          />
+        </FormField>
+        <PrimaryButton>Log in</PrimaryButton>
+      </fetcher.Form>
     </StyledLoginForm>
   );
 }
